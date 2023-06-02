@@ -1,0 +1,18 @@
+{
+    "footerLinks1": {
+        "title": "Useful Links",
+        "links": [
+            {"name": "Mobile Phone", "location": "/shop"},
+            {"name": "Laptop", "location": "/shop"},
+            {"name": "Headphone", "location": "/shop"}
+        ]
+    },
+    "footerLinks2": {
+        "title": "Our Policy",
+        "links": [
+            {"name": "Homepage", "location": "/"},
+            {"name": "Blog", "location": "/blog-list"},
+            {"name": "Services", "location": "/about"}
+        ]
+    }
+}

@@ -1,0 +1,29 @@
+<!---Badge.stories.mdx --->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+
+<Meta title="Docs/_Installation" />
+
+
+# Prerequisites
+
+Installation
+Before going further, you have to install Node.JS and NPM.
+1. Install Node.js and NPM : You can download latest Node.js from https://nodejs.org/en/download/ and install it on your system. NPM comes bundled with Node.js
+2. Install npm packages : In terminal go to your project root directory and run <code>npm install</code> command, it will download all the dependencies inside of node_modules folder.
+<br/>
+<br/>
+
+# Running Vue Development server
+Run <code>npm run serve</code>  [(command options)](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve) command to run dev server and access http://localhost:8080/ to run your app/project on browser. 
+The app will automatically reload if you change any of the source files. As <code>npm run serve</code> runs watch command which detects any change in project files so it will automatically reload your app on browser if you make changes in files.
+<br/>
+<br/>
+
+# Production Building
+Before you build your project, please see check your .env configuration carefully and customize.
+Run <code>npm build</code> [(command options)](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-build) command to build the project. The build artifacts will be stored inside the dist directory.
+
+# Change your current theme/demo
+Change the value of <code>VUE_APP_CURRENT_THEME</code> in your <code>.env</code> to match one of the folders name located in <code>%PROJECT_PATH%/src/views/%DEMO_NAME%</code>

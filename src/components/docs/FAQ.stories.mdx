@@ -1,0 +1,26 @@
+<!---Badge.stories.mdx --->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+
+
+<Meta title="Docs/FAQ" />
+
+
+# FAQ
+
+**After building**
+
+1. *I tried opening my index.html in browser and all I see is a white page*
+
+If you want to directly access your webapp you need to check the following steps (one at a time or both): 
+
+- Open your browser console and check for 404 errors. If there are any proceed to change your VUE_APP_BUILD_PATH accordingly. (build and check fi the problem is solved)
+- Open this file <code>< YOUR_PROJECT_LOCATIOn >/src/router/index.js</code> in your favorite editor and replace <code>createWebHistory</code> with <code>createWebHashHistory</code>  (build and check fi the problem is solved)
+
+<br/>
+
+2. *I have lots of 404 logs in my console.*
+
+In your .env file change VUE_APP_BUILD_PATH value to your app location.
+
+Example: <code>example.com/my/app/location => VUE_APP_BUILD_PATH=/my/app/location </code>

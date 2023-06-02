@@ -1,0 +1,31 @@
+{
+  "categories": [
+    {
+      "name": "Phones",
+      "subcategories": [
+        "Data Cables",
+        "Mobile Chargers",
+        "Mobile Phones",
+        "Power Banks"
+      ]
+    },
+    {
+      "name": "Computers",
+      "subcategories": [
+        "Desktop Pc",
+        "Accesories",
+        "Peripherals",
+        "Memory"
+      ]
+    },
+    {
+      "name": "Gaming",
+      "subcategories": [
+        "Playstation",
+        "Xbox",
+        "Games",
+        "Accesories"
+      ]
+    }
+  ]
+}

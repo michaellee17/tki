@@ -1,0 +1,8 @@
+{
+  "tags": [
+    { "id": 1, "name": "Phone", "location": "/shop" },
+    { "id": 2, "name": "Cars", "location": "/shop" },
+    { "id": 3, "name": "Efficient", "location": "/shop" },
+    { "id": 4, "name": "Case", "location": "/shop" }
+  ]
+}

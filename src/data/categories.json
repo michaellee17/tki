@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "icon": "mobile",
+      "name": " Laptops, Tablets & Phones",
+      "location": "/",
+      "component": "SubmenuVerticalA",
+      "componentProps": {
+        "items": [
+          {
+            "name": "IT & COMPUTERS",
+            "links": [
+              { "location": "/", "name": "Laptops" },
+              { "location": "/", "name": "Windows Laptops" }
+            ]
+          },
+          {
+            "name": "Wearable",
+            "links": [
+              { "location": "/", "name": "Smart Watches" },
+              { "location": "/", "name": "Fitness Bracelets" }
+            ]
+          },
+          {
+            "name": "Phones",
+            "links": [
+              { "location": "/", "name": "Phone Cases" },
+              { "location": "/", "name": "Android Smartphones" },
+              { "location": "/", "name": "Chargers" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "icon": "desktop",
+      "location": "/",
+      "name": " PC, Peripherals & Software"
+    },
+    { "icon": "tv", "location": "/", "name": "Laptops IT Products" },
+    { "icon": "adjust", "location": "/", "name": "TV, Audio-Video & Photo" },
+    { "icon": "gamepad", "location": "/", "name": "Games & Consoles" }
+  ]
+}

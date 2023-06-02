@@ -1,0 +1,84 @@
+{
+  "members": [
+    {
+      "name": "Andrew Mosfat",
+      "occupation": "WebDesigner",
+      "socials": [
+        { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+      ],
+      "imageSrc": "images/membersteam/member-pic4.png"
+    },
+    {
+        "name": "Sherlyn Mcconnel",
+        "occupation": "Social Media Manager",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-pic3.png"
+      },
+      {
+        "name": "Bethany Elliot",
+        "occupation": "Full Stack Developer",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-pic2.png"
+      },   
+       {
+        "name": "Christine Chubbuck",
+        "occupation": "Web Developer",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-pic1.png"
+      },
+      {
+        "name": "John Francis",
+        "occupation": "Web Developer",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-pic6.png"
+      },
+      {
+        "name": "Alex Sand",
+        "occupation": "Web Developer",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-team1.jpg"
+      },
+      {
+        "name": "Audrey Steel",
+        "occupation": "Web Developer",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-team6.jpg"
+      },
+      {
+        "name": "Mary Anne",
+        "occupation": "Web Developer",
+        "socials": [
+          { "location": "/", "icon": "facebook" },
+          { "location": "/", "icon": "twitter" },
+          { "location": "/", "icon": "behance" }
+        ],
+        "imageSrc": "images/membersteam/member-team5.jpg"
+      }
+  ]
+}

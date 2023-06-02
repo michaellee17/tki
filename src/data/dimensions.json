@@ -1,0 +1,7 @@
+{
+    "dimensions": [
+        {"id": 1, "name": "Large", "count": 2},
+        {"id": 2, "name": "Medium", "count": 42},
+        {"id": 3, "name": "Small", "count": 22}
+    ]
+}

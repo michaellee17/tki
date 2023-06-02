@@ -1,0 +1,11 @@
+{
+    "partners": [
+        {"name": "Tech Company", "imageSrc":"images/brands/client1.png"},
+        {"name": "Tech Brand", "imageSrc":"images/brands/client2.png"},
+        {"name": "TechCompany", "imageSrc":"images/brands/client1.png"},
+        {"name": "Tech Brand", "imageSrc":"images/brands/client2.png"},
+        {"name": "TechCompany", "imageSrc":"images/brands/client1.png"},
+        {"name": "Tech Brand", "imageSrc":"images/brands/client2.png"},
+        {"name": "TechCompany",  "imageSrc":"images/brands/client1.png"}
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "testimonials": [
+    {
+      "name": "Martin Culich",
+      "position": "Digital Marketed",
+      "text": "Yahoo Inc. is an American multinational Internet corporation headquartered in Sunnyvale, California.          It is globally known for its Web portal, search engine Yahoo Search.",
+      "imageSrc": "images/testimonials/testimonial-1.jpg"
+    },
+    {
+      "name": "Martin Culich",
+      "position": "Digital Marketed",
+      "text": "Yahoo Inc. is an American multinational Internet corporation headquartered in Sunnyvale, California.          It is globally known for its Web portal, search engine Yahoo Search.",
+      "imageSrc":  "images/testimonials/testimonial-2.jpg"
+    },
+    {
+      "name": "Martin Culich",
+      "position": "Digital Marketed",
+      "text": "Yahoo Inc. is an American multinational Internet corporation headquartered in Sunnyvale, California.          It is globally known for its Web portal, search engine Yahoo Search.",
+      "imageSrc":  "images/testimonials/testimonial-3.jpg"
+    }
+  ]
+}
