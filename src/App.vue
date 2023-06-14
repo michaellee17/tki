@@ -20,7 +20,7 @@ import {products} from "./data/auctions.json"
 export default {
   components: {QuickView,Modal},
   created() {
-
+//git test
     document.addEventListener('keydown', e => {
         let key = e.key;
         if (key && 'Escape' === key) {
