@@ -21,7 +21,7 @@
       <link-wrapper class="text-decoration-none text-dark" :location="productURL">
         <span class="fw-bold title">{{ name }}</span>
       </link-wrapper>
-      <span class="fs-7 status">
+      <!-- <span class="fs-7 status">
         <template v-if="type === 'single'">
           <span class="fw-bold">{{ $formatPrice(currentBid) }}</span>
         </template>
@@ -32,15 +32,15 @@
         <template v-else>
           Auction ended
         </template>
-      </span>
-      <div class="icon">
+      </span> -->
+      <!-- <div class="icon">
         <IconCard
           class="icon-cardb mt-1 d-flex justify-content-md-start justify-content-center"
           :id="id"
           :productURL="productURL"
           :horizontal="true"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

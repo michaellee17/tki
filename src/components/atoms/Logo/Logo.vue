@@ -13,21 +13,21 @@
       </link-wrapper>
     </div>
     <div class="icons d-md-none d-flex align-items-center">
-      <div class="mobile_only_icon_group account me-4">
+      <!-- <div class="mobile_only_icon_group account me-4">
         <link-wrapper location="/my-account" data-modal="modal-log-in" class="modeltheme-trigger">
-          <font-awesome-icon class="text-dark" :icon="['fas', 'user']" />
+          <font-awesome-icon class="text-dark" :icon="['far', 'user-circle']" />
         </link-wrapper>
       </div>
       <div class="mobile_only_icon_group wishlist">
         <link-wrapper class="top-payment">
           <font-awesome-icon class="text-dark me-4" :icon="['fas', 'heart']" />
         </link-wrapper>
-      </div>
+      </div> -->
       <div class="mobile_only_icon_group cart">
         <link-wrapper :location="'/cart/'">
           <font-awesome-icon
             class="text-dark me-3"
-            :icon="['fas', 'shopping-basket']"
+            :icon="['far', 'bell']"
           />
         </link-wrapper>
       </div>

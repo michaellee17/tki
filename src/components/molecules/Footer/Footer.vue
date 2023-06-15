@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <FooterSectionLinks v-bind="footerLinks1" />
+      <!-- <FooterSectionLinks v-bind="footerLinks1" />
       <FooterSectionLinks v-bind="footerLinks2" />
 
       <div class="col">
@@ -46,29 +46,29 @@
             >
           </search>
         </ul>
-      </div>
+      </div> -->
     </div>
   </div>
 
   <div class="copyright">
     <div class="container">
       <div class=" d-flex justify-content-between ">
-        <div class="copyright-text">Copyright by ModelTheme.All Rights Reserved</div>
-        <div class="copyright-text">Elite Author on ThemeForest.</div>
+        <div class="copyright-text">© Copyright 2023 . T-KI All rights reserved.</div>
+        <!-- <div class="copyright-text">Elite Author on ThemeForest.</div> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 
-import FooterSectionLinks from "../../atoms/TitleWithHorizontalLinksList/TitleWithHorizontalLinksList.vue";
+// import FooterSectionLinks from "../../atoms/TitleWithHorizontalLinksList/TitleWithHorizontalLinksList.vue";
 import { footerLinks1 } from "../../../data/footerLinks.json";
 import { footerLinks2 } from "../../../data/footerLinks.json";
 import Search from "../Search/Search.vue";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
 
 export default {
-  components: { FooterSectionLinks, Search, LinkWrapper },
+  components: { Search, LinkWrapper },
   data() {
     return {
       footerLinks1,

@@ -1,32 +1,32 @@
 <template>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <div class="row menu-mobile d-flex justify-content-around w-100 m-0 ">
-    <link-wrapper :location="'/search'" class="col-3 link-color border-end">
+    <link-wrapper :location="'/'" class="col-3 link-color border-end">
       <div class=" d-flex flex-column mobile-menu-item align-items-center  ">
-        <font-awesome-icon class="fa-2x p-2 " :icon="['fas', 'search']" />
-        <span>Search</span>
-      </div>
-    </link-wrapper>
-    <link-wrapper :location="'/cart'" class="col-3 link-color border-end">
-      <div class=" d-flex flex-column mobile-menu-item align-items-center ">
-        <font-awesome-icon
-          class="fa-2x p-2 "
-          :icon="['fas', 'shopping-cart']"
-        />
-        <span>Cart</span>
+        <span class="material-symbols-outlined p-2 icon-solid">other_houses</span>
+        <span>首頁</span>
       </div>
     </link-wrapper>
 
-    <link-wrapper :location="'/shop'" class="col-3 link-color border-end">
+    <link-wrapper :location="'/'" class="col-3 link-color border-end">
       <div class="d-flex flex-column mobile-menu-item align-items-center">
-        <font-awesome-icon class="fa-2x p-2 " :icon="['fas', 'heart']" />
-        <span>Wishlist</span>
+        <span class="material-symbols-outlined p-2">book_online</span>
+        <span>我的票券</span>
+      </div>
+    </link-wrapper>
+
+    <link-wrapper :location="'/cart'" class="col-3 link-color border-end">
+      <div class=" d-flex flex-column mobile-menu-item align-items-center ">
+        <span class="material-symbols-outlined p-2">payments</span>
+        <span>購票清單</span>
       </div>
     </link-wrapper>
 
     <link-wrapper :location="'/my-account'" class="col-3 link-color ">
       <div class="d-flex flex-column mobile-menu-item align-items-center">
-        <font-awesome-icon class="fa-2x p-2 " :icon="['fas', 'user']" />
-        <span>Account</span>
+        <!-- <font-awesome-icon class="fa-2x p-2 " :icon="['far', 'user-circle']" /> -->
+        <span class="material-symbols-outlined p-2">account_circle</span>
+        <span>會員中心</span>
       </div>
     </link-wrapper>
   </div>
@@ -38,7 +38,28 @@ export default {
   components: { LinkWrapper },
 };
 </script>
+
 <style scoped="scoped">
+.material-symbols-outlined{
+  font-size: 2em;
+}
+.material-symbols-outlined.icon-solid {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+a.col-3.link-color{
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+a:hover path {
+  fill: var(--primary-color);
+}
+
 .menu-mobile {
   background-color: #ffffff;
   overflow: hidden;
@@ -55,7 +76,7 @@ export default {
 .p-2 {
   padding: 0.3rem !important;
 }
-.col-3 span {
+.col-3 span:not(.material-symbols-outlined) {
   font-size: 12px !important;
   font-weight: 300 !important;
 }

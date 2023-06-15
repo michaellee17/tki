@@ -15,8 +15,8 @@
         <div
           class="slider-content d-flex flex-column position-absolute align-items-center text-center"
         >
-          <span class="  text-uppercase fs-6 fw-bold">{{ item.category }}</span>
-          <h1 class="slider-title text-uppercase">{{ item.productName }}</h1>
+          <!-- <span class="  text-uppercase fs-6 fw-bold">{{ item.category }}</span>
+          <h1 class="slider-title text-uppercase">{{ item.productName }}</h1> -->
         </div>
         <div
           class="caracteristics-slider position-relative d-flex flex-column align-items-center"
@@ -32,11 +32,12 @@
               v-for="characteristic in item.characteristics"
               :key="characteristic"
             >
-              <font-awesome-icon class="slider-icon" :icon="['fas', 'check']" />
-              <span class="caracteristic ms-2 ">{{ characteristic }}</span>
+              <!-- <font-awesome-icon class="slider-icon" :icon="['fas', 'check']" /> -->
+              <!-- <h1>BLACKPINK</h1> -->
+              <!-- <span class="caracteristic ms-2 ">{{ characteristic }}</span> -->
             </li>
           </ul>
-          <div class="slider-btn d-flex justify-content-center">
+          <!-- <div class="slider-btn d-flex justify-content-center">
             <button-filled
               class="mb-3 slider-product-button fw-bold"
               :text="'Add to cart'"
@@ -51,7 +52,7 @@
                 Add to cart
               </template>
             </button-filled>
-          </div>
+          </div> -->
         </div>
       </div>
     </swiper-slide>
@@ -117,7 +118,7 @@ export default {
   top: unset !important;
 }
 .slider {
-  background-image:url('../../../assets/images/slider/slider-bg.png');
+  /* background-image:url('../../../assets/images/slider/slider-bg.png'); */
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -173,7 +174,7 @@ export default {
 }
 
 .caracteristic {
-  color: #9198aa;
+  color: #fff; /* color: #9198aa; */
   font-size: 18px !important;
   transform: translateY(60px);
   animation-fill-mode: forwards;
@@ -203,7 +204,7 @@ export default {
 }
 
 .slider-img {
-  max-width: 500px;
+  max-width: 100%; /* max-width: 500px; */
   padding: 0px;
   margin: 0px;
   transform: translateY(60px);

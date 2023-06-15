@@ -16,6 +16,7 @@ import "../src/icons/iconsBrands"
 import "../src/icons/iconsRegular"
 import "../src/icons/iconsSolid"
 
+import "../src/assets/all.scss";
 import "../src/assets/main.css";
 
 const router = createRouter({

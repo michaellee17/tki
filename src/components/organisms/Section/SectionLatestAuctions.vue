@@ -1,6 +1,6 @@
 <template>
-    <Heading :title="'Latest Actions'" />
-    <div class="row ">
+    <Heading :title="'預約搶票'" />
+    <div class="row">
       <div
         v-for="auction in getLimitedAuctions"
         :key="auction"

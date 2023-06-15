@@ -9,18 +9,18 @@
         class="text-white d-flex card-title text-uppercase fw-bold align-middle fs-2"
         >{{ title }}</h3
       >
-      <span class="text-white d-flex  align-middle fs-6"
-        ><b class="me-1">{{ productsNo }}</b> Product{{
-          productsNo > 1 ? "s" : ""
-        }}</span
-      >
+      <!-- <span class="text-white d-flex  align-middle fs-6">
+        <b class="me-1">{{ productsNo }}</b> 
+        Product
+        {{productsNo > 1 ? "s" : ""}}
+      </span> -->
 
       <ButtonOutline
         v-if="buttonLocation"
         :location="buttonLocation"
         :linkWrapperArgs="linkWrapperArgs"
         class="mt-3"
-        :text="'View All Items'"
+        :text="'查看更多'"
         :hasRoundedCorners="true"
         :size="'small'"
         :wide="true"

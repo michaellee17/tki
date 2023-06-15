@@ -1,6 +1,9 @@
 <template>
   <div class="container Mini-cart mx-auto pt-4 pb-4 ">
-    <div
+    <div class="fw-bold text-center">
+        推播通知
+    </div>
+    <!-- <div
       v-if="items !== undefined || items.length !== 0"
       class=" mini-cart-items"
     >
@@ -10,7 +13,7 @@
     </div>
 
     <div class="fw-bold text-center" v-if="items.length === 0">
-      No products in cart
+      推播通知
     </div>
     <template v-else>
       <hr class="separator mx-auto" />
@@ -34,7 +37,7 @@
           :location="'/checkout'"
         />
       </div>
-    </template>
+    </template> -->
   </div>
 </template>
 

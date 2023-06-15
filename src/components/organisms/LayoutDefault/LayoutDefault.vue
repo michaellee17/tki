@@ -4,7 +4,7 @@
     <PageHeader />
     <slot> <div class="text-center p-5 m-5">No content yet.</div> </slot>
 
-    <TopFooter />
+    <!-- <TopFooter /> -->
     <Footer class="footer-top" />
     <floating-menu-mobile></floating-menu-mobile>
   </div>
@@ -12,7 +12,7 @@
 
 <script>
 import Footer from "../../molecules/Footer/Footer.vue";
-import TopFooter from "../TopFooter.vue";
+// import TopFooter from "../TopFooter.vue";
 import TopHeader from "../TopHeader.vue";
 import PageHeader from "../PageHeader.vue";
 import FloatingMenuMobile from "../../molecules/Mobile/FloatingMenuMobile.vue";
@@ -21,7 +21,7 @@ export default {
   name: "Home",
   components: {
     Footer,
-    TopFooter,
+    // TopFooter,
     PageHeader,
     TopHeader,
     FloatingMenuMobile,

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="Menu fluid-container d-flex justify-content-center">
     <ul
       data-bs-placement="top"
@@ -77,4 +77,4 @@ export default {
 .item-searched > hr {
   margin: 0;
 }
-</style>
+</style> -->

@@ -1,41 +1,52 @@
 <template>
   <layout-default>
+    <!-- 主要 slider -->
     <div class="fluid-container  slider">
       <Slider :items="sliderItems" />
     </div>
 
-    <div class="container features  mt-5 ">
+    <!-- <div class="container features  mt-5 ">
       <SectionFeatures />
-    </div>
+    </div> -->
 
-    <div class="container latest-auctions ">
-      <SectionLatestAuctions />
-    </div>
-
+    <!-- 熱門活動 -->
     <div class="container masonry">
       <SectionMasonry />
     </div>
 
-    <div class="container latest-auctions-category mb-5">
-      <SectionLatestAuctionsWithCategoryName :title="'Desktops'" :productsNo="150" :skipAuctions="0" />
+    <!-- 次要 slider -->
+    <div class="fluid-container  slider">
+      <SliderSecond :items="sliderItems2" />
     </div>
 
-    <div class="container latest-auctions-category mb-5">
-      <SectionLatestAuctionsWithCategoryName :title="'Phones'" :background="'radial-gradient(#ff5f4a,#dd3e29)'" :productsNo="117" :skipAuctions="11" />
+    <!-- 預約搶票 -->
+    <div class="container latest-auctions ">
+      <SectionLatestAuctions />
     </div>
 
+    <!-- 演唱會 -->
     <div class="container latest-auctions-category ">
-      <SectionLatestAuctionsWithCategoryName :title="'Tablets'" :background="'radial-gradient(#fce406,#f9be00)'" :productsNo="23" :skipAuctions="18"  />
+      <SectionLatestAuctionsWithCategoryName :title="'演唱會'" :background="'radial-gradient(#fce406,#f9be00)'" :productsNo="23" :skipAuctions="18"  />
     </div>
 
-    <div class="container contact">
+    <!-- 音樂祭 -->
+    <div class="container latest-auctions-category mb-5">
+      <SectionLatestAuctionsWithCategoryName :title="'音樂祭'" :productsNo="150" :skipAuctions="0" />
+    </div>
+
+    <!-- 展演 -->
+    <div class="container latest-auctions-category mb-5">
+      <SectionLatestAuctionsWithCategoryName :title="'展演'" :background="'radial-gradient(#ff5f4a,#dd3e29)'" :productsNo="117" :skipAuctions="11" />
+    </div>
+
+    <!-- <div class="container contact">
       <SectionContact />
     </div>
 
     <div class="container news justify-content-center">
       <SectionNews />
     </div>
-    <SectionBrands class="d-none fluid-container mb-0 brands d-md-block" />
+    <SectionBrands class="d-none fluid-container mb-0 brands d-md-block" /> -->
   </layout-default>
 </template>
 
@@ -50,12 +61,13 @@ import SectionContact from "../../components/organisms/Section/Contact/SectionCo
 import SectionNews from "../../components/organisms/Section/SectionNews.vue";
 import SectionBrands from "../../components/organisms/Section/SectionBrands.vue";
 import Slider from "../../components/atoms/Carousel/Slider.vue";
+import SliderSecond from "../../components/atoms/Carousel/Slider-second.vue";
 import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
 
 export default {
   name: "Home",
   beforeCreate() {
-    document.title = "iBid – Multi Vendor Auctions WooCommerce Theme";
+    document.title = "T-KI";
   },
   components: {
     SectionLatestAuctions,
@@ -67,43 +79,84 @@ export default {
     SectionBrands,
     Slider,
     LayoutDefault,
+    SliderSecond
   },
   data() {
     return {
       sliderItems: [
         {
-          productImage: require("../../assets/images/slider/macbook_gold-1.png"),
+          productImage: require("../../assets/images/slider/home_bn01.jpg"),
           characteristics: [
-            "2.9 GHz Dual-Core Intel Core i5",
-            "256 GB SSD auf PCle Basis(On-Board)",
-            "8 GB 2133 MHz LPDDR3 Arbeitsspeicher",
+            "BLACKPINK WORLD TOUR"
           ],
           category: "tech equipment",
           productName: "Macbook",
           id: 1,
         },
         {
-          productImage: require("../../assets/images/slider/object_headphones_1.png"),
+          productImage: require("../../assets/images/slider/home_bn02.jpg"),
           characteristics: [
-            "Balanced High, Mid and Low tones",
-            "Active Noise Cancellation",
-            "Bluetooth Wireless",
+            "BLACKPINK WORLD TOUR"
           ],
           category: "tech equipment",
           productName: "HEADPHONES",
           id: 2,
         },
         {
-          productImage: require("../../assets/images/slider/watch_tp3-1.png"),
+          productImage: require("../../assets/images/slider/home_bn03.jpg"),
           characteristics: [
-            "Dual‑Core Processor, Integrated GPS",
-            "WIFI (802.11b/g/n 2,4 GHz), Bluetooth 4.0",
-            "OLED Retina Display",
-            "312 x 390 Pixel (42 mm)",
+            "BLACKPINK WORLD TOUR"
           ],
           category: "tech equipment",
           productName: "WATCH",
           id: 3,
+        },
+        {
+          productImage: require("../../assets/images/slider/home_bn01.jpg"),
+          characteristics: [
+            "BLACKPINK WORLD TOUR"
+          ],
+          category: "tech equipment",
+          productName: "Macbook",
+          id: 1,
+        },
+      ],
+      sliderItems2: [
+        {
+          productImage: require("../../assets/images/slider/home_bn02.jpg"),
+          characteristics: [
+            "BLACKPINK WORLD TOUR"
+          ],
+          category: "tech equipment",
+          productName: "Macbook",
+          id: 1,
+        },
+        {
+          productImage: require("../../assets/images/slider/home_bn01.jpg"),
+          characteristics: [
+            "BLACKPINK WORLD TOUR"
+          ],
+          category: "tech equipment",
+          productName: "HEADPHONES",
+          id: 2,
+        },
+        {
+          productImage: require("../../assets/images/slider/home_bn03.jpg"),
+          characteristics: [
+            "BLACKPINK WORLD TOUR"
+          ],
+          category: "tech equipment",
+          productName: "WATCH",
+          id: 3,
+        },
+        {
+          productImage: require("../../assets/images/slider/home_bn01.jpg"),
+          characteristics: [
+            "BLACKPINK WORLD TOUR"
+          ],
+          category: "tech equipment",
+          productName: "Macbook",
+          id: 1,
         },
       ],
     };
@@ -111,6 +164,7 @@ export default {
 };
 </script>
 <style scoped="scoped">
+.slider,
 .features,
 .latest-auctions,
 .latest-auctions-category,
@@ -130,6 +184,7 @@ export default {
 :deep(.Counter .col-3) {
   padding: 8px 13px !important;
 }
+
 @media (max-width: 767.98px) {
   :deep(.latest-auctions-category) {
     padding: 0px !important;
