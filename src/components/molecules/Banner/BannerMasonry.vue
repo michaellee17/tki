@@ -2,7 +2,7 @@
   <div :style="style" class="mas me-1 mb-1  ">
     <div class="d-flex prod-container flex-column justify-content-start">
       <h3 class="mas-title text-white text-uppercase">{{ title }}</h3>
-      <span class="fw-light text-white no ">{{ productsNo }} Products</span>
+      <!-- <span class="fw-light text-white no ">{{ productsNo }} Products</span> -->
       <ButtonOutline
         class="masonry-btn"
         :hasRoundedCorners="true"
@@ -10,7 +10,7 @@
         :size="'small'"
         v-if="viewMoreLocation"
         :location="viewMoreLocation"
-        :text="'View More'"
+        :text="'查看更多'"
       />
     </div>
   </div>
@@ -122,7 +122,7 @@ export default {
   right: 30px;
 }
 .masonry-btn {
-  margin-top: 40px;
+   margin-top: 20px; /* margin-top: 40px; */
   padding: 10px 25px;
   width: fit-content;
 }

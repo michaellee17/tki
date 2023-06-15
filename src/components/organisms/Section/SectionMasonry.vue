@@ -1,37 +1,38 @@
 <template>
   <div class="container masonry">
+    <Heading :title="'熱門活動'" />
     <div class="row masonry-grid">
       <div class="col-md-6  masonry-column p-0 pb-2">
         <MasonryProduct
-          :title="'Headphones'"
+          :title="'演唱會'"
           :productsNo="574"
           :height="280"
-          :imageSrc="'images/masonrybanner/masonry-banner-4.jpg'"
+          :imageSrc="'images/masonrybanner/pa_cover01.jpg'"
           :viewMoreLocation="'shop'"
         />
 
         <MasonryProduct
-          :title="'Drones'"
+          :title="'音樂祭'"
           :productsNo="45"
           :height="420"
-          :imageSrc="'images/masonrybanner/masonry-banner-1.jpg'"
+          :imageSrc="'images/masonrybanner/pa_cover03.jpg'"
           :viewMoreLocation="'shop'"
         />
       </div>
 
       <div class="col-md-6  masonry-column p-0 ">
         <MasonryProduct
-          :title="'Gaming Headphones'"
+          :title="'展演'"
           :productsNo="11"
           :height="400"
-          :imageSrc="'images/masonrybanner/masonry-banner-3.jpg'"
+          :imageSrc="'images/masonrybanner/pa_cover02.jpg'"
           :viewMoreLocation="'shop'"
         />
         <MasonryProduct
-          :title="'Wireless Charging'"
+          :title="'歌劇'"
           :productsNo="253"
           :height="300"
-          :imageSrc="'images/masonrybanner/masonry-banner-2.jpg'"
+          :imageSrc="'images/masonrybanner/pa_cover04.jpg'"
           :viewMoreLocation="'shop'"
         />
       </div>
@@ -39,9 +40,10 @@
   </div>
 </template>
 <script>
+import Heading from "../../atoms/SectionHeading/Heading.vue";
 import MasonryProduct from "../../molecules/Banner/BannerMasonry.vue";
 export default {
-  components: { MasonryProduct },
+  components: { MasonryProduct, Heading },
 };
 </script>
 <style scoped="scoped">

@@ -20,7 +20,6 @@ import {products} from "./data/auctions.json"
 export default {
   components: {QuickView,Modal},
   created() {
-//git test
     document.addEventListener('keydown', e => {
         let key = e.key;
         if (key && 'Escape' === key) {
@@ -75,4 +74,7 @@ export default {
   },
 };
 </script>
-<style src="./assets/main.css"></style>
+<style lang="scss">
+@import "./assets/all.scss";
+</style>
+<!-- <style src="./assets/main.css"></style> -->

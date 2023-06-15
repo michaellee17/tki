@@ -1,13 +1,13 @@
 <template>
   <div class="text-decoration-none h-100">
     <div class="product-card d-inline-block border-0 position-relative h-100">
-      <IconCard
+      <!-- <IconCard
         class="position-absolute mt-4 icon-card"
         :productURL="productURL"
         :didAuctionEnd="didAuctionEnd"
         :id="id"
         :type="type"
-      />
+      /> -->
       <link-wrapper class="text-decoration-none bb" :location="productURL">
         <div class="card position-relative border-0">
           <img
@@ -36,7 +36,7 @@
               {{ name }}
             </link-wrapper>
           </h3>
-          <div class="details">
+          <!-- <div class="details">
             <template v-if="type ==='single'">
               <span class="fw-bold">{{ $formatPrice(currentBid) }}</span>
             </template>
@@ -47,6 +47,9 @@
             <template v-else>
               Auction ended
             </template>
+          </div> -->
+          <div class="details">
+            <span class="fw-bold">150張</span>
           </div>
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faBell,
   faHeart,
   faCalendar,
   faBookmark,
-  faUser,
+  faUserCircle
 } from "@fortawesome/free-regular-svg-icons";
 
-library.add(faHeart, faCalendar, faBookmark, faUser);
+library.add(faBell, faHeart, faCalendar, faBookmark, faUserCircle);

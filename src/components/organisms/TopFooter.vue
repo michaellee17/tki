@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="search-wrapper">
     <div class="container">
       <div class="row py-4 d-flex">
@@ -101,4 +101,4 @@ export default {
     flex-grow: 2;
   }
 }
-</style>
+</style>  -->

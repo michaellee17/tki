@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import "bootstrap/dist/js/bootstrap.bundle";
 import Jumbotron from "../../components/molecules/Jumbotron/JumbotronBox.vue";
 import LogoWithMessage from "../../components/molecules/Jumbotron/LogoWithMessage.vue";
 import SectionFeatures from "../../components/organisms/Section/SectionFeatures.vue";
@@ -103,7 +104,7 @@ import SectionTestimonials from "../../components/organisms/Section/SectionTesti
 
 export default {
   created() {
-    document.title = "About us - iBid";
+    document.title = "關於我們 - T-KI";
   },
   components: {
     LayoutDefault,

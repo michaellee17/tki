@@ -1,5 +1,5 @@
 <template>
-  <div class="mycart position-relative">
+  <!-- <div class="mycart position-relative">
     <link-wrapper
       :external="false"
       class="cart-contents text-end d-flex justify-content-end text-decoration-none align-items-center"
@@ -17,7 +17,7 @@
         >
       </div>
       <div class="ms-2 mycart-icon mt-3 mb-3">
-        <font-awesome-icon :icon="['fas', 'shopping-basket']" />
+        <font-awesome-icon :icon="['far', 'bell']" />
       </div>
     </link-wrapper>
     <CartContent
@@ -25,7 +25,7 @@
       :items="items"
       :subtotal="$formatPrice($store.getters.getSubtotal)"
     />
-  </div>
+  </div> -->
 </template>
 
 <script>

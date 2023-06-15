@@ -7,10 +7,10 @@
             class="currency-language m-0 list-inline-block list-unstyled menu-list"
           >
             <dropdown :items="internationalization.langs"></dropdown>
-            <dropdown
+            <!-- <dropdown
               :items="internationalization.currencies"
               :selectedIndex="0"
-            ></dropdown>
+            ></dropdown> -->
           </ul>
 
           <!-- Call Us -->
@@ -20,7 +20,7 @@
               class="header-top-contact-method"
             >
               <span class="contact-text">
-                <span class="hide-mobile">Call us toll free: </span>
+                <span class="hide-mobile">Tel </span>
                 <a
                   class="text-decoration-none"
                   :href="
@@ -46,7 +46,7 @@
               class="header-top-contact-method"
             >
               <span class="contact-text">
-                <span class="hide-mobile">Send us an email: </span>
+                <span class="hide-mobile">Email: </span>
                 <a
                   class="text-decoration-none"
                   :href="'mailto:' + $store.state.app.contactInfo.email"
@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <div class="d-sm-none d-md-block col-md-5 account-urls">
+        <!-- <div class="d-sm-none d-md-block col-md-5 account-urls">
           <link-wrapper class="top-order text-decoration-none" location="/blog-list">
             <font-awesome-icon
               class="fa-flip-horizontal"
@@ -80,7 +80,7 @@
             <font-awesome-icon :icon="['fas', 'heart']" />
             Wishlist
           </link-wrapper>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

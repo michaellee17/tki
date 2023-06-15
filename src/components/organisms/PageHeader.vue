@@ -9,16 +9,16 @@
           <div class="col-md-8 search-form-product align-items-center">
             <form action="shop" method="GET">
               <Search
-                :placeholder="'Search products...'"
+                :placeholder="'Search...'"
                 :categoriesOptions="categories"
                 :buttonType="'submit'"
                 :selectDefault="'Categories'"
               />
             </form>
           </div>
-          <div class="col-md-3 menu-products">
+          <!-- <div class="col-md-3 menu-products">
             <Cart />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

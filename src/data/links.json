@@ -2,53 +2,17 @@
   "links": [
     {
       "location": "/",
-      "name": "Home",
+      "name": "活動",
       "component": "SubmenuVerticalA",
       "componentProps": {
         "items": [
           {
-            "name": "Demos",
+             "name": "",
             "links": [
-              { "location": "https://ibid.modeltheme.com/vuejs/", "name": "Main demo", "external": true, "target": "blank" },
-              { "location": "https://ibid.modeltheme.com/vuejs/automotive/", "name": "Automotive", "external": true, "target": "blank" },
-              { "location": "https://ibid.modeltheme.com/", "name": "WordPress", "external": true, "target": "blank" }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "location": "/shop/",
-      "name": "Shop",
-      "component": "SubmenuVerticalA",
-      "componentProps": {
-        "items": [
-          {
-            "name": "IT & COMPUTERS",
-            "links": [
-              { "location": "/shop", "name": "Laptops" },
-              { "location": "/shop", "name": "Desktops" },
-              { "location": "/shop", "name": "Graphic Cards" },
-              { "location": "/shop", "name": "Workstations" },
-              { "location": "/shop", "name": "RAM" }
-            ]
-          },
-          {
-            "name": "Wearable",
-            "links": [
-              { "location": "/shop", "name": "Smart Watches" },
-              { "location": "/shop", "name": "Fitness Bracelets" },
-              { "location": "/shop", "name": "Masks" },
-              { "location": "/shop", "name": "Electronic tagging" }
-            ]
-          },
-          {
-            "name": "Phones",
-            "links": [
-              { "location": "/shop", "name": "Phone Cases" },
-              { "location": "/shop", "name": "Android Smartphones" },
-              { "location": "/shop", "name": "Chargers" },
-              { "location": "/shop", "name": "Apple phones" }
+              { "location": "https://ibid.modeltheme.com/vuejs/", "name": "演唱會", "external": true, "target": "blank" },
+              { "location": "https://ibid.modeltheme.com/vuejs/automotive/", "name": "音樂祭", "external": true, "target": "blank" },
+              { "location": "https://ibid.modeltheme.com/", "name": "展演", "external": true, "target": "blank" },
+              { "location": "https://ibid.modeltheme.com/", "name": "歌劇", "external": true, "target": "blank" }
             ]
           }
         ]
@@ -56,35 +20,17 @@
     },
     {
       "location": "/blog-list/",
-      "name": "Blog",
-      "component": "SubmenuVerticalA",
-      "componentProps": {
-        "items": [
-          {
-            "name": "BLOG TYPES",
-            "links": [
-              { "location": "/blog-post/a-phone-keeps-your-friends-away-1", "name": "Blog Single" },
-              { "location": "/blog-list", "name": "Blog List" }
-            ]
-          }
-        ]
-      }
+      "name": "平台公告",
+      "component": "SubmenuVerticalA"
     },
-    { "location": "/about", "name": "About" },
     {
-      "location": "/contact",
-      "name": "Contact",
+      "location": "/about",
+      "name": "關於我們",
       "component": "SubmenuVerticalB"
     },
     {
-      "location": "/demo",
-      "name": "404"
-    }, 
-    {
-      "location": "https://themeforest.net/item/ibid-multi-vendor-auctions-woocommerce-theme/24923136",
-      "name": "External Link",
-      "external": true,
-      "target": "blank"
+      "location": "/contact",
+      "name": "FAQ"
     }
   ]
 }

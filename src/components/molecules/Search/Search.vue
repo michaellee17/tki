@@ -1,13 +1,13 @@
 <template>
   <div class="ibid-header-searchform position-relative">
     <div class="woocommerce-product-search menu-search">
-      <BasicSelectBox
+      <!-- <BasicSelectBox
         v-if="categoriesOptions"
         name="product_cat"
         class="form-control1"
         :defaultValueText="selectDefault"
         :options="categoriesOptions"
-      />
+      /> -->
 
       <input
         :class="{ 'has-select': categoriesOptions }"
@@ -96,14 +96,15 @@ export default {
 }
 .btn.btn-primary:hover {
   background: var(--primary-color);
-  border-color: var(--primary-color);
+  /* border-color: var(--primary-color); */
+  color: #fff;
 }
-.has-select {
+/* .has-select {
   border-left: 0.5px solid #ddd !important;
   padding-left: 24px;
-}
+} */
 .btn.btn-primary {
-  background: #484848;
+  background: #fff;
   padding: 0;
   border-radius: 50px !important;
   padding: 8px 13px;
