@@ -75,7 +75,7 @@
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div id="loginBoard" class="d-none">
+        <div id="loginBoard" ref="loginBoard">
           <div class="modal-body text-center text-second pb-5">
             <div class="d-flex justify-content-center gap-2 mb-4">
               <h1 class="modal-title fs-2" id="loginModalLabel">登入</h1>
@@ -107,7 +107,7 @@
           </div>
         </div>
 
-        <div id="termsPage" class="d-none">
+        <div id="termsPage" ref="termsPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
               <h1 class="modal-title fs-2 text-primary">平台服務協議</h1>
@@ -126,7 +126,7 @@
           </div>
         </div>
 
-        <div id="MemberInfoPage" class="d-none">
+        <div id="memberInfoPage" ref="memberInfoPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
               <h1 class="modal-title fs-2 text-primary">會員資料</h1>
@@ -164,7 +164,7 @@
                   </div>
                 </div>
                 <div class="mb-4 row justify-content-center align-items-center">
-                  <label for="password" class="col-3 form-label text-nowrap">確認密碼</label>
+                  <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
                   <div class="col-9">
                     <input type="password" class="form-control" id="passwordCmf" placeholder="再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
                   </div>
@@ -174,54 +174,72 @@
           </div>
         </div>
 
-        <div id="AccountLoginPage" class="d-none">
+        <div id="accountLoginPage" ref="accountLoginPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
               <h1 class="modal-title fs-2 text-primary">使用會員帳號登入</h1>
             </div>
             <form>
               <div class="mb-2 row justify-content-center align-items-center">
-                <label for="tel" class="col-3 form-label">帳號</label>
+                <label for="loginTel" class="col-3 form-label">帳號</label>
                 <div class="col-9">
-                  <input type="tel" class="form-control" id="tel" placeholder="請輸入手機號碼" aria-describedby="tel" minlength="10" required>
+                  <input type="tel" class="form-control" id="loginTel" placeholder="請輸入手機號碼" aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
               <div class="mb-4 row justify-content-center align-items-center">
-                <label for="password" class="col-3 form-label">密碼</label>
+                <label for="loginPassword" class="col-3 form-label">密碼</label>
                 <div class="col-9">
-                  <input type="password" class="form-control" id="password" placeholder="請輸入密碼" aria-describedby="password" minlength="8" required>
+                  <input type="password" class="form-control" id="loginPassword" placeholder="請輸入密碼" aria-describedby="password" minlength="8" required>
                 </div>
               </div>
               <div class="text-end mb-2">
-                <a class="text-decoration-none link-secondary ">忘記密碼</a>
+                <a class="text-decoration-none link-secondary" @click="showPage('accountLoginPage', 'forgetPwdPage')">忘記密碼</a>
               </div>
               <button type="submit" class="btn btn-primary link-light w-100 py-2">登入</button>
             </form>
           </div>
         </div>
 
-        <div id="ForgetPwdPage" class="">
+        <div id="forgetPwdPage" ref="forgetPwdPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
               <h1 class="modal-title fs-2 text-primary">忘記密碼</h1>
             </div>
             <form>
+              <h5 class="mb-3">請先驗證您的手機號碼</h5>
               <div class="mb-2 row justify-content-center align-items-center">
-                <label for="tel" class="col-3 form-label">帳號</label>
+                <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
-                  <input type="tel" class="form-control" id="tel" placeholder="請輸入手機號碼" aria-describedby="tel" minlength="10" required>
+                  <input type="tel" class="form-control" id="forgetTel" placeholder="0912345678" aria-describedby="tel" minlength="10" required>
+                </div>
+              </div>
+              <div class="mb-2 row justify-content-center align-items-center">
+                <p class="col-3"></p>
+                <div class="col-9">
+                  <button type="button" class="btn btn-info link-light w-100">發送驗證碼</button>
+                </div>
+              </div>
+              <div class="mb-5 row justify-content-center align-items-center">
+                <label for="forgetCode" class="col-3 form-label"></label>
+                <div class="col-9 d-flex align-items-center gap-2">
+                  <input type="text" class="form-control" id="forgetCode" placeholder="輸入驗證碼" aria-describedby="code" required>
+                  <button type="button" class="btn btn-info link-light w-50">驗證</button>
+                </div>
+              </div>
+              <h5 class="mb-3">重新設定密碼</h5>
+              <div class="mb-3 row justify-content-center align-items-center">
+                <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
+                <div class="col-9">
+                  <input type="password" class="form-control" id="forgetPassword" placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
                 </div>
               </div>
               <div class="mb-4 row justify-content-center align-items-center">
-                <label for="password" class="col-3 form-label">密碼</label>
+                <label for="forgetPasswordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
                 <div class="col-9">
-                  <input type="password" class="form-control" id="password" placeholder="請輸入密碼" aria-describedby="password" minlength="8" required>
+                  <input type="password" class="form-control" id="orgetPasswordCmf" placeholder="再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
                 </div>
               </div>
-              <div class="text-end mb-2">
-                <a class="text-decoration-none link-secondary ">忘記密碼</a>
-              </div>
-              <button type="submit" class="btn btn-primary link-light w-100 py-2">登入</button>
+                <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
             </form>
           </div>
         </div>
@@ -245,7 +263,8 @@ import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
 export default {
   mounted(){
     this.loginModal = new Modal(this.$refs.loginModal);
-    this.showLoginModal();
+    this.initLoginBoard();
+    this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
   },
   components: {
     // NavigationSubMenu,
@@ -262,17 +281,28 @@ export default {
     };
   },
   methods: {
+    initLoginBoard() {
+      this.$refs.loginBoard.classList.remove('d-none');
+      this.$refs.termsPage.classList.add('d-none');
+      this.$refs.memberInfoPage.classList.add('d-none');
+      this.$refs.accountLoginPage.classList.add('d-none');
+      this.$refs.forgetPwdPage.classList.add('d-none');
+    },
     showLoginModal() {
         this.loginModal.show()
     },
     submitTerms() {
       if (!this.$refs.agreenTermsBox.checked) {
-        this.$refs.agreenTermsAlert.classList.remove('d-none')
-        console.log('no checked!')
+        this.$refs.agreenTermsAlert.classList.remove('d-none');
+        console.log('no checked!');
       } else {
-        console.log('checked!')
+        console.log('checked!');
       }
     },
+    showPage(closedPage, showedPage) {
+      this.$refs[closedPage].classList.add('d-none');
+      this.$refs[showedPage].classList.remove('d-none');
+    }
    }
 };
 </script>
@@ -458,24 +488,28 @@ a {
   margin-bottom: 0;
 }
 
-#MemberInfoPage form {
+#memberInfoPage form {
     padding-right: 6.5rem;
     padding-left: 6.5rem;
 }
-#AccountLoginPage form {
+#accountLoginPage form {
     padding-right: 8.5rem;
     padding-left: 8.5rem;
+}
+#forgetPwdPage form {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 @media (max-width: 768px) {
   .navbar {
     display: none !important;
   }
-  #MemberInfoPage form {
+  #memberInfoPage form {
     padding-right: 0.5rem;
     padding-left: 0.5rem;
   }
-  #AccountLoginPage form {
+  #accountLoginPage form {
     padding-right: 4rem;
     padding-left: 4rem;
   }
