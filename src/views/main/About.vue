@@ -5,26 +5,26 @@
       :text="
         'Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline. Quickly maximize timely deliverables for real-time schemas. <br/><br/> Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed the start-up mentality to derive convergence.'
       "
-      :title="'About us'"
+      :title="'關於我們'"
     ></jumbotron>
 
-    <div class="container about-logo-message">
+    <!-- <div class="container about-logo-message">
       <logo-with-message
         :message="
           'Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service. Objectively innovate empowered manufactured products whereas parallel platforms.'
         "
       ></logo-with-message>
-    </div>
+    </div> -->
 
     <div class="container about-features">
       <SectionFeatures />
     </div>
 
-    <div class="container d-flex about-team justify-content-center">
+    <!-- <div class="container d-flex about-team justify-content-center">
       <SectionOurTeam />
-    </div>
+    </div> -->
 
-    <div class="fluid-container about-testimonial">
+    <!-- <div class="fluid-container about-testimonial">
       <div class="container p-0">
         <div class="row d-flex justify-content-between">
 
@@ -88,7 +88,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </layout-default>
 </template>
 

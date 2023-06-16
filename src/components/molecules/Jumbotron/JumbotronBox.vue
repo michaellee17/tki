@@ -10,14 +10,14 @@
         ></div>
       </div>
 
-        <div>
+        <!-- <div>
           <ButtonFilled
           class=" Minicart_button mt-3 "
           :text="'Read More'"
           :hasRoundedCorners="true"
           :location="buttonLocation"
         />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

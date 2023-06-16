@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="modall d-flex align-items-center justify-content-center">
     <div class="container p-0 modal-newsletter bg-white position-relative">
       <div class="row d-flex flex-row">
@@ -154,4 +154,4 @@ export default {
     text-align: center !important;
   }
 }
-</style>
+</style> -->
