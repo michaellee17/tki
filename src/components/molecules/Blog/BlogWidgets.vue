@@ -1,13 +1,13 @@
 <template>
-  <div class="space">
+  <!-- <div class="space">
     <BasicInputSearch class="search-blogs" placeholder="Search" />
-  </div>
+  </div> -->
   <div class="space">
-    <FilterTitle class="mb-2 fs-4 w-100" title="Recent Posts" />
+    <FilterTitle class="mb-2 fs-4 w-100" title="最新公告" />
     <FilterListTags class="list p-0 flex-column" :items="latestBlogs" />
   </div>
-  <div class="space">
-    <FilterTitle class="mb-2 fs-4 w-100" title="Categories" />
+  <!-- <div class="space">
+    <FilterTitle class="mb-2 fs-4 w-100" title="分類" />
     <FilterListTags
       class="list p-0 flex-column"
       :items="[
@@ -18,7 +18,7 @@
     />
   </div>
   <div class="space">
-    <FilterTitle class="mb-2 fs-4 w-100" title="Post Tags" />
+    <FilterTitle class="mb-2 fs-4 w-100" title="標籤" />
     <FilterListTags
       class="list d-flex flex-row"
       :items="[
@@ -28,9 +28,9 @@
         { name: 'Laptop', location: '/blog-list/' },
       ]"
     />
-  </div>
-  <div class=" ">
-    <FilterTitle class="mb-2 fs-4 w-100" title="Archives" />
+  </div> -->
+  <!-- <div class=" ">
+    <FilterTitle class="mb-2 fs-4 w-100" title="發布日期" />
     <FilterListTags
       class="list p-0 flex-column"
       :items="[
@@ -43,7 +43,7 @@
         { name: 'January 2021', location: '/blog-list/' },
       ]"
     />
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -65,7 +65,7 @@ export default {
   computed: {
     latestBlogs() {
       let blogs = [];
-      this.blogs.slice(0, 5).map((object) => {
+      this.blogs.slice(0, 10).map((object) => {
         blogs.push({
           name: object.title,
           location: this.$buildBlogURL(object.title, object.id),

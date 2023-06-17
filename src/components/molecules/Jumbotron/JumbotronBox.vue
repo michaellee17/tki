@@ -2,13 +2,15 @@
   <div class="about-jumbotron p-5">
     <div class="container d-flex justify-content-end">
       <div class="about-container bg-light p-4 d-flex flex-column w-50 justify-content-end">
-      <div class="about-inner-container">
-        <h1 class="about-us-title text-uppercase fw-bold">{{ title }}</h1>
-        <div
-          class="fw-light text-secondary fs-6 text-container"
-          v-html="text"
-        ></div>
-      </div>
+        <div class="about-inner-container">
+          <h1 class="about-us-title text-uppercase fw-bold">
+            {{ title }}
+          </h1>
+          <div
+            class="fw-light text-secondary fs-6 text-container"
+            v-html="text"
+          />
+        </div>
 
         <!-- <div>
           <ButtonFilled
@@ -48,7 +50,7 @@ export default {
 .about-jumbotron {
   padding: 130px 0px !important;
   width: 100%;
-  background-image: url("../../../assets/images/misc/about-business-pic.jpg");
+  background-image: url("../../../assets/images/misc/about-bg.avif");
   background-size: cover;
   background-position: center;
 }

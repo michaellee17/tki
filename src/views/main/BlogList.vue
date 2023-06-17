@@ -50,11 +50,11 @@ import BlogWidgets from "../../components/molecules/Blog/BlogWidgets.vue";
 import { blogs } from "../../data/blogs.json";
 export default {
   created() {
-    document.title = "Blogs - iBid";
+    document.title = "平台公告 - T-KI";
   },
   mounted() {
     this.$store.commit("setLocation", [
-      { title: "Blog List", location: "/blog-list" },
+      { title: "平台公告", location: "/blog-list" },
     ]);
   },
   components: {

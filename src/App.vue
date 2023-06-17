@@ -14,37 +14,10 @@
 
 <script>
 import colors from "./views/color_schemes.json";
-import QuickView from "./components/molecules/Modal/QuickView.vue"
+// import QuickView from "./components/molecules/Modal/QuickView.vue"
 // import Modal from "./components/molecules/Modal/NewsLetterPopup.vue"
 import {products} from "./data/auctions.json"
 export default {
-  components: {QuickView},
-  created() {
-    document.addEventListener('keydown', e => {
-        let key = e.key;
-        if (key && 'Escape' === key) {
-            this.$store.commit('forceCloseModal')
-        }
-    }, false);
-
-    if(document.cookie.indexOf('modal=true') === -1) {
-      setTimeout(function() {
-        this.$store.commit('toggleModal', 'newsletter');
-      }.bind(this),3000)
-    }
-
-  },
-  watch: {
-    "$store.state.app.currentActiveModal": function() {
-      let body = document.getElementsByTagName("BODY")[0];
-      let modalsState = this.$store.state.app.currentActiveModal;
-      if (modalsState !== "") {
-        body.style.overflow = "hidden";
-      } else {
-        body.style.overflow = "auto";
-      }
-    },
-  },
   data() {
     return {
       colors,
@@ -71,6 +44,33 @@ export default {
           return prod.id == this.$store.state.app.currentActiveModal.split('-')[1]
       })
     }
+  },
+  // watch: {
+  //   "$store.state.app.currentActiveModal": function() {
+  //     let body = document.getElementsByTagName("BODY")[0];
+  //     let modalsState = this.$store.state.app.currentActiveModal;
+  //     if (modalsState !== "") {
+  //       body.style.overflow = "hidden";
+  //     } else {
+  //       body.style.overflow = "auto";
+  //     }
+  //   },
+  // },
+  // components: {QuickView},
+  created() {
+    document.addEventListener('keydown', e => {
+        let key = e.key;
+        if (key && 'Escape' === key) {
+            this.$store.commit('forceCloseModal')
+        }
+    }, false);
+
+    if(document.cookie.indexOf('modal=true') === -1) {
+      setTimeout(function() {
+        this.$store.commit('toggleModal', 'newsletter');
+      }.bind(this),3000)
+    }
+
   },
 };
 </script>

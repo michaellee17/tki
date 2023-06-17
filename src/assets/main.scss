@@ -4,7 +4,7 @@
 //   background-color: var(--primary-color);
 // }
 body {
-  --popper-theme-background-color: #5e5553 !important;
+  // --popper-theme-background-color: #5e5553 !important;
   --primary-color: #f5742e;
   --primary-light-color: #f5742e80;
   --secondary-color: #0000008C;
@@ -73,12 +73,12 @@ html {
   list-style-type: none;
 }
 
-ul li,
-ol li {
-  color: #8b8b8a;
-  font-size: 14px;
-  font-weight: 400;
-}
+// ul li,
+// ol li {
+//   color: #8b8b8a;
+//   font-size: 14px;
+//   font-weight: 400;
+// }
 .navbar .mobile_only_icon_group {
   display: none;
   float: right;

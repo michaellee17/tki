@@ -95,6 +95,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Contact.vue')
   },
+  {
+    path: '/faq',
+    name: 'FAQ',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/FAQ.vue')
+  },
   { path: '/404',     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/NotFound.vue')},  
   { path: '/:catchAll(.*)', redirect: '/404' },  
 ]

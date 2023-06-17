@@ -3,55 +3,60 @@
     <div class="container">
       <div class="blog-breadcrumb border-bottom">
         <Breadcrumb />
-        <h1 class="blog-title mt-2">{{ getBlog.title }}</h1>
+        <h1 class="blog-title mt-2">
+          {{ getBlog.title }}
+        </h1>
       </div>
       <div class="row row-blog">
         <div class="col-sm-12 col-lg-8  blog-post-list">
-          <blog-content v-bind="getBlog"></blog-content>
-          <div class="blog-tags" v-if="getBlog.tags">
+          <blog-content v-bind="getBlog" />
+          <!-- <div
+            v-if="getBlog.tags"
+            class="blog-tags"
+          >
             <BlogTags :items="getBlog.tags" />
-          </div>
-          <div class="blog-comment">
+          </div> -->
+          <!-- <div class="blog-comment">
             <blog-comment-section>
               <blog-comment
-                :isApproved="true"
+                :is-approved="true"
                 :date="'7/8/2021'"
-                :canReply="true"
-                :authorAvatar="
+                :can-reply="true"
+                :author-avatar="
                   'images/blogpost/blogpost6.jpg'
                 "
-                :authorName="'Jack Daniels'"
+                :author-name="'Jack Daniels'"
                 :content="
                   'In publishing, art, and communication, content is the information and experiences that are directed toward an end-user or audience.[1] Content is \'something that is to be expressed through some medium, as speech, writing or any of various arts\'.'
                 "
-              ></blog-comment>
+              />
               <blog-comment
                 class="mt-3"
-                :isApproved="false"
+                :is-approved="false"
                 :date="'7/8/2021'"
-                :authorAvatar="
+                :author-avatar="
                   'images/blogpost/blogpost1.jpg'
                 "
-                :authorName="'George Indianul'"
+                :author-name="'George Indianul'"
                 :content="
                   'In publishing, art, and communication, content is the information and experiences that are directed toward an end-user or audience.[1] Content is \'something that is to be expressed through some medium, as speech, writing or any of various arts\'.'
                 "
-              ></blog-comment>
+              />
               <blog-comment
                 class="my-3"
-                :isApproved="false"
+                :is-approved="false"
                 :date="'7/8/2021'"
-                :canReply="false"
-                :authorAvatar="
+                :can-reply="false"
+                :author-avatar="
                   'images/blogpost/blogpost3.jpg'
                 "
-                :authorName="'Madalin Racheta'"
+                :author-name="'Madalin Racheta'"
                 :content="
                   'In publishing, art, and communication, content is the information and experiences that are directed toward an end-user or audience.[1] Content is \'something that is to be expressed through some medium, as speech, writing or any of various arts\'.'
                 "
-              ></blog-comment>
+              />
             </blog-comment-section>
-          </div>
+          </div> -->
         </div>
         <div class="col-sm-12 col-lg-4 blog-list ps-md-5 ">
           <BlogWidgets />
@@ -73,18 +78,6 @@ import BlogWidgets from "../../components/molecules/Blog/BlogWidgets.vue";
 import { blogs } from "../../data/blogs.json";
 
 export default {
-  created() {
-    document.title = this.getBlog.title + " - iBid";
-  },
-  mounted() {
-    this.$store.commit("setLocation", [
-      { title: "Blog List", location: "/blog-list" },
-      {
-        title: this.getBlog.title,
-        location: this.$buildBlogURL(this.getBlog.title, this.getBlog.id),
-      },
-    ]);
-  },
   components: {
     LayoutDefault,
     BlogCommentSection,
@@ -106,6 +99,18 @@ export default {
           this.$convertToSlug(blog.title, blog.id) == this.$route.params.blogID
       );
     },
+  },
+  created() {
+    document.title = this.getBlog.title + " - T-KI";
+  },
+  mounted() {
+    this.$store.commit("setLocation", [
+      { title: "平台公告", location: "/blog-list" },
+      {
+        title: this.getBlog.title,
+        location: this.$buildBlogURL(this.getBlog.title, this.getBlog.id),
+      },
+    ]);
   },
 };
 </script>

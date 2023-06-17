@@ -1,6 +1,5 @@
 <template>
   <layout-default>
-    
     <div class="container contact-container">
       <SectionContact2 />
     </div>
@@ -14,29 +13,29 @@
             <section-testimonials
               text="Yahoo Inc. is an American multinational Internet corporation headquartered in Sunnyvale, California.
           It is globally known for its Web portal, search engine Yahoo Search."
-              imageLocation="images/testimonials/member-team1.jpg"
+              image-location="images/testimonials/member-team1.jpg"
               name="Martin Culich"
               position="Digita Marketed"
             />
           </div>
-        <div class="col-md-6 contact-features ms-2">
+          <div class="col-md-6 contact-features ms-2">
             <div class="row section-features d-flex flex-row float-end">
               <div class="col-6 col-md-6 col-sm-4 d-flex first-column flex-column ">
                 <Characteristic
                   class="features"
-                  :imageSrc="'images/features/deliveries.png'"
+                  :image-src="'images/features/deliveries.png'"
                   :title="'8523'"
                   :subtitle="'Auctions'"
                 />
                 <Characteristic
                   class="features"
-                  :imageSrc="'images/features/deliveries.png'"
+                  :image-src="'images/features/deliveries.png'"
                   :title="'8523'"
                   :subtitle="'Seller Account'"
                 />
                 <Characteristic
                   class="features"
-                  :imageSrc="'images/features/money.png'"
+                  :image-src="'images/features/money.png'"
                   :title="'458'"
                   :subtitle="'Users Helped'"
                 />
@@ -44,19 +43,19 @@
               <div class="col-6 col-md-6 col-sm-4 d-flex second-column flex-column ">
                 <Characteristic
                   class="features"
-                  :imageSrc="'images/features/deliveries.png'"
+                  :image-src="'images/features/deliveries.png'"
                   :title="'116'"
                   :subtitle="'Employees'"
                 />
                 <Characteristic
                   class="features"
-                  :imageSrc="'images/features/deliveries.png'"
+                  :image-src="'images/features/deliveries.png'"
                   :title="'4523'"
                   :subtitle="'Total Accounts'"
                 />
                 <Characteristic
                   class="features"
-                  :imageSrc="'images/features/money.png'"
+                  :image-src="'images/features/money.png'"
                   :title="'458'"
                   :subtitle="'Problems Solved'"
                 />
@@ -77,15 +76,15 @@ import Characteristic from "../../components/atoms/Characteristic/Characteristic
 import SectionTestimonials from "../../components/organisms/Section/SectionTestimonials.vue";
 
 export default {
-  beforeCreate() {
-    document.title = "Contact Us - iBid";
-  },
   components: {
     LayoutDefault,
     SectionContact2,
     SectionOurTeam,
     Characteristic,
     SectionTestimonials,
+  },
+  beforeCreate() {
+    document.title = "常見問題 - T-KI";
   },
 };
 </script>

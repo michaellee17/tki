@@ -1,32 +1,28 @@
 <template>
   <div
     v-if="items !== undefined"
-    class="submenu-vertical position-absolute mx-auto"
-  >
+    class="submenu-vertical position-absolute mx-auto">
     <div class="container">
       <div
-        class="row"
         v-for="rowIdx in Math.ceil(items.length / colPerRow)"
         :key="rowIdx"
-      >
+        class="row">
         <div
-          class="d-flex flex-column mb-3 col-wrapper"
           v-for="item in items.slice(
             colPerRow * (rowIdx - 1),
             colPerRow * rowIdx
           )"
-          :class="rowClass(rowIdx)"
           :key="item"
-        >
-          <h6 class="fw-bold text-uppercase text-dark">{{ item.name }}</h6>
-          <span class="item-group" v-for="link in item.links" :key="link">
+          class="d-flex flex-column mb-3 col-wrapper"
+          :class="rowClass(rowIdx)">
+          <!-- <h6 class="fw-bold text-uppercase text-dark">{{ item.name }}</h6> -->
+          <span v-for="link in item.links" :key="link" class="item-group">
             <font-awesome-icon
               v-if="link.icon"
               class="me-2"
-              :icon="['fas', link.icon]"
-            />
+              :icon="['fas', link.icon]" />
 
-            <link-wrapper :removeDecorations="true" :location="link.location" :external="link.external" :target="link.target">{{
+            <link-wrapper :remove-decorations="true" :location="link.location" :external="link.external" :target="link.target">{{
               link.name
             }}</link-wrapper>
           </span>
@@ -54,16 +50,16 @@ export default {
       default: 3,
     },
   },
+  computed: {
+    colBootstrapConverter() {
+      return "col-" + 12 / this.colPerRow;
+    },
+  },
   methods: {
     rowClass(rowIdx) {
       return rowIdx % this.colPerRow === 0
         ? "mt-4"
         : "" + this.colBootstrapConverter;
-    },
-  },
-  computed: {
-    colBootstrapConverter() {
-      return "col-" + 12 / this.colPerRow;
     },
   },
 };
@@ -72,12 +68,12 @@ export default {
 <style scoped="scoped">
 .submenu-vertical {
   box-shadow: 0 0 25px rgb(0 0 0 / 10%);
-  width: max-content;
+  /* width: max-content; */
   left: 100%;
   top: 0;
   z-index: 100;
   background: white;
-  padding: 15px 30px !important;
+  padding: 15px !important;
 }
 .flex-column {
   margin: 20px 0 !important;
@@ -87,7 +83,7 @@ export default {
   width: 13px;
 }
 .col-wrapper {
-  min-width: 150px;
+  min-width: 100px;
 }
 .item-group a {
   padding: 12px 0;

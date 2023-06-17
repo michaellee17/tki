@@ -1,6 +1,6 @@
 <template>
   <div class="author-details d-flex flex-row mb-4 mt-2 flex-wrap">
-    <link-wrapper v-bind="authorLinkArgs" class="author text-decoration-none">
+    <!-- <link-wrapper v-bind="authorLinkArgs" class="author text-decoration-none">
       <font-awesome-icon class="icon text-secondary" :icon="['far', 'user']" />
       <span class=" text-secondary fw-light ms-2 me-4">{{ authorName }}</span>
     </link-wrapper>
@@ -11,16 +11,15 @@
         :icon="['far', 'bookmark']"
       />
       <span class="text-secondary fw-light ms-2 me-4">{{ category }}</span>
-    </link-wrapper>
+    </link-wrapper> -->
 
     <link-wrapper v-bind="dateLinkArgs" class="date text-decoration-none">
       <font-awesome-icon
         class="icon text-secondary"
         :icon="['far', 'calendar']"
       />
-      <span class="text-secondary fw-light ms-2 me-4">{{
-        $formatDate(date)
-      }}</span>
+      <!-- <span class="text-secondary fw-light ms-2 me-4">{{ $formatDate(date) }}</span> -->
+      <span class="text-secondary fw-light ms-2 me-4">{{ date }}</span>
     </link-wrapper>
   </div>
 </template>

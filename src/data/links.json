@@ -7,7 +7,7 @@
       "componentProps": {
         "items": [
           {
-             "name": "",
+            "name": "",
             "links": [
               { "location": "https://ibid.modeltheme.com/vuejs/", "name": "演唱會", "external": true, "target": "blank" },
               { "location": "https://ibid.modeltheme.com/vuejs/automotive/", "name": "音樂祭", "external": true, "target": "blank" },
@@ -20,17 +20,15 @@
     },
     {
       "location": "/blog-list/",
-      "name": "平台公告",
-      "component": "SubmenuVerticalA"
+      "name": "平台公告"
+    },
+    {
+      "location": "/faq",
+      "name": "常見問題"
     },
     {
       "location": "/about",
-      "name": "關於我們",
-      "component": "SubmenuVerticalB"
-    },
-    {
-      "location": "/contact",
-      "name": "FAQ"
+      "name": "關於我們"
     }
   ]
 }
