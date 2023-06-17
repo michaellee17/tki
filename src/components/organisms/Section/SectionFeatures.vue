@@ -1,32 +1,26 @@
 <template>
-<div class="container features-container ">
-  <div class="row">
-    <div class="col-md-3 col-6 feature-col  ">
-    <Feature
-      :imageSrc="'images/features/deliveries.png'"
-      :title="'Fastest Delivery'"
-      :subtitle="'Efficiently unleash media'"
-    /></div>
-    <div class="col-md-3 col-6 feature-col ">
-    <Feature
-      :imageSrc="'images/features/money.png'"
-      :title="'Instant Buying'"
-      :subtitle="'Podcasting operational'"
-    /></div>
-    <div class="col-md-3 col-6 feature-col ">
-    <Feature
-      :imageSrc="'images/features/support.png'"
-      :title="'Call Center'"
-      :subtitle="'Completely synergize'"
-    /></div>
-    <div class="col-md-3 col-6 feature-col ">
-    <Feature
-      :imageSrc="'images/features/tracking.png'"
-      :title="'Order tracking'"
-      :subtitle="'Objectively empowered'"
-    /></div>
+  <div class="container features-container ">
+    <div class="row justify-content-around">
+      <div class="col-md-3 col-6 feature-col  ">
+        <Feature
+          :image-src="'images/features/notification.png'"
+          :title="'即時通知'"
+          :subtitle="'手機推播通知功能，讓您無時無刻都能收到最新消息！'" />
+      </div>
+      <div class="col-md-3 col-6 feature-col ">
+        <Feature
+          :image-src="'images/features/ticket.png'"
+          :title="'活動多樣'"
+          :subtitle="'演唱會、展演、歌劇、音樂祭，各式各樣活動任您挑選！'" />
+      </div>
+      <div class="col-md-3 col-6 feature-col ">
+        <Feature
+          :image-src="'images/features/qr-code.png'"
+          :title="'防偽數位票'"
+          :subtitle="'防翻拍、防螢幕截圖的數位票，省去麻煩、驗票快速！'" />
+      </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script>

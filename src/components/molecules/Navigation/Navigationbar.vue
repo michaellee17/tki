@@ -1,7 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-sm p-0">
     <div class="container justify-content-start">
-      
       <!-- <div class="nav-item dropdown list-unstyled d-none d-lg-block">
         <a
           class="position-relative nav-link d-flex 
@@ -23,62 +22,65 @@
       <div class="navbar w-100 p-0" :class="{'show' :isActiveTablet}">
         <ul class="navbar-nav me-auto mb-2 ms-0 ms-lg-4 mb-lg-0 h-100 w-100">
           <li
-            class="nav-item position-relative h-100 d-flex align-items-center"
             v-for="(link, i) in links"
             :key="link"
+            class="nav-item position-relative h-100 d-flex align-items-center"
             @mouseover="hoveredItem = i"
-            @mouseleave="hoveredItem = -1"
-          >
+            @mouseleave="hoveredItem = -1">
             <LinkWrapper
               class="nav-link text-white fs-6 mx-2"
               :location="link.location"
               :name="link.name"
               :external="link.external"
-              :target="link.target"
-            />
+              :target="link.target" />
             <template
-              v-if="link.component && link.componentProps !== undefined"
-            >
+              v-if="link.component && link.componentProps !== undefined">
               <transition name="showMenu">
                 <component
-                  v-show="hoveredItem === i"
                   :is="link.component"
+                  v-show="hoveredItem === i"
                   v-bind="link.componentProps"
-                  class="menu-hover"
-                ></component>
+                  class="menu-hover" />
               </transition>
             </template>
           </li>
 
           <li
             class="nav-item position-relative h-100 d-flex align-items-center ms-auto"
-          >
-            <LinkWrapper
-              class="nav-link text-white fs-6 px-0"
-              @click="showLoginModal"
-              :name="'登入'"
-            />
+            @mouseover="hoveredItem = 1"
+            @mouseleave="hoveredItem = -1">
+            <!-- 尚未登入 -->
             <!-- <LinkWrapper
-              class="nav-link text-white fs-6 px-0"
-              location="/my-account"
+              class="nav-link text-white fs-6 px-0" 
               :name="'登入'"
-            /> -->
+              @click="showLoginModal" /> -->
+            <LinkWrapper
+              class="nav-link text-white fs-6 px-0" 
+              :name="'登入'" />
+            <transition name="showMenu">
+              <SubmenuVerticalA
+                v-show="hoveredItem === 1"
+                :items="loggedInItems"
+                class="menu-hover" />
+            </transition>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <!-- loginModal -->
-  <div class="modal fade" ref="loginModal" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div
+    id="loginModal" ref="loginModal" class="modal fade" tabindex="-1"
+    aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
         </div>
         <div id="loginBoard" ref="loginBoard">
           <div class="modal-body text-center text-second pb-5">
             <div class="d-flex justify-content-center gap-2 mb-4">
-              <h1 class="modal-title fs-2" id="loginModalLabel">登入</h1>
+              <h1 id="loginModalLabel" class="modal-title fs-2">登入</h1>
               <p class="fs-2 fw-bold text-primary">T-KI</p>
             </div>
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
@@ -117,9 +119,9 @@
                 <p>本使用條款（以下簡稱「本條款」）是就LINECorporation（以下簡稱「本公司」）所提供所有LINE相關產品與服務（以下簡稱「本服務」）的使用條件，由使用本服務的用戶（以下簡稱「用戶」）與本公司間訂定的條款。1. 定義本使用條款（以下簡稱「本條款」）是就LINECorporation（以下簡稱「本公司」）所提供所有LINE相關產品與服務（以下簡稱「本服務」）的使用條件，由使用本服務的用戶（以下簡稱「用戶」）與本公司間訂定的條款。1. 定義本使用條款（以下簡稱「本條款」）是就LINECorporation（以下簡稱「本公司」）所提供所有LINE相關產品與服務（以下簡稱「本服務」）的使用條件，由使用本服務的用戶（以下簡稱「用戶」）與本公司間訂定的條款。1. 定義本使用條款（以下簡稱「本條款」）是就LINECorporation（以下簡稱「本公司」）所提供所有LINE相關產品與服務（以下簡稱「本服務」）的使用條件，由使用本服務的用戶（以下簡稱「用戶」）與本公司間訂定的條款。1. 定義</p>
               </div>
               <div class="d-flex justify-content-start align-items-center gap-2 mb-4">
-                <input type="checkbox" id="agreenTermsBox" ref="agreenTermsBox">
+                <input id="agreenTermsBox" ref="agreenTermsBox" type="checkbox">
                 <label for="agreenTermsBox">我已同意服務條款</label>
-                <span class="text-danger d-none" ref="agreenTermsAlert">請先同意服務條款</span>
+                <span ref="agreenTermsAlert" class="text-danger d-none">請先同意服務條款</span>
               </div>
               <button type="button" class="btn btn-primary link-light w-100 py-2" @click="submitTerms">下一步</button>
             </div>
@@ -131,46 +133,56 @@
             <div class="text-center mb-5">
               <h1 class="modal-title fs-2 text-primary">會員資料</h1>
             </div>
-              <form>
-                <div class="mb-3 row justify-content-center align-items-center">
-                  <label for="name" class="col-3 form-label  text-nowrap">會員姓名</label>
-                  <div class="col-9">
-                    <input type="text" class="form-control" id="name" placeholder="輸入姓名" aria-describedby="name" required>
-                  </div>
+            <form>
+              <div class="mb-3 row justify-content-center align-items-center">
+                <label for="name" class="col-3 form-label  text-nowrap">會員姓名</label>
+                <div class="col-9">
+                  <input
+                    id="name" type="text" class="form-control" placeholder="輸入姓名"
+                    aria-describedby="name" required>
                 </div>
-                <div class="mb-2 row justify-content-center align-items-center">
-                  <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
-                  <div class="col-9">
-                    <input type="tel" class="form-control" id="tel" placeholder="0912345678" aria-describedby="tel" minlength="10" required>
-                  </div>
+              </div>
+              <div class="mb-2 row justify-content-center align-items-center">
+                <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
+                <div class="col-9">
+                  <input
+                    id="tel" type="tel" class="form-control" placeholder="0912345678"
+                    aria-describedby="tel" minlength="10" required>
                 </div>
-                <div class="mb-2 row justify-content-center align-items-center">
-                  <p class="col-3"></p>
-                  <div class="col-9">
-                    <button type="button" class="btn btn-info link-light w-100">發送驗證碼</button>
-                  </div>
+              </div>
+              <div class="mb-2 row justify-content-center align-items-center">
+                <p class="col-3" />
+                <div class="col-9">
+                  <button type="button" class="btn btn-info link-light w-100">發送驗證碼</button>
                 </div>
-                <div class="mb-3 row justify-content-center align-items-center">
-                  <label for="code" class="col-3 form-label"></label>
-                  <div class="col-9 d-flex align-items-center gap-2">
-                    <input type="text" class="form-control" id="code" placeholder="輸入驗證碼" aria-describedby="code" required>
-                    <button type="button" class="btn btn-info link-light w-50">驗證</button>
-                  </div>
+              </div>
+              <div class="mb-3 row justify-content-center align-items-center">
+                <label for="code" class="col-3 form-label" />
+                <div class="col-9 d-flex align-items-center gap-2">
+                  <input
+                    id="code" type="text" class="form-control" placeholder="輸入驗證碼"
+                    aria-describedby="code" required>
+                  <button type="button" class="btn btn-info link-light w-50">驗證</button>
                 </div>
-                <div class="mb-3 row justify-content-center align-items-center">
-                  <label for="password" class="col-3 form-label text-nowrap">密碼</label>
-                  <div class="col-9">
-                    <input type="password" class="form-control" id="password" placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
-                  </div>
+              </div>
+              <div class="mb-3 row justify-content-center align-items-center">
+                <label for="password" class="col-3 form-label text-nowrap">密碼</label>
+                <div class="col-9">
+                  <input
+                    id="password" type="password" class="form-control" placeholder="需包含英數，至少8碼"
+                    aria-describedby="password" minlength="8" required>
                 </div>
-                <div class="mb-4 row justify-content-center align-items-center">
-                  <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
-                  <div class="col-9">
-                    <input type="password" class="form-control" id="passwordCmf" placeholder="再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
-                  </div>
+              </div>
+              <div class="mb-4 row justify-content-center align-items-center">
+                <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
+                <div class="col-9">
+                  <input
+                    id="passwordCmf" type="password" class="form-control" placeholder="再次輸入密碼"
+                    aria-describedby="passwordCmf" minlength="8" required>
                 </div>
-                  <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
-              </form>
+              </div>
+              <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
+            </form>
           </div>
         </div>
 
@@ -183,13 +195,17 @@
               <div class="mb-2 row justify-content-center align-items-center">
                 <label for="loginTel" class="col-3 form-label">帳號</label>
                 <div class="col-9">
-                  <input type="tel" class="form-control" id="loginTel" placeholder="請輸入手機號碼" aria-describedby="tel" minlength="10" required>
+                  <input
+                    id="loginTel" type="tel" class="form-control" placeholder="請輸入手機號碼"
+                    aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
               <div class="mb-4 row justify-content-center align-items-center">
                 <label for="loginPassword" class="col-3 form-label">密碼</label>
                 <div class="col-9">
-                  <input type="password" class="form-control" id="loginPassword" placeholder="請輸入密碼" aria-describedby="password" minlength="8" required>
+                  <input
+                    id="loginPassword" type="password" class="form-control" placeholder="請輸入密碼"
+                    aria-describedby="password" minlength="8" required>
                 </div>
               </div>
               <div class="text-end mb-2">
@@ -210,19 +226,23 @@
               <div class="mb-2 row justify-content-center align-items-center">
                 <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
-                  <input type="tel" class="form-control" id="forgetTel" placeholder="0912345678" aria-describedby="tel" minlength="10" required>
+                  <input
+                    id="forgetTel" type="tel" class="form-control" placeholder="0912345678"
+                    aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
               <div class="mb-2 row justify-content-center align-items-center">
-                <p class="col-3"></p>
+                <p class="col-3" />
                 <div class="col-9">
                   <button type="button" class="btn btn-info link-light w-100">發送驗證碼</button>
                 </div>
               </div>
               <div class="mb-5 row justify-content-center align-items-center">
-                <label for="forgetCode" class="col-3 form-label"></label>
+                <label for="forgetCode" class="col-3 form-label" />
                 <div class="col-9 d-flex align-items-center gap-2">
-                  <input type="text" class="form-control" id="forgetCode" placeholder="輸入驗證碼" aria-describedby="code" required>
+                  <input
+                    id="forgetCode" type="text" class="form-control" placeholder="輸入驗證碼"
+                    aria-describedby="code" required>
                   <button type="button" class="btn btn-info link-light w-50">驗證</button>
                 </div>
               </div>
@@ -230,46 +250,41 @@
               <div class="mb-3 row justify-content-center align-items-center">
                 <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
                 <div class="col-9">
-                  <input type="password" class="form-control" id="forgetPassword" placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
+                  <input
+                    id="forgetPassword" type="password" class="form-control" placeholder="需包含英數，至少8碼"
+                    aria-describedby="password" minlength="8" required>
                 </div>
               </div>
               <div class="mb-4 row justify-content-center align-items-center">
                 <label for="forgetPasswordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
                 <div class="col-9">
-                  <input type="password" class="form-control" id="orgetPasswordCmf" placeholder="再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
+                  <input
+                    id="orgetPasswordCmf" type="password" class="form-control" placeholder="再次輸入密碼"
+                    aria-describedby="passwordCmf" minlength="8" required>
                 </div>
               </div>
-                <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
+              <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
             </form>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import "bootstrap/dist/js/bootstrap";
-// import "bootstrap/dist/js/bootstrap.bundle";
-
 import Modal from "bootstrap/js/dist/modal";
 // import NavigationSubMenu from "./NavigationSubMenu.vue";
 import SubmenuVerticalA from "../../atoms/Menu/SubmenuVerticalA.vue";
-import SubmenuVerticalB from "../../atoms/Menu/SubmenuVerticalB.vue";
+// import SubmenuVerticalB from "../../atoms/Menu/SubmenuVerticalB.vue";
 import { links } from "../../../data/links.json";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
 
 export default {
-  mounted(){
-    this.loginModal = new Modal(this.$refs.loginModal);
-    this.initLoginBoard();
-    this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
-  },
   components: {
     // NavigationSubMenu,
     SubmenuVerticalA,
-    SubmenuVerticalB,
+    // SubmenuVerticalB,
     LinkWrapper,
   },
   data() {
@@ -278,7 +293,21 @@ export default {
       isActive: false,
       links,
       hoveredItem: -1,
+      loggedInItems : [
+          {
+            "links": [
+              { "location": "/", "name": "會員中心" },
+              { "location": "/", "name": "我的票券" },
+              { "location": "/", "name": "購票清單" }
+            ]
+          }
+        ]
     };
+  },
+  mounted(){
+    this.loginModal = new Modal(this.$refs.loginModal);
+    this.initLoginBoard();
+    this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
   },
   methods: {
     initLoginBoard() {

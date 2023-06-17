@@ -1,34 +1,51 @@
 <template>
-    <div class="position-fixed modall d-flex align-items-center justify-content-center">
-        <div class="bg-white row position-relative ">
-            <div class="close position-absolute" @click="$store.commit('forceCloseModal')">x</div>
-            <div class="col-md-6 d-flex align-items-center justify-content-center">
-                <img :src="$getFileSource(photos[0])" />
-            </div>
-            <div class="col-md-6 d-flex justify-content-center flex-column">
-                <h1 class="bolded">{{name}}</h1>
-                <p class="bolded mt-3 border-bottom pb-3 mb-5">
-                   <template v-if="didAuctionEnd">
-                        <template v-if="type === 'auction'">Current bid: </template> {{$formatPrice(currentBid)}}
-                   </template>
-                    <template v-else>
-                        Auction ended
-                   </template>
-                </p>
-                <div class="spacing">
-                    SKU: {{sku}}
-                </div>
-                <div class="product-bid-categories spacing d-flex">
-                    <span class="text-secondary">Categories: </span>
-                    <FilterListTags :comma="true" class="list-category d-flex ms-2 m-0 p-0" :items="categories" />
-                </div>
-                <div class="product-bid-tags negative-spacing d-flex">
-                    <span class="text-secondary">Tags: </span>
-                    <FilterListTags :comma="true" class="ms-2  list-tags d-flex m-0 p-0" :items="tags" />
-                </div>
-            </div>
+  <div class="position-fixed modall d-flex align-items-center justify-content-center">
+    <div class="bg-white row position-relative ">
+      <div
+        class="close position-absolute"
+        @click="$store.commit('forceCloseModal')"
+      >
+        x
+      </div>
+      <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <img :src="$getFileSource(photos[0])">
+      </div>
+      <div class="col-md-6 d-flex justify-content-center flex-column">
+        <h1 class="bolded">
+          {{ name }}
+        </h1>
+        <p class="bolded mt-3 border-bottom pb-3 mb-5">
+          <template v-if="didAuctionEnd">
+            <template v-if="type === 'auction'">
+              Current bid:
+            </template> {{ $formatPrice(currentBid) }}
+          </template>
+          <template v-else>
+            Auction ended
+          </template>
+        </p>
+        <div class="spacing">
+          SKU: {{ sku }}
         </div>
+        <div class="product-bid-categories spacing d-flex">
+          <span class="text-secondary">Categories: </span>
+          <FilterListTags
+            :comma="true"
+            class="list-category d-flex ms-2 m-0 p-0"
+            :items="categories"
+          />
+        </div>
+        <div class="product-bid-tags negative-spacing d-flex">
+          <span class="text-secondary">Tags: </span>
+          <FilterListTags
+            :comma="true"
+            class="ms-2  list-tags d-flex m-0 p-0"
+            :items="tags"
+          />
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

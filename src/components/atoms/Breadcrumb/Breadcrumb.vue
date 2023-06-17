@@ -2,7 +2,7 @@
   <div class="page-location">
     <!-- 15 min -->
     <link-wrapper :location="home" class="breadcrumb-text text-decoration-none">
-      <span class="breadcrumb-home">Home</span> <span class="breadcrumb-text mx-2"> / </span>
+      <span class="breadcrumb-home">首頁</span> <span class="breadcrumb-text mx-2"> / </span>
     </link-wrapper>
     <template v-for="(link, i) in $store.state.app.breadcrumb" :key="link">
       <link-wrapper :location="link.location" class="breadcrumb-text text-decoration-none">

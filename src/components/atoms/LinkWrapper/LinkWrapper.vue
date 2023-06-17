@@ -3,17 +3,12 @@
     :target="target"
     v-if="external"
     :class="{ removeDecorations }"
-    :href="location"
-  >
-    <slot>
-      {{ name }}
-    </slot>
+    :href="location">
+    <slot>{{ name }}</slot>
   </a>
 
   <router-link v-else :to="location" :class="{ removeDecorations }">
-    <slot>
-      {{ name }}
-    </slot>
+    <slot>{{ name }}</slot>
   </router-link>
 </template>
 

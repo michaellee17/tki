@@ -29,13 +29,13 @@ export default {
 </script>
 
 <style scoped="scoped">
-.feature {
+/* .feature {
   margin-right: 30px;
-}
+} */
 
 .feature img {
   height: 60px;
-  width: 50px;
+  width: 60px;
   margin-right: 20px;
 }
 .feature-text p{

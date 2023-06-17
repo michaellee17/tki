@@ -1,12 +1,11 @@
 <template>
   <layout-default>
     <jumbotron
-      :buttonLocation="'/contact'"
+      :button-location="'/'"
       :text="
-        'Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline. Quickly maximize timely deliverables for real-time schemas. <br/><br/> Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed the start-up mentality to derive convergence.'
+        'T-KI 致力於打造最專業、最順暢的購票平台，希望帶給使用者最棒的服務體驗。不再連不上售票網站；不再為了在機器前排隊數小時，不論在學校、公司、家裡、通勤中，只要在電腦前、手機旁，連著網路，就能在開賣的第一時間，上來買票！'
       "
-      :title="'關於我們'"
-    ></jumbotron>
+      :title="'關於我們'" />
 
     <!-- <div class="container about-logo-message">
       <logo-with-message
@@ -16,7 +15,7 @@
       ></logo-with-message>
     </div> -->
 
-    <div class="container about-features">
+    <div class="container about-features mb-5">
       <SectionFeatures />
     </div>
 
@@ -103,9 +102,6 @@ import SectionOurTeam from "../../components/organisms/Section/SectionOurTeam.vu
 import SectionTestimonials from "../../components/organisms/Section/SectionTestimonials.vue";
 
 export default {
-  created() {
-    document.title = "關於我們 - T-KI";
-  },
   components: {
     LayoutDefault,
     Jumbotron,
@@ -115,6 +111,9 @@ export default {
     SectionOurTeam,
     SectionTestimonials,
   },
+  created() {
+    document.title = "關於我們 - T-KI";
+  },
 };
 </script>
 <style scoped="scoped">
@@ -123,7 +122,7 @@ export default {
 }
 .about-features,
 .about-team {
-  margin-bottom: 90px;
+  margin: 90px auto 0;
 }
 .features {
   margin-bottom: 10px;

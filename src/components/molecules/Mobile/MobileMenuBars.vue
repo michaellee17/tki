@@ -3,20 +3,18 @@
     <div class="categories d-flex align-items-center">
       <linked-wrapper
         class="mt-search-icon"
-        @click.prevent="expanded = !expanded"
-      >
+        @click.prevent="expanded = !expanded">
         <font-awesome-icon class="text-dark" :icon="['fas', 'bars']" />
         <span class="text-uppercase fw-bold ms-2">categories</span>
       </linked-wrapper>
     </div>
     <transition name="showMenu">
-      <ul class="categories-list list-unstyled ps-2" v-if="expanded">
+      <ul v-if="expanded" class="categories-list list-unstyled ps-2">
         <li
-          class="d-flex align-items-center border-bottom p-2"
           v-for="category in categories"
           :key="category"
-        >
-          <link-wrapper :location="category.location" :removeDecorations="true">
+          class="d-flex align-items-center border-bottom p-2">
+          <link-wrapper :location="category.location" :remove-decorations="true">
             <font-awesome-icon :icon="['fas', category.icon]" />
             <span class="ms-2">{{ category.name }}</span>
           </link-wrapper>
@@ -25,41 +23,36 @@
     </transition>
     <ul class="categories-list list-unstyled">
       <li
-        class="categories-list border-bottom p-2"
         v-for="(link, i) in links"
         :key="link"
-      >
+        class="categories-list border-bottom p-2">
         <span class="d-flex justify-content-between">
-          <link-wrapper :location="link.location" :removeDecorations="true">
+          <link-wrapper :location="link.location" :remove-decorations="true">
             {{ link.name }}
           </link-wrapper>
           <font-awesome-icon
+            v-if="link.component === 'SubmenuVerticalA'"
+            :icon="['fas', 'angle-down']"
             @click.prevent="
               currentActiveDropdownMenu === i
                 ? (currentActiveDropdownMenu = -1)
                 : (currentActiveDropdownMenu = i)
-            "
-            v-if="link.component === 'SubmenuVerticalA'"
-            :icon="['fas', 'angle-down']"
-          />
+            " />
         </span>
 
         <transition name="showMenu">
           <template v-if="i === currentActiveDropdownMenu">
             <ul
-              class="categories-list list-unstyled"
               v-if="link.component === 'SubmenuVerticalA'"
-            >
+              class="categories-list list-unstyled">
               <template v-for="item in link.componentProps.items" :key="item">
                 <li
                   v-for="itemLink in item.links"
                   :key="itemLink"
-                  class="categories-list d-flex justify-content-between align-items-center p-2"
-                >
+                  class="categories-list d-flex justify-content-between align-items-center p-2">
                   <link-wrapper
                     :location="itemLink.location"
-                    :removeDecorations="true"
-                  >
+                    :remove-decorations="true">
                     <span>{{ itemLink.name }}</span>
                   </link-wrapper>
                 </li>
@@ -99,7 +92,7 @@ export default {
 }
 .categories-list span {
   font-size: 13px;
-  color: #8b8b8a;
+  color: var(--pale-color);
   font-weight: 500 !important;
 }
 .categories {

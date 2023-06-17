@@ -1,33 +1,43 @@
 <template>
   <div class="blog-card">
-    <div class="blog-image" v-if="thumbNail !== ''">
+    <div
+      v-if="thumbNail !== ''"
+      class="blog-image"
+    >
       <link-wrapper :location="getBlogLocation">
-        <img :src="$getFileSource(thumbNail)"  :alt="title"  />
+        <img
+          :src="$getFileSource(thumbNail)"
+          :alt="title"
+        >
       </link-wrapper>
     </div>
     <div class="blog-content">
-      <link-wrapper :location="getBlogLocation" :removeDecorations="true" >
+      <link-wrapper
+        :location="getBlogLocation"
+        :remove-decorations="true"
+      >
         <div class="title">
           <font-awesome-icon
             v-if="pinned"
             class="fa fa-2x icon"
             :icon="['fas', 'star']"
           />
-          <span class="blog-card-title fs-3 fw-bold text-dark ">{{
-            title
-          }}</span>
+          <span class="blog-card-title fs-3 fw-bold text-dark ">{{ title }}</span>
         </div>
       </link-wrapper>
-      <AuthorDetails class="author-details" v-bind="authorDetails" />
+      <AuthorDetails
+        class="author-details"
+        v-bind="authorDetails"
+      />
       <div class="preview-text fs-6 text-secondary">{{ shortDesc }}</div>
       <div class="read-more  d-flex justify-content-start ">
-          <ButtonFilled
-            class="blog-btn fw-bold"
-            :hasRoundedCorners="true"
-            :text="'Read more'"
+        <ButtonFilled
+          class="blog-btn fw-bold"
+          :has-rounded-corners="true"
+          :text="'查看更多'"
            
-            :location="getBlogLocation"
-          />
+          :location="getBlogLocation"
+        />
       </div>
     </div>
   </div>
@@ -55,7 +65,7 @@ export default {
     thumbNail: {
       type: String,
     },
-    shortDesc: {
+    content: {
       type: String,
       required: true,
     },
@@ -71,6 +81,9 @@ export default {
     getBlogLocation() {
       return this.$buildBlogURL(this.title,this.id);
     },
+    shortDesc() {
+      return this.content.replace(/(<[^>]*>|&nbsp;|&gt;)/g, '');
+    }
   },
 };
 </script>
@@ -108,5 +121,13 @@ export default {
 .blog-card-title:hover {
   color: var(--primary-color) !important;
   cursor: pointer;
+}
+
+div.preview-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
