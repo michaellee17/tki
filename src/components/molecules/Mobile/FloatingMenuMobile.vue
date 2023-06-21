@@ -8,21 +8,21 @@
       </div>
     </link-wrapper>
 
-    <link-wrapper :location="'/'" class="col-3 link-color border-end">
+    <link-wrapper :location="'/my-ticket'" class="col-3 link-color border-end">
       <div class="d-flex flex-column mobile-menu-item align-items-center">
         <span class="material-symbols-outlined p-2">book_online</span>
         <span>我的票券</span>
       </div>
     </link-wrapper>
 
-    <link-wrapper :location="'/cart'" class="col-3 link-color border-end">
+    <link-wrapper :location="'/buy-ticket-list'" class="col-3 link-color border-end">
       <div class=" d-flex flex-column mobile-menu-item align-items-center ">
         <span class="material-symbols-outlined p-2">payments</span>
         <span>購票清單</span>
       </div>
     </link-wrapper>
 
-    <link-wrapper :location="'/my-account'" class="col-3 link-color ">
+    <link-wrapper :location="'/member'" class="col-3 link-color ">
       <div class="d-flex flex-column mobile-menu-item align-items-center">
         <!-- <font-awesome-icon class="fa-2x p-2 " :icon="['far', 'user-circle']" /> -->
         <span class="material-symbols-outlined p-2">account_circle</span>

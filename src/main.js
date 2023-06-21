@@ -15,6 +15,8 @@ import PriceFormatter from "./plugins/PriceFormatter.js"
 import DateFormatter from "./plugins/DateFormatter.js"
 import FileSource from "./plugins/FileSource.js"
 import Slugerize from "./plugins/Slugerize.js"
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 import "./icons/iconsSolid.js";
 import "./icons/iconsRegular.js";
@@ -47,6 +49,7 @@ Vue.use(VueZoomer)
   .use(Slugerize)
   .use(DateFormatter)
   .use(SplitCarousel)
+  .use(VueAxios, axios)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount("#app");
 

@@ -13,8 +13,8 @@ export const Filled = (args) => ({
   setup() {
     const store = useStore();
     store.commit("setLocation", [
-      { title: "平台公告", location: "/blog-list" },
-      { title: "Blog Title Name", location: "/blog-post/0" },
+      { title: "平台公告", location: "/announcement" },
+      { title: "Blog Title Name", location: "/announcement/0" },
     ]);
     //👇 The args will now be passed down to the template
     return { args };

@@ -36,6 +36,8 @@
   </div>
 </template>
 <script>
+import router from '../../../router';
+
 
 export default {
   props: {
@@ -52,6 +54,7 @@ export default {
       default: "no",
     },
   },
+  emits: ['onChangePageNoRequest'],
   data() {
     return {
       currentPageWrapper: this.currentPage - 1,
@@ -59,10 +62,12 @@ export default {
   },
   methods: {
     changePage(pageNo) {
-      if (this.resetID !== "no")
-        document.getElementById(this.resetID).scrollIntoView();
       this.$emit("onChangePageNoRequest", Math.round(pageNo));
       this.currentPageWrapper = pageNo;
+      this.$router.push(`/announcement/page/${pageNo}`);
+      if (this.resetID !== "no") {
+        document.getElementById(this.resetID).scrollIntoView();
+      }
     },
   },
   computed: {

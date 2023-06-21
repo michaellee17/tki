@@ -1,8 +1,15 @@
 <template>
   <div class="blog-post w-100">
-    <img :src="$getFileSource(thumbNail)"  />
+    <!-- <img :src="$getFileSource(image_path)"  /> -->
+    <img :src="image_path"  />
     <div class="author-details mt-4 mb-4">
-      <AuthorDetails v-bind="authorDetails" />
+      <div class="author-details d-flex flex-row mb-3 mt-2 flex-wrap align-items-center">
+          <font-awesome-icon
+            class="icon text-secondary"
+            :icon="['far', 'calendar']"
+          />
+          <span class="text-secondary fw-light ms-2 me-4">{{ release_at }}</span>
+      </div>
     </div>
     <div class="blog-content d-flex flex-column" v-html="content"></div>
   </div>
@@ -15,20 +22,7 @@ export default {
   components: {
     AuthorDetails,
   },
-  props: {
-    thumbNail: {
-      type: String,
-      required: true,
-    },
-    authorDetails: {
-      type: Array,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-  },
+  props: ['image_path', 'content', 'release_at'],
 };
 </script>
 
