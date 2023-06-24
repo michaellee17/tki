@@ -3,23 +3,20 @@
     <button
       v-if="currentPageWrapper > pageNumbers / 4 && currentPageWrapper > 1"
       class="btn pagination-btn btn-lg me-3 text-dark d-flex align-items-center justify-content-center"
-      @click="changePage(currentPageWrapper - 1)"
-    >
+      @click="changePage(currentPageWrapper - 1)">
       <span class="pagination-text fs-6">
         <font-awesome-icon
           class="fa"
           style="transform: rotateY(180deg)"
-          :icon="['fas', 'arrow-right']"
-      /></span>
+          :icon="['fas', 'arrow-right']" /></span>
     </button>
 
     <template v-for="no in showLessPages" :key="no">
       <button
-        @click="changePage(no)"
         v-if="no > 0 && no <= pageNumbers"
         :class="{ active: currentPageWrapper === no || currentPageWrapper === 0 && no == 1 }"
         class="btn pagination-btn btn-lg btn-active me-3 text-dark d-flex align-items-center justify-content-center"
-      >
+        @click="changePage(no)">
         <span>{{ no }}</span>
       </button>
     </template>
@@ -27,11 +24,9 @@
     <button
       v-if="currentPageWrapper !== pageNumbers"
       class="btn pagination-btn btn-lg text-dark d-flex align-items-center justify-content-center"
-      @click="changePage(currentPageWrapper + 1)"
-    >
+      @click="changePage(currentPageWrapper + 1)">
       <span class="fs-6">
-        <font-awesome-icon class="fa" :icon="['fas', 'arrow-right']"
-      /></span>
+        <font-awesome-icon class="fa" :icon="['fas', 'arrow-right']" /></span>
     </button>
   </div>
 </template>
@@ -57,18 +52,9 @@ export default {
   emits: ['onChangePageNoRequest'],
   data() {
     return {
-      currentPageWrapper: this.currentPage - 1,
+      currentPageWrapper: this.currentPage,
+      // currentPageWrapper: this.currentPage - 1,
     };
-  },
-  methods: {
-    changePage(pageNo) {
-      this.$emit("onChangePageNoRequest", Math.round(pageNo));
-      this.currentPageWrapper = pageNo;
-      this.$router.push(`/announcement/page/${pageNo}`);
-      if (this.resetID !== "no") {
-        document.getElementById(this.resetID).scrollIntoView();
-      }
-    },
   },
   computed: {
     showLessPages() {
@@ -81,6 +67,16 @@ export default {
         this.currentPageWrapper + 2,
         this.currentPageWrapper + 3,
       ];
+    },
+  },
+  methods: {
+    changePage(pageNo) {
+      this.$emit("onChangePageNoRequest", Math.round(pageNo));
+      this.currentPageWrapper = pageNo;
+      this.$router.push(`/announcement/page/${pageNo}`);
+      if (this.resetID !== "no") {
+        document.getElementById(this.resetID).scrollIntoView();
+      }
     },
   },
 };

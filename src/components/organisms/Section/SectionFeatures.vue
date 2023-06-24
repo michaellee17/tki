@@ -1,19 +1,19 @@
 <template>
   <div class="container features-container ">
     <div class="row justify-content-around">
-      <div class="col-md-3 col-6 feature-col  ">
+      <div class="col-md-3 col-12 feature-col">
         <Feature
           :image-src="'images/features/notification.png'"
           :title="'即時通知'"
           :subtitle="'手機推播通知功能，讓您無時無刻都能收到最新消息！'" />
       </div>
-      <div class="col-md-3 col-6 feature-col ">
+      <div class="col-md-3 col-12 feature-col ">
         <Feature
           :image-src="'images/features/ticket.png'"
           :title="'活動多樣'"
           :subtitle="'演唱會、展演、歌劇、音樂祭，各式各樣活動任您挑選！'" />
       </div>
-      <div class="col-md-3 col-6 feature-col ">
+      <div class="col-md-3 col-12 feature-col ">
         <Feature
           :image-src="'images/features/qr-code.png'"
           :title="'防偽數位票'"

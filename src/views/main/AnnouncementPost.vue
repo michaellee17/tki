@@ -2,7 +2,7 @@
   <layout-announcement>
     <div class="col-sm-12 col-lg-8  blog-post-list">
       <h1 class="blog-title mb-4">
-        {{  announcement.title }}
+        {{ announcement.title }}
       </h1>
       <blog-content v-bind="announcement" />
     </div>
@@ -34,13 +34,21 @@ export default {
     };
   },
   computed: {
+    announcementPost() {
+      return this.$route.params.annoucementID;
+    },
     announcementId() {
-      const postRoute = this.$route.params.annoucementID.split('-')
+      const postRoute = this.announcementPost.split('-')
        return parseInt(postRoute[postRoute.length - 1])
     },
   },
+  watch : {
+    announcementPost: function() {
+      this.getAnnouncement();
+    }
+  },
   created() {
-    document.title = this.$route.params.annoucementID + " - T-KI";
+    document.title = this.announcementPost + " - T-KI";
   },
   mounted() {
     this.getAnnouncement();
@@ -48,11 +56,14 @@ export default {
   methods: {
     getAnnouncement() {
       this.axios.get(`${process.env.VUE_APP_PATH}/announcement/get_info?id=${this.announcementId}`)
-      // this.axios.get(`${process.env.VUE_APP_PATH}/announcement/get_info?id=1`)
       .then(res => { 
-        console.log( res.data.data )
-        this.announcement = res.data.data 
-        this.setLocation()
+        // console.log( res.data )
+        if (res.data.status_code === 'SYSTEM_1000') {
+          this.announcement = res.data.data 
+          this.setLocation()
+        } else {
+          this.$router.push('/404')
+        }
       });
     },
     setLocation() {

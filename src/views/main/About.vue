@@ -159,7 +159,7 @@ export default {
   }
   :deep(.feature) {
     display: flex;
-    justify-content: unset !important;
+    /* justify-content: unset !important; */
   }
   .testimonial-message,
   .section-features {

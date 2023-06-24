@@ -51,9 +51,9 @@ export default {
     flex-direction: row;
     margin-bottom: 20px;
   }
-  .feature-text {
+  /* .feature-text {
     max-width: 70px;
-  }
+  } */
 }
 
 @media screen and (max-width: 768px) {
@@ -66,11 +66,12 @@ export default {
     flex-direction: row;
     margin-bottom: 20px;
     justify-content:center;
+    align-items: center;
   }
 
-  .feature-text {
+  /* .feature-text {
     max-width: 70px;
-  }
+  } */
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   .feature-text{

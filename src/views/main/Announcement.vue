@@ -4,13 +4,11 @@
       <BlogCard v-for="announcement in announcements" :key="announcement.id" v-bind="announcement" />
       <div class="blog-pagination d-flex align-items-start">
         <pagination-buttons
-          class="my-2"
           v-if="numberOfItems / itemsPerPage > 1"
-          :pageNumbers="numberOfItems / itemsPerPage"
-          :currentPage="currentPage"
-          @onChangePageNoRequest="changePage"
-          >
-        </pagination-buttons>
+          class="my-2"
+          :page-numbers="numberOfItems / itemsPerPage"
+          :current-page="currentPage"
+          @onChangePageNoRequest="changePage" />
       </div>
     </div>
   </layout-announcement>
@@ -28,16 +26,6 @@ import PaginationButtons from "../../components/atoms/PaginationButtons/Paginati
 
 
 export default {
-  created() {
-    document.title = "平台公告 - T-KI";
-  },
-  mounted() {
-    this.$route.params.pageId === undefined ? this.currentPage = 1 : this.currentPage = this.$route.params.pageId
-    this.$store.commit("setLocation", [
-      { title: "平台公告", location: "/announcement" },
-    ]);
-    this.getAnnouncements();
-  },
   components: {
     FilterTitle,
     FilterListTags,
@@ -60,6 +48,9 @@ export default {
     };
   },
   computed: {
+    pageId() {
+      return this.$route.params.pageId;
+    },
     filterMenuState() {
       return this.$store.state.app.currentActiveModal === "filter"
         ? this.$store.state.app.currentActiveModal
@@ -76,17 +67,35 @@ export default {
       return announcements;
     },
   },
+  watch: {
+    pageId: function() { 
+      this.getAnnouncements();
+     } 
+  },
+  created() {
+    document.title = "平台公告 - T-KI";
+  },
+  mounted() {
+    this.pageId === undefined ? this.currentPage = 1 : this.currentPage = this.pageId
+    this.$store.commit("setLocation", [
+      { title: "平台公告", location: "/announcement" },
+    ]);
+    this.getAnnouncements();
+  },
   methods: {
     getAnnouncements() {
       this.axios.get(`${process.env.VUE_APP_PATH}/announcement/get_list?page=${this.currentPage}&limit=${this.itemsPerPage}`)
       .then(res => { 
-        this.announcements = res.data.data ;
-        this.numberOfItems = res.data.total;
+        if (res.data.status_code === 'SYSTEM_1000') {
+          this.announcements = res.data.data ;
+          this.numberOfItems = res.data.total;
+        } else {
+          this.$router.push('/404')
+        }
       });
     },
     changePage(pageNo) {
       this.currentPage = pageNo;
-      this.getAnnouncements();
     }
   }
 };
