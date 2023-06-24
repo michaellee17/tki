@@ -40,14 +40,14 @@
                   :is="link.component"
                   v-show="hoveredItem === i"
                   v-bind="link.componentProps"
-                  class="menu-hover" />
+                  class="menu-hover-main" />
               </transition>
             </template>
           </li>
 
           <li
             class="nav-item position-relative h-100 d-flex align-items-center ms-auto"
-            @mouseover="hoveredItem = 1"
+            @mouseover="hoveredItem = 'login'"
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
             <!-- <LinkWrapper
@@ -59,9 +59,9 @@
               :name="'登入'" />
             <transition name="showMenu">
               <SubmenuVerticalA
-                v-show="hoveredItem === 1"
+                v-show="hoveredItem === 'login'"
                 :items="loggedInItems"
-                class="menu-hover" />
+                class="menu-hover-login" />
             </transition>
           </li>
         </ul>
@@ -296,9 +296,9 @@ export default {
       loggedInItems : [
           {
             "links": [
-              { "location": "/", "name": "會員中心" },
-              { "location": "/", "name": "我的票券" },
-              { "location": "/", "name": "購票清單" }
+              { "location": "/member", "name": "會員中心" },
+              { "location": "/my-ticket", "name": "我的票券" },
+              { "location": "/buy-ticket-list", "name": "購票清單" }
             ]
           }
         ]
@@ -407,9 +407,13 @@ li {
   height: 70px;
 }
 
-.nav-item > .menu-hover {
+.nav-item > .menu-hover-main {
   top: 100%;
   left: 0;
+}
+.nav-item > .menu-hover-login {
+  top: 100%;
+  left: -70px;
 }
 .cat-icon {
   margin-top:3px;

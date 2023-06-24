@@ -1,5 +1,6 @@
 <template>
-  <div class="blog-card">
+  <!-- old -->
+  <!-- <div class="blog-card">
     <div
       v-if="thumbNail !== ''"
       class="blog-image"
@@ -34,7 +35,60 @@
         <ButtonFilled
           class="blog-btn fw-bold"
           :has-rounded-corners="true"
-          :text="'查看更多'"
+          :text="'詳細資料'"
+           
+          :location="getBlogLocation"
+        />
+      </div>
+    </div>
+  </div> -->
+
+  <div class="blog-card">
+    <div
+      v-if="image_path !== ''"
+      class="blog-image"
+    >
+      <link-wrapper :location="getBlogLocation">
+        <!-- <img
+          :src="$getFileSource(image_path)"
+          :alt="title"
+        > -->
+        <img :src="image_path"  />
+      </link-wrapper>
+    </div>
+    <div class="blog-content">
+      <link-wrapper
+        :location="getBlogLocation"
+        :remove-decorations="true"
+      >
+        <div class="title">
+          <font-awesome-icon
+            v-if="pinned"
+            class="fa fa-2x icon"
+            :icon="['fas', 'star']"
+          />
+          <span class="blog-card-title fs-3 fw-bold text-dark ">{{ title }}</span>
+        </div>
+      </link-wrapper>
+      <!-- <AuthorDetails
+        class="author-details"
+        v-bind="authorDetails"
+      /> -->
+      <!-- AuthorDetails -->
+      <div class="author-details d-flex flex-row mb-3 mt-2 flex-wrap align-items-center">
+          <font-awesome-icon
+            class="icon text-secondary"
+            :icon="['far', 'calendar']"
+          />
+          <span class="text-secondary fw-light ms-2 me-4">{{ release_at }}</span>
+      </div>
+      <!-- 副標題 -->
+      <div v-if="subtitle !== null" class="preview-text fs-6 text-secondary mb-3">{{ subtitle }}</div>
+      <div class="read-more  d-flex justify-content-start ">
+        <ButtonFilled
+          class="blog-btn fw-bold"
+          :has-rounded-corners="true"
+          :text="'詳細資料'"
            
           :location="getBlogLocation"
         />
@@ -53,7 +107,7 @@ export default {
     ButtonFilled,
     LinkWrapper,
   },
-  props: {
+  /* props: {
     id: {
       type: Number,
       required: true,
@@ -76,14 +130,16 @@ export default {
     pinned: {
       type: Boolean,
     },
-  },
+  }, */
+
+  props: [ 'id', 'title', 'image_path', 'subtitle', 'release_at' ],
   computed: {
     getBlogLocation() {
       return this.$buildBlogURL(this.title,this.id);
     },
-    shortDesc() {
-      return this.content.replace(/(<[^>]*>|&nbsp;|&gt;)/g, '');
-    }
+    // shortDesc() {
+    //   return this.content.replace(/(<[^>]*>|&nbsp;|&gt;)/g, '');
+    // }
   },
 };
 </script>
@@ -106,10 +162,9 @@ export default {
   height: auto;
   vertical-align: middle;
 }
-.blog-btn {
- 
+/* .blog-btn {
   margin-top: 25px;
-}
+} */
 .icon {
   color: var(--primary-color);
 }

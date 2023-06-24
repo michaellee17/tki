@@ -4,10 +4,10 @@ export default {
       return (
         type +
         title
-          .toLowerCase()
+          // .toLowerCase()
           .replace(/ /g, "-")
-          .replace(/[^\w-]+/g, "") +
-        "-" +
+          // .replace(/[^\w-]+/g, "") +
+       + "-" +
         id
       );
     };

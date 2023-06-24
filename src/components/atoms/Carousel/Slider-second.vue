@@ -10,54 +10,28 @@
     }"
     class="mySwiper"
   >
-    <swiper-slide v-for="item in items" :key="item">
+    <swiper-slide v-for="item in advertises" :key="item.adv_index">
       <div class="fluid-container slider d-block position-relative">
         <div
           class="slider-content d-flex flex-column position-absolute align-items-center text-center"
         >
-          <!-- <span class="  text-uppercase fs-6 fw-bold">{{ item.category }}</span>
-          <h1 class="slider-title text-uppercase">{{ item.productName }}</h1> -->
         </div>
         <div
-          class="banner-sm caracteristics-slider position-relative d-flex flex-column align-items-center"
+          class="banner-wrap caracteristics-slider position-relative d-flex flex-column align-items-center"
         >
+        <a :href="item.link_url" target="_blank">
           <img
-            class="slider-img img-sm"
-            :src="item.productImage"
-            :alt="item.productName"
+            class="slider-img"
+            :src="item.image_path"
+            :alt="adv + item.adv_index"
           />
-          <ul class="list-unstyled specification">
-            <li
-              class="align-items-center text-center"
-              v-for="characteristic in item.characteristics"
-              :key="characteristic"
-            >
-              <!-- <font-awesome-icon class="slider-icon" :icon="['fas', 'check']" /> -->
-              <!-- <h1>BLACKPINK</h1> -->
-              <!-- <span class="caracteristic ms-2 ">{{ characteristic }}</span> -->
-            </li>
-          </ul>
-          <!-- <div class="slider-btn d-flex justify-content-center">
-            <button-filled
-              class="mb-3 slider-product-button fw-bold"
-              :text="'Add to cart'"
-              :size="'big'"
-              @click.prevent="addToCart(item.id)"
-            >
-              <template v-slot:default>
-                <font-awesome-icon
-                  class="me-2"
-                  :icon="['fas', 'shopping-cart']"
-                />
-                Add to cart
-              </template>
-            </button-filled>
-          </div> -->
+        </a>
         </div>
       </div>
     </swiper-slide>
   </swiper>
 </template>
+
 <script>
 import ButtonFilled from "../Button/ButtonFilled.vue";
 // import Swiper core and required modules
@@ -68,10 +42,13 @@ import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
 SwiperCore.use([EffectFade, Navigation, Pagination]);
 
 import "swiper/swiper-bundle.css";
-import { products } from "../../../data/auctions.json";
+// import { products } from "../../../data/auctions.json";
 import {addToCart} from "../../../composables/manageCart"
 
 export default {
+  mounted() {
+    this.getAdvertises();
+  },
   components: {
     ButtonFilled,
     Swiper,
@@ -84,8 +61,17 @@ export default {
   },
   data() {
     return {
-      products,
+      // products,
+      advertises: []
     };
+  },
+  methods : {
+    getAdvertises() {
+      this.axios.get(`${process.env.VUE_APP_PATH}/advertise/get_list?layoutID=2`)
+      .then(res => { 
+        this.advertises = res.data.data;
+      });
+    }
   },
   setup() {
     return {
@@ -95,17 +81,6 @@ export default {
 };
 </script>
 <style>
-.banner-sm{
-  max-height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.img-sm{
-  object-position: center;
-  object-fit: cover;
-}
-
 @keyframes slideTop {
   from {
     transform: translateY(60px);
@@ -214,17 +189,7 @@ export default {
   animation-delay: 0.1s;
 }
 
-.slider-img {
-  max-width: 100%; /* max-width: 500px; */
-  padding: 0px;
-  margin: 0px;
-  transform: translateY(60px);
-  animation-fill-mode: forwards;
-  opacity: 0;
-  animation-name: slideFade;
-  animation-duration: 1s;
-  animation-delay: 0.3s;
-}
+
 .specification {
   top: -40px;
   position: relative;
@@ -242,6 +207,27 @@ export default {
   .slider-title {
      font-size: 140px;
   }
+}
+
+.slider-img {
+  max-width: 100%;
+  max-height: 300px;
+  padding: 0px;
+  margin: 0px;
+  transform: translateY(60px);
+  animation-fill-mode: forwards;
+  opacity: 0;
+  animation-name: slideFade;
+  animation-duration: 1s;
+  animation-delay: 0.3s;
+  object-position: center;
+  object-fit: cover;
+}
+.banner-wrap{
+  /* max-height: 600px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media (max-width: 767.99px) {
   .slider-title {

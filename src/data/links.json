@@ -1,7 +1,7 @@
 {
   "links": [
     {
-      "location": "/",
+      "location": "/activity",
       "name": "活動",
       "component": "SubmenuVerticalA",
       "componentProps": {
@@ -9,17 +9,17 @@
           {
             "name": "",
             "links": [
-              { "location": "https://ibid.modeltheme.com/vuejs/", "name": "演唱會", "external": true, "target": "blank" },
-              { "location": "https://ibid.modeltheme.com/vuejs/automotive/", "name": "音樂祭", "external": true, "target": "blank" },
-              { "location": "https://ibid.modeltheme.com/", "name": "展演", "external": true, "target": "blank" },
-              { "location": "https://ibid.modeltheme.com/", "name": "歌劇", "external": true, "target": "blank" }
+              { "location": "/activity/concert", "name": "演唱會", "external": false },
+              { "location": "/activity/music-festival", "name": "音樂祭", "external": false },
+              { "location": "/activity/show", "name": "展演", "external": false },
+              { "location": "/activity/opera", "name": "歌劇", "external": false }
             ]
           }
         ]
       }
     },
     {
-      "location": "/blog-list/",
+      "location": "/announcement/",
       "name": "平台公告"
     },
     {
