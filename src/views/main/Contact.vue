@@ -1,68 +1,38 @@
 <template>
   <layout-default>
-    <div class="container contact-container">
-      <SectionContact2 />
-    </div>
-    <div class="container d-flex about-team justify-content-center">
-      <SectionOurTeam class="section-team" />
-    </div>
-    <div class="fluid-container about-testimonial">
-      <div class="container p-0">
-        <div class="row d-flex justify-content-between">
-          <div class="col-md-6 testimonial-message p-0">
-            <section-testimonials
-              text="Yahoo Inc. is an American multinational Internet corporation headquartered in Sunnyvale, California.
-          It is globally known for its Web portal, search engine Yahoo Search."
-              image-location="images/testimonials/member-team1.jpg"
-              name="Martin Culich"
-              position="Digita Marketed"
-            />
-          </div>
-          <div class="col-md-6 contact-features ms-2">
-            <div class="row section-features d-flex flex-row float-end">
-              <div class="col-6 col-md-6 col-sm-4 d-flex first-column flex-column ">
-                <Characteristic
-                  class="features"
-                  :image-src="'images/features/deliveries.png'"
-                  :title="'8523'"
-                  :subtitle="'Auctions'"
-                />
-                <Characteristic
-                  class="features"
-                  :image-src="'images/features/deliveries.png'"
-                  :title="'8523'"
-                  :subtitle="'Seller Account'"
-                />
-                <Characteristic
-                  class="features"
-                  :image-src="'images/features/money.png'"
-                  :title="'458'"
-                  :subtitle="'Users Helped'"
-                />
-              </div>
-              <div class="col-6 col-md-6 col-sm-4 d-flex second-column flex-column ">
-                <Characteristic
-                  class="features"
-                  :image-src="'images/features/deliveries.png'"
-                  :title="'116'"
-                  :subtitle="'Employees'"
-                />
-                <Characteristic
-                  class="features"
-                  :image-src="'images/features/deliveries.png'"
-                  :title="'4523'"
-                  :subtitle="'Total Accounts'"
-                />
-                <Characteristic
-                  class="features"
-                  :image-src="'images/features/money.png'"
-                  :title="'458'"
-                  :subtitle="'Problems Solved'"
-                />
-              </div>
+    <TopHeader :title="'聯絡我們'"></TopHeader>
+    <div class="container">
+      <p class="description text-center fs-5 mb-5">請將您的寶貴意見以填寫表單方式送出，我們將於工作日由專人回覆您的問題</p>
+      <div class="row">
+        <form class="contact-form p-4 rounded col-11 col-lg-6 mx-auto">
+          <p class="text-primary text-center mb-4">請留下您的意見與想法，我們會有專人與您聯繫</p>
+          <div class="row justify-content-between">
+            <div class="col-12 col-lg-5">
+              <label for="name" class="d-block">姓名*</label>
+              <input type="text" id="name">
+            </div>
+            <div class="col-12 col-lg-5">
+              <label for="address">居住縣市區域*</label>
+              <input type="text" id="address">
             </div>
           </div>
-        </div>
+          <div class="row justify-content-between">
+            <div class="col-12 col-lg-5">
+              <label for="email" class="d-block">E-mail*</label>
+              <input type="email" id="email">
+            </div>
+            <div class="col-12 col-lg-5">
+              <label for="tel">電話*</label>
+              <input type="tel" id="tel">
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-12">
+              <label for="message" class="d-block">請留下您的需求內容以及寶貴意見*</label>
+              <textarea name="" id="message" rows="3"></textarea>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </layout-default>
@@ -70,136 +40,36 @@
 
 <script>
 import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
-import SectionContact2 from "../../components/organisms/Section/Contact/SectionContact2.vue";
-import SectionOurTeam from "../../components/organisms/Section/SectionOurTeam.vue";
-import Characteristic from "../../components/atoms/Characteristic/Characteristic.vue";
-import SectionTestimonials from "../../components/organisms/Section/SectionTestimonials.vue";
+import TopHeader from "../../components/TopHeader.vue";
 
 export default {
   components: {
-    LayoutDefault,
-    SectionContact2,
-    SectionOurTeam,
-    Characteristic,
-    SectionTestimonials,
+    LayoutDefault, TopHeader
   },
   beforeCreate() {
-    document.title = "常見問題 - T-KI";
+    document.title = "聯絡我們 - T-KI";
   },
 };
 </script>
-<style scoped>
-.section-features {
-  width: 85%;
-}
-.testimonial-message {
-  max-width: 700px;
-}
-.contact-container{
-  margin-bottom:80px;
-  margin-top:80px;
-}
-:deep(.features img) {
-  width: 50px !important;
-  height:auto!important;
-}
-:deep(.features h5) {
-  font-size: 30px;
-}
-:deep(.features p) {
-  font-size: 15px !important;
-  text-transform: uppercase !important;
-}
-.section-team {
-  margin-bottom: 100px !important;
-}
-.about-testimonial {
-  padding-left: 118px;
-  padding-right: 118px;
-  padding: 70px 83px 70px;
-  background-color: #f9f9f9;
-  width: 100%;
-}
 
-@media (max-width: 767.98px) {
-    .section-features {
-    width:100%;
-  }
-  .section-features {
-   padding:0px!important;
-    margin:50px 0;
-  }
-  .section-features{
-    display:flex!important;
-    justify-content: center!important;
-  }
+<style scoped lang="scss">
 
-  :deep(.feature){
-    display:flex;
-    justify-content: unset!important;
-  }
- 
-  .section-team {
-    display: none !important;
-  }
-  .testimonial-message,.section-features{
-    padding:0 10px!important;
-  }
-  :deep(.testimonial-message){
-    margin:50px 0px!important;
-  }
-  :deep(.testimonial){
-    padding:0px 10px;
-  }
-  .about-features {
-    padding: 20px !important;
-  }
-  .about-team {
-    display: none !important;
-  }
-  .about-testimonial {
-    padding: 50px 15px 0 0;
-  }
-  .feature-list {
-    display: block !important;
-    flex-direction: column !important;
-  }
-  .section-feature {
-    padding: 35px 15px 65px;
-  }
-  .features h5 {
-    font-size: 20px;
-  }
-  .features {
-    flex-direction: column !important;
-  }
-  .section-features {
-    padding-top: 20px;
-  }
-  .contact-features{
-    padding:0 10px!important;
-  }
-  .first-column,.second-column{
-    padding:0px;
-  }
+.description {
+  letter-spacing: 2px;
 }
-@media (min-width: 768px) and (max-width: 1024px) {
-  .about-team {
-    display: none !important;
+.contact-form {
+  background-color: #F5742E0F;
+  box-shadow: 0px 3px 6px #00000029;
+  & input, textarea {
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+    padding: 3px 5px;
+    margin-bottom: 20px;
   }
-  .first-column {
-    padding:5px;
-  }
-  .second-column {
-    padding:5px;
-  }
-  .about-testimonial {
-    padding:70px 10px!important;
-  }
-  :deep(.feature){
-    margin:0px!important;
-  }
-
-
+  & textarea:focus-visible {
+   outline: none;
+  } 
 }
 </style>

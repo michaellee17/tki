@@ -1,3 +1,3 @@
 <template>
-  歌劇
+  會員首頁
 </template>

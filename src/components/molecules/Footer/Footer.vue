@@ -1,21 +1,34 @@
 <template>
-  <div class="container footer footer-top ">
-    <div class="row row-footer">
-      <div class="col">
+  <div class="footer">
+    <div class="container row justify-content-between mx-auto mb-4">
+      <div class="col-12 col-md-3 mb-3">
         <img
           class="mb-2"
-          :src="$getFileSource(path)"
+          :src="$getFileSource('images/logos/logo-main-white.png')"
           :alt="$store.state.app.settings.websiteName"
         />
         <br />
-        <a :href="'mailto:'+ $store.state.app.contactInfo.email" class="text-secondary text-decoration-none d-block mb-1">{{
-          $store.state.app.contactInfo.email
-        }}</a
-        >
-        <a :href="'tel:' + $store.state.app.contactInfo.phoneNo.replace(/ /g,'')" class="text-secondary text-decoration-none">{{
+        <a :href="'mailto:'+ $store.state.app.contactInfo.email" class=" mb-1">{{
+          $store.state.app.contactInfo.email}}
+        </a>
+        <a :href="'tel:' + $store.state.app.contactInfo.phoneNo.replace(/ /g,'')" class="">{{
           $store.state.app.contactInfo.phoneNo
         }}</a>
-        <div class="social-icons mt-2">
+      </div>
+      <div class="links col-4 col-md-2">
+        <router-link to="/about" class="mb-2">關於我們</router-link> 
+        <router-link to="/contact" class="mb-2">聯絡我們</router-link> 
+        <router-link to="/faq" class="mb-2">常見問題</router-link> 
+      </div>
+      <div class="links col-4 col-md-2">
+        <router-link to="/privacy-terms" class="mb-2">隱私權條款</router-link> 
+        <router-link to="/service-terms" class="mb-2">服務條款</router-link>
+        <router-link to="/" class="mb-2">客服時間</router-link>
+      </div>
+      <div class="links col-4 col-md-2">
+        <p class="mb-2">追蹤我們</p>
+        <!-- <router-link to="/" class="mb-2">追蹤我們</router-link> -->
+        <div class="social-icons d-flex mb-2">
           <!-- Social Icons -->
           <link-wrapper
             v-for="social in $store.state.app.contactInfo.socials"
@@ -24,39 +37,15 @@
             :location="social.location"
           >
             <font-awesome-icon
-              class="social-icon me-4"
+              class="social-icon me-2"
               :icon="['fab', social.icon]"
             />
           </link-wrapper>
-
-          <!--  -->
-        </div>
-      </div>
-
-      <!-- <FooterSectionLinks v-bind="footerLinks1" />
-      <FooterSectionLinks v-bind="footerLinks2" />
-
-      <div class="col">
-        <h6 class=" subscribe fs-4 fw-bold ">Subscribe to our Newsletter</h6>
-        <ul class="list-unstyled">
-          <li class="mb-1 w-100"></li>
-          <search class="top-footer-search" :placeholder="'Enter your email...'">
-            <span class="text-uppercase fw-bold px-2" style="font-size:12px;"
-              >Submit</span
-            >
-          </search>
-        </ul>
-      </div> -->
-    </div>
-  </div>
-
-  <div class="copyright">
-    <div class="container">
-      <div class=" d-flex justify-content-between ">
-        <div class="copyright-text">© Copyright 2023 . T-KI All rights reserved.</div>
-        <!-- <div class="copyright-text">Elite Author on ThemeForest.</div> -->
+        </div> 
+        <p class="mb-2">下載 APP</p>
       </div>
     </div>
+    <p class="text-light text-center">© Copyright 2023 . T-KI All rights reserved.</p>
   </div>
 </template>
 <script>
@@ -79,7 +68,8 @@ export default {
 };
 </script>
 
-<style scoped="scoped">
+<style scoped="scoped" lang="scss">
+
 .copyright{
   padding:20px;
 }
@@ -101,9 +91,10 @@ span.text-secondary {
 .subscribe {
   margin: 0 0 19px !important;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
   .copyright {
-    margin-bottom: 40px !important;
+    /* margin-bottom: 40px !important; */
+    margin-bottom: 65px;
   }
 }
 .menu-search span {
@@ -111,7 +102,6 @@ span.text-secondary {
 }
 
 .footer img {
- 
   width: 100px;
 }
 .searchfooter {
@@ -165,13 +155,33 @@ span.text-secondary {
   max-width: 100%;
   border-radius: 20px 20px 20px 20px;
 }
-@media (max-width: 767.98px) {
+.footer {
+  background-color: var(--primary-color);
+  padding-bottom: 1rem;
+  padding-top: 3rem;
+  margin-top: auto;
+}
+.footer :is(a, p) {
+  color: #fff !important;
+  // text-decoration: none;
+  display: block;
+}
+.footer a:hover {
+  color: var(--bs-gray-700)!important;
+}
+ 
+.footer .links :is(a, p) {
+  font-size: 16px;
+  letter-spacing: 4px;
+}
+
+/* @media (max-width: 767.98px) {
   .row {
     display: block !important;
   }
   .col {
     margin-top: 20px;
   }
-}
+} */
 
 </style>

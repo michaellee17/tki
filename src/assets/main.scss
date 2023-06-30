@@ -1,20 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap");
-// .btn {
-//   background-color: var(--primary-color);
-// }
+// @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+
 body {
-  // --popper-theme-background-color: #5e5553 !important;
   --primary-color: #f5742e;
-  --primary-light-color: #f5742e80;
+  --primary-light-color: #F9EDE0;
   --secondary-color: #0000008C;
   --info-color: #5990fa;
   --danger-color: #ea4335;
-  --pale-color: #adb5bd;
+  --pale-color: #00000029; //#adb5bd;
+  font-family: 'Noto Sans TC', sans-serif;
 }
-a, a.text-dark {
-  transition: 0.25s linear;
+a {
+  transition: 0.1s linear;
+  text-decoration: none;
 }
+ul li{
+  list-style: none;
+}
+
 select {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -52,26 +57,26 @@ select::-ms-expand {
 .color {
   color: var(--primary-color);
 }
-body
-  a:hover:not(.text-white):not(.top-payment):not(.top-order):not(.bot_nav_cat):not(.main-content-btn),
-a.text-dark:hover:not(.bot_nav_cat) {
-  color: var(--primary-color) !important;
-}
+// body
+//   a:hover:not(.text-white):not(.top-payment):not(.top-order):not(.bot_nav_cat):not(.main-content-btn),
+// a.text-dark:hover:not(.bot_nav_cat) {
+//   color: var(--primary-color) !important;
+// }
 
-body,
-html {
-  font-family: Montserrat, sans-serif !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 14px !important;
-  scroll-behavior: auto !important;
-}
-.color-initial {
-  color: initial !important;
-}
-.list-unstyled > li {
-  list-style-type: none;
-}
+// body,
+// html {
+//   font-family: Montserrat, sans-serif !important;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   font-size: 14px !important;
+//   scroll-behavior: auto !important;
+// }
+// .color-initial {
+//   color: initial !important;
+// }
+// .list-unstyled > li {
+//   list-style-type: none;
+// }
 
 // ul li,
 // ol li {
@@ -96,9 +101,9 @@ button:focus {
   outline: none;
   box-shadow: none;
 }
-a {
-  color: var(--primary-color);
-}
+// a {
+//   color: var(--primary-color);
+// }
 
 .border-anim.border-bottom {
   transition: border-bottom 0.25s linear;
@@ -113,10 +118,10 @@ a {
 .cursor-pointer {
   cursor: pointer;
 }
-.footer-top {
-  padding-bottom: 60px;
-  padding-top: 70px;
-}
+// .footer-top {
+//   padding-bottom: 30px;
+//   padding-top: 60px;
+// }
 .radius {
   border-radius: 45px !important;
 }
@@ -126,19 +131,19 @@ a {
 .blue-color {
   color: var(--primary-color);
 }
-div.popper {
-  background: #5e5553 !important;
-  font-weight: 800 !important;
-  font-family: Montserrat !important;
-  text-align: center !important;
-  padding: 8px 10px !important;
-  font-size: 12px !important;
-  color: #fff !important;
-  border-radius: 6px !important;
-  line-height: 1.2 !important;
-  cursor: pointer;
-  min-width: 120px;
-}
+// div.popper {
+//   background: #5e5553 !important;
+//   font-weight: 800 !important;
+//   font-family: Montserrat !important;
+//   text-align: center !important;
+//   padding: 8px 10px !important;
+//   font-size: 12px !important;
+//   color: #fff !important;
+//   border-radius: 6px !important;
+//   line-height: 1.2 !important;
+//   cursor: pointer;
+//   min-width: 120px;
+// }
 .popper #arrow::before {
   left: 0 !important;
 }

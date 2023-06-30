@@ -1,12 +1,12 @@
 <template>
-  <div class="container my-md-4 py-4 py-md-0 border-md-bottom">
+  <div class="container my-md-4 py-4 py-md-0 border-md-bottom d-block d-md-none">
     <div class="row row-header">
       <div class="navbar-header col-md-3 d-flex align-items-center col-sm-12">
         <Logo @toggleMenuMobile="showMobileMenu = !showMobileMenu" />
       </div>
       <div class="first-part col-md-9 col-sm-12 align-items-center">
         <div class="row align-items-center justify-content-between">
-          <div class="col-md-8 search-form-product align-items-center">
+          <!-- <div class="col-md-8 search-form-product align-items-center">
             <form action="shop" method="GET">
               <Search
                 :placeholder="'Search...'"
@@ -15,7 +15,7 @@
                 :selectDefault="'Categories'"
               />
             </form>
-          </div>
+          </div> -->
           <!-- <div class="col-md-3 menu-products">
             <Cart />
           </div> -->

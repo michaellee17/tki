@@ -1,25 +1,23 @@
 <template>
-  <li v-if="items.length > 0">
-    <div class="language-box dropdown-box position-relative">
-      <a class="text-decoration-none language-current">
-        {{ items[selectedIndex] }}
-        <font-awesome-icon
-          class="dropdown-icon"
-          :icon="['fas', 'chevron-down']"
-        />
-      </a>
-      <ul
-        class="language-list list-none dropdown-list position-absolute list-unstyled"
-        style="left:0;"
-      >
-        <slot name="list">
-          <li v-for="item in items" :key="item">
-            <a @click="announceEvent(item)"  class="pe-auto">{{ item }}</a>
-          </li>
-        </slot>
-      </ul>
-    </div>
-  </li>
+  <div class="dropdown-box position-relative my-1">
+    <a class="text-decoration-none language-current">
+      {{ items[selectedIndex] }}
+      <font-awesome-icon
+        class="dropdown-icon"
+        :icon="['fas', 'chevron-down']"
+      />
+    </a>
+    <ul
+      class="language-list list-none dropdown-list position-absolute list-unstyled"
+      style="left:0;"
+    >
+      <slot name="list">
+        <li v-for="item in items" :key="item">
+          <a @click="announceEvent(item)"  class="pe-auto">{{ item }}</a>
+        </li>
+      </slot>
+    </ul>
+  </div>
 </template>
 
 <script>

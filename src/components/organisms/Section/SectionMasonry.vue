@@ -8,32 +8,32 @@
           :productsNo="574"
           :height="280"
           :imageSrc="'images/masonrybanner/pa_cover01.jpg'"
-          :viewMoreLocation="'shop'"
+          :viewMoreLocation="'/activity/concert'"
         />
 
         <MasonryProduct
-          :title="'音樂祭'"
+          :title="'運動賽事'"
           :productsNo="45"
           :height="420"
           :imageSrc="'images/masonrybanner/pa_cover03.jpg'"
-          :viewMoreLocation="'shop'"
+          :viewMoreLocation="'/activity/sport'"
         />
       </div>
 
       <div class="col-md-6  masonry-column p-0 ">
         <MasonryProduct
-          :title="'展演'"
+          :title="'藝文展演'"
           :productsNo="11"
           :height="400"
           :imageSrc="'images/masonrybanner/pa_cover02.jpg'"
-          :viewMoreLocation="'shop'"
+          :viewMoreLocation="'/activity/show'"
         />
         <MasonryProduct
-          :title="'歌劇'"
+          :title="'其他'"
           :productsNo="253"
           :height="300"
           :imageSrc="'images/masonrybanner/pa_cover04.jpg'"
-          :viewMoreLocation="'shop'"
+          :viewMoreLocation="'/activity/other'"
         />
       </div>
     </div>

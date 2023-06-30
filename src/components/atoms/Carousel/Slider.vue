@@ -1,6 +1,7 @@
 <template>
   <swiper
     ref="mySwiper"
+    :loop="true"
     :options="swiperOptions"
     :spaceBetween="30"
     :navigation="true"
@@ -10,24 +11,15 @@
     }"
     class="mySwiper"
   >
-    <swiper-slide v-for="item in advertises" :key="item.adv_index">
-      <div class="fluid-container slider d-block position-relative">
-        <div
-          class="slider-content d-flex flex-column position-absolute align-items-center text-center"
-        >
+    <swiper-slide v-for="(item, i) in advertises" :key="item.image_path + i">
+      <a :href="item.link_url" target="_blank">
+        <div class="slider slider-top banner-l" 
+        :style="{ backgroundImage: `url(${ item.image_path })` }">
         </div>
-        <div
-          class="banner-wrap caracteristics-slider position-relative d-flex flex-column align-items-center"
-        >
-        <a :href="item.link_url" target="_blank">
-          <img
-            class="slider-img"
-            :src="item.image_path"
-            :alt="adv + item.adv_index"
-          />
-        </a>
+        <div class="slider slider-top banner-sm" 
+        :style="{ backgroundImage: `url(${ item.image_path_app })` }">
         </div>
-      </div>
+      </a>
     </swiper-slide>
   </swiper>
 </template>
@@ -42,7 +34,6 @@ import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
 SwiperCore.use([EffectFade, Navigation, Pagination]);
 
 import "swiper/swiper-bundle.css";
-// import { products } from "../../../data/auctions.json";
 import {addToCart} from "../../../composables/manageCart"
 
 export default {
@@ -54,20 +45,14 @@ export default {
     Swiper,
     SwiperSlide,
   },
-  props: {
-    items: {
-      type: Array,
-    },
-  },
   data() {
     return {
-      // products,
-      advertises: []
+      advertises: [],
     };
   },
   methods : {
     getAdvertises() {
-      this.axios.get(`${process.env.VUE_APP_PATH}/advertise/get_list?layoutID=1`)
+      this.axios.get(`${process.env.VUE_APP_PATH}/advertise/get_banner?layoutID=1`)
       .then(res => { 
         this.advertises = res.data.data;
       });
@@ -80,7 +65,9 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss">
+@import "../../../assets/mixin.scss";
+
 @keyframes slideTop {
   from {
     transform: translateY(60px);
@@ -103,11 +90,6 @@ export default {
   bottom: 0 !important;
   top: unset !important;
 }
-.slider {
-  /* background-image:url('../../../assets/images/slider/slider-bg.png'); */
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 .swiper-button-prev::after,
 .swiper-button-next::after {
   background: #000;
@@ -129,12 +111,45 @@ export default {
 .swiper-button-next::after {
   margin-right: 50px;
 }
-
-</style>
-<style scoped="scoped">
 .slider {
   padding: 30px;
   padding-bottom: 0 !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.banner-sm {
+    display: none;
+}
+@include screen-sm {
+  .banner-l {
+    display: none;
+  }
+  .banner-sm {
+    display: block;
+  }
+}
+
+
+</style>
+<style scoped="scoped" lang="scss">
+@import "../../../assets/mixin.scss";
+.slider-top {
+  // web 16:5
+  height: 600px;
+  @include screen-xl {
+    height: 450px;
+  }
+  @include screen-l {
+    height: 320px;
+  }
+  @include screen-m {
+    height: 240px;
+  }
+  // app 16:9
+  @include screen-sm {
+    height: 324px;
+  }
 }
 .slider-icon {
   color: #8500bd;
@@ -211,7 +226,8 @@ export default {
 
 .slider-img {
   max-width: 100%;
-  max-height: 600px;
+  /* width: 1920px;
+  height: 600px; */
   padding: 0px;
   margin: 0px;
   transform: translateY(60px);
@@ -229,7 +245,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-@media (max-width: 767.99px) {
+@media (max-width: 768px) {
   .slider-title {
     font-size: 50px;
     top: -40px;

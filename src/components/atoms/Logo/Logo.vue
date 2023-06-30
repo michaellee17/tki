@@ -23,18 +23,22 @@
           <font-awesome-icon class="text-dark me-4" :icon="['fas', 'heart']" />
         </link-wrapper>
       </div> -->
-      <div class="mobile_only_icon_group cart">
+      <!-- <div class="mobile_only_icon_group cart">
         <link-wrapper :location="'/cart/'">
           <font-awesome-icon
             class="text-dark me-3"
             :icon="['far', 'bell']"
           />
         </link-wrapper>
-      </div>
-      <div class="mobile_only_icon_group search">
+      </div> -->
+      <!-- <div class="mobile_only_icon_group search">
         <a href="#" class="mt-search-icon me-4">
           <font-awesome-icon class="text-dark " :icon="['fas', 'search']" />
         </a>
+      </div> -->
+      <div class="search-wrap me-4">
+        <input type="text" placeholder="搜尋活動..." class="search-input border border-dark" >
+        <font-awesome-icon :icon="['fas', 'search']" class="search-icon"/>
       </div>
       <div class="mobile_only_icon_group search">
         <a href="#"  @click.prevent="$emit('toggleMenuMobile')" class="mt-search-icon bars-color fs-2">
@@ -58,6 +62,7 @@ export default {
 };
 </script>
 <style scoped="scoped">
+
 @media (max-width: 767.98px) {
   .logo-section {
     display: flex;

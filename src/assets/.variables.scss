@@ -68,7 +68,7 @@ $colors: (
 
 // scss-docs-start theme-color-variables
 $primary:       #f5742e; //$blue !default;
-$secondary:     #0000008C; //$gray-600 !default;
+$secondary:     $gray-600 !default;
 $success:       $green !default;
 $info:          #5990fa; //$cyan !default;
 $warning:       $yellow !default;
@@ -378,7 +378,7 @@ $spacers: (
   1: $spacer * .25,
   2: $spacer * .5,
   3: $spacer,
-  4: $spacer * 1.5,
+  4: $spacer * 2,
   5: $spacer * 3,
 ) !default;
 

@@ -1,7 +1,7 @@
 {
   "links": [
     {
-      "location": "/activity",
+      
       "name": "活動",
       "component": "SubmenuVerticalA",
       "componentProps": {
@@ -10,9 +10,9 @@
             "name": "",
             "links": [
               { "location": "/activity/concert", "name": "演唱會", "external": false },
-              { "location": "/activity/music-festival", "name": "音樂祭", "external": false },
-              { "location": "/activity/show", "name": "展演", "external": false },
-              { "location": "/activity/opera", "name": "歌劇", "external": false }
+              { "location": "/activity/sport", "name": "運動賽事", "external": false },
+              { "location": "/activity/show", "name": "藝文展演", "external": false },
+              { "location": "/activity/other", "name": "其他", "external": false }
             ]
           }
         ]

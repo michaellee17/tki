@@ -4,7 +4,7 @@
       class="product-card-category col-md-3"
       :title="title"
       :productsNo="productsNo"
-      :buttonLocation="'/shop'"
+      :buttonLocation="location"
       :background="background"
     />
     <div class="col-md-9 p-0 mt-4 mt-md-0">
@@ -32,6 +32,9 @@ import { products } from "../../../data/auctions.json";
 export default {
   components: { CardCategory, ProductCardb },
   props: {
+    location: {
+      type: String
+    }, 
     maxAuctions: {
       type: Number,
       default: 4,

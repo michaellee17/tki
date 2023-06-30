@@ -1,88 +1,19 @@
 <template>
-  <div class="top-header">
+  <!-- <div class="top-header">
     <div class="container p-0">
       <div class="row row-top-header m-0 p-0">
-        <div class="col-md-7 col-sm-12 contact-header ">
+        <div class="col-md-7 col-sm-12 contact-header">
           <ul
             class="currency-language m-0 list-inline-block list-unstyled menu-list"
           >
             <dropdown :items="internationalization.langs"></dropdown>
-            <!-- <dropdown
-              :items="internationalization.currencies"
-              :selectedIndex="0"
-            ></dropdown> -->
           </ul>
-
-          <!-- Call Us -->
-          <div class="header-top-contact-methods d-flex">
-            <div
-              v-show="$store.state.app.contactInfo.phoneNo"
-              class="header-top-contact-method"
-            >
-              <span class="contact-text">
-                <span class="hide-mobile">Tel </span>
-                <a
-                  class="text-decoration-none"
-                  :href="
-                    'tel:' +
-                      $store.state.app.contactInfo.phoneNo.replace(/ /g, '')
-                  "
-                >
-                  <font-awesome-icon
-                    class="contact-icon d-block d-md-none"
-                    :href="'tel:' + $store.state.app.contactInfo.phoneNo"
-                    :icon="['fas', 'phone']"
-                  />
-                  <span class="hide-mobile">{{
-                    $store.state.app.contactInfo.phoneNo
-                  }}</span>
-                </a>
-              </span>
-            </div>
-
-            <!-- Mail Us -->
-            <div
-              v-show="$store.state.app.contactInfo.email"
-              class="header-top-contact-method"
-            >
-              <span class="contact-text">
-                <span class="hide-mobile">Email: </span>
-                <a
-                  class="text-decoration-none"
-                  :href="'mailto:' + $store.state.app.contactInfo.email"
-                >
-                  <font-awesome-icon
-                    class="contact-icon d-block d-md-none"
-                    :icon="['fas', 'envelope-open-text']"
-                  />
-                  <span class="hide-mobile">{{
-                    $store.state.app.contactInfo.email
-                  }}</span>
-                </a>
-              </span>
-            </div>
-          </div>
         </div>
-
-        <!-- <div class="d-sm-none d-md-block col-md-5 account-urls">
-          <link-wrapper class="top-order text-decoration-none" location="/blog-list">
-            <font-awesome-icon
-              class="fa-flip-horizontal"
-              :icon="['fas', 'truck']"
-            />
-            <span>Order Tracking</span>
-          </link-wrapper>
-
-          <link-wrapper
-            class="top-payment text-decoration-none"
-            location="/shop"
-          >
-            <font-awesome-icon :icon="['fas', 'heart']" />
-            Wishlist
-          </link-wrapper>
-        </div> -->
       </div>
     </div>
+  </div> -->
+  <div class="container">
+    <dropdown :items="internationalization.langs" class="ps-5"></dropdown>
   </div>
 </template>
 <script>

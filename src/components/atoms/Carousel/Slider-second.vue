@@ -1,6 +1,7 @@
 <template>
   <swiper
     ref="mySwiper"
+    :loop="true"
     :options="swiperOptions"
     :spaceBetween="30"
     :navigation="true"
@@ -10,39 +11,27 @@
     }"
     class="mySwiper"
   >
-    <swiper-slide v-for="item in advertises" :key="item.adv_index">
-      <div class="fluid-container slider d-block position-relative">
-        <div
-          class="slider-content d-flex flex-column position-absolute align-items-center text-center"
-        >
+  <swiper-slide v-for="item in advertises" :key="item.adv_index">
+      <a :href="item.link_url" target="_blank">
+        <div class="slider slider-middle banner-l" 
+        :style="{ backgroundImage: `url(${ item.image_path })` }">
         </div>
-        <div
-          class="banner-wrap caracteristics-slider position-relative d-flex flex-column align-items-center"
-        >
-        <a :href="item.link_url" target="_blank">
-          <img
-            class="slider-img"
-            :src="item.image_path"
-            :alt="adv + item.adv_index"
-          />
-        </a>
+        <div class="slider slider-middle banner-sm" 
+        :style="{ backgroundImage: `url(${ item.image_path_app })` }">
         </div>
-      </div>
+      </a>
     </swiper-slide>
   </swiper>
 </template>
 
 <script>
 import ButtonFilled from "../Button/ButtonFilled.vue";
-// import Swiper core and required modules
 import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
 
-// install Swiper modules
 SwiperCore.use([EffectFade, Navigation, Pagination]);
 
 import "swiper/swiper-bundle.css";
-// import { products } from "../../../data/auctions.json";
 import {addToCart} from "../../../composables/manageCart"
 
 export default {
@@ -54,20 +43,14 @@ export default {
     Swiper,
     SwiperSlide,
   },
-  props: {
-    items: {
-      type: Array,
-    },
-  },
   data() {
     return {
-      // products,
       advertises: []
     };
   },
   methods : {
     getAdvertises() {
-      this.axios.get(`${process.env.VUE_APP_PATH}/advertise/get_list?layoutID=2`)
+      this.axios.get(`${process.env.VUE_APP_PATH}/advertise/get_banner?layoutID=2`)
       .then(res => { 
         this.advertises = res.data.data;
       });
@@ -80,61 +63,25 @@ export default {
   }
 };
 </script>
-<style>
-@keyframes slideTop {
-  from {
-    transform: translateY(60px);
-  }
-  to {
-    transform: translateY(0px);
-  }
-}
-@keyframes slideFade {
-  from {
-    transform: translateY(60px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-.swiper-pagination {
-  bottom: 0 !important;
-  top: unset !important;
-}
-.slider {
-  /* background-image:url('../../../assets/images/slider/slider-bg.png'); */
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  background: #000;
-  background: rgba(0, 0, 0, 0.5);
-  width: 40px;
-  height:40px;
-  position: absolute;
-  display: block;
-  font-size: 18px;
-  z-index: 1000;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.swiper-button-prev::after {
-  margin-left: 50px;
-}
-.swiper-button-next::after {
-  margin-right: 50px;
-}
+<style scoped="scoped" lang="scss">
+@import "../../../assets/mixin.scss";
 
-</style>
-<style scoped="scoped">
-.slider {
-  padding: 30px;
-  padding-bottom: 0 !important;
+.slider-middle {
+  // web 16:3
+  height: 360px;
+  @include screen-xl {
+    height: 270px;
+  }
+  @include screen-l {
+    height: 192px;
+  }
+  @include screen-m {
+    height: 144px;
+  }
+  // app 16:9
+  @include screen-sm {
+    height: 324px;
+  }
 }
 .slider-icon {
   color: #8500bd;

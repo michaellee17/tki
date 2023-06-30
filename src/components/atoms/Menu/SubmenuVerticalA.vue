@@ -96,6 +96,9 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
+.submenu-vertical a:hover {
+  color: var(--bs-gray-500);
+}
 h6 {
   font-weight: bold;
   font-size: 14px;

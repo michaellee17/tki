@@ -1,3 +1,3 @@
 <template>
-  音樂祭
+  訂單記錄
 </template>

@@ -7,55 +7,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Home.vue')
   },
   {
-    path: '/shop',
-    name: 'ShopDefault',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Shop.vue')
-  },
-  {
-    path: '/shop/:pageNo',
-    name: 'ShopWithPagination',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Shop.vue')
-  },
-  {
-    path: '/cart',
-    name: 'Cart',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "cart" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Cart.vue')
-  },
-
-  {
-    path: process.env.VUE_APP_PRODUCT_PATH+':productID',
-    name: 'Product',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "product" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Product.vue')
-  },
-  {
-    path: '/checkout',
-    name: 'Checkout',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "checkout" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Checkout.vue')
-  },
-  // {
-  //   path: '/blog-list',
-  //   name: 'BlogList',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (shop.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/BlogList.vue')
-  // },
-  {
     path: '/announcement',
     name: 'Announcement',
     component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Announcement.vue')
@@ -65,14 +16,6 @@ const routes = [
     name: 'AnnouncementPage',
     component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Announcement.vue')
   },
-  // {
-  //   path: process.env.VUE_APP_BLOG_PATH+':blogID',
-  //   name: 'BlogPost',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (shop.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "blogpost" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/BlogPost.vue')
-  // },
   {
     path: '/announcement/:annoucementID',
     name: 'AnnouncementPost',
@@ -81,33 +24,13 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+
     component: () => import(/* webpackChunkName: "about" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/About.vue')
-  },
-  {
-    path: '/my-account',
-    name: 'MyAccount',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "myaccount" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/MyAccount.vue')
-  },
-  {
-    path: '/wishlist',
-    name: 'Wishlist',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "wishlist" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Wishlist.vue')
   },
   {
     path: '/contact',
     name: 'Contact',
-    // route level code-splitting
-    // this generates a separate chunk (shop.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+
     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Contact.vue')
   },
   {
@@ -116,19 +39,41 @@ const routes = [
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/FAQ.vue')
   },
   {
+    path: '/service-terms',
+    name: 'ServiceTerms',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/ServiceTerms.vue')
+  },
+  {
+    path: '/privacy-terms',
+    name: 'PrivacyTerms',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/PrivacyTerms.vue')
+  },
+  {
     path: '/member',
     name: 'Member',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Member/Member.vue')
-  },
-  {
-    path: '/my-ticket',
-    name: 'MyTicket',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/MyTicket.vue')
-  },
-  {
-    path: '/buy-ticket-list',
-    name: 'BuyTicketList',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/BuyTicketList.vue')
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Member/Member.vue'),
+    children: [
+      {
+        path: 'index',
+        component: () => import('../views/main/Member/Index.vue')
+      },
+      {
+        path: 'info',
+        component: () => import('../views/main/Member/Info.vue')
+      },
+      {
+        path: 'order-history',
+        component: () => import('../views/main/Member/OrderHistory.vue')
+      },
+      {
+        path: 'reward',
+        component: () => import('../views/main/Member/Reward.vue')
+      },
+      {
+        path: 'my-collection',
+        component: () => import('../views/main/Member/MyCollection.vue')
+      },
+    ]
   },
   {
     path: '/activity',
@@ -140,12 +85,12 @@ const routes = [
         component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Concert.vue')
       },
       {
-        path: 'music-festival',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/MusicFestival.vue')
+        path: 'sport',
+        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Sport.vue')
       },
       {
-        path: 'opera',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Opera.vue')
+        path: 'other',
+        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Other.vue')
       },
       {
         path: 'show',
@@ -153,8 +98,74 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/my-ticket',
+    name: 'MyTicket',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/MyTicket.vue')
+  },
+  {
+    path: '/buy-ticket-list',
+    name: 'BuyTicketList',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/BuyTicketList.vue')
+  },
   { path: '/404',     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/NotFound.vue')},  
-  { path: '/:catchAll(.*)', redirect: '/404' },  
+  // { path: '/:catchAll(.*)', redirect: '/404' },  
+   // {
+  //   path: '/my-account',
+  //   name: 'MyAccount',
+
+  //   component: () => import(/* webpackChunkName: "myaccount" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/MyAccount.vue')
+  // },
+  // {
+  //   path: '/wishlist',
+  //   name: 'Wishlist',
+
+  //   component: () => import(/* webpackChunkName: "wishlist" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Wishlist.vue')
+  // },
+  // {
+  //   path: '/shop',
+  //   name: 'ShopDefault',
+  //   component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Shop.vue')
+  // },
+  // {
+  //   path: '/shop/:pageNo',
+  //   name: 'ShopWithPagination',
+
+  //   component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Shop.vue')
+  // },
+  // {
+  //   path: '/cart',
+  //   name: 'Cart',
+  //   component: () => import(/* webpackChunkName: "cart" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Cart.vue')
+  // },
+  // {
+  //   path: process.env.VUE_APP_PRODUCT_PATH+':productID',
+  //   name: 'Product',
+
+  //   component: () => import(/* webpackChunkName: "product" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Product.vue')
+  // },
+  // {
+  //   path: '/checkout',
+  //   name: 'Checkout',
+
+  //   component: () => import(/* webpackChunkName: "checkout" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Checkout.vue')
+  // },
+  // {
+  //   path: '/blog-list',
+  //   name: 'BlogList',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (shop.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/BlogList.vue')
+  // },
+  // {
+    //   path: process.env.VUE_APP_BLOG_PATH+':blogID',
+    //   name: 'BlogPost',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (shop.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "blogpost" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/BlogPost.vue')
+    // },
 ]
 
 const router = createRouter({

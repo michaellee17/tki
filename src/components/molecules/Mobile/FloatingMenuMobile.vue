@@ -80,7 +80,7 @@ a:hover path {
   font-size: 12px !important;
   font-weight: 300 !important;
 }
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
 .mobile-menu-item{
   padding:5px 0!important;
 }
@@ -88,12 +88,12 @@ a:hover path {
   font-weight:300;
 }
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
   .menu-mobile {
     display: none !important;
   }
 }
-@media screen and (min-width: 1600px) {
+/* @media screen and (min-width: 1600px) {
   .menu-mobile {
     display: none !important;
   }
@@ -102,5 +102,5 @@ a:hover path {
   .menu-mobile {
     display: none !important;
   }
-}
+} */
 </style>

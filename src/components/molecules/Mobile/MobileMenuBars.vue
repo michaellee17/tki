@@ -1,13 +1,13 @@
 <template>
   <div class="d-flex flex-column">
-    <div class="categories d-flex align-items-center">
+    <!-- <div class="categories d-flex align-items-center">
       <linked-wrapper
         class="mt-search-icon"
         @click.prevent="expanded = !expanded">
         <font-awesome-icon class="text-dark" :icon="['fas', 'bars']" />
         <span class="text-uppercase fw-bold ms-2">categories</span>
       </linked-wrapper>
-    </div>
+    </div> -->
     <transition name="showMenu">
       <ul v-if="expanded" class="categories-list list-unstyled ps-2">
         <li

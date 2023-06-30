@@ -1,5 +1,6 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+  faUserCircle,
   faSearch,
   faThList,
   faBorderAll,
@@ -40,10 +41,11 @@ import {
   faLaptop,
   faGamepad,
   faSpa,
-  faMobile
+  faMobile,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faUserCircle,
   faSearch,
   faThList,
   faBorderAll,

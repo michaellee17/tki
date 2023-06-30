@@ -3,7 +3,7 @@
     <div class="container justify-content-start">
 
       <div class="navbar w-100 p-0" :class="{'show' :isActiveTablet}">
-        <ul class="navbar-nav me-auto mb-2 ms-0 mb-lg-0 h-100 w-100">
+        <ul class="navbar-nav me-auto ms-0 ms-lg-4 mb-lg-0 h-100 w-100">
           <!-- logo -->
           <li class="d-flex align-items-center pe-4">
             <div class="logo-section align-items-center justify-content-between ">
@@ -36,7 +36,7 @@
             @mouseover="hoveredItem = i"
             @mouseleave="hoveredItem = -1">
             <LinkWrapper
-              class="nav-link text-white fs-6"
+              class="nav-link text-white fs-6 mx-2"
               :location="link.location"
               :name="link.name"
               :external="link.external"
@@ -53,28 +53,20 @@
             </template>
           </li>
           <!-- search -->
-          <li class="d-flex align-items-center ms-auto pe-4">
+          <!-- <li class="d-flex align-items-center ms-auto pe-4">
             <div class="search-wrap">
               <input type="text" placeholder="搜尋活動..." class="search-input" >
               <font-awesome-icon :icon="['fas', 'search']" class="search-icon"/>
             </div>
-          </li>
+          </li> -->
           <!-- login -->
           <li
-            class="nav-item position-relative h-100 d-flex align-items-center"
+            class="nav-item position-relative h-100 d-flex align-items-center ms-auto"
             @mouseover="hoveredItem = 'login'"
             @mouseleave="hoveredItem = -1">
-            <!-- 尚未登入 -->
-            <!-- <LinkWrapper
-              class="nav-link text-white fs-6 px-0" 
-              :name="'登入'"
-              @click="openLoginModal" /> -->
-              <!-- 已登入 -->
-              
-            <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-2" />
             <LinkWrapper
               class="nav-link text-white fs-6 px-0" 
-              :name="'登入'" />
+              :name="'登出'" />
             <transition name="showMenu">
               <SubmenuVerticalA
                 v-show="hoveredItem === 'login'"
@@ -86,18 +78,15 @@
       </div>
     </div>
   </nav>
-  <loginModal ref="loginModal"></loginModal>
 </template>
 
 <script>
-import loginModal from "../../organisms/LoginModal.vue"
 import SubmenuVerticalA from "../../atoms/Menu/SubmenuVerticalA.vue";
 import { links } from "../../../data/links.json";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
 
 export default {
   components: {
-    loginModal,
     SubmenuVerticalA,
     LinkWrapper,
   },
@@ -119,11 +108,6 @@ export default {
         ]
     };
   },
-  methods: {
-    openLoginModal() {
-      this.$refs.loginModal.showModal();
-    },
-   }
 };
 </script>
 <style>
@@ -159,13 +143,10 @@ export default {
   cursor: pointer;
 }
 .nav-item a {
-  letter-spacing: 4px;
+  color: #ffff;
+  font-size: 14px !important;
+  font-weight: 500 !important;
 }
-// .nav-item a {
-//   color: #ffff;
-//   font-size: 14px !important;
-//   font-weight: 500 !important;
-// }
 li > a:hover {
   -moz-transition: all 0.1s ease-in-out;
   -webkit-transition: all 0.1s ease-in-out;
@@ -176,11 +157,11 @@ li > a:hover {
 /*Edit starts here*/
 li > a::after {
   content: "";
-  top: 12px;
+  top: 15px;
   margin: auto;
   left: 0;
   right: 0;
-  width: 60%;
+  width: 30%;
   position: absolute;
   height: 2px;
   background: #ffff;
@@ -223,15 +204,15 @@ li {
 .dropdown-toggle::after {
   content: none;
 }
-// .navbar a {
-//   text-align: left;
-//   box-sizing: border-box;
-//   text-decoration: none;
-//   background-color: transparent;
-//   color: #606060;
-//   font-weight: 400;
-//   font-size: 14px;
-// }
+.navbar a {
+  text-align: left;
+  box-sizing: border-box;
+  text-decoration: none;
+  background-color: transparent;
+  color: #606060;
+  font-weight: 400;
+  font-size: 14px;
+}
 .nav-link.bot_nav_cat {
   background: #fff !important;
   opacity: 1;
@@ -295,20 +276,18 @@ li {
 .search-wrap {
   position: relative;
 }
-.search-input {
-  outline: 0;
-  border: 0;
-  border-radius: 24px;
-  padding: 5px 35px 5px 15px;
-  width: 145px;
-  line-height: 35px;
-}
+// .search-input {
+//   outline: 0;
+//   border: 0;
+//   border-radius: 10px;
+//   padding: 5px 10px;
+//   width: 130px;
+// }
 .search-icon {
   position: absolute;
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--primary-color);
 }
 
 @media (max-width: 768px) {
