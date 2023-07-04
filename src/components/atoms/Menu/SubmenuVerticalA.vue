@@ -73,17 +73,17 @@ export default {
   top: 0;
   z-index: 100;
   background: white;
-  padding: 15px !important;
-}
-.flex-column {
-  margin: 20px 0 !important;
 }
 .item-group svg {
   color: #606060;
   width: 13px;
 }
+.item-group:not(:last-child){
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4)
+}
 .col-wrapper {
   min-width: 100px;
+  margin: 1rem;
 }
 .item-group a {
   padding: 12px 0;
@@ -97,7 +97,7 @@ export default {
   cursor: pointer;
 }
 .submenu-vertical a:hover {
-  color: var(--bs-gray-500);
+  color: var(--primary-color);
 }
 h6 {
   font-weight: bold;

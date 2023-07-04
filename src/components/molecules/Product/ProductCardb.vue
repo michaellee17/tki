@@ -1,5 +1,5 @@
 <template>
-  <div class="product-card d-flex h-100">
+  <div class="product-card d-flex h-100 p-3 gap-3">
     <div class="align-items-center d-flex justify-content-center">
       <link-wrapper class="text-decoration-none" :location="productURL">
         <div class="card border-0 position-relative">
@@ -17,9 +17,9 @@
         </div>
       </link-wrapper>
     </div>
-    <div class="card-name d-flex flex-column mt-4">
+    <div class="card-name d-flex flex-column">
       <link-wrapper class="text-decoration-none text-dark" :location="productURL">
-        <span class="fw-bold title">{{ name }}</span>
+        <h5 class="fs-18 title">{{ name }}</h5>
       </link-wrapper>
       <!-- <span class="fs-7 status">
         <template v-if="type === 'single'">
@@ -101,9 +101,9 @@ export default {
   padding: 11px ;
 }
 
-span.title {
+/* span.title {
   font-size: 18px;
-}
+} */
 
 .product-card {
   box-shadow: 0 0 25px rgb(0 0 0 / 10%);
@@ -142,9 +142,11 @@ span.title {
     flex-direction: column;
     text-align: center;
   }
-
-  .card-name span {
+  .title {
+        font-size: 14px;
+    }
+  /* .card-name span {
     font-size: 13px !important;
-  }
+  } */
 }
 </style>

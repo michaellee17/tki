@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="icon_zoom_out_map_active" transform="translate(-993 -1506)">
+    <rect id="Rectangle_71" data-name="Rectangle 71" width="32" height="32" transform="translate(993 1506)" fill="none"/>
+    <path id="zoom_out_map_FILL0_wght400_GRAD0_opsz48" d="M120-810v-9.583h2.5v5.292l6.167-6.167,1.792,1.792-6.167,6.167h5.292v2.5Zm20.417,0v-2.5h5.292l-6.125-6.125,1.792-1.792,6.125,6.125v-5.292H150V-810Zm-11.792-19.583-6.125-6.125v5.292H120V-840h9.583v2.5h-5.292l6.125,6.125Zm12.75,0-1.792-1.792,6.125-6.125h-5.292V-840H150v9.583h-2.5v-5.292Z" transform="translate(874 2347)" fill="#f5742e"/>
+  </g>
+</svg>

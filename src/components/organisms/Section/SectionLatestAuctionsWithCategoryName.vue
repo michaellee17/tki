@@ -3,23 +3,21 @@
     <CardCategory
       class="product-card-category col-md-3"
       :title="title"
-      :productsNo="productsNo"
-      :buttonLocation="location"
-      :background="background"
-    />
+      :products-no="productsNo"
+      :button-location="location"
+      :background="background" />
     <div class="col-md-9 p-0 mt-4 mt-md-0">
       <div class="row productb-row row-cols-2 m-0">
-      <div
-        class="col-6 p-2 p-md-0"
-        v-for="product in getLimitedAuctions"
-        :key="product"
-      >
-        <ProductCardb
-          v-bind="product"
-          :endDate="new Date(product.endDate)"
-          class="prodcard-padding"
-        />
-      </div>
+        <!-- <ActivityCard></ActivityCard> -->
+        <div
+          v-for="product in getLimitedAuctions"
+          :key="product"
+          class="col-6 p-2 p-md-0">
+          <ProductCardb
+            v-bind="product"
+            :end-date="new Date(product.endDate)"
+            class="prodcard-padding" />
+        </div>
       </div>
     </div>
   </div>
@@ -28,9 +26,10 @@
 import CardCategory from "../../molecules/Card/CardCategory.vue";
 import ProductCardb from "../../molecules/Product/ProductCardb.vue";
 import { products } from "../../../data/auctions.json";
+import ActivityCard from "../../ActivityCard.vue";
 
 export default {
-  components: { CardCategory, ProductCardb },
+  components: { CardCategory, ProductCardb, ActivityCard },
   props: {
     location: {
       type: String
@@ -66,7 +65,7 @@ export default {
 };
 </script>
 
-<style scoped="scoped">
+<style>
 .productb-row .col-6:nth-child(3),
 .productb-row .col-6:nth-child(4) {
   margin-top: 15px;

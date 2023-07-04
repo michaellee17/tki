@@ -8,8 +8,7 @@
           @click="
             showFilterMenu = !showFilterMenu;
             $store.commit('toggleModal', 'filter');
-          "
-        >
+          ">
           <font-awesome-icon class="fa icon" :icon="['fas', 'align-left']" />
         </button>
       </div>
@@ -18,21 +17,19 @@
           <BlogCard v-for="blog in blogs" :key="blog" v-bind="blog" />
           <div class="blog-pagination d-flex align-items-start">
             <pagination-buttons
-              class="my-2"
               v-if="numberOfItems / itemsPerPage > 1"
-              :pageNumbers="numberOfItems / itemsPerPage"
-              :currentPage="
+              class="my-2"
+              :page-numbers="numberOfItems / itemsPerPage"
+              :current-page="
                 $route.params.pageNo === undefined
                   ? currentPage
                   : parseInt($route.params.pageNo)
-              "
-            ></pagination-buttons>
+              " />
           </div>
         </div>
         <div
           class="col-sm-12 col-lg-4 blog-list ps-md-5 filter-mobile d-none d-md-block"
-          :class="{ active: filterMenuState }"
-        >
+          :class="{ active: filterMenuState }">
           <BlogWidgets />
         </div>
       </div>
@@ -49,14 +46,6 @@ import BlogWidgets from "../../components/molecules/Blog/BlogWidgets.vue";
 
 import { blogs } from "../../data/blogs.json";
 export default {
-  created() {
-    document.title = "平台公告 - T-KI";
-  },
-  mounted() {
-    this.$store.commit("setLocation", [
-      { title: "平台公告", location: "/blog-list" },
-    ]);
-  },
   components: {
     BlogCard,
     LayoutDefault,
@@ -82,6 +71,14 @@ export default {
         ? this.$store.state.app.currentActiveModal
         : false;
     },
+  },
+  created() {
+    document.title = "平台公告 - T-KI";
+  },
+  mounted() {
+    this.$store.commit("setLocation", [
+      { title: "平台公告", location: "/blog-list" },
+    ]);
   },
 };
 </script>

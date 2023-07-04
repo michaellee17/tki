@@ -13,23 +13,20 @@
           <img
             :class="{ hide: photos[1] }"
             :src="$getFileSource(photos[0])"
-            :alt="name"
-          />
+            :alt="name">
           <img
             :class="{ show: photos[0] }"
             class="position-absolute"
             :src="$getFileSource(photos[1])"
-            :alt="name"
-          />
+            :alt="name">
         </div>
       </link-wrapper>
       <div class=" product-card-title pt-2 pb-2 position-relative h-50">
         <Counter
-          :endDate="endDate"
-          class="prod-card-counter position-absolute"
-          counterInnerClass=" mx-auto"
           v-if="didAuctionEnd && type ==='auction'"
-        />
+          :end-date="endDate"
+          class="prod-card-counter position-absolute"
+          counter-inner-class=" mx-auto" />
         <div class="position-relative elbordaro">
           <h3 class="fw-bold product-title m-0">
             <link-wrapper class="text-decoration-none " :location="productURL">

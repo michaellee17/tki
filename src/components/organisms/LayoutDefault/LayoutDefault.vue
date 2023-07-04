@@ -1,13 +1,13 @@
 <template>
   <div class="wrap">
     <div class="container">
-      <dropdown :items="internationalization.langs"></dropdown>
+      <dropdown :items="internationalization.langs" />
     </div>
     <PageHeader />
-    <div class="mb-5">
+    <div class="mb-100">
       <slot><div class="text-center">No content yet.</div> </slot>
     </div>
-    <Footer class="mt-5"/>
+    <Footer />
   </div>
 </template>
 
@@ -18,16 +18,15 @@ import PageHeader from "../PageHeader.vue";
 import internationalization from "../../../data/internationalization.json";
 
 export default {
-  data() {
-    return {
-      internationalization,
-    };
-  },
-  name: "Home",
   components: {
     Footer,
     PageHeader,
     Dropdown,
+  },
+  data() {
+    return {
+      internationalization,
+    };
   },
 };
 </script>
@@ -44,5 +43,8 @@ export default {
 
 .navbar-header .logo img {
   max-width: 85px;
+}
+.mb-100 {
+  margin-bottom: 100px;
 }
 </style>

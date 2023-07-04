@@ -1,18 +1,16 @@
 <template>
   <nav class="navbar navbar-expand-sm p-0">
     <div class="container justify-content-start">
-
       <div class="navbar w-100 p-0" :class="{'show' :isActiveTablet}">
-        <ul class="navbar-nav me-auto mb-2 ms-0 mb-lg-0 h-100 w-100">
+        <ul class="navbar-nav me-auto mb-2 ms-0 mb-lg-0 h-100 w-100 px-0">
           <!-- logo -->
-          <li class="d-flex align-items-center pe-4">
+          <li class="d-flex align-items-center pe-3">
             <div class="logo-section align-items-center justify-content-between ">
               <div class="logo logo-image">
                 <link-wrapper :location="'/'">
                   <img
                     :src="$getFileSource(path)"
-                    :alt="$store.state.app.settings.websiteName"
-                  />
+                    :alt="$store.state.app.settings.websiteName">
                 </link-wrapper>
               </div>
               <div class="icons d-md-none d-flex align-items-center">
@@ -22,7 +20,7 @@
                   </a>
                 </div>
                 <div class="mobile_only_icon_group search">
-                  <a href="#"  @click.prevent="$emit('toggleMenuMobile')" class="mt-search-icon bars-color fs-2">
+                  <a href="#" class="mt-search-icon bars-color fs-2" @click.prevent="$emit('toggleMenuMobile')">
                     <font-awesome-icon class="text-dark " :icon="['fas', 'bars']" />
                   </a>
                 </div>
@@ -55,13 +53,13 @@
           <!-- search -->
           <li class="d-flex align-items-center ms-auto pe-4">
             <div class="search-wrap">
-              <input type="text" placeholder="搜尋活動..." class="search-input" >
-              <font-awesome-icon :icon="['fas', 'search']" class="search-icon"/>
+              <input type="text" placeholder="搜尋活動..." class="search-input">
+              <font-awesome-icon :icon="['fas', 'search']" class="search-icon" />
             </div>
           </li>
           <!-- login -->
           <li
-            class="nav-item position-relative h-100 d-flex align-items-center"
+            class="login-items nav-item position-relative h-100 d-flex align-items-center"
             @mouseover="hoveredItem = 'login'"
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
@@ -69,12 +67,11 @@
               class="nav-link text-white fs-6 px-0" 
               :name="'登入'"
               @click="openLoginModal" /> -->
-              <!-- 已登入 -->
-              
+            <!-- 已登入 -->
             <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-2" />
             <LinkWrapper
               class="nav-link text-white fs-6 px-0" 
-              :name="'登入'" />
+              :name="this.$store.state.user.loginStatus" />
             <transition name="showMenu">
               <SubmenuVerticalA
                 v-show="hoveredItem === 'login'"
@@ -86,11 +83,11 @@
       </div>
     </div>
   </nav>
-  <loginModal ref="loginModal"></loginModal>
+  <loginModal ref="loginModal" />
 </template>
 
 <script>
-import loginModal from "../../organisms/LoginModal.vue"
+import loginModal from "../../LoginModal.vue"
 import SubmenuVerticalA from "../../atoms/Menu/SubmenuVerticalA.vue";
 import { links } from "../../../data/links.json";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
@@ -108,12 +105,17 @@ export default {
       isActive: false,
       links,
       hoveredItem: -1,
+      // hoveredItem: 'login',
       loggedInItems : [
           {
             "links": [
-              { "location": "/member", "name": "會員中心" },
-              { "location": "/my-ticket", "name": "我的票券" },
-              { "location": "/buy-ticket-list", "name": "購票清單" }
+              { "location": "/member/index", "name": "會員中心" },
+              { "location": "/member/order-history", "name": "訂單記錄" },
+              { "location": "/member/reward", "name": "獲獎紀錄" },
+              { "location": "/member/my-collection", "name": "我的收藏" },
+              { "location": "/member/my-ticket", "name": "我的票券" },
+              { "location": "/buy-ticket-list", "name": "購票清單" },
+              { "location": "/", "name": "登出" },
             ]
           }
         ]
@@ -126,7 +128,7 @@ export default {
    }
 };
 </script>
-<style>
+<style lang="scss">
 .grow-enter-active,
 .grow-leave-active {
   transition: max-height 0.5s ease;
@@ -159,7 +161,7 @@ export default {
   cursor: pointer;
 }
 .nav-item a {
-  letter-spacing: 4px;
+  letter-spacing: 3px;
 }
 // .nav-item a {
 //   color: #ffff;
@@ -207,7 +209,7 @@ li {
 }
 .nav-item > .menu-hover-login {
   top: 100%;
-  left: -70px;
+  left: -50px;
 }
 .cat-icon {
   margin-top:3px;
@@ -302,6 +304,7 @@ li {
   padding: 5px 35px 5px 15px;
   width: 145px;
   line-height: 35px;
+  color: var(--primary-color);
 }
 .search-icon {
   position: absolute;
@@ -310,6 +313,15 @@ li {
   transform: translateY(-50%);
   color: var(--primary-color);
 }
+.login-items .submenu-vertical {
+    background-color: rgba(245, 116, 46, 0.4);
+    & a {
+      color: #fff;
+    }
+}
+.navbar-expand-sm .navbar-nav .nav-link {
+    padding: 0 6px !important;
+  }
 
 @media (max-width: 768px) {
   .navbar {

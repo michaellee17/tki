@@ -23,9 +23,9 @@
       </div>
     </div>
   </div>
-  <navbar></navbar>
+  <navbar />
   <transition name="grow">
-    <mobile-menu-bars v-if="showMobileMenu"></mobile-menu-bars>
+    <mobile-menu-bars v-if="showMobileMenu" />
   </transition>
 </template>
 <script>

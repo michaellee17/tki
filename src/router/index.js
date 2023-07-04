@@ -51,34 +51,44 @@ const routes = [
   {
     path: '/member',
     name: 'Member',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Member/Member.vue'),
+    component: () => import('../views/main/Member/Layout.vue'),
     children: [
       {
         path: 'index',
+        name: 'Index',
         component: () => import('../views/main/Member/Index.vue')
       },
       {
         path: 'info',
+        name: 'Info',
         component: () => import('../views/main/Member/Info.vue')
       },
       {
         path: 'order-history',
+        name: 'OrderHistory',
         component: () => import('../views/main/Member/OrderHistory.vue')
       },
       {
         path: 'reward',
+        name: 'Reward',
         component: () => import('../views/main/Member/Reward.vue')
       },
       {
         path: 'my-collection',
+        name: 'MyCollection',
         component: () => import('../views/main/Member/MyCollection.vue')
+      },
+      {
+        path: 'my-ticket',
+        name: 'MyTicket',
+        component: () => import('../views/main/Member/MyTicket.vue')
       },
     ]
   },
   {
     path: '/activity',
     name: 'Activity',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Activity.vue'),
+    component: () => import('../views/main/Activity/Layout.vue'),
     children: [
       {
         path: 'concert',
@@ -96,12 +106,56 @@ const routes = [
         path: 'show',
         component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Show.vue')
       },
+      {
+        path: 'detail/:activityId',
+        component: () => import('../views/main/Activity/ActivityDetail/ActivityDetail.vue'),
+        children: [
+          {
+            path: 'news',
+            name: 'News',
+            component: () => import('../views/main/Activity/ActivityDetail/News.vue'),
+          },
+          {
+            path: 'buy-ticket',
+            name: 'BuyTicket',
+            component: () => import('../views/main/Activity/ActivityDetail/BuyTicket.vue'),
+            children: [
+              {
+                path: 'session',
+                name: 'BuyTicketSession',
+                component: () => import('../views/main/Activity/ActivityDetail/BuyTicketSession.vue')
+              },
+              {
+                path: 'type',
+                name: 'BuyTicketType',
+                component: () => import('../views/main/Activity/ActivityDetail/BuyTicketType.vue')
+              },
+              {
+                path: 'seat',
+                name: 'BuyTicketSeat',
+                component: () => import('../views/main/Activity/ActivityDetail/BuyTicketSeat.vue')
+              },
+            ]
+          },
+          
+          {
+            path: 'location',
+            name: 'Location',
+            component: () => import('../views/main/Activity/ActivityDetail/Location.vue')
+          },
+          {
+            path: 'notes',
+            name: 'Notes',
+            component: () => import('../views/main/Activity/ActivityDetail/Notes.vue')
+          },
+        ]
+      },
+      {
+        path: 'news-detail',
+        name: 'NewsDetail',
+        component: () => import('../views/main/Activity/ActivityDetail/NewsDetail.vue')
+      },
     ]
-  },
-  {
-    path: '/my-ticket',
-    name: 'MyTicket',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/MyTicket.vue')
   },
   {
     path: '/buy-ticket-list',

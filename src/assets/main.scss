@@ -1,11 +1,10 @@
-// @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
-// @import url("https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
 
-body {
+:root {
   --primary-color: #f5742e;
   --primary-light-color: #F9EDE0;
+  --primary-bg-color: #F5742E1F;
   --secondary-color: #0000008C;
   --info-color: #5990fa;
   --danger-color: #ea4335;
@@ -13,8 +12,12 @@ body {
   font-family: 'Noto Sans TC', sans-serif;
 }
 a {
-  transition: 0.1s linear;
+  // transition: 0.1s linear;
   text-decoration: none;
+  color: #000;
+}
+ul {
+  padding: 0 12px;
 }
 ul li{
   list-style: none;
@@ -51,12 +54,12 @@ select {
   cursor:zoom-in;
 }
 /* For IE (thanks to @SaiManoj) */
-select::-ms-expand {
-  display: none;
-}
-.color {
-  color: var(--primary-color);
-}
+// select::-ms-expand {
+//   display: none;
+// }
+// .color {
+//   color: var(--primary-color);
+// }
 // body
 //   a:hover:not(.text-white):not(.top-payment):not(.top-order):not(.bot_nav_cat):not(.main-content-btn),
 // a.text-dark:hover:not(.bot_nav_cat) {
@@ -122,15 +125,15 @@ button:focus {
 //   padding-bottom: 30px;
 //   padding-top: 60px;
 // }
-.radius {
-  border-radius: 45px !important;
-}
-.blue-background {
-  background-color: var(--primary-color);
-}
-.blue-color {
-  color: var(--primary-color);
-}
+// .radius {
+//   border-radius: 45px !important;
+// }
+// .blue-background {
+//   background-color: var(--primary-color);
+// }
+// .blue-color {
+//   color: var(--primary-color);
+// }
 // div.popper {
 //   background: #5e5553 !important;
 //   font-weight: 800 !important;
@@ -144,23 +147,24 @@ button:focus {
 //   cursor: pointer;
 //   min-width: 120px;
 // }
-.popper #arrow::before {
-  left: 0 !important;
-}
-.gray {
-  background-color: #f5f3f4;
-}
-.close-radius {
-  border-radius: 0px;
-}
-input.radius.list-search {
-  padding-left: 20px !important;
-}
+// .popper #arrow::before {
+//   left: 0 !important;
+// }
+// .gray {
+//   background-color: #f5f3f4;
+// }
+// .close-radius {
+//   border-radius: 0px;
+// }
+// input.radius.list-search {
+//   padding-left: 20px !important;
+// }
 select {
   background: none;
 }
 input {
   transition: border 0.25s linear;
+  padding: 3px 8px;
 }
 .btn:focus {
   outline: none !important;
@@ -193,10 +197,61 @@ input::placeholder {
   color: var(--pale-color)!important;
 }
 
-
-
-// @media (min-width: 1400px) {
-//   .container {
-//     max-width: 1400px !important;
-//   }
-// }
+a {
+  cursor: pointer;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fs-18 {
+  font-size: 18px;
+}
+.text-gray-800 {
+  color: var(--bs-gray-800)
+}
+/* nav */
+.nav-tab-primary {
+  font-size: 22px;
+  color: var(--primary-color);
+  opacity: 0.5;
+  margin-bottom: 0;
+  &.nav-tab-primary.active {
+    opacity: 1;
+    border-bottom: 6px solid #F5742E;
+  }
+}
+/* image */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.bg-cover {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* button */
+.btn-outline-primaryA {
+  border-radius: 50rem;
+}
+.btn-outline-primaryA, .btn-outline-primaryB{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-color);
+  background-color: var(--primary-bg-color);
+  padding: 0.4rem 2rem;
+  & .icon {
+      filter: invert(66%) sepia(66%) saturate(3736%) hue-rotate(338deg) brightness(96%) contrast(101%);
+  }
+}
+.btn-outline-primaryA.active, .btn-outline-primaryA:hover,
+.btn-outline-primaryB.active, .btn-outline-primaryB:hover {
+  color: #fff;
+  background-color: var(--primary-color);
+  & .icon {
+      filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+  }
+}

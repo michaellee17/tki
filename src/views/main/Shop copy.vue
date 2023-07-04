@@ -8,21 +8,18 @@
       <div class="row">
         <div
           class="filter-col col-md-3 col-sm-12 pe-4 d-none d-md-block filter-mobile"
-          :class="{ active: filterMenuState }"
-        >
+          :class="{ active: filterMenuState }">
           <!-- Search -->
           <div class="filter-search-shop">
             <div>
               <FilterTitle
                 class="title mb-3 mt-0"
-                title="Search for auctions"
-              />
+                title="Search for auctions" />
             </div>
             <div>
               <BasicInputSearch
                 class="list-search"
-                placeHolder="Search products"
-              />
+                place-holder="Search products" />
             </div>
           </div>
           <!-- RangePrice -->
@@ -36,17 +33,14 @@
                 :process="true"
                 :max="500.0"
                 :tooltip-formatter="(v) => $formatPrice(v)"
-                :contained="true"
-              ></vue-slider>
+                :contained="true" />
               <div
-                class="d-flex align-items-center justify-content-between mt-3"
-              >
+                class="d-flex align-items-center justify-content-between mt-3">
                 <ButtonFilled
                   class="filter-btn text-white fw-bold mt-0"
                   text="Filter"
                   size="small"
-                  :hasRoundedCorners="true"
-                />
+                  :has-rounded-corners="true" />
                 <div class="price-font">
                   Price: {{ $formatPrice(rangeSliderValue[0]) }} -
                   {{ $formatPrice(rangeSliderValue[1]) }}
@@ -62,15 +56,13 @@
             <div class="shop-slider">
               <BasicInputSearch
                 class="input-color mb-2"
-                placeHolder="Any color"
-              />
+                place-holder="Any color" />
               <ButtonFilled
                 class="filter-btn fw-bold text-white"
                 name="Apply"
                 text="Apply"
                 size="small"
-                :hasRoundedCorners="true"
-              />
+                :has-rounded-corners="true" />
             </div>
           </div>
           <!-- Condition -->
@@ -81,15 +73,13 @@
             <div class="shop-slider">
               <BasicInputSearch
                 class="input-condition mb-2"
-                placeHolder="Any Condition"
-              />
+                place-holder="Any Condition" />
               <ButtonFilled
                 class="filter-btn fw-bold text-white"
                 name="Apply"
                 text="Apply"
                 size="small"
-                :hasRoundedCorners="true"
-              />
+                :has-rounded-corners="true" />
             </div>
           </div>
           <!-- Size -->
@@ -120,37 +110,34 @@
             </div>
           </div>
         </div>
-        <div class="col-md-9 col-sm-12 shop-grid" id="topGrid">
+        <div id="topGrid" class="col-md-9 col-sm-12 shop-grid">
           <div class="fluid-container filter-bar-shop">
             <filter-bar
-              :totalResults="numberOfItems"
-              :itemsShowing="
+              :total-results="numberOfItems"
+              :items-showing="
                 currentPage * itemsPerPage > numberOfItems
                   ? numberOfItems
                   : currentPage * itemsPerPage
-              "
-            >
-              <template v-slot:left>
-                <change-layout-buttons class="me-4" @onChange='layout = !layout'></change-layout-buttons>
+              ">
+              <template #left>
+                <change-layout-buttons class="me-4" @onChange="layout = !layout" />
 
                 <button
                   class="float-end d-block d-md-none btn-link btn text-decoration-none"
                   @click="
                     showFilterMenu = !showFilterMenu;
                     $store.commit('toggleModal', 'filter');
-                  "
-                >
+                  ">
                   <font-awesome-icon class="fa icon" :icon="['fas', 'cogs']" />
                 </button>
               </template>
-              <template v-slot:right>
+              <template #right>
                 <div class="sorting d-flex">
                   <BasicSelectBox
                     class="orderby"
                     :options="sortOptions"
-                    @selected="selectedValue = $event"
-                    :defaultValueText="'Default sorting'"
-                  />
+                    :default-value-text="'Default sorting'"
+                    @selected="selectedValue = $event" />
                 </div>
               </template>
             </filter-bar>
@@ -159,22 +146,20 @@
             <component
               :is="layout === true ? 'Grid' : 'List'"
               :items="limitAuctionsPerPage()"
-              :itemsPerRow="3"
-            />
+              :items-per-row="3" />
           </keep-alive>
 
           <pagination-buttons
-            class="pagination-shop"
             v-if="numberOfItems / itemsPerPage > 1"
-            resetID="topGrid"
-            :pageNumbers="Math.ceil(numberOfItems / itemsPerPage)"
-            @onChangePageNoRequest="updatePage"
-            :currentPage="
+            class="pagination-shop"
+            reset-i-d="topGrid"
+            :page-numbers="Math.ceil(numberOfItems / itemsPerPage)"
+            :current-page="
               $route.params.pageNo === undefined
                 ? currentPage
                 : parseInt($route.params.pageNo)
             "
-          ></pagination-buttons>
+            @onChangePageNoRequest="updatePage" />
         </div>
       </div>
     </div>
@@ -204,13 +189,6 @@ import { tags } from "../../data/tags.json";
 import { categories } from "../../data/productCategories.json";
 import { dimensions } from "../../data/dimensions.json";
 export default {
-  beforeCreate() {
-    document.title = "Products - iBid";
-  },
-  mounted() {
-    this.$store.commit("setLocation", [{ title: "Shop", location: "/shop" }]);
-    this.numberOfItems = this.auctions.length;
-  },
   components: {
     LayoutDefault,
     PaginationButtons,
@@ -255,6 +233,20 @@ export default {
       showFilterMenu: false,
     };
   },
+  computed: {
+    filterMenuState() {
+      return this.$store.state.app.currentActiveModal === "filter"
+        ? this.$store.state.app.currentActiveModal
+        : false;
+    },
+  },
+  beforeCreate() {
+    document.title = "Products - iBid";
+  },
+  mounted() {
+    this.$store.commit("setLocation", [{ title: "Shop", location: "/shop" }]);
+    this.numberOfItems = this.auctions.length;
+  },
   methods: {
     limitAuctionsPerPage() {
       let nextItems =
@@ -267,13 +259,6 @@ export default {
     },
     updatePage(pageNo) {
       this.currentPage = pageNo;
-    },
-  },
-  computed: {
-    filterMenuState() {
-      return this.$store.state.app.currentActiveModal === "filter"
-        ? this.$store.state.app.currentActiveModal
-        : false;
     },
   },
 };

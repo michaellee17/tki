@@ -9,24 +9,21 @@
       </div>
       <div class="row single-product d-flex">
         <div class=" col-md-5 col-sm-12 p-0">
-          <product-slider class="product-image " :photos="getProduct.photos"></product-slider>
+          <product-slider class="product-image " :photos="getProduct.photos" />
         </div>
 
 
         <div
-          class=" product-details-col col-md-7 col-sm-12 d-flex  flex-column mt-4 mt-md-0"
-        >
+          class=" product-details-col col-md-7 col-sm-12 d-flex  flex-column mt-4 mt-md-0">
           <div
-            class="current-bid-title border-bottom"
             v-if="getProduct.type === 'auction'"
-          >
+            class="current-bid-title border-bottom">
             <span class="current-bid fw-bold ">
               {{ didAuctionEnd ? "Current bid" : "Product sold for" }}:
-              {{ $formatPrice(getProduct.currentBid) }}</span
-            >
+              {{ $formatPrice(getProduct.currentBid) }}</span>
           </div>
           <template v-else>
-            <div class="text-secondary" v-html="shortdesc"></div>
+            <div class="text-secondary" v-html="shortdesc" />
 
             <div class="fs-3 fw-bold mt-3">
               {{ $formatPrice(getProduct.directBuyPrice) }}
@@ -34,35 +31,27 @@
           </template>
           <span
             v-if="getProduct.type === 'auction'"
-            class="product-condition text-secondary"
-            >Item condition: {{ getProduct.condition }}</span
-          >
+            class="product-condition text-secondary">Item condition: {{ getProduct.condition }}</span>
           <div
-            class="container counter-bid "
             v-if="didAuctionEnd && getProduct.type === 'auction'"
-          >
+            class="container counter-bid ">
             <span class="product-condition text-secondary">Time left:</span>
             <div class=" product-counter p-0 w-100">
               <Counter
                 class="single-product-counter"
-                :endDate="new Date(getProduct.endDate)"
-                counterInnerClass="w-100"
-              />
+                :end-date="new Date(getProduct.endDate)"
+                counter-inner-class="w-100" />
             </div>
           </div>
           <span
             v-if="getProduct.type === 'auction'"
-            class="product-auction-end text-secondary"
-            >Auction {{ didAuctionEnd ? "ends" : "ended" }}:
-            {{ $formatDate(getProduct.endDate) }}</span
-          >
+            class="product-auction-end text-secondary">Auction {{ didAuctionEnd ? "ends" : "ended" }}:
+            {{ $formatDate(getProduct.endDate) }}</span>
           <div
             :class="{ 'mt-3': getProduct.type !== 'auction' }"
-            class="product-bid d-flex justify-content-between align-items-start align-items-xl-center"
-          >
+            class="product-bid d-flex justify-content-between align-items-start align-items-xl-center">
             <div
-              class="bid-value d-flex justify-content-between align-items-center w-100 "
-            >
+              class="bid-value d-flex justify-content-between align-items-center w-100 ">
               <div class="d-flex justify-content-center align-items-center">
                 <div class="bid-spinner">
                   <BasicInputNumberStep v-model="val" />
@@ -73,47 +62,40 @@
                     :type="getProduct.type"
                     :horizontal="true"
                     class="product-bid-icons"
-                    :didAuctionEnd="didAuctionEnd"
-                  />
+                    :did-auction-end="didAuctionEnd" />
                 </div>
               </div>
               <div
-                class="bid-btn"
                 v-if="
                   getProduct.directBuyPrice &&
                     didAuctionEnd &&
                     getProduct.type === 'auction'
                 "
-              >
+                class="bid-btn">
                 <ButtonOutline
                   class="product-bid-btn fw-bold"
-                  :hasRoundedCorners="true"
-                  @click="addToCart(getProduct.id)"
+                  :has-rounded-corners="true"
                   :text="
                     'Buy now for ' + $formatPrice(getProduct.directBuyPrice)
                   "
-                />
+                  @click="addToCart(getProduct.id)" />
               </div>
             </div>
           </div>
-          <span class="product-series text-secondary"
-            >SKU: {{ getProduct.sku }}</span
-          >
+          <span class="product-series text-secondary">SKU: {{ getProduct.sku }}</span>
           <div class="product-bid-categories d-flex">
             <span class="text-secondary">Categories: </span>
             <FilterListTags
               :comma="true"
               class="list-category d-flex ms-2 m-0 p-0"
-              :items="getProduct.categories"
-            />
+              :items="getProduct.categories" />
           </div>
           <div class="product-bid-tags d-flex">
             <span class="text-secondary">Tags: </span>
             <FilterListTags
               :comma="true"
               class="ms-2  list-tags d-flex m-0 p-0"
-              :items="getProduct.tags"
-            />
+              :items="getProduct.tags" />
           </div>
         </div>
       </div>
@@ -121,37 +103,36 @@
         <div class=" ">
           <div class="tabs">
             <tab-wrapper>
-              <tab :title="'Description'"
-                ><Description class="mt-4" :description="getProduct.description"
-              /></tab>
+              <tab :title="'Description'">
+                <Description class="mt-4" :description="getProduct.description" />
+              </tab>
               <tab
-                :title="'Additional Information'"
                 v-if="getProduct.type === 'auction'"
-                ><AdditionalInfo class="mt-4" :items="getProduct.specTable"
-              /></tab>
+                :title="'Additional Information'">
+                <AdditionalInfo class="mt-4" :items="getProduct.specTable" />
+              </tab>
               <tab
-                :title="'Auction History'"
                 v-if="getProduct.type === 'auction'"
-                ><TableAuctionHistory
+                :title="'Auction History'">
+                <TableAuctionHistory
                   class="mt-4"
-                  :latestAuctions="getProduct.history"
-              /></tab>
-              <tab :title="'Vendor Info'"
-                ><VendorInfo class="mt-4" v-bind="getProduct.vendorInfo"
-              /></tab>
+                  :latest-auctions="getProduct.history" />
+              </tab>
+              <tab :title="'Vendor Info'">
+                <VendorInfo class="mt-4" v-bind="getProduct.vendorInfo" />
+              </tab>
               <tab :title="'More from Vendor'">
                 <div class="row mt-5">
                   <div
                     v-for="auction in getLimitedAuctions"
                     :key="auction"
-                    class="col-6 col-md-3 mb-4"
-                  >
+                    class="col-6 col-md-3 mb-4">
                     <ProductCard
                       v-bind="auction"
-                      :endDate="new Date(auction.endDate)"
-                    />
-                  </div></div
-              ></tab>
+                      :end-date="new Date(auction.endDate)" />
+                  </div>
+                </div>
+              </tab>
             </tab-wrapper>
           </div>
         </div>
@@ -162,12 +143,10 @@
           <div
             v-for="auction in getLimitedAuctions"
             :key="auction"
-            class="col-6 col-md-3 mb-4"
-          >
+            class="col-6 col-md-3 mb-4">
             <ProductCard
               v-bind="auction"
-              :endDate="new Date(auction.endDate)"
-            />
+              :end-date="new Date(auction.endDate)" />
           </div>
         </div>
       </div>
@@ -195,19 +174,6 @@ import BasicInputNumberStep from "../../components/atoms/FormInput/BasicInputNum
 import { addToCart } from "../../composables/manageCart";
 
 export default {
-  setup() {
-    return { addToCart };
-  },
-  created() {
-    document.title = this.getProduct.name + " - iBid";
-    this.$store.commit("setLocation", [
-      { title: "Products", location: "/shop" },
-      {
-        title: this.getProduct.title,
-        location: "/product/" + this.getProduct.id,
-      },
-    ]);
-  },
   components: {
     LayoutDefault,
     ProductSlider,
@@ -224,6 +190,9 @@ export default {
     AdditionalInfo,
     Description,
     ProductCard,
+  },
+  setup() {
+    return { addToCart };
   },
   data() {
     return {
@@ -251,6 +220,16 @@ export default {
         this.getProduct.description.indexOf("</p>") + 4
       );
     },
+  },
+  created() {
+    document.title = this.getProduct.name + " - iBid";
+    this.$store.commit("setLocation", [
+      { title: "Products", location: "/shop" },
+      {
+        title: this.getProduct.title,
+        location: "/product/" + this.getProduct.id,
+      },
+    ]);
   },
 };
 </script>

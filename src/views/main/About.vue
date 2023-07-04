@@ -2,7 +2,7 @@
   <layout-default>
     <TopHeader :title="'關於我們'"></TopHeader>
     <div class="container">
-      <p class="intro fs-5">T-KI 致力於打造最專業、最順暢的購票平台，希望帶給使用者最棒的服務體驗。不再連不上售票網站；不再為了在機器前排隊數小時，不論在學校、公司、家裡、通勤中，只要在電腦前、手機旁，連著網路，就能在開賣的第一時間，上來買票！</p>
+      <p class="intro fs-5 mb-5">T-KI 致力於打造最專業、最順暢的購票平台，希望帶給使用者最棒的服務體驗。不再連不上售票網站；不再為了在機器前排隊數小時，不論在學校、公司、家裡、通勤中，只要在電腦前、手機旁，連著網路，就能在開賣的第一時間，上來買票！</p>
       <section class="row text-center justify-content-center gap-5 mb-5">
         <div class="col-12 col-md-3">
           <div class="feature-outline mb-4 mx-auto border border-primary d-flex justify-content-center align-items-center">

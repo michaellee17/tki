@@ -5,27 +5,26 @@
         <img
           class="mb-2"
           :src="$getFileSource('images/logos/logo-main-white.png')"
-          :alt="$store.state.app.settings.websiteName"
-        />
-        <br />
+          :alt="$store.state.app.settings.websiteName">
+        <br>
         <a :href="'mailto:'+ $store.state.app.contactInfo.email" class=" mb-1">{{
-          $store.state.app.contactInfo.email}}
+          $store.state.app.contactInfo.email }}
         </a>
         <a :href="'tel:' + $store.state.app.contactInfo.phoneNo.replace(/ /g,'')" class="">{{
           $store.state.app.contactInfo.phoneNo
         }}</a>
       </div>
-      <div class="links col-4 col-md-2">
+      <div class="links col-4 col-md-2-custom">
         <router-link to="/about" class="mb-2">關於我們</router-link> 
         <router-link to="/contact" class="mb-2">聯絡我們</router-link> 
         <router-link to="/faq" class="mb-2">常見問題</router-link> 
       </div>
-      <div class="links col-4 col-md-2">
+      <div class="links col-4 col-md-2-custom">
         <router-link to="/privacy-terms" class="mb-2">隱私權條款</router-link> 
         <router-link to="/service-terms" class="mb-2">服務條款</router-link>
         <router-link to="/" class="mb-2">客服時間</router-link>
       </div>
-      <div class="links col-4 col-md-2">
+      <div class="links col-4 col-md-2-custom">
         <p class="mb-2">追蹤我們</p>
         <!-- <router-link to="/" class="mb-2">追蹤我們</router-link> -->
         <div class="social-icons d-flex mb-2">
@@ -34,12 +33,10 @@
             v-for="social in $store.state.app.contactInfo.socials"
             :key="social"
             :external="true"
-            :location="social.location"
-          >
+            :location="social.location">
             <font-awesome-icon
               class="social-icon me-2"
-              :icon="['fab', social.icon]"
-            />
+              :icon="['fab', social.icon]" />
           </link-wrapper>
         </div> 
         <p class="mb-2">下載 APP</p>
@@ -53,11 +50,10 @@
 // import FooterSectionLinks from "../../atoms/TitleWithHorizontalLinksList/TitleWithHorizontalLinksList.vue";
 import { footerLinks1 } from "../../../data/footerLinks.json";
 import { footerLinks2 } from "../../../data/footerLinks.json";
-import Search from "../Search/Search.vue";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
 
 export default {
-  components: { Search, LinkWrapper },
+  components: { LinkWrapper },
   data() {
     return {
       footerLinks1,
@@ -172,7 +168,13 @@ span.text-secondary {
  
 .footer .links :is(a, p) {
   font-size: 16px;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
+}
+@media(min-width: 768px) {
+  .links.col-md-2-custom {
+    width: 18.5% ;
+  }
+
 }
 
 /* @media (max-width: 767.98px) {
