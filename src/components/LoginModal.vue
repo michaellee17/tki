@@ -7,6 +7,7 @@
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
         </div>
+        <!-- 登入 / 註冊首頁 -->
         <div id="loginBoard" ref="loginBoard">
           <div class="modal-body text-center text-second pb-5">
             <div class="d-flex justify-content-center gap-2 mb-4">
@@ -19,7 +20,9 @@
                 <img src="../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
                 <p class="my-2">使用 GOOGLE 帳號</p>
               </button>
-              <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
+              <button
+                type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
+                @click="showPage('loginBoard','termsPage')">
                 <img src="../assets/images/icons/line.png" alt="line" width="28" class="position-absolute">
                 <p class="my-2">使用 LINE 帳號</p>
               </button>
@@ -27,18 +30,23 @@
                 <img src="../assets/images/icons/apple.png" alt="apple" width="28" class="position-absolute">
                 <p class="my-2">使用 APPLE 帳號</p>
               </button>
-              <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
+              <button
+                type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
+                @click="showPage('loginBoard', 'accountLoginPage')">
                 <img src="../assets/images/icons/member.png" alt="member" width="28" class="position-absolute">
                 <p class="my-2">使用 會員 帳號</p>
               </button>
             </div>
             <div class="">
               <span class="pe-2">還沒有帳號？</span>
-              <a class="text-info text-decoration-none">註冊成為會員</a><span>吧！</span>
+              <a href="#" class="text-info text-decoration-none" @click.prevent="showPage('loginBoard', 'memberInfoPage')">註冊成為會員</a><span>吧！</span>
             </div>
           </div>
         </div>
 
+        <!-- 導向第三方登入 -->
+
+        <!-- 同意平台服務協議 --> 
         <div id="termsPage" ref="termsPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
@@ -58,6 +66,7 @@
           </div>
         </div>
 
+        <!-- 輸入會員資料 -->
         <div id="memberInfoPage" ref="memberInfoPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
@@ -116,6 +125,7 @@
           </div>
         </div>
 
+        <!-- 使用會員帳號登入 -->
         <div id="accountLoginPage" ref="accountLoginPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
@@ -146,6 +156,7 @@
           </div>
         </div>
 
+        <!--  忘記密碼 -->
         <div id="forgetPwdPage" ref="forgetPwdPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
@@ -233,6 +244,7 @@ export default {
         console.log('no checked!');
       } else {
         console.log('checked!');
+        this.showPage('termsPage', 'memberInfoPage');
       }
     },
     showPage(closedPage, showedPage) {
@@ -244,9 +256,6 @@ export default {
 </script>
 
 <style scoped="scoped" lang="scss">
-.modal {
-  top: 15%;
-}
 .modal-header {
   border-bottom: none;
 }
@@ -280,5 +289,19 @@ a {
 #forgetPwdPage form {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none !important;
+  }
+  #memberInfoPage form {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  #accountLoginPage form {
+    padding-right: 4rem;
+    padding-left: 4rem;
+  }
 }
 </style>

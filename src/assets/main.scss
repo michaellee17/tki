@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
-
 :root {
   --primary-color: #f5742e;
   --primary-light-color: #F9EDE0;
@@ -11,181 +10,11 @@
   --pale-color: #00000029; //#adb5bd;
   font-family: 'Noto Sans TC', sans-serif;
 }
-a {
-  // transition: 0.1s linear;
-  text-decoration: none;
-  color: #000;
-}
-ul {
-  padding: 0 12px;
-}
-ul li{
-  list-style: none;
-}
 
-select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-  background-image: 
-  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAZBJREFUaEPtlj1KBEEUhL81MVWPYaZoYqx4C0HRxAvoEfQGgqLgLfyJjUQEwVuoseAfDT0wbDDd/V4NsvAm2p3prq6vapjuCTN+TWbcPwHw3w1GA9GAM4F4hZwBuqdHA+4InQLRgDNA9/RowB2hU6C2gXlgGXgFPp1rlqY3rVULcAdsAo/ANvBecmF8vgTcAGvAPbBV0qkFSIYXs9hTFlZDJPMpqNW8zgeQ7g1etQA7wBUwNxLEtPkfYBe4VgEknSR40YN4zq/VW2mRwvMF4BZYz+N+gUPgrEa3toFOSw3hMp9MtQIom3CbtwIoICTmPQAeCJl5L4AFQmpeAdACITevAqiBGMW8EmAI4tvznS/tBZbP6JDm9D7xAnwBK5ZNqmRe3UC33h5w3tuxu/vpeHAAXNYYqx2jbqAPkY4dnX46HuyrzY/VQAdxAhzlP6fAcW2qLePGaqDzsJF/PLSYahk7NkCLF9PYADDFJpwUDQjDNElFA6bYhJOiAWGYJqlowBSbcFI0IAzTJBUNmGITTvoDg3BYMeLFdsMAAAAASUVORK5CYII=')   !important;
-  background-repeat: no-repeat, repeat !important;
-  background-position: right 0.7em top 50%, 0 0 !important;
-  background-size: 0.65em auto, 100% !important;
-}
-.modal-background {
-  z-index: 9998;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5);
-}
-.modall {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 9999;
-    position: fixed;
-}
-.vue-zoomer {
-  cursor:zoom-in;
-}
-/* For IE (thanks to @SaiManoj) */
-// select::-ms-expand {
-//   display: none;
-// }
-// .color {
-//   color: var(--primary-color);
-// }
-// body
-//   a:hover:not(.text-white):not(.top-payment):not(.top-order):not(.bot_nav_cat):not(.main-content-btn),
-// a.text-dark:hover:not(.bot_nav_cat) {
-//   color: var(--primary-color) !important;
-// }
-
-// body,
-// html {
-//   font-family: Montserrat, sans-serif !important;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   font-size: 14px !important;
-//   scroll-behavior: auto !important;
-// }
-// .color-initial {
-//   color: initial !important;
-// }
-// .list-unstyled > li {
-//   list-style-type: none;
-// }
-
-// ul li,
-// ol li {
-//   color: #8b8b8a;
-//   font-size: 14px;
-//   font-weight: 400;
-// }
-.navbar .mobile_only_icon_group {
-  display: none;
-  float: right;
-}
-
-.navbar-header .logo img {
-  max-width: 85px;
-}
-.form-control:active,
-.form-control:focus,
-.form-select2:active,
-.form-select2:focus,
-input:focus,
-button:focus {
-  outline: none;
-  box-shadow: none;
-}
-// a {
-//   color: var(--primary-color);
-// }
-
-.border-anim.border-bottom {
-  transition: border-bottom 0.25s linear;
-  border-bottom: 1px solid #dee2e6 !important;
-}
-.border-anim.border-bottom:focus {
-  border-bottom: 1px solid var(--primary-color) !important;
-  border-top: 0px solid #dee2e6 !important;
-  border-left: 0px solid #dee2e6 !important;
-  border-right: 0px solid #dee2e6 !important;
-}
-.cursor-pointer {
-  cursor: pointer;
-}
-// .footer-top {
-//   padding-bottom: 30px;
-//   padding-top: 60px;
-// }
-// .radius {
-//   border-radius: 45px !important;
-// }
-// .blue-background {
-//   background-color: var(--primary-color);
-// }
-// .blue-color {
-//   color: var(--primary-color);
-// }
-// div.popper {
-//   background: #5e5553 !important;
-//   font-weight: 800 !important;
-//   font-family: Montserrat !important;
-//   text-align: center !important;
-//   padding: 8px 10px !important;
-//   font-size: 12px !important;
-//   color: #fff !important;
-//   border-radius: 6px !important;
-//   line-height: 1.2 !important;
-//   cursor: pointer;
-//   min-width: 120px;
-// }
-// .popper #arrow::before {
-//   left: 0 !important;
-// }
-// .gray {
-//   background-color: #f5f3f4;
-// }
-// .close-radius {
-//   border-radius: 0px;
-// }
-// input.radius.list-search {
-//   padding-left: 20px !important;
-// }
-select {
-  background: none;
-}
-input {
-  transition: border 0.25s linear;
-  padding: 3px 8px;
-}
-.btn:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-input:not([type="checkbox"]):focus,
-input:not([type="checkbox"]).form-control:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-.form-check-input:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-select:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.text-second {
-  color: #0000008C;
+/* modal */
+.modal {
+  top: 50%;
+  transform: translateY(-50%);
 }
 .modal-header .btn-close {
   padding: 1rem;
@@ -193,18 +22,15 @@ select:focus {
 .modal-body {
   padding: 1rem 2rem 2rem 2rem;
 }
-input::placeholder {
-  color: var(--pale-color)!important;
-}
-
-a {
-  cursor: pointer;
-}
+/* font */
 .fs-14 {
   font-size: 14px;
 }
 .fs-18 {
   font-size: 18px;
+}
+.text-second {
+  color: #0000008C;
 }
 .text-gray-800 {
   color: var(--bs-gray-800)
@@ -240,9 +66,9 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--primary-color);
   background-color: var(--primary-bg-color);
   padding: 0.4rem 2rem;
+  color: var(--primary-color);
   & .icon {
       filter: invert(66%) sepia(66%) saturate(3736%) hue-rotate(338deg) brightness(96%) contrast(101%);
   }
@@ -254,4 +80,35 @@ a {
   & .icon {
       filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
   }
+}
+/* form */
+input::placeholder {
+  color: var(--pale-color)!important;
+}
+input:not([type="checkbox"]):focus,
+input:not([type="checkbox"]).form-control:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.form-check-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* remove-decoration */
+a {
+  transition: 0.1s linear;
+  text-decoration: none;
+  // color: #000;
+  cursor: pointer;
+}
+ul {
+  padding: 0 12px;
+}
+ul li{
+  list-style: none;
 }

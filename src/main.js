@@ -36,10 +36,26 @@ const store = new createStore({
   plugins: [dataState]
 });
 
-router.beforeEach(() => {
-  window.scrollTo(0, 0)
+/* 預設跳頁時滾動到頂部，以下條件除外， */
+router.beforeEach((to, from) => {
+  switch (to.name) {
+    case 'BuyTicket':
+    case 'BuyTicketSession':
+    case 'BuyTicketType':
+    case 'BuyTicketSeat':
+    case 'Location':
+    case 'Notes':
+      break;
+    default:
+      /* 從 activity/detail 跳頁到 News 不會滾動到頂部 */
+      if (to.name === 'News' && from.path.includes('activity/detail')) {
+        break;
+      }
+      window.scrollTo(0, 0)
+  }
   store.commit("forceCloseModal")
 })
+
 Vue.use(VueZoomer)
   .use(router)
   .use(store)

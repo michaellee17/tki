@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column flex-md-row align-items-center gap-2 mb-2">
+  <div class="d-flex flex-column flex-md-row align-items-md-center align-items-stretch gap-2 mb-2">
     <p class="mb-0">訂單時間</p>
     <input id="start" type="date" value="2023-05-01">
     <input id="end" type="date" value="2023-06-01">

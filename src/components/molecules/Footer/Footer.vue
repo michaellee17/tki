@@ -163,7 +163,7 @@ span.text-secondary {
   display: block;
 }
 .footer a:hover {
-  color: var(--bs-gray-700)!important;
+  color: #000 !important;
 }
  
 .footer .links :is(a, p) {

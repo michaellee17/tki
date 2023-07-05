@@ -7,6 +7,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Home.vue')
   },
   {
+    path: '/test',
+    name: 'Test',
+    component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Test.vue')
+  },
+  {
     path: '/announcement',
     name: 'Announcement',
     component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Announcement.vue')

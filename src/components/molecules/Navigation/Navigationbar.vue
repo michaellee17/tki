@@ -63,12 +63,12 @@
             @mouseover="hoveredItem = 'login'"
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
-            <!-- <LinkWrapper
+            <LinkWrapper
               class="nav-link text-white fs-6 px-0" 
               :name="'登入'"
-              @click="openLoginModal" /> -->
+              @click="openLoginModal" />
             <!-- 已登入 -->
-            <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-2" />
+            <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
             <LinkWrapper
               class="nav-link text-white fs-6 px-0" 
               :name="this.$store.state.user.loginStatus" />
@@ -326,14 +326,6 @@ li {
 @media (max-width: 768px) {
   .navbar {
     display: none !important;
-  }
-  #memberInfoPage form {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-  }
-  #accountLoginPage form {
-    padding-right: 4rem;
-    padding-left: 4rem;
   }
 }
 

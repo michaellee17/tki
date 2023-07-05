@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
 .top-bg {
-  background-image: url('../assets/images/top-bg.avif');
+  background-image: url('../assets/images/top-bg.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
