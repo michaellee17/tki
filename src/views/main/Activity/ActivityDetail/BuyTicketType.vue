@@ -15,8 +15,9 @@
       </div>
       <p>選擇您要購買的票種</p>
       <select id="ticketType" name="ticketType" class="form-select mb-3">
-        <option value="一般票" selected>一般票</option>
+        <option value="一般票" selected>請選擇</option>
         <option value="一般票">一般票</option>
+        <option value="一般票">敬老票</option>
       </select>
       <p>請選擇選位方式</p>
       <div class="position-relative choose-seat mb-3">

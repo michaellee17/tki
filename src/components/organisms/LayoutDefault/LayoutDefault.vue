@@ -3,13 +3,12 @@
     <div class="container">
       <!-- <dropdown :items="internationalization.langs" /> -->
     </div>
-    <!-- <PageHeader v-if="!this.$store.state.appView.view" /> -->
-    <PageHeader/>
+    <PageHeader v-if="!this.$store.state.appView.view" />  
+    <!-- <PageHeader />  -->
     <div class="mb-100">
       <slot><div class="text-center">No content yet.</div> </slot>
     </div>
-    <!-- <Footer v-if="!this.$store.state.appView.view" /> -->
-    <Footer />
+    <Footer v-if="!this.$store.state.appView.view" />
   </div>
 </template>
 
@@ -26,25 +25,24 @@ export default {
       // appView: false
     }
   },
-  // mounted () {
-  //   console.log(this.$route.name, this.$store.state.appView.view, this.$store.state.user.loginStatus)
-  //   if (this.$route.query.isapp === 'true'){
-  //     switch(this.$route.name) {
-  //       case 'About':
-  //       case 'FAQ': 
-  //       case 'ServiceTerms':
-  //       case 'PrivacyTerms':
-  //       case 'Contact':
-  //       case 'BuyTicketSeat':
-  //         this.$store.commit('changeAppView', 'true')
-  //         console.log(this.$store.state.appView.view)
-  //         break;
-  //       default:
-  //         this.$store.commit('changeAppView', 'false')
-  //         break;
-  //     }
-  //   }
-  // },
+  mounted () {
+    /* 給 app 的 web view */
+    if (this.$store.state.appView.view) {
+      this.$store.commit('changeAppView', false)
+    }
+    if (this.$route.query.isapp === 'true'){
+      switch(this.$route.name) {
+        case 'About':
+        case 'FAQ': 
+        case 'ServiceTerms':
+        case 'PrivacyTerms':
+        case 'Contact':
+        case 'BuyTicketSeat':
+          this.$store.commit('changeAppView', true)
+          break;
+      }
+    }
+  },
   components: {
     Footer,
     PageHeader,

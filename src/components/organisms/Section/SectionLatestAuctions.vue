@@ -3,7 +3,7 @@
     <div class="row gap-2 justify-content-center">
       <div class="col-5 col-md-3 mb-4">
         <div class="product-card d-inline-block border-0 position-relative h-100">
-          <router-link to="/activity/detail/blackpink/news">
+          <router-link to="/activity/detail/blackpink/buy-ticket/session">
               <div class="card position-relative border-0">
                   <img src="../../../assets/images/activity/blackpink.jpg" alt="">
               </div>
