@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
-    <div class="container row justify-content-between mx-auto mb-4">
-      <div class="col-12 col-md-3 mb-3">
+    <div class="container row justify-content-center align-items-center mb-4 mx-auto gap-3">
+      <div class="col-10 col-md-4 mb-3">
         <img
           class="mb-2"
           :src="$getFileSource('images/logos/logo-main-white.png')"
@@ -14,17 +14,17 @@
           $store.state.app.contactInfo.phoneNo
         }}</a>
       </div>
-      <div class="links col-4 col-md-2-custom">
+      <div class="links col-10 col-md-2-custom">
         <router-link to="/about" class="mb-2">關於我們</router-link> 
         <router-link to="/contact" class="mb-2">聯絡我們</router-link> 
         <router-link to="/faq" class="mb-2">常見問題</router-link> 
       </div>
-      <div class="links col-4 col-md-2-custom">
+      <div class="links col-10 col-md-2-custom">
         <router-link to="/privacy-terms" class="mb-2">隱私權條款</router-link> 
         <router-link to="/service-terms" class="mb-2">服務條款</router-link>
         <router-link to="/" class="mb-2">客服時間</router-link>
       </div>
-      <div class="links col-4 col-md-2-custom">
+      <div class="links col-10 col-md-2-custom">
         <p class="mb-2">追蹤我們</p>
         <!-- <router-link to="/" class="mb-2">追蹤我們</router-link> -->
         <div class="social-icons d-flex mb-2">

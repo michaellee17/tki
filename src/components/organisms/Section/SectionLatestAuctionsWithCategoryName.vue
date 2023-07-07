@@ -102,5 +102,9 @@ export default {
   .row.row-cols-2 {
     padding: 0 20px;
   }
+  .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+  }
 }
 </style>

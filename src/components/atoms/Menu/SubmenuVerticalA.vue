@@ -89,12 +89,12 @@ export default {
   padding: 12px 0;
   line-height: 2.5;
   font-weight: 400;
-  font-size: 14px;
 }
 .submenu-vertical a {
   line-height: 2;
   text-decoration: none;
   cursor: pointer;
+  /* font-size: 1rem; */
 }
 .submenu-vertical a:hover {
   color: var(--primary-color);

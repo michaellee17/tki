@@ -8,11 +8,29 @@
     </div>
     <div class="col-12 col-md-6">
       <p class="fs-5">售票時間：2023/06/03 12:00 ~ 2023/07/01 19:30</p>
-      <div class="d-flex gap-3 mb-4">
+
+      <swiper
+      :slides-per-view="'auto'"
+      :free-mode="true"
+      :space-between="20"
+      class="mySwiper mb-4">
+      <swiper-slide>
         <button type="button" class="btn btn-outline-primaryA active">6/11</button>
+      </swiper-slide>
+      <swiper-slide>
         <button type="button" class="btn btn-outline-primaryA">6/12</button>
+      </swiper-slide>
+      <swiper-slide>
         <button type="button" class="btn btn-outline-primaryA">6/13</button>
-      </div>
+      </swiper-slide>
+      <swiper-slide>
+        <button type="button" class="btn btn-outline-primaryA">6/13</button>
+      </swiper-slide>
+      <swiper-slide>
+        <button type="button" class="btn btn-outline-primaryA">6/13</button>
+      </swiper-slide>
+    </swiper>
+
       <div class="choose-date mb-4">
         <div class="soldout d-flex justify-content-between align-items-center mb-3">
           <div>
@@ -24,7 +42,7 @@
         <router-link to="type">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h6 class="mb-1">平面座位特區</h6>
+              <h6 class="mb-1 link-dark">平面座位特區</h6>
               <p class="text-primary mb-0">NTD 5,800 / 4,800</p>
             </div>
             <p class="fs-5 text-secondary mb-0">熱賣中 ></p>
@@ -70,6 +88,21 @@
   </div>
 </template>
 
+<script>
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import SwiperCore, { EffectFade, Navigation } from "swiper";
+SwiperCore.use([EffectFade, Navigation]);
+
+import "swiper/swiper-bundle.css";
+
+export default {
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+}
+</script>
+
 <style scoped lang="scss">
 .img-wrap-buy-ticket {
     width: 100%;
@@ -97,5 +130,8 @@
 }
 .soldout {
     opacity: 0.5;
+}
+.swiper-slide {
+    width: auto;
 }
 </style>

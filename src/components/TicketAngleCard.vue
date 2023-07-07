@@ -11,7 +11,7 @@
         </li>
         <li class="d-flex justify-content-between align-items-center pb-3">
           <p class="mb-0">活動詳情</p>
-          <button type="button" class="btn btn-outline-light rounded-pill px-3">請用 APP 操作</button>
+          <button type="button" class="btn btn-outline-light rounded-pill px-3">下載 APP</button>
         </li>
       </ul>
     </div>
@@ -26,7 +26,7 @@
         </li>
         <li class="d-flex justify-content-between align-items-center pb-3">
           <p class="mb-0">活動詳情</p>
-          <button type="button" class="btn btn-outline-light rounded-pill px-3">請用 APP 操作</button>
+          <button type="button" class="btn btn-outline-light rounded-pill px-3">下載 APP</button>
         </li>
       </ul>
     </div>

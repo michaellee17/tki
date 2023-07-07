@@ -1,10 +1,10 @@
 <template>
-  <div class="top-bg position-relative">
+  <div  v-if="!appView" class="top-bg position-relative">
     <div class="blur">
       <div class="img-wrap-top position-absolute">
         <img src="../../../../assets/images/activity/blackpink.jpg" class="img-cover" alt="">
       </div>
-      <div class="title-top text-white position-absolute mb-3">
+      <div class="title-top text-white position-absolute mb-1">
         <h1 class="fw-bold mb-3">BLACKPINK</h1>
         <p class="fs-4">2023/05/01 (週六) 19:00</p>
       </div>
@@ -50,11 +50,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../../../assets/mixin.scss";
+
 * {
     --img-top-width: 300px;
-    --img-top-height: 450px;
+    --img-top-height: calc( var(--img-top-width) * 1.5 );
     --img-top-left: 11%;
+    @include screen-m {
+      --img-top-width: 150px;
+      --img-top-left: 5%;
+    }
 }
+
 .top-bg{
     background-image: url('../../../../assets/images/activity/blackpink.jpg');
     background-position: center;
@@ -64,19 +71,19 @@ export default {
     & .img-wrap-top {
         width: var(--img-top-width);
         height: var(--img-top-height);
-        bottom: -75%;
+        bottom: 0%;
+        transform: translateY(50%);
         left: var(--img-top-left);
-        // transform: translateY(50%);
     }
     & .title-top {
         bottom: 0;
         left: calc( var(--img-top-width) + var(--img-top-left) + 3% )
     }
     & .title-bottom {
-        top: 110%;
+        top: 105%;
         left: calc( var(--img-top-width) + var(--img-top-left) + 3% )
+      }
     }
-}
 .blur {
     height: 100%;
     width: 100%;
@@ -86,7 +93,18 @@ export default {
 .container {
     margin-top: calc( var(--img-top-height) / 2 + 48px );
 }
-
+@include screen-m { 
+  .top-bg .title-bottom {
+    top: calc(100% + 150px);
+    left: var(--img-top-left)
+}
+  .container {
+    margin-top: calc( var(--img-top-height) + 150px );
+  }
+  .nav-tab-primary {
+    font-size: 1rem;
+  }
+}
 
 
 

@@ -67,20 +67,6 @@
     }, 
     data () {
         return {
-            // swiperOptions: {
-            //     '768': {
-            //         slidesPerView: 1,
-            //         spaceBetween: 2,
-            //     },
-            //     '1024': {
-            //         slidesPerView: 2,
-            //         spaceBetween: 2,
-            //     },
-            //     '1440': {
-            //         slidesPerView: 3,
-            //         spaceBetween: 30,
-            //     },
-            //             }
         }
     }
 }
@@ -96,6 +82,7 @@
     left: 1rem;
   }
 }
+/* 套用輪播 auto 效果 */
 .swiper-slide {
     width: auto;
 }

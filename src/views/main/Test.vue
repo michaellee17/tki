@@ -1,3 +1,4 @@
+<!-- google 登入錯誤 -->
 <!-- <template>
   <div>
     <LayoutDefault>
@@ -31,7 +32,8 @@ export default {
 }
 </script> -->
 
-<template>
+<!-- google 登入 -->
+<!-- <template>
     <div ref="googleLoginBtn" />
    </template>
    <script>
@@ -60,4 +62,23 @@ export default {
          }
        }
      }
-   </script>
+   </script> -->
+
+   <template>
+    <input type="checkbox" v-model="status">checkbox
+   </template>
+
+   <script>
+  export default {
+    data() {
+      return {
+        status: false
+      }
+    },
+    watch: {
+      status () {
+        console.log('change', this.status);
+      }
+    }
+  }
+  </script>

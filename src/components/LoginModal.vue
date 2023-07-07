@@ -229,11 +229,11 @@ export default {
   },
   methods: {
     initLoginBoard() {
-      this.$refs.loginBoard.classList.remove('d-none');
-      this.$refs.termsPage.classList.add('d-none');
-      this.$refs.memberInfoPage.classList.add('d-none');
-      this.$refs.accountLoginPage.classList.add('d-none');
-      this.$refs.forgetPwdPage.classList.add('d-none');
+      // this.$refs.loginBoard.classList.remove('d-none');
+      // this.$refs.termsPage.classList.add('d-none');
+      // this.$refs.memberInfoPage.classList.add('d-none');
+      // this.$refs.accountLoginPage.classList.add('d-none');
+      // this.$refs.forgetPwdPage.classList.add('d-none');
     },
     showModal() {
         this.loginModal.show()

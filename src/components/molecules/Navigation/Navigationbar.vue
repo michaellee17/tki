@@ -168,31 +168,32 @@ export default {
 //   font-size: 14px !important;
 //   font-weight: 500 !important;
 // }
-li > a:hover {
+li.nav-item > a:hover {
   -moz-transition: all 0.1s ease-in-out;
   -webkit-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.05s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
+  color: #000 !important;
 }
 /*Edit starts here*/
-li > a::after {
-  content: "";
-  top: 12px;
-  margin: auto;
-  left: 0;
-  right: 0;
-  width: 60%;
-  position: absolute;
-  height: 2px;
-  background: #ffff;
-  transition: cubic-bezier(0.77, 0, 0.18, 1) 0.3s;
-  transform: scale(0);
-}
-li > a:hover::after,
-li > a.router-link-active::after {
-  transform: scale(1);
-}
+// li > a::after {
+//   content: "";
+//   top: 12px;
+//   margin: auto;
+//   left: 0;
+//   right: 0;
+//   width: 60%;
+//   position: absolute;
+//   height: 2px;
+//   background: #ffff;
+//   transition: cubic-bezier(0.77, 0, 0.18, 1) 0.3s;
+//   transform: scale(0);
+// }
+// li > a:hover::after,
+// li > a.router-link-active::after {
+//   transform: scale(1);
+// }
 .bot_nav_cat {
   box-shadow: 0 3px 25px rgb(0 0 0 / 10%);
 }
@@ -314,7 +315,7 @@ li {
   color: var(--primary-color);
 }
 .login-items .submenu-vertical {
-    background-color: rgba(245, 116, 46, 0.4);
+    background-color: rgba(245, 116, 46, 0.8);
     & a {
       color: #fff;
     }
@@ -323,10 +324,14 @@ li {
     padding: 0 6px !important;
   }
 
+
 @media (max-width: 768px) {
   .navbar {
     display: none !important;
   }
+  .logo-image img{
+    width: 5rem;
+}
 }
 
 </style>
