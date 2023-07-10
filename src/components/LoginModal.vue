@@ -16,10 +16,12 @@
             </div>
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
             <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
-              <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
+              <GoogleLogin :callback="callback">
+                <button  type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
                 <img src="../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
                 <p class="my-2">使用 GOOGLE 帳號</p>
               </button>
+              </GoogleLogin>
               <button
                 type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
                 @click="showPage('loginBoard','termsPage')">
@@ -219,6 +221,7 @@ import Modal from "bootstrap/js/dist/modal";
 export default {
   data() {
     return {
+      data:'',
       loginModal: {},
     }
   },
@@ -228,6 +231,10 @@ export default {
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
   },
   methods: {
+    callback(response){
+      this.data = response
+      console.log(this.data);
+    },
     initLoginBoard() {
       // this.$refs.loginBoard.classList.remove('d-none');
       // this.$refs.termsPage.classList.add('d-none');

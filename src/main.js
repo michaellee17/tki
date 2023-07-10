@@ -4,7 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import { createStore } from "vuex";
 import VueZoomer from 'vue-zoomer'
-
+import vue3GoogleLogin from 'vue3-google-login'
 
 import SplitCarousel from "vue-split-carousel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -30,6 +30,13 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 
 const Vue = createApp(App);
 
+const gAuthOptions = {
+  clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',
+  scope: 'profile email',
+  prompt: 'select_account',
+  fetchBasicProfile: true,
+};
+Vue.use(vue3GoogleLogin,gAuthOptions)
 const store = new createStore({
   modules,
   strict: process.env.NODE_ENV !== "production",
