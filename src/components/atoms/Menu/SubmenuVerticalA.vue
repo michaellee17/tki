@@ -37,7 +37,7 @@
 <script>
 
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
-
+import Swal from "sweetalert2";
 export default {
   components: {
     LinkWrapper,
