@@ -1,12 +1,12 @@
 <template>
   <h5 class="fs-18 text-secondary mb-3">購票資訊</h5>
-  <div class="row flex-column flex-md-row gap-3 justify-content-center">
-    <div class="col-12 col-md-5">
-      <div class="img-wrap-buy-ticket">
-        <img src="../../../../assets/images/activity/news2.jpg" class="img-cover" alt="">
+  <div class="row flex-column flex-md-row  justify-content-center">
+    <div class="col-12 col-lg-6">
+      <div class="">
+        <img src="../../../../assets/images/activity/news2.jpg" class="img-fluid" alt="">
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-lg-6">
       <p class="fs-5">售票時間：2023/06/03 12:00 ~ 2023/07/01 19:30</p>
 
       <swiper
@@ -104,12 +104,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.img-wrap-buy-ticket {
-    width: 100%;
-    height: 100%;
-    max-width: 560px;
-    max-height: 560px;
-}
+// .img-wrap-buy-ticket {
+//     width: 100%;
+//     height: 100%;
+//     max-width: 560px;
+//     max-height: 560px;
+// }
 .choose-date {
     max-height: 400px;
     overflow: auto;
@@ -133,5 +133,8 @@ export default {
 }
 .swiper-slide {
     width: auto;
+}
+.link-dark:hover {
+  color: var(--primary-color);
 }
 </style>

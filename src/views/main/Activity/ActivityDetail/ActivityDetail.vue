@@ -14,7 +14,7 @@
           <span class="me-3">#流行音樂</span><span class="me-3">#韓團</span><span class="me-3">#BLACKPINK</span>
         </div>
         <div class="d-flex gap-4">
-          <button type="button" class="btn btn-outline-primaryA active">
+          <button type="button" class="btn btn-outline-primaryA">
             <img src="../../../../assets/images/icons/share.svg" width="19" class="icon me-1" alt="">
             <span>分享</span>
           </button>
