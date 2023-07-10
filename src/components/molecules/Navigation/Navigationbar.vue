@@ -64,20 +64,23 @@
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
             <LinkWrapper
+              v-if="$store.state.user.loginStatus === '未登入'"
               class="nav-link text-white fs-6 px-0" 
-              :name="'登入'"
+              :name="$store.state.user.loginStatus"
               @click="openLoginModal" />
             <!-- 已登入 -->
-            <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
-            <LinkWrapper
-              class="nav-link text-white fs-6 px-0" 
-              :name="this.$store.state.user.loginStatus" />
-            <transition name="showMenu">
-              <SubmenuVerticalA
-                v-show="hoveredItem === 'login'"
-                :items="loggedInItems"
-                class="menu-hover-login" />
-            </transition>
+            <div v-if="$store.state.user.loginStatus !== '未登入'" class="d-flex">
+              <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
+              <LinkWrapper
+                class="nav-link text-white fs-6 px-0" 
+                :name="$store.state.user.loginStatus" />
+              <transition name="showMenu">
+                <SubmenuVerticalA
+                  v-show="hoveredItem === 'login'"
+                  :items="loggedInItems"
+                  class="menu-hover-login" />
+              </transition>
+            </div>
           </li>
         </ul>
       </div>
@@ -91,6 +94,8 @@ import loginModal from "../../LoginModal.vue"
 import SubmenuVerticalA from "../../atoms/Menu/SubmenuVerticalA.vue";
 import { links } from "../../../data/links.json";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
+import { mapMutations } from 'vuex';
+
 
 export default {
   components: {
@@ -125,7 +130,7 @@ export default {
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
-   }
+   },
 };
 </script>
 <style lang="scss">
