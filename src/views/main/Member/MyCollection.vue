@@ -15,6 +15,7 @@
       </div>
     </div>
   </section>
+  
   <PaginationA />
 </template>
 

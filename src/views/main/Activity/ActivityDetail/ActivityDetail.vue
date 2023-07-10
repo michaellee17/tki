@@ -1,5 +1,5 @@
 <template>
-  <div  v-if="!appView" class="top-bg position-relative">
+  <div v-if="!this.$store.state.appView.view" class="top-bg position-relative">
     <div class="blur">
       <div class="img-wrap-top position-absolute">
         <img src="../../../../assets/images/activity/blackpink.jpg" class="img-cover" alt="">
@@ -14,7 +14,7 @@
           <span class="me-3">#流行音樂</span><span class="me-3">#韓團</span><span class="me-3">#BLACKPINK</span>
         </div>
         <div class="d-flex gap-4">
-          <button type="button" class="btn btn-outline-primaryA active">
+          <button type="button" class="btn btn-outline-primaryA">
             <img src="../../../../assets/images/icons/share.svg" width="19" class="icon me-1" alt="">
             <span>分享</span>
           </button>
@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="container">
-    <div class="border-bottom row justify-content-between text-center mb-4">
+    <div v-if="!this.$store.state.appView.view" class="border-bottom row justify-content-between text-center mb-4">
       <router-link :to="'/activity/detail/' + $route.params.activityId + '/news'" :class="{ active: $route.name ==='News' }" class="col-3 nav-tab-primary py-2">活動消息</router-link>
       <router-link
         :to="'/activity/detail/' + $route.params.activityId + '/buy-ticket/session'" 

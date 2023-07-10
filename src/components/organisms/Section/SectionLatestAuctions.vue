@@ -1,9 +1,9 @@
 <template>
     <Heading :title="'預約搶票'" />
-    <div class="row gap-2 justify-content-center">
-      <div class="col-5 col-md-3 mb-4">
+    <div class="row justify-content-center gap-2 gap-lg-0">
+      <div class="col-5 col-lg-3 mb-4">
         <div class="product-card d-inline-block border-0 position-relative h-100">
-          <router-link to="/activity/detail/blackpink/news">
+          <router-link to="/activity/detail/blackpink/buy-ticket/session">
               <div class="card position-relative border-0">
                   <img src="../../../assets/images/activity/blackpink.jpg" alt="">
               </div>
@@ -25,7 +25,7 @@
       <div
         v-for="auction in getLimitedAuctions"
         :key="auction"
-        class="col-5 col-md-3 mb-4"
+        class="col-5 col-lg-3 mb-4"
       >
         <ProductCard v-bind="auction" :endDate="new Date(auction.endDate)" />
       </div>

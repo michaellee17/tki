@@ -33,7 +33,7 @@ export default {
 </script> -->
 
 <!-- google 登入 -->
-<!-- <template>
+<template>
     <div ref="googleLoginBtn" />
    </template>
    <script>
@@ -62,23 +62,4 @@ export default {
          }
        }
      }
-   </script> -->
-
-   <template>
-    <input type="checkbox" v-model="status">checkbox
-   </template>
-
-   <script>
-  export default {
-    data() {
-      return {
-        status: false
-      }
-    },
-    watch: {
-      status () {
-        console.log('change', this.status);
-      }
-    }
-  }
-  </script>
+   </script>
