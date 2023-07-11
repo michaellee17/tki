@@ -30,11 +30,12 @@
     "vue-router": "^4.0.0-0",
     "vue-slider-component": "^4.0.0-beta.5",
     "vue-split-carousel": "^2.1.0",
+    "vue-sweetalert2": "^5.0.5",
     "vue-toast-notification": "^2.0.1",
     "vue-zoomer": "^0.4.0-beta.1",
     "vue3-popper": "^1.2.1",
     "vuex": "^4.0.2",
-    "vuex-persistedstate": "^4.0.0",
+    "vuex-persistedstate": "^4.1.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {

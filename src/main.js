@@ -27,20 +27,18 @@ import "./icons/iconsBrands.js";
 //import 'vue-toast-notification/dist/theme-default.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
-
 const Vue = createApp(App);
 
 const gAuthOptions = {
   clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',
-  scope: 'profile email',
-  prompt: 'select_account',
-  fetchBasicProfile: true,
 };
 Vue.use(vue3GoogleLogin,gAuthOptions)
 const store = new createStore({
   modules,
   strict: process.env.NODE_ENV !== "production",
-  plugins: [dataState]
+  plugins: [
+    dataState,
+  ]
 });
 
 /* 預設跳頁時滾動到頂部，以下條件除外， */

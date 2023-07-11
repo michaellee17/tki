@@ -5,7 +5,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+          <button
+            ref="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close" />
         </div>
         <!-- 登入 / 註冊首頁 -->
         <div id="loginBoard" ref="loginBoard">
@@ -17,10 +19,10 @@
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
             <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
               <GoogleLogin :callback="callback">
-                <button  type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
-                <img src="../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
-                <p class="my-2">使用 GOOGLE 帳號</p>
-              </button>
+                <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
+                  <img src="../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
+                  <p class="my-2">使用 GOOGLE 帳號</p>
+                </button>
               </GoogleLogin>
               <button
                 type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
@@ -79,7 +81,8 @@
                 <label for="name" class="col-3 form-label  text-nowrap">會員姓名</label>
                 <div class="col-9">
                   <input
-                    id="name" type="text" class="form-control" placeholder="輸入姓名"
+                    id="name" ref="registerName" type="text" class="form-control" 
+                    placeholder="輸入姓名"
                     aria-describedby="name" required>
                 </div>
               </div>
@@ -87,30 +90,33 @@
                 <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
                   <input
-                    id="tel" type="tel" class="form-control" placeholder="0912345678"
+                    id="tel" ref="registerPhone" type="tel" class="form-control" 
+                    placeholder="0912345678"
                     aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
               <div class="mb-2 row justify-content-center align-items-center">
                 <p class="col-3" />
                 <div class="col-9">
-                  <button type="button" class="btn btn-info link-light w-100">發送驗證碼</button>
+                  <button class="btn btn-info link-light w-100" type="button" @click="sendOTP">發送驗證碼</button>
                 </div>
               </div>
               <div class="mb-3 row justify-content-center align-items-center">
                 <label for="code" class="col-3 form-label" />
                 <div class="col-9 d-flex align-items-center gap-2">
                   <input
-                    id="code" type="text" class="form-control" placeholder="輸入驗證碼"
+                    id="code" ref="registerOTP" type="text" class="form-control" 
+                    placeholder="輸入驗證碼"
                     aria-describedby="code" required>
-                  <button type="button" class="btn btn-info link-light w-50">驗證</button>
+                  <button type="button" class="btn btn-info link-light w-50" @click="vertifyOTP">驗證</button>
                 </div>
               </div>
               <div class="mb-3 row justify-content-center align-items-center">
                 <label for="password" class="col-3 form-label text-nowrap">密碼</label>
                 <div class="col-9">
                   <input
-                    id="password" type="password" class="form-control" placeholder="需包含英數，至少8碼"
+                    id="password" ref="registerPsw" type="password" class="form-control"
+                    placeholder="需包含英數，至少8碼"
                     aria-describedby="password" minlength="8" required>
                 </div>
               </div>
@@ -122,7 +128,7 @@
                     aria-describedby="passwordCmf" minlength="8" required>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
+              <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendRegister">送出</button>
             </form>
           </div>
         </div>
@@ -138,7 +144,8 @@
                 <label for="loginTel" class="col-3 form-label">帳號</label>
                 <div class="col-9">
                   <input
-                    id="loginTel" type="tel" class="form-control" placeholder="請輸入手機號碼"
+                    id="loginTel" ref="loginPhone" type="tel" class="form-control" 
+                    placeholder="請輸入手機號碼"
                     aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
@@ -146,14 +153,15 @@
                 <label for="loginPassword" class="col-3 form-label">密碼</label>
                 <div class="col-9">
                   <input
-                    id="loginPassword" type="password" class="form-control" placeholder="請輸入密碼"
+                    id="loginPassword" ref="loginPsw" type="password" class="form-control"
+                    placeholder="請輸入密碼"
                     aria-describedby="password" minlength="8" required>
                 </div>
               </div>
               <div class="text-end mb-2">
                 <a class="text-decoration-none link-secondary" @click="showPage('accountLoginPage', 'forgetPwdPage')">忘記密碼</a>
               </div>
-              <button type="submit" class="btn btn-primary link-light w-100 py-2">登入</button>
+              <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendLogin">登入</button>
             </form>
           </div>
         </div>
@@ -170,43 +178,49 @@
                 <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
                   <input
-                    id="forgetTel" type="tel" class="form-control" placeholder="0912345678"
+                    id="forgetTel" ref="forgetPhone" type="tel" class="form-control" 
+                    placeholder="0912345678"
                     aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
               <div class="mb-2 row justify-content-center align-items-center">
                 <p class="col-3" />
                 <div class="col-9">
-                  <button type="button" class="btn btn-info link-light w-100">發送驗證碼</button>
+                  <button type="button" class="btn btn-info link-light w-100" @click="forgetOTP">發送驗證碼</button>
                 </div>
               </div>
               <div class="mb-5 row justify-content-center align-items-center">
                 <label for="forgetCode" class="col-3 form-label" />
                 <div class="col-9 d-flex align-items-center gap-2">
                   <input
-                    id="forgetCode" type="text" class="form-control" placeholder="輸入驗證碼"
+                    id="forgetCode" ref="forgetCode" type="text" class="form-control"
+                    placeholder="輸入驗證碼"
                     aria-describedby="code" required>
-                  <button type="button" class="btn btn-info link-light w-50">驗證</button>
+                  <button type="button" class="btn btn-info link-light w-50" @click="forgetVertifyOTP">驗證</button>
                 </div>
               </div>
-              <h5 class="mb-3">重新設定密碼</h5>
-              <div class="mb-3 row justify-content-center align-items-center">
-                <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
-                <div class="col-9">
-                  <input
-                    id="forgetPassword" type="password" class="form-control" placeholder="需包含英數，至少8碼"
-                    aria-describedby="password" minlength="8" required>
+              <div v-show="isForgetOTPVertify">
+                <h5 class="mb-3">重新設定密碼</h5>
+                <div class="mb-3 row justify-content-center align-items-center">
+                  <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
+                  <div class="col-9">
+                    <input
+                      id="forgetPassword" ref="forgetPsw1" type="password" class="form-control" 
+                      placeholder="需包含英數，至少8碼"
+                      aria-describedby="password" minlength="8" required>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-4 row justify-content-center align-items-center">
-                <label for="forgetPasswordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
-                <div class="col-9">
-                  <input
-                    id="orgetPasswordCmf" type="password" class="form-control" placeholder="再次輸入密碼"
-                    aria-describedby="passwordCmf" minlength="8" required>
+                <div class="mb-4 row justify-content-center align-items-center">
+                  <label for="forgetPasswordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
+                  <div class="col-9">
+                    <input
+                      id="orgetPasswordCmf" ref="forgetPsw2" type="password" class="form-control" 
+                      placeholder="再次輸入密碼"
+                      aria-describedby="passwordCmf" minlength="8" required>
+                  </div>
                 </div>
+                <button type="button" class="btn btn-primary link-light w-100 py-2" @click="resetPsw">送出</button>
               </div>
-              <button type="submit" class="btn btn-primary link-light w-100 py-2">送出</button>
             </form>
           </div>
         </div>
@@ -217,10 +231,13 @@
 
 <script>
 import Modal from "bootstrap/js/dist/modal";
-
+import Swal from "sweetalert2";
+import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
+      isForgetOTPVertify:false,
+      isOTPVertify:false,
       data:'',
       loginModal: {},
     }
@@ -231,9 +248,388 @@ export default {
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
   },
   methods: {
+    //取出登入狀態
+    ...mapMutations('user', ['changeLoginStatus']),
+    //登入後回到原頁面並更換NAVBAR的使用者資訊
+    afterLogin(){
+       //關閉modal回到原本瀏覽處
+       const modalClose = this.$refs.modalClose;
+       loginModal.click();
+       //將登入狀態存到vuex
+       this.changeLoginStatus('已登入');
+    },
+    //重設密碼
+    resetPsw(){
+      const phone= this.$refs.forgetPhone.value
+      const psw1 = this.$refs.forgetPsw1.value;
+      const psw2 = this.$refs.forgetPsw2.value;
+      if(psw1 !== psw2){
+        Swal.fire({
+              icon: 'error',
+              title: '兩次輸入的密碼不同',
+        });
+      }
+      const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/; 
+      if (!passwordRegex.test(psw1)) {
+        Swal.fire({
+          icon: 'error',
+          title: '密碼格式不符合要求',
+        });
+        return;
+      }
+      const apiUrl = `${process.env.VUE_APP_PATH}/forget_password`;
+      const requestData = {
+       account:phone,
+       password:psw1,
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            Swal.fire({
+              icon: 'success',
+              title: '設定新密碼成功',
+            })
+            this.afterLogin();
+          }
+          if(res.data.status_code === 'SYSTEM_100'){
+            Swal.fire({
+              icon: 'error',
+              title: '資料不齊全',
+            })
+          }
+          if(res.data.status_code === 'USER_2043'){
+            Swal.fire({
+              icon: 'error',
+              title: '用戶不存在',
+            })
+          }
+        });
+    },
+    //忘記密碼驗證otp
+    forgetVertifyOTP(){
+      const phone= this.$refs.forgetPhone.value
+      const code = this.$refs.forgetCode.value
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/verifyotp`;
+      const requestData = {
+        phone: phone,
+        otp: code
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.isForgetOTPVertify = true;
+            Swal.fire({
+              icon: 'success',
+              title: '驗證成功',
+            })
+
+          }
+          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
+            Swal.fire({
+              icon: 'error',
+              title: '驗證碼錯誤',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2093') {
+            Swal.fire({
+              icon: 'error',
+              title: '驗證碼錯誤超過五次，驗證失敗',
+            });
+          }
+        });
+
+    },
+    //忘記密碼發送otp
+    forgetOTP(){
+      const phone = this.$refs.forgetPhone.value
+      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      if (!phoneRegex.test(phone)) {
+        Swal.fire({
+          icon: 'error',
+          title: '手機號碼格式不正確',
+          text: '請輸入有效的手機號碼',
+        });
+        return; // 停止繼續執行
+      }
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
+      const requestData = {
+        phone: phone,
+        method: "forget"
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if (res.data.status_code === 'SYSTEM_1000') {
+            Swal.fire({
+              icon: 'success',
+              title: '發送簡訊驗證碼成功！',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2094') {
+            Swal.fire({
+              icon: 'error',
+              title: '手機號碼格式不正確',
+              text: '請輸入有效的手機號碼',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'SYSTEM_2091') {
+            Swal.fire({
+              icon: 'error',
+              title: '請求過於頻繁',
+              text: '請稍後再嘗試',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2043') {
+            Swal.fire({
+              icon: 'error',
+              title: '用戶不存在',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2099') {
+            Swal.fire({
+              icon: 'error',
+              title: 'OTP服務異常',
+            });
+          }
+        });
+    },
+    //登入
+    sendLogin(){
+      const phone = this.$refs.loginPhone.value
+      const password = this.$refs.loginPsw.value
+      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      if (!phoneRegex.test(phone)) {
+        Swal.fire({
+          icon: 'error',
+          title: '手機號碼格式不正確',
+          text: '請輸入有效的手機號碼',
+        });
+        return; // 停止繼續執行
+      }
+      const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/; 
+      if (!passwordRegex.test(password)) {
+        Swal.fire({
+          icon: 'error',
+          title: '密碼格式不符合要求',
+        });
+        return;
+      }
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
+      const requestData = {
+       account:phone,
+       password:password,
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            Swal.fire({
+              icon: 'success',
+              title: '登入成功',
+            });
+            this.afterLogin();
+          }
+          if (res.data.status_code === 'SYSTEM_1001') {
+            Swal.fire({
+              icon: 'error',
+              title: '資料格式錯誤',
+            });
+          }
+          if (res.data.status_code === 'USER_2011') {
+            Swal.fire({
+              icon: 'error',
+              title: '登入失敗，驗證資訊錯誤',
+            });
+          }
+          if (res.data.status_code === 'USER_2012') {
+            Swal.fire({
+              icon: 'error',
+              title: '登入失敗，帳號已被停權',
+            });
+          }
+        });
+
+    },
+    //註冊
+    sendRegister(){
+      const registerName = this.$refs.registerName.value
+      const nameRegex = /^[a-zA-Z\s\u4E00-\u9FFF]+$/; // 只能包含中文、英文和空格
+      if (!nameRegex.test(registerName)) {
+        Swal.fire({
+          icon: 'error',
+          title: '姓名格式不符合要求',
+          text: '請輸入有效的姓名，只能包含中文、英文和空格',
+        });
+        return;
+      }
+      const phone = this.$refs.registerPhone.value;
+      // 驗證手機號碼格式
+      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      if (!phoneRegex.test(phone)) {
+        Swal.fire({
+          icon: 'error',
+          title: '手機號碼格式不正確',
+          text: '請輸入有效的手機號碼',
+        });
+        return; // 停止繼續執行
+      }
+      const password = this.$refs.registerPsw.value;
+      const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/; 
+      if (!passwordRegex.test(password)) {
+        Swal.fire({
+          icon: 'error',
+          title: '密碼格式不符合要求',
+        });
+        return;
+      }
+      if(this.isOTPVertify === false){
+        Swal.fire({
+              icon: 'error',
+              title: '請先完成手機驗證',
+        });
+        return;
+      }
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/register`;
+      const requestData = {
+       full_name:registerName,
+       account:phone,
+       password:password,
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.isOTPVertify = true
+            Swal.fire({
+              icon: 'success',
+              title: '註冊成功',
+            })
+            this.afterLogin();
+          }
+          if (res.data.status_code === 'SYSTEM_1001') {
+            Swal.fire({
+              icon: 'error',
+              title: '資料格式錯誤',
+            });
+          }
+          if (res.data.status_code === 'USER_2021') {
+            Swal.fire({
+              icon: 'error',
+              title: '帳號格式錯誤',
+            });
+          }
+          if (res.data.status_code === 'USER_2022') {
+            Swal.fire({
+              icon: 'error',
+              title: '密碼格式錯誤',
+            });
+          }
+          if (res.data.status_code === 'USER_2023') {
+            Swal.fire({
+              icon: 'error',
+              title: '姓名格式錯誤',
+            });
+          }
+          if (res.data.status_code === 'USER_2041') {
+            Swal.fire({
+              icon: 'error',
+              title: '帳號已存在',
+            });
+          }
+          if (res.data.status_code === 'USER_2082' || res.data.status_code === 'USER_2081') {
+            Swal.fire({
+              icon: 'error',
+              title: 'OPT驗證失敗',
+            });
+          }
+        });
+    },
+    //註冊驗證otp
+    vertifyOTP(){
+      const phone = this.$refs.registerPhone.value;
+      const otpCode = this.$refs.registerOTP.value
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/verifyotp`;
+      const requestData = {
+        phone: phone,
+        otp: otpCode
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.isOTPVertify = true
+            Swal.fire({
+              icon: 'success',
+              title: '驗證成功',
+            })
+          }
+          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
+            Swal.fire({
+              icon: 'error',
+              title: '驗證碼錯誤',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2093') {
+            Swal.fire({
+              icon: 'error',
+              title: '驗證碼錯誤超過五次，驗證失敗',
+            });
+          }
+        });
+    },
+    //註冊送出otp
+    sendOTP() {
+      const phone = this.$refs.registerPhone.value;
+      // 驗證手機號碼格式
+      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      if (!phoneRegex.test(phone)) {
+        Swal.fire({
+          icon: 'error',
+          title: '手機號碼格式不正確',
+          text: '請輸入有效的手機號碼',
+        });
+        return; // 停止繼續執行
+      }
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
+      const requestData = {
+        phone: phone,
+        method: "register"
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if (res.data.status_code === 'SYSTEM_1000') {
+            Swal.fire({
+              icon: 'success',
+              title: '發送簡訊驗證碼成功！',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2094') {
+            Swal.fire({
+              icon: 'error',
+              title: '手機號碼格式不正確',
+              text: '請輸入有效的手機號碼',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'SYSTEM_2091') {
+            Swal.fire({
+              icon: 'error',
+              title: '請求過於頻繁',
+              text: '請稍後再嘗試',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2041') {
+            Swal.fire({
+              icon: 'error',
+              title: '手機已註冊過',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2099') {
+            Swal.fire({
+              icon: 'error',
+              title: 'OTP服務異常',
+            });
+          }
+        });
+    },
     callback(response){
       this.data = response
-      console.log(this.data);
+      console.log(response);
     },
     initLoginBoard() {
       // this.$refs.loginBoard.classList.remove('d-none');
@@ -248,9 +644,7 @@ export default {
     submitTerms() {
       if (!this.$refs.agreenTermsBox.checked) {
         this.$refs.agreenTermsAlert.classList.remove('d-none');
-        console.log('no checked!');
       } else {
-        console.log('checked!');
         this.showPage('termsPage', 'memberInfoPage');
       }
     },

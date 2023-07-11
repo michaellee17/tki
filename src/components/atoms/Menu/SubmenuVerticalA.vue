@@ -22,9 +22,11 @@
               class="me-2"
               :icon="['fas', link.icon]" />
 
-            <link-wrapper :remove-decorations="true" :location="link.location" :external="link.external" :target="link.target">{{
-              link.name
-            }}</link-wrapper>
+            <link-wrapper
+              :remove-decorations="true" :location="link.location" :external="link.external" :target="link.target" 
+              @click="handleLinkClick(link.location)">{{
+                link.name
+              }}</link-wrapper>
           </span>
         </div>
       </div>
@@ -35,7 +37,7 @@
 <script>
 
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
-
+import Swal from "sweetalert2";
 export default {
   components: {
     LinkWrapper,
@@ -56,6 +58,20 @@ export default {
     },
   },
   methods: {
+    handleLinkClick(location){
+      if (location === '/') {
+        const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
+        this.axios.get(apiUrl)
+          .then(res => { 
+            if(res.data.status_code === 'SYSTEM_1000'){
+              Swal.fire({
+                icon: 'success',
+                title: '登出成功',
+              })
+            }
+          });
+      }
+    },
     rowClass(rowIdx) {
       return rowIdx % this.colPerRow === 0
         ? "mt-4"
