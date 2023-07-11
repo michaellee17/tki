@@ -11,7 +11,7 @@
           <div class=" product-card-title pt-2 pb-2 position-relative h-50">
             <div class="position-relative elbordaro">
               <h3 class="fw-bold product-title m-0">
-              <router-link to="/activity/detail/blackpink/news">BLACKPINK高雄站演唱會 2023｜BORN PINK
+              <router-link to="/activity/detail/blackpink/buy-ticket/session">BLACKPINK高雄站演唱會 2023｜BORN PINK
             </router-link>
           </h3>
             <div class="details">
