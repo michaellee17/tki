@@ -109,7 +109,7 @@ export default {
     color: var(--primary-color);
   }
   &.active .icon, & :hover .icon {
-    filter: invert(66%) sepia(66%) saturate(3736%) hue-rotate(338deg) brightness(96%) contrast(101%);
+    filter: var(--primary-filter);
   } 
 }
 .slidebar-list li:not(:last-child) {
