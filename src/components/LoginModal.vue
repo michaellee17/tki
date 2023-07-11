@@ -18,7 +18,7 @@
             </div>
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
             <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
-              <GoogleLogin :callback="callback">
+              <GoogleLogin :callback="callback" popup-type="TOKEN">
                 <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
                   <img src="../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
                   <p class="my-2">使用 GOOGLE 帳號</p>
@@ -232,7 +232,7 @@
 <script>
 import Modal from "bootstrap/js/dist/modal";
 import Swal from "sweetalert2";
-import { mapActions  } from 'vuex';
+import { mapActions,mapGetters} from 'vuex';
 export default {
   data() {
     return {
@@ -242,6 +242,9 @@ export default {
       loginModal: {},
     }
   },
+  computed:{
+    ...mapGetters('user',['getLoginData']),
+  },
   mounted(){
     this.loginModal = new Modal(this.$refs.loginModal);
     this.initLoginBoard();
@@ -249,14 +252,22 @@ export default {
   },
   methods: {
     //取出登入狀態
-    ...mapActions('user', ['updateLoginStatus']),
+    ...mapActions('user', ['fetchMemberData', 'updateLoginStatus','updateLoginData']),
+    
     //登入後回到原頁面並更換NAVBAR的使用者資訊
-    afterLogin(){
+    afterLogin(loginToken){
        //關閉modal回到原本瀏覽處
        const modalClose = this.$refs.modalClose;
        loginModal.click();
        //將登入狀態存到vuex
-       this.updateLoginStatus('已登入');
+       const access_token = this.getLoginData.access_token
+       this.fetchMemberData(access_token)
+        .then(() => {
+          this.updateLoginStatus('已登入');
+        })
+        .catch(error => {
+          console.error('會員資訊出錯', error);
+        });
     },
     //重設密碼
     resetPsw(){
@@ -425,6 +436,8 @@ export default {
               icon: 'success',
               title: '登入成功',
             });
+            const loginData = res.data;
+            this.updateLoginData(loginData);
             this.afterLogin();
           }
           if (res.data.status_code === 'SYSTEM_1001') {
@@ -628,8 +641,49 @@ export default {
         });
     },
     callback(response){
-      this.data = response
-      console.log(response);
+      //使用取得的accesstoken再打一次google api取得google id
+      const accessToken = response.access_token;
+      this.axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(response => {
+        const googleId = response.data.id;
+        this.googleLogin(googleId);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
+    googleLogin(googleId){
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
+      const requestData = {
+        platform_id: googleId,
+        method: "Google"
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => { 
+          if (res.data.status_code === 'SYSTEM_1000') {
+            Swal.fire({
+              icon: 'success',
+              title: '登入成功！',
+            });
+            this.afterLogin();
+          }
+          if (res.data.status_code === 'USER_2013') {
+            Swal.fire({
+              icon: 'error',
+              title: '該用戶未綁定',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_1001') {
+            Swal.fire({
+              icon: 'error',
+              title: '資料不完整',
+            });
+          }
+        });
     },
     initLoginBoard() {
       // this.$refs.loginBoard.classList.remove('d-none');

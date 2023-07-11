@@ -63,6 +63,7 @@
             @mouseover="hoveredItem = 'login'"
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
+            
             <LinkWrapper
               v-if="loginStatus === '未登入'"
               class="nav-link text-white fs-6 px-0" 
@@ -73,7 +74,7 @@
               <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
               <LinkWrapper
                 class="nav-link text-white fs-6 px-0" 
-                :name="loginStatus" />
+                :name="memberData.data.full_name" />
               <transition name="showMenu">
                 <SubmenuVerticalA
                   v-show="hoveredItem === 'login'"
@@ -105,32 +106,42 @@ export default {
   },
   data() {
     return {
+      memberID:'',
       showMobileMenu: false,
       path: 'images/logos/logo-main-white.png',
       isActive: false,
       links,
       hoveredItem: -1,
-      // hoveredItem: 'login',
-      loggedInItems : [
-          {
-            "links": [
-              { "location": "/member/index", "name": "會員中心" },
-              { "location": "/member/order-history", "name": "訂單記錄" },
-              { "location": "/member/reward", "name": "獲獎紀錄" },
-              { "location": "/member/my-collection", "name": "我的收藏" },
-              { "location": "/member/my-ticket", "name": "我的票券" },
-              { "location": "/buy-ticket-list", "name": "購票清單" },
-              { "location": "/", "name": "登出" },
-            ]
-          }
-        ]
     };
   },
   computed: {
-    ...mapGetters('user',['getLoginStatus']), // 將 getLoginStatus 映射到計算屬性中
+    ...mapGetters('user',['getLoginStatus','getMemberData']), // 將 getLoginStatus 映射到計算屬性中
     loginStatus() {
       return this.getLoginStatus; // 使用計算屬性取得 loginStatus
     },
+    memberData(){
+      return this.getMemberData;
+    },
+    loggedInItems() {
+    const memberData = this.memberData;
+    if (memberData) {
+      const memberDataId = memberData.data.id;
+      return [
+        {
+          links: [
+            { location: `/member/index/${memberDataId}`, name: '會員中心' },
+            { location: '/member/order-history', name: '訂單記錄' },
+            { location: '/member/reward', name: '獲獎紀錄' },
+            { location: '/member/my-collection', name: '我的收藏' },
+            { location: '/member/my-ticket', name: '我的票券' },
+            { location: '/buy-ticket-list', name: '購票清單' },
+            { location: '/', name: '登出' },
+          ],
+        },
+      ];
+    }
+    return [];
+  },
   },
   methods: {
     openLoginModal() {
