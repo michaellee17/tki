@@ -10,26 +10,26 @@
       <p class="fs-5">售票時間：2023/06/03 12:00 ~ 2023/07/01 19:30</p>
 
       <swiper
-      :slides-per-view="'auto'"
-      :free-mode="true"
-      :space-between="20"
-      class="mySwiper mb-4">
-      <swiper-slide>
-        <button type="button" class="btn btn-outline-primaryA active">6/11</button>
-      </swiper-slide>
-      <swiper-slide>
-        <button type="button" class="btn btn-outline-primaryA">6/12</button>
-      </swiper-slide>
-      <swiper-slide>
-        <button type="button" class="btn btn-outline-primaryA">6/13</button>
-      </swiper-slide>
-      <swiper-slide>
-        <button type="button" class="btn btn-outline-primaryA">6/13</button>
-      </swiper-slide>
-      <swiper-slide>
-        <button type="button" class="btn btn-outline-primaryA">6/13</button>
-      </swiper-slide>
-    </swiper>
+        :slides-per-view="'auto'"
+        :free-mode="true"
+        :space-between="20"
+        class="mySwiper mb-4">
+        <swiper-slide>
+          <button type="button" class="btn btn-outline-primaryA active">6/11</button>
+        </swiper-slide>
+        <swiper-slide>
+          <button type="button" class="btn btn-outline-primaryA">6/12</button>
+        </swiper-slide>
+        <swiper-slide>
+          <button type="button" class="btn btn-outline-primaryA">6/13</button>
+        </swiper-slide>
+        <swiper-slide>
+          <button type="button" class="btn btn-outline-primaryA">6/13</button>
+        </swiper-slide>
+        <swiper-slide>
+          <button type="button" class="btn btn-outline-primaryA">6/13</button>
+        </swiper-slide>
+      </swiper>
 
       <div class="choose-date mb-4">
         <div class="soldout d-flex justify-content-between align-items-center mb-3">
@@ -121,7 +121,7 @@ export default {
         //整體
         &::-webkit-scrollbar {
             width: 8px;
-        background-color: var(--bs-gray-200);
+            background-color: var(--bs-gray-200);
         }
         //bar 本體
         &::-webkit-scrollbar-thumb {

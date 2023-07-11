@@ -3,8 +3,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { createStore } from "vuex";
-import VueZoomer from 'vue-zoomer'
-import vue3GoogleLogin from 'vue3-google-login'
+import VueZoomer from 'vue-zoomer';
+import vue3GoogleLogin from 'vue3-google-login';
 
 import SplitCarousel from "vue-split-carousel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -45,15 +45,15 @@ const store = new createStore({
 router.beforeEach((to, from) => {
   switch (to.name) {
     case 'BuyTicket':
-    case 'BuyTicketSession':
+    case 'News':
     case 'BuyTicketType':
     case 'BuyTicketSeat':
     case 'Location':
     case 'Notes':
       break;
     default:
-      /* 從 activity/detail 跳頁到 News 不會滾動到頂部 */
-      if (to.name === 'News' && from.path.includes('activity/detail')) {
+      /* 從 activity/detail 跳頁到 BuyTicketSession 不會滾動到頂部 */
+      if (to.name === 'BuyTicketSession' && from.path.includes('activity/detail')) {
         break;
       }
       window.scrollTo(0, 0)
