@@ -38,6 +38,7 @@
 
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
 import Swal from "sweetalert2";
+import { mapActions } from 'vuex';
 export default {
   components: {
     LinkWrapper,
@@ -58,12 +59,14 @@ export default {
     },
   },
   methods: {
+    ...mapActions('user', ['updateLoginStatus']),
     handleLinkClick(location){
       if (location === '/') {
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         this.axios.get(apiUrl)
           .then(res => { 
             if(res.data.status_code === 'SYSTEM_1000'){
+              this.updateLoginStatus('未登入');
               Swal.fire({
                 icon: 'success',
                 title: '登出成功',

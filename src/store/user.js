@@ -3,11 +3,19 @@ export const user = {
   state: () => ({
     loginStatus: '未登入',
   }),
+  actions: {
+    updateLoginStatus({ commit }, status) {
+      commit('changeLoginStatus', status);
+    },
+  },
   mutations: {
     changeLoginStatus(state, status) {
       state.loginStatus = status;
     },
   },
-  actions: {},
-  getters: {},
+  getters: {
+    getLoginStatus(state){
+      return state.loginStatus;
+    }
+  },
 };

@@ -64,16 +64,16 @@
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
             <LinkWrapper
-              v-if="$store.state.user.loginStatus === '未登入'"
+              v-if="loginStatus === '未登入'"
               class="nav-link text-white fs-6 px-0" 
-              :name="$store.state.user.loginStatus"
+              :name="loginStatus"
               @click="openLoginModal" />
             <!-- 已登入 -->
-            <div v-if="$store.state.user.loginStatus !== '未登入'" class="d-flex">
+            <div v-if="loginStatus !== '未登入'" class="d-flex">
               <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
               <LinkWrapper
                 class="nav-link text-white fs-6 px-0" 
-                :name="$store.state.user.loginStatus" />
+                :name="loginStatus" />
               <transition name="showMenu">
                 <SubmenuVerticalA
                   v-show="hoveredItem === 'login'"
@@ -94,7 +94,7 @@ import loginModal from "../../LoginModal.vue"
 import SubmenuVerticalA from "../../atoms/Menu/SubmenuVerticalA.vue";
 import { links } from "../../../data/links.json";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
-import { mapMutations } from 'vuex';
+import { mapGetters  } from 'vuex';
 
 
 export default {
@@ -125,6 +125,12 @@ export default {
           }
         ]
     };
+  },
+  computed: {
+    ...mapGetters('user',['getLoginStatus']), // 將 getLoginStatus 映射到計算屬性中
+    loginStatus() {
+      return this.getLoginStatus; // 使用計算屬性取得 loginStatus
+    },
   },
   methods: {
     openLoginModal() {

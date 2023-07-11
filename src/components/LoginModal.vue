@@ -232,7 +232,7 @@
 <script>
 import Modal from "bootstrap/js/dist/modal";
 import Swal from "sweetalert2";
-import { mapMutations } from 'vuex';
+import { mapActions  } from 'vuex';
 export default {
   data() {
     return {
@@ -249,14 +249,14 @@ export default {
   },
   methods: {
     //取出登入狀態
-    ...mapMutations('user', ['changeLoginStatus']),
+    ...mapActions('user', ['updateLoginStatus']),
     //登入後回到原頁面並更換NAVBAR的使用者資訊
     afterLogin(){
        //關閉modal回到原本瀏覽處
        const modalClose = this.$refs.modalClose;
        loginModal.click();
        //將登入狀態存到vuex
-       this.changeLoginStatus('已登入');
+       this.updateLoginStatus('已登入');
     },
     //重設密碼
     resetPsw(){
