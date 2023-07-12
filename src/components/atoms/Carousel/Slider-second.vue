@@ -2,23 +2,27 @@
   <swiper
     ref="mySwiper"
     :loop="true"
+    :initial-slide="1"
+    :autoplay="{
+      delay: 2500,
+      disableOnInteraction: false,
+    }"
     :options="swiperOptions"
-    :spaceBetween="30"
+    :space-between="30"
     :navigation="true"
     :pagination="{
       type: 'progressbar',
       clickable: true,
     }"
-    class="mySwiper"
-  >
-  <swiper-slide v-for="item in advertises" :key="item.adv_index">
+    class="mySwiper">
+    <swiper-slide v-for="item in advertises" :key="item.adv_index">
       <a :href="item.link_url" target="_blank">
-        <div class="slider slider-middle banner-l" 
-        :style="{ backgroundImage: `url(${ item.image_path })` }">
-        </div>
-        <div class="slider slider-middle banner-sm" 
-        :style="{ backgroundImage: `url(${ item.image_path_app })` }">
-        </div>
+        <div
+          class="slider slider-middle banner-l" 
+          :style="{ backgroundImage: `url(${ item.image_path_web })` }" />
+        <div
+          class="slider slider-middle banner-sm" 
+          :style="{ backgroundImage: `url(${ item.image_path })` }" />
       </a>
     </swiper-slide>
   </swiper>
@@ -27,26 +31,31 @@
 <script>
 import ButtonFilled from "../Button/ButtonFilled.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
+import SwiperCore, { EffectFade, Navigation, Pagination, Autoplay } from "swiper";
 
-SwiperCore.use([EffectFade, Navigation, Pagination]);
+SwiperCore.use([EffectFade, Navigation, Pagination, Autoplay]);
 
 import "swiper/swiper-bundle.css";
 import {addToCart} from "../../../composables/manageCart"
 
 export default {
-  mounted() {
-    this.getAdvertises();
-  },
   components: {
     ButtonFilled,
     Swiper,
     SwiperSlide,
   },
+  setup() {
+    return {
+      EffectFade,addToCart,
+    };
+  },
   data() {
     return {
       advertises: []
     };
+  },
+  mounted() {
+    this.getAdvertises();
   },
   methods : {
     getAdvertises() {
@@ -55,11 +64,6 @@ export default {
         this.advertises = res.data.data;
       });
     }
-  },
-  setup() {
-    return {
-      EffectFade,addToCart,
-    };
   }
 };
 </script>

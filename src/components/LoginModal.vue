@@ -734,16 +734,16 @@ a {
 }
 
 #memberInfoPage form {
-    padding-right: 6.5rem;
-    padding-left: 6.5rem;
+    // padding-right: 6.5rem;
+    // padding-left: 6.5rem;
 }
 #accountLoginPage form {
-    padding-right: 8.5rem;
-    padding-left: 8.5rem;
+    // padding-right: 8.5rem;
+    // padding-left: 8.5rem;
 }
 #forgetPwdPage form {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+//   padding-right: 0.5rem;
+//   padding-left: 0.5rem;
 }
 
 @media (max-width: 768px) {

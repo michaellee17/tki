@@ -30,15 +30,16 @@
         </div>
       </div>
     </div>
-    <div ref="contentWrap" class="content-wrap ">
+    <div ref="contentWrap" class="content-wrap">
       <div ref="content" class="content ">
         <div class=" py-5 d-flex flex-column gap-2 justify-content-center align-items-center">
           <div v-for="rows in seatData" :id="rows.row" :key="rows.row" class="mx-auto">
             <img
-              v-for="(seat, i) in rows.status" :key="i + seat"
-              ref="seatIcon" src="../../../../assets/images/icons/seat.svg" alt="seat"
-              draggable="false" class="seat-icon"
-              :data-status="seat" @click.prevent="updateStatus(i, seat, $event)">
+              v-for="(seat, i) in rows.status" :id="rows.row + (i+1)"
+              :key="i + seat" ref="seatIcon" src="../../../../assets/images/icons/seat.svg"
+              alt="seat" draggable="false"
+              class="seat-icon" :style="{ width: currentWidth + 'px' }"
+              :data-status="seat" @click="updateStatus(i, seat, $event)">
           </div>
         </div>
       </div>
@@ -103,21 +104,22 @@
                       status: [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ]
                   },
               ],
-              // 座位圖拖曳功能
+              // 座位圖拖曳
               isDown: false, 
               startX: null, 
               startY: null,
               scrollLeft: null, 
               scrollTop: null,
-              // 放大倍率
+              // 縮小放大
               zoomMax: 53,
-              zoomMin: 25
+              zoomMin: 25,
+              currentWidth: 36
           }
       },
       mounted() {
           this.$refs.contentWrap.addEventListener('mousedown', this.handleMouseDown);
           this.$refs.contentWrap.addEventListener('mouseup', this.handleMouseUp);
-          this.$refs.contentWrap.addEventListener('mouseover', this.handleMouseOver);
+          this.$refs.contentWrap.addEventListener('mousemove', this.handleMouseMove);
       },
       methods: {
           updateStatus(i, status, event) {
@@ -128,38 +130,23 @@
                   } else if(item.row === rowId && status === 1) {
                       item.status[i] = 0;
                   }
-              })
+                })
           },
           zoomIn() {
               this.$refs.seatIcon.forEach( item => {
-                const updateWidth = Math.round(item.clientWidth * 1.2);
                 if (item.clientWidth < this.zoomMax) {
-                //   console.log(updateWidth, item.clientWidth, item.width)
-                  item.style.width = `${updateWidth}px`;
+                this.currentWidth = Math.round(item.clientWidth * 1.2);
+                  item.style.width = `${this.currentWidth}px`;
                 }
               })
-              // const match = this.$refs.content.style.transform.match(this.scaleRegex);
-              // let scaleValue = match ? parseFloat(match[1]) : 1;
-              // let updateScale = `scale(${scaleValue * 1.2} )`
-              // if (scaleValue < this.zoomMax) {
-              //     this.$refs.content.style.transform = updateScale;
-              //     this.$refs.content.style.transformOrigin = '0 0 ';
-              // }
           },
           zoomOut() {
             this.$refs.seatIcon.forEach( item => {
-              const updateWidth = Math.round(item.clientWidth / 1.2);
               if (item.clientWidth > this.zoomMin) {
-                item.style.width = `${updateWidth}px`;
+              this.currentWidth = Math.round(item.clientWidth / 1.2);
+                item.style.width = `${this.currentWidth}px`;
               }
             })
-              // const match = this.$refs.content.style.transform.match(this.scaleRegex);
-              // let scaleValue = match ? parseFloat(match[1]) : 1;
-              // let updateScale = `scale(${scaleValue / 1.2} )`
-              // if (scaleValue > this.zoomMin) {
-              //     this.$refs.content.style.transform = updateScale;
-              //     this.$refs.content.style.transformOrigin = '0 0 ';
-              // }
           },
           handleMouseDown (e) {
               this.isDown = true;
@@ -173,7 +160,7 @@
               this.isDown = false;
               this.$refs.contentWrap.classList.remove('active');
           },
-          handleMouseOver (e) {
+          handleMouseMove (e) {
               if (!this.isDown) return
               e.preventDefault();
               // 按住滑鼠的終止點
@@ -195,8 +182,8 @@
       border: 1px solid transparent;
       & .content-wrap {
           height: 500px;
-        //   overflow: auto;
-          overflow: hidden;
+          overflow: auto;
+          // overflow: hidden;
           @media(max-width: 768px) {
               overflow: auto;
           }
