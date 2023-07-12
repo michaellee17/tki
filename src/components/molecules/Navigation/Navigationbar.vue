@@ -125,25 +125,25 @@ export default {
       return this.getMemberData && this.getMemberData.data && this.getMemberData.data.full_name ? this.getMemberData.data.full_name : '';
     },
     loggedInItems() {
-    const memberData = this.memberData;
-    if (memberData) {
-      const memberDataId = memberData.data.id;
-      return [
-        {
-          links: [
-            { location: `/member/index/${memberDataId}`, name: '會員中心' },
-            { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
-            { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
-            { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
-            { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
-            { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
-            { location: '/', name: '登出' },
-          ],
-        },
-      ];
-    }
-    return [];
-  },
+  if (this.memberData && this.memberData.data && this.memberData.data.id) {
+    const memberDataId = this.memberData.data.id;
+    return [
+      {
+        links: [
+          { location: `/member/index/${memberDataId}`, name: '會員中心' },
+          { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
+          { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
+          { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
+          { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
+          { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
+          { location: '/', name: '登出' },
+        ],
+      },
+    ];
+  }
+  return [];
+},
+
   },
   methods: {
     openLoginModal() {
