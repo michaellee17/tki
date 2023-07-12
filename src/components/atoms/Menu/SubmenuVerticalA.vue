@@ -96,8 +96,8 @@ export default {
 .submenu-vertical {
   box-shadow: 0 0 25px rgb(0 0 0 / 10%);
   /* width: max-content; */
-  left: 100%;
-  top: 0;
+  left: -60%;
+  top: 100%;
   z-index: 100;
   background: white;
 }
