@@ -1,5 +1,5 @@
 <template>
-  <div class="row flex-column flex-md-row justify-content-center">
+  <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div class="">
         <img src="../../../../assets/images/activity/news2.jpg" class="img-fluid" alt="">
