@@ -2,6 +2,7 @@
 
 :root {
   --primary-color: #f5742e;
+  --primary-light-color: #F9EDE0;
   --primary-filter: brightness(0) saturate(100%) invert(50%) sepia(13%) saturate(2800%) hue-rotate(339deg) brightness(102%) contrast(92%);
   --white-filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(299deg) brightness(104%) contrast(102%);
   --grey-filter: brightness(0) saturate(100%) invert(46%) sepia(6%) saturate(677%) hue-rotate(167deg) brightness(95%) contrast(81%);
@@ -72,7 +73,7 @@
   padding: 0.4rem 2rem;
   color: var(--primary-color);
   & .icon {
-      filter: invert(66%) sepia(66%) saturate(3736%) hue-rotate(338deg) brightness(96%) contrast(101%);
+      filter: var(--primary-filter);
   }
 }
 .btn-outline-primaryA.active, .btn-outline-primaryA:hover,
@@ -80,7 +81,7 @@
   color: #fff;
   background-color: var(--primary-color);
   & .icon {
-      filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+      filter: var(--white-filter);
   }
 }
 /* form */
@@ -113,4 +114,23 @@ ul {
 }
 ul li{
   list-style: none;
+}
+/* other */
+.roundedM {
+  border-radius: 10px;
+}
+
+/* but-ticket */
+.but-ticket-notice {
+  box-shadow: 0px 3px 6px #00000029;
+  height: 300px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--bs-gray-200);
+  }
+  //bar 本體
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+  }
 }

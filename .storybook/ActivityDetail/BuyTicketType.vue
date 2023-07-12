@@ -1,5 +1,5 @@
 <template>
-  <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
+  <div class="row flex-column flex-md-row justify-content-center">
     <div class="col-12 col-lg-6">
       <div class="">
         <img src="../../../../assets/images/activity/news2.jpg" class="img-fluid" alt="">
@@ -31,10 +31,10 @@
       <small class="text-danger">若剩餘空位的數量不滿足張數條件，或是剩餘的空位已經沒有連續座位，則電腦配位將會顯示【已無足夠數量】或【已無足夠連續座位】等相關訊息，可選擇其他區域或重新調整張數需求後，再送出訂購需求。</small>
       <div class="d-flex justify-content-between mt-3">
         <router-link to="session">
-          <button type="button" class="btn btn-outline-primaryA">上一步</button>
-        </router-link>
+        <button type="button" class="btn btn-outline-primaryA">上一步</button>
+    </router-link>
         <router-link to="seat">
-          <button type="button" class="btn btn-outline-primaryA">下一步</button>
+        <button type="button" class="btn btn-outline-primaryA">下一步</button>
         </router-link>
       </div>
     </div>

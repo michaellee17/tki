@@ -140,6 +140,16 @@ const routes = [
                 name: 'BuyTicketSeat',
                 component: () => import('../views/main/Activity/ActivityDetail/BuyTicketSeat.vue')
               },
+              {
+                path: 'cart',
+                name: 'BuyTicketCart',
+                component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCart.vue')
+              },
+              {
+                path: 'checkout',
+                name: 'BuyTicketCheckout',
+                component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCheckout.vue')
+              },
             ]
           },
           
