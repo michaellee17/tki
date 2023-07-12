@@ -44,10 +44,12 @@ const store = new createStore({
 /* 預設跳頁時滾動到頂部，以下條件除外， */
 router.beforeEach((to, from) => {
   switch (to.name) {
-    case 'BuyTicket':
     case 'News':
+    case 'BuyTicket':
     case 'BuyTicketType':
     case 'BuyTicketSeat':
+    case 'BuyTicketCart':
+    case 'BuyTicketCheckout':
     case 'Location':
     case 'Notes':
       break;
