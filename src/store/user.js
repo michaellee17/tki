@@ -4,7 +4,9 @@ export const user = {
   state: () => ({
     //loginStatus為false代表未登入，為true代表已登入
     loginStatus: false,
+    //會員資訊
     memberData: null,
+    //登入資訊包含token
     loginData:null,
   }),
   actions: {
@@ -16,7 +18,6 @@ export const user = {
         }
       }).then(response => {
         commit('setMemberData', response.data);
-        console.log(response);
       }).catch(error => {
         console.error(error);
       });
@@ -26,6 +27,9 @@ export const user = {
     },
     updateLoginData({ commit }, status) {
       commit('setLoginData', status);
+    },
+    cleanMemberData({commit}){
+      commit('setMemberData', []);
     },
   },
   mutations: {

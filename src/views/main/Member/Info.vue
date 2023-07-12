@@ -23,8 +23,10 @@
       <p class="fs-18">社群綁定</p>
       <ul class="text-center d-flex justify-content-between px-0">
         <li>
-          <img src="../../../assets/images/icons/google.png" width="25" alt="google">
-          <p class="mb-0 text-gray-800">尚未綁定</p>
+          <GoogleLogin :callback="callback" popup-type="TOKEN">
+            <img src="../../../assets/images/icons/google.png" width="25" alt="google">
+            <p class="mb-0 text-gray-800">尚未綁定</p>
+          </GoogleLogin>
         </li>
         <li>
           <img src="../../../assets/images/icons/line.png" width="26" alt="google">
@@ -40,6 +42,7 @@
 </template>
 <script>
 import { mapGetters  } from 'vuex';
+import Swal from "sweetalert2";
 export default {
   data () {
     return {
@@ -47,9 +50,54 @@ export default {
     }
   },
   computed:{
-    ...mapGetters('user',['getMemberData']), 
+    ...mapGetters('user',['getMemberData','getLoginData']), 
     memberData(){
       return this.getMemberData.data;
+    },
+  },
+  methods:{
+    callback(response){
+      //使用取得的accesstoken再打一次google api取得google id
+      const accessToken = response.access_token;
+      this.axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(response => {
+        const googleId = response.data.id;
+        this.googleBinding(googleId);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    },
+    googleBinding(googleId){
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/binding_platform`;
+      const requestData = {
+        platform_id: googleId,
+        method: "Google"
+      };
+      const accessToken = this.getLoginData.access_token
+      this.axios.post(apiUrl, requestData,{
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+        .then(res => { 
+          if (res.data.status_code === 'SYSTEM_1000') {
+            Swal.fire({
+              icon: 'success',
+              title: '綁定成功！',
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_1001') {
+            Swal.fire({
+              icon: 'error',
+              title: '資料不完整',
+            });
+          }
+        });
     },
   },
 }

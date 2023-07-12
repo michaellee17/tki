@@ -2,14 +2,14 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { createStore } from "vuex";
+
 import VueZoomer from 'vue-zoomer';
 import vue3GoogleLogin from 'vue3-google-login';
 
 import SplitCarousel from "vue-split-carousel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import VueToast from 'vue-toast-notification';
-import { modules, dataState } from "./store/storeModules.js";
+import { store } from "./store/storeModules.js";
 
 import PriceFormatter from "./plugins/PriceFormatter.js"
 import DateFormatter from "./plugins/DateFormatter.js"
@@ -33,13 +33,13 @@ const gAuthOptions = {
   clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',
 };
 Vue.use(vue3GoogleLogin,gAuthOptions)
-const store = new createStore({
-  modules,
-  strict: process.env.NODE_ENV !== "production",
-  plugins: [
-    dataState,
-  ]
-});
+// const store = new createStore({
+//   modules,
+//   strict: process.env.NODE_ENV !== "production",
+//   plugins: [
+//     dataState,
+//   ]
+// });
 
 /* 預設跳頁時滾動到頂部，以下條件除外， */
 router.beforeEach((to, from) => {

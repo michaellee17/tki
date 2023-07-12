@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import { user } from '../store/user.js';
+ import { store } from '../store/storeModules.js';
 const routes = [
   {
     path: '/',
@@ -57,15 +57,14 @@ const routes = [
     path: '/member',
     name: 'Member',
     component: () => import('../views/main/Member/Layout.vue'),
-    // beforeEnter: (to, from, next) => {
-    //   const loginStatus = user.state.loginStatus;
-    //   console.log(user.state);
-    //   if (loginStatus) {
-    //     next(); 
-    //   } else {
-    //     next('/login');
-    //   }
-    // },
+    beforeEnter: (to, from, next) => {
+      const loginStatus = store.getters['user/getLoginStatus'];
+      if (loginStatus) {
+        next(); 
+      } else {
+        next('/login');
+      }
+    },
     children: [
       {
         path: 'index/:memberID',

@@ -62,7 +62,7 @@ export default {
     ...mapGetters('user',['getLoginData']),
   },
   methods: {
-    ...mapActions('user', ['updateLoginStatus']),
+    ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
     handleLinkClick(location){
       if (location === '/') {
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
@@ -75,6 +75,8 @@ export default {
           .then(res => { 
             if(res.data.status_code === 'SYSTEM_1000'){
               this.updateLoginStatus(false);
+              this.updateLoginData([]);
+              this.cleanMemberData();
               Swal.fire({
                 icon: 'success',
                 title: '登出成功',
