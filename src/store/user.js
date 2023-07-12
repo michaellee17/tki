@@ -2,7 +2,8 @@ import axios from 'axios';
 export const user = {
   namespaced: true,
   state: () => ({
-    loginStatus: '未登入',
+    //loginStatus為false代表未登入，為true代表已登入
+    loginStatus: false,
     memberData: null,
     loginData:null,
   }),

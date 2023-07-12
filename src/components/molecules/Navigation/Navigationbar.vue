@@ -63,18 +63,17 @@
             @mouseover="hoveredItem = 'login'"
             @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
-            
             <LinkWrapper
-              v-if="loginStatus === '未登入'"
+              v-if="loginStatus === false"
               class="nav-link text-white fs-6 px-0" 
-              :name="loginStatus"
+              :name="'請登入'"
               @click="openLoginModal" />
             <!-- 已登入 -->
-            <div v-if="loginStatus !== '未登入'" class="d-flex">
+            <div v-if="loginStatus === true" class="d-flex">
               <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
               <LinkWrapper
                 class="nav-link text-white fs-6 px-0" 
-                :name="memberData.data.full_name" />
+                :name="memberName" />
               <transition name="showMenu">
                 <SubmenuVerticalA
                   v-show="hoveredItem === 'login'"
@@ -122,6 +121,9 @@ export default {
     memberData(){
       return this.getMemberData;
     },
+    memberName() {
+      return this.getMemberData && this.getMemberData.data && this.getMemberData.data.full_name ? this.getMemberData.data.full_name : '';
+    },
     loggedInItems() {
     const memberData = this.memberData;
     if (memberData) {
@@ -130,11 +132,11 @@ export default {
         {
           links: [
             { location: `/member/index/${memberDataId}`, name: '會員中心' },
-            { location: '/member/order-history', name: '訂單記錄' },
-            { location: '/member/reward', name: '獲獎紀錄' },
-            { location: '/member/my-collection', name: '我的收藏' },
-            { location: '/member/my-ticket', name: '我的票券' },
-            { location: '/buy-ticket-list', name: '購票清單' },
+            { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
+            { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
+            { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
+            { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
+            { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
             { location: '/', name: '登出' },
           ],
         },

@@ -74,7 +74,7 @@ export default {
         })
           .then(res => { 
             if(res.data.status_code === 'SYSTEM_1000'){
-              this.updateLoginStatus('未登入');
+              this.updateLoginStatus(false);
               Swal.fire({
                 icon: 'success',
                 title: '登出成功',

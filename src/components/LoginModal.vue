@@ -263,7 +263,7 @@ export default {
        const access_token = this.getLoginData.access_token
        this.fetchMemberData(access_token)
         .then(() => {
-          this.updateLoginStatus('已登入');
+          this.updateLoginStatus(true);
         })
         .catch(error => {
           console.error('會員資訊出錯', error);
