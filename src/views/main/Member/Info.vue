@@ -3,12 +3,12 @@
   <ul class="row flex-column">
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
       <p class="fs-18">姓名</p>
-      <p class="mb-0 text-gray-800">林GG</p>
+      <p class="mb-0 text-gray-800">{{ memberData.full_name }}</p>
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
       <p class="fs-18">手機驗證</p>
       <div class="d-flex justify-content-between text-secondary">
-        <p>0912345678</p>
+        <p>{{ memberData.account }}</p>
         <p>已驗證</p>
       </div>
     </li>
@@ -17,7 +17,7 @@
         <p class="fs-18">電子信箱</p>
         <a class="text-primary edit">編輯</a>
       </div>
-      <input class="mb-0 text-gray-800" value="abc@mail.com">
+      <input class="mb-0 text-gray-800" :value="memberData.email">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
       <p class="fs-18">社群綁定</p>
@@ -38,6 +38,22 @@
     </li>
   </ul>
 </template>
+<script>
+import { mapGetters  } from 'vuex';
+export default {
+  data () {
+    return {
+      // showMobileMenu: false,
+    }
+  },
+  computed:{
+    ...mapGetters('user',['getMemberData']), 
+    memberData(){
+      return this.getMemberData.data;
+    },
+  },
+}
+</script>
 <style scoped>
 input {
   border: 1px solid var(--primary-color);

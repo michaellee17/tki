@@ -5,37 +5,37 @@
         <div class="profile d-flex justify-content-center align-items-center gap-3 py-3 mb-3">
           <img src="../../../assets/images/icons/avatar.png" width="50" alt="">
           <div>
-            <h5 class="text-primary">林GG</h5>
-            <p class="text-secondary mb-0">0912345678</p>
+            <h5 class="text-primary">{{ memberName }}</h5>
+            <p class="text-secondary mb-0">{{ memberAccount }}</p>
           </div>
         </div>
         <ul class="slidebar-list fs-18 px-4 py-3">
           <li :class="{ active: $route.name ==='Info' }">
-            <router-link to="info" class="d-flex justify-content-center align-items-center gap-3">
+            <router-link :to="{ name: 'Info', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/member-Information.svg" width="30" class="icon" alt="member-Information">
               <span>會員資訊</span>
             </router-link>
           </li>
           <li :class="{ active: $route.name ==='OrderHistory' }">
-            <router-link to="order-history" class="d-flex justify-content-center align-items-center gap-3">
+            <router-link :to="{ name: 'OrderHistory', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/order-history.svg" width="30" class="icon" alt="order-history">
               <span>訂單記錄</span>
             </router-link>
           </li>
           <li :class="{ active: $route.name ==='Reward' }">
-            <router-link to="reward" class="d-flex justify-content-center align-items-center gap-3">
+            <router-link :to="{ name: 'Reward', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/awards.svg" width="30" class="icon" alt="awards">
               <span>獲獎紀錄</span>
             </router-link>
           </li>
           <li :class="{ active: $route.name ==='MyCollection' }">
-            <router-link to="my-collection" class="d-flex justify-content-center align-items-center gap-3">
+            <router-link :to="{ name: 'MyCollection', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/my-collection.svg" width="30" class="icon" alt="my-collection">
               <span>我的收藏</span>
             </router-link>
           </li>
           <li :class="{ active: $route.name ==='MyTicket' }">
-            <router-link to="my-ticket" class="d-flex justify-content-center align-items-center gap-3">
+            <router-link :to="{ name: 'MyTicket', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/my-ticket.svg" width="30" class="icon" alt="my-ticket">
               <span>我的票券</span>
             </router-link>
@@ -51,7 +51,7 @@
 
 <script>
 import LayoutDefault from "../../../components/organisms/LayoutDefault/LayoutDefault.vue";
-
+import { mapGetters  } from 'vuex';
 export default {
   components: {
     LayoutDefault
@@ -62,15 +62,21 @@ export default {
       // showMobileMenu: false,
     }
   },
+  computed:{
+    ...mapGetters('user',['getMemberData']), 
+    memberData(){
+      return this.getMemberData.data.id;
+    },
+    memberName(){
+      return this.getMemberData.data.full_name;
+    },
+    memberAccount(){
+      return this.getMemberData.data.account;
+    },
+  },
   created () {
     document.title = "會員中心 - T-KI"
   },
-  mounted () {
-    this.$store.commit('changeLoginStatus', '林GG')
-  },
-  unmounted () {
-    this.$store.commit('changeLoginStatus', '登入')
-  }
 }
 </script>
 

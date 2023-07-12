@@ -59,32 +59,32 @@ const routes = [
     component: () => import('../views/main/Member/Layout.vue'),
     children: [
       {
-        path: 'index',
+        path: 'index/:memberID',
         name: 'Index',
         component: () => import('../views/main/Member/Index.vue')
       },
       {
-        path: 'info',
+        path: 'info/:memberID',
         name: 'Info',
         component: () => import('../views/main/Member/Info.vue')
       },
       {
-        path: 'order-history',
+        path: 'order-history/:memberID',
         name: 'OrderHistory',
         component: () => import('../views/main/Member/OrderHistory.vue')
       },
       {
-        path: 'reward',
+        path: 'reward/:memberID',
         name: 'Reward',
         component: () => import('../views/main/Member/Reward.vue')
       },
       {
-        path: 'my-collection',
+        path: 'my-collection/:memberID',
         name: 'MyCollection',
         component: () => import('../views/main/Member/MyCollection.vue')
       },
       {
-        path: 'my-ticket',
+        path: 'my-ticket/:memberID',
         name: 'MyTicket',
         component: () => import('../views/main/Member/MyTicket.vue')
       },
