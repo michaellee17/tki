@@ -288,9 +288,9 @@ export default {
             grant_type: 'authorization_code',
             code: code,
             // yourURI 請設置為實際Line developer 設定的重新導向網址
-            redirect_uri: 'yourURI',
-            client_id: client_id.value,
-            client_secret: client_secret.value
+            redirect_uri,
+            client_id: client_id,
+            client_secret: client_secret
           }), {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
