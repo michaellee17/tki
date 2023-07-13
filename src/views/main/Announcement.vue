@@ -73,12 +73,12 @@ export default {
      } 
   },
   created() {
-    document.title = "平台公告 - T-KI";
+    document.title = "最新公告 - T-KI";
   },
   mounted() {
     this.pageId === undefined ? this.currentPage = 1 : this.currentPage = this.pageId
     this.$store.commit("setLocation", [
-      { title: "平台公告", location: "/announcement" },
+      { title: "最新公告", location: "/announcement" },
     ]);
     this.getAnnouncements();
   },

@@ -2,7 +2,7 @@
   "links": [
     {
       
-      "name": "活動",
+      "name": "活動分類",
       "component": "SubmenuVerticalA",
       "componentProps": {
         "items": [
@@ -20,7 +20,7 @@
     },
     {
       "location": "/announcement/",
-      "name": "平台公告"
+      "name": "最新公告"
     },
     {
       "location": "/faq",
