@@ -186,6 +186,11 @@ const routes = [
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/BuyTicketList.vue')
   },
   { path: '/404',     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/NotFound.vue')},  
+  {
+    path: '/line-login',
+    name: 'LineLogin',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/LineLogin.vue')
+  },
   // { path: '/:catchAll(.*)', redirect: '/404' },  
    // {
   //   path: '/my-account',
