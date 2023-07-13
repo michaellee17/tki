@@ -30,7 +30,22 @@
                 <img src="../assets/images/icons/line.png" alt="line" width="28" class="position-absolute">
                 <p class="my-2">使用 LINE 帳號</p>
               </button>
-              <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
+              <vue-apple-login
+                ref="apple" class="d-none"
+                mode="center-align"
+                type="sign in"
+                color="black"
+                :border="true"
+                :radius="15"
+                width="100%"
+                height="10%"
+                logo-size="medium"
+                :logo-position="0"
+                :label-position="0"
+                class-name="vue-apple-login"
+                :on-success="callSuccess"
+                :on-failure="callFail" />
+              <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative" @click="triggerApple">
                 <img src="../assets/images/icons/apple.png" alt="apple" width="28" class="position-absolute">
                 <p class="my-2">使用 APPLE 帳號</p>
               </button>
@@ -242,8 +257,12 @@ export default {
       loginModal: {},
     }
   },
+
   computed:{
     ...mapGetters('user',['getLoginData']),
+  },
+  watch: {
+   
   },
   mounted(){
     this.loginModal = new Modal(this.$refs.loginModal);
@@ -253,99 +272,66 @@ export default {
   methods: {
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus','updateLoginData','cleanMemberData']),
-    //line登入
+    triggerApple(){
+      this.$refs.apple.trigger()
+    },
+    //line登入觸發跳窗
     lineLogin(){
-      const client_id = '2000112185';
-      const redirect_uri ='http://localhost:8396/gc_tki_frontend/';
-      const client_secret = 'ef136a36a0544abe79e736d3295e87a0';
-      let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}&state=login&scope=openid%20profile`;
-      window.location.href = link;
-      (async () => {
-        try {
-          // 使用 window.location.search 和 urlParams 獲取當前網頁 URL 中的查詢參數
-          const queryString = window.location.search;
-          const urlParams = new URLSearchParams(queryString);
-          /* 
-          使用 get 方法從 urlParams 實例中獲取名為 code 的參數的值。(授權碼，通常由用戶在身份驗證流程中獲得)
-          如果查詢字串中存在名為 code 的參數，code 變數將被賦值為該參數的值；否則，code 變數將為 null。
-          */
-          const code = urlParams.get('code');
-          // 使用 require 引入模組的方式引入qs模組
-          const qs = require('qs');
-
-          /*
-          使用 Axios 發送 HTTP POST 請求到指定的 URL
-          並指定 'Content-Type': 'application/x-www-form-urlencoded' 標頭以指示伺服器使用 URL 編碼形式解析參數
-          grant_type：指定授權類型為 "authorization_code"
-          code：授權碼，這個值是從 code 變數中取得的
-          redirect_url：指定用戶授權完成後的重定向 URL
-          client_id：用於識別應用程式的客戶端 ID
-          client_secret：應用程式的客戶端密鑰
-          這些參數使用 qs.stringify 函式轉換為 URL 編碼的形式，以符合 "application/x-www-form-urlencoded" 的請求格式
-          Content-Type': 'application/x-www-form-urlencoded'：指定請求的內容類型為 URL 編碼形式
-          */
-          const tokenResponse = await axios.post('https://api.line.me/oauth2/v2.1/token', qs.stringify({
-            grant_type: 'authorization_code',
-            code: code,
-            // yourURI 請設置為實際Line developer 設定的重新導向網址
-            redirect_uri: 'yourURI',
-            client_id: client_id.value,
-            client_secret: client_secret.value
-          }), {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
+      const router = this.$router;
+      const routePath = '/line-login'; // 替換為您的路徑
+      const fullPath = router.resolve(routePath).href;
+      const windowFeatures = 'width=500,height=600';
+      const newWindow = window.open(fullPath,'line登入',windowFeatures);
+      this.startListeningForLineId(newWindow);
+    },
+    //監聽回傳的lineid若有值的時候幫他登入
+    startListeningForLineId(newWindow) {
+    const lineIdPolling = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(lineIdPolling);
+        const lineUserId = localStorage.getItem('lineUserId');
+        if (lineUserId) {
+          const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
+          const requestData = {
+            platform_id: lineUserId,
+            method: "Line"
+          };
+        this.axios.post(apiUrl, requestData)
+          .then(res => { 
+            if (res.data.status_code === 'SYSTEM_1000') {
+              Swal.fire({
+                icon: 'success',
+                title: '登入成功！',
+              });
+              localStorage.removeItem('lineUserId');
+              const loginData = res.data;
+              this.updateLoginData(loginData);
+              this.afterLogin();
+            }
+            if (res.data.status_code === 'USER_2013') {
+              Swal.fire({
+                icon: 'error',
+                title: '該用戶未綁定',
+              });
+              localStorage.removeItem('lineUserId');
+              //關閉modal回到原本瀏覽處
+              const modalClose = this.$refs.modalClose;
+              loginModal.click();
+            }
+            if (res.data.status_code === 'SYSTEM_1001') {
+              Swal.fire({
+                icon: 'error',
+                title: '資料不完整',
+              });
+              localStorage.removeItem('lineUserId');
             }
           });
-
-          /*
-          從 tokenResponse 的回應資料中取得 access_token 和 id_token。
-          這些欄位是從 LINE 登入 API 取得的授權資訊。
-          access_token 是用來作為驗證的令牌
-          id_token 是使用者的身份令牌。
-          */
-          const accessToken = tokenResponse.data.access_token;
-          const idToken = tokenResponse.data.id_token;
-
-          /*
-          使用 Axios 發送 HTTP POST 到 https://api.line.me/oauth2/v2.1/verify，驗證 id_token 以獲取包含使用者資訊的回應
-          id_token：用於識別使用者的身份令牌
-          client_id：用於識別應用程式的客戶端 ID
-          使用 qs.stringify 函式轉換為 URL 編碼的形式，以符合 "application/x-www-form-urlencoded" 的請求格式
-          Content-Type': 'application/x-www-form-urlencoded'：指定請求的內容類型為 URL 編碼形式。
-          'Authorization': 'Bearer ' + accessToken：使用存取令牌進行身份驗證，將存取令牌放在 'Bearer ' 字符串之後。
-          */
-          const userInfoResponse = await axios.post('https://api.line.me/oauth2/v2.1/verify', qs.stringify({
-            id_token: idToken,
-            client_id: client_id.value
-          }), {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': 'Bearer ' + accessToken
-            }
-          });
-
-          /*
-          根據需求，可以在登入後的處理中進行相應的操作，例如驗證用戶資訊、儲存登入狀態等。
-          */
-          const lineUserId = userInfoResponse.data.sub;
-          const lineNickname = userInfoResponse.data.name;
-          const lineAccountTypeID = 1;
-
-          const response = await axios.post(`${API_URL}lineLogin.php`, {
-            userId: lineUserId,
-            nickname: lineNickname,
-            accountTypeID: lineAccountTypeID
-          });
-
-          localStorage.setItem("token", response.data.id);
-          //window.location.reload();
-        } catch (error) {
-          console.log(error);
+          }
         }
-      })
+      }, 1000);
     },
     //登入後回到原頁面並更換NAVBAR的使用者資訊
-    afterLogin(loginToken){
+    afterLogin(){
        //關閉modal回到原本瀏覽處
        const modalClose = this.$refs.modalClose;
        loginModal.click();
@@ -828,16 +814,16 @@ a {
 }
 
 #memberInfoPage form {
-    // // padding-right: 6.5rem;
-    // // padding-left: 6.5rem;
+    // padding-right: 6.5rem;
+    // padding-left: 6.5rem;
 }
 #accountLoginPage form {
     // padding-right: 8.5rem;
     // padding-left: 8.5rem;
 }
 #forgetPwdPage form {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  // padding-right: 0.5rem;
+  // padding-left: 0.5rem;
 }
 
 @media (max-width: 768px) {

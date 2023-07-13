@@ -17,6 +17,8 @@ import FileSource from "./plugins/FileSource.js"
 import Slugerize from "./plugins/Slugerize.js"
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueAppleLogin from 'vue-apple-login';
+
 
 import "./icons/iconsSolid.js";
 import "./icons/iconsRegular.js";
@@ -33,13 +35,7 @@ const gAuthOptions = {
   clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',
 };
 Vue.use(vue3GoogleLogin,gAuthOptions)
-// const store = new createStore({
-//   modules,
-//   strict: process.env.NODE_ENV !== "production",
-//   plugins: [
-//     dataState,
-//   ]
-// });
+
 
 /* 預設跳頁時滾動到頂部，以下條件除外， */
 router.beforeEach((to, from) => {
@@ -62,7 +58,13 @@ router.beforeEach((to, from) => {
   }
   store.commit("forceCloseModal")
 })
-
+Vue.use(VueAppleLogin, {
+  clientId: 'demo2.gcreate.com.tw',
+  scope: 'name email',
+  redirectURI: 'https://example.com/redirect',
+  state: 'test',
+  usePopup: true,
+});
 Vue.use(VueZoomer)
   .use(router)
   .use(store)

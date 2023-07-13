@@ -28,7 +28,7 @@
             <p class="mb-0 text-gray-800">尚未綁定</p>
           </GoogleLogin>
         </li>
-        <li>
+        <li @click="lineVertify">
           <img src="../../../assets/images/icons/line.png" width="26" alt="google">
           <p class="mb-0 text-gray-800">尚未綁定</p>
         </li>
@@ -55,7 +55,55 @@ export default {
       return this.getMemberData.data;
     },
   },
+  mounted(){
+  },
   methods:{
+    lineVertify(){
+      const router = this.$router;
+      const routePath = '/line-login'; // 替換為您的路徑
+      const fullPath = router.resolve(routePath).href;
+      const windowFeatures = 'width=500,height=600';
+      const newWindow = window.open(fullPath,'line登入',windowFeatures);
+      this.startListeningForLineId(newWindow);
+    },
+    //監聽回傳的lineid若有值的時候幫他登入
+    startListeningForLineId(newWindow) {
+    const lineIdPolling = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(lineIdPolling);
+        const lineUserId = localStorage.getItem('lineUserId');
+        if (lineUserId) {
+          const apiUrl = `${process.env.VUE_APP_PATH}/user/binding_platform`;
+          const requestData = {
+            platform_id: lineUserId,
+            method: "Line"
+          };
+        const accessToken = this.getLoginData.access_token
+        this.axios.post(apiUrl, requestData,{
+          headers: {
+          'Authorization': `Bearer ${accessToken}`
+          }
+        })
+          .then(res => { 
+            if (res.data.status_code === 'SYSTEM_1000') {
+              Swal.fire({
+                icon: 'success',
+                title: '綁定成功！',
+              });
+            }
+            if (res.data.status_code === 'SYSTEM_1001') {
+              Swal.fire({
+                icon: 'error',
+                title: '資料不完整',
+              });
+              localStorage.removeItem('lineUserId');
+            }
+          });
+          }
+        }
+      }, 1000);
+    },
+    //google取得token
     callback(response){
       //使用取得的accesstoken再打一次google api取得google id
       const accessToken = response.access_token;
@@ -72,6 +120,7 @@ export default {
         console.error(error);
       });
     },
+    //google綁定
     googleBinding(googleId){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/binding_platform`;
       const requestData = {
