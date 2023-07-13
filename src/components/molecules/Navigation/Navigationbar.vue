@@ -66,7 +66,7 @@
             <LinkWrapper
               v-if="loginStatus === false"
               class="nav-link text-white fs-6 px-0" 
-              :name="'請登入'"
+              :name="'登入'"
               @click="openLoginModal" />
             <!-- 已登入 -->
             <div v-if="loginStatus === true" class="d-flex">
