@@ -105,7 +105,7 @@ export default {
   },
   mounted() {
     this.$store.commit("setLocation", [
-      { title: "平台公告", location: "/blog-list" },
+      { title: "最新公告", location: "/blog-list" },
       {
         title: this.getBlog.title,
         location: this.$buildBlogURL(this.getBlog.title, this.getBlog.id),

@@ -3,16 +3,18 @@
     <div class="blur">
       <div class="container bg position-relative">
         <div class="img-wrap-top position-absolute">
-          <img src="../../../../assets/images/activity/blackpink.jpg" class="img-fluid" alt="">
+          <img :src="basic_info.image_url" class="img-fluid" alt="">
         </div>
         <div class="title-top position-absolute text-white mb-1">
-          <h1 class="fw-bold mb-3">BLACKPINK</h1>
-          <p class="fs-4">2023/05/01 (週六) 19:00</p>
+          <h1 class="fw-bold mb-3">{{ basic_info.performer }}</h1>
+          <p class="fs-4">{{ basic_info.release_date }}</p>
+          <!-- <p class="fs-4">2023/05/01 (週六) 19:00</p> -->
         </div>
         <div class="title-bottom position-absolute">
-          <h2 class="mb-3">BLACKPINK高雄站演唱會 2023｜BORN PINK</h2>
+          <h2 class="mb-3">{{ basic_info.event_name }}</h2>
           <div class="mb-4">
-            <a class="link-primary me-3">#流行音樂</a><a class="link-primary me-3">#韓團</a><a class="link-primary me-3">#BLACKPINK</a>
+            <a class="link-primary me-3">{{ basic_info.event_tags }}</a>
+            <!-- <a class="link-primary me-3">#流行音樂</a><a class="link-primary me-3">#韓團</a><a class="link-primary me-3">#BLACKPINK</a> -->
           </div>
           <div class="d-flex gap-4">
             <button type="button" class="btn btn-outline-primaryA">
@@ -47,7 +49,15 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
+  mounted() {
+    this.getData();
+  },
+  computed: mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),
+  methods : {
+    ...mapActions('activity', ['getData']),
+  }
 }
 </script>
 

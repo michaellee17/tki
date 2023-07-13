@@ -1,14 +1,15 @@
+import { createStore } from "vuex";
+import createPersistedState from "vuex-persistedstate";
 import { application } from "./applicationState.js";
 import { wishlist } from "./wishlist.js";
 import { cart } from "./cart.js";
 import { user } from "./user.js";
 import { appView } from "./appView.js";
-import { createStore } from "vuex";
+import { activity } from "./activity.js";
 
-import createPersistedState from "vuex-persistedstate";
 
 const dataState = createPersistedState({
-  paths: ['user', 'application', 'cart','wishlist', 'appView']
+  paths: ['user', 'application', 'cart', 'wishlist', 'appView', 'activity']
 })
 
 const modules = {
@@ -16,7 +17,8 @@ const modules = {
   wishlist,
   cart,
   user,
-  appView
+  appView,
+  activity
 };
 
 export const store = new createStore({

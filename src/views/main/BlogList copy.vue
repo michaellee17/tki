@@ -73,11 +73,11 @@ export default {
     },
   },
   created() {
-    document.title = "平台公告 - T-KI";
+    document.title = "最新公告 - T-KI";
   },
   mounted() {
     this.$store.commit("setLocation", [
-      { title: "平台公告", location: "/blog-list" },
+      { title: "最新公告", location: "/blog-list" },
     ]);
   },
 };

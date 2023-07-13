@@ -68,7 +68,7 @@ export default {
     },
     setLocation() {
       this.$store.commit("setLocation", [
-      { title: "平台公告", location: "/announcement" },
+      { title: "最新公告", location: "/announcement" },
       {
         title: this.announcement.title,
         location: this.$buildBlogURL(this.announcement.title, this.announcementId),

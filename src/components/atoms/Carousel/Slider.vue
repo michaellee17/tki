@@ -71,24 +71,24 @@ export default {
 <style lang="scss">
 @import "../../../assets/mixin.scss";
 
-@keyframes slideTop {
-  from {
-    transform: translateY(60px);
-  }
-  to {
-    transform: translateY(0px);
-  }
-}
-@keyframes slideFade {
-  from {
-    transform: translateY(60px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
+// @keyframes slideTop {
+//   from {
+//     transform: translateY(60px);
+//   }
+//   to {
+//     transform: translateY(0px);
+//   }
+// }
+// @keyframes slideFade {
+//   from {
+//     transform: translateY(60px);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateY(0px);
+//     opacity: 1;
+//   }
+// }
 .swiper-pagination {
   bottom: 0 !important;
   top: unset !important;
@@ -154,108 +154,103 @@ export default {
     height: 324px;
   }
 }
-.slider-icon {
-  color: #8500bd;
-  font-weight: 400;
-}
-.slider-product-button {
-  padding: 20px 55px !important;
-  border-radius: 30px !important;
-}
-.fa-check {
-  font-weight: 400;
-  width: 15px !important;
-  height: auto;
-}
-.slider-content {
-  padding: 20px 0 0 0 !important;
-  left: 0;
-  right: 0;
-  transform: translateY(60px);
-  animation-fill-mode: forwards;
-  animation-name: slideTop;
-  animation-duration: 1s;
-}
+// .slider-icon {
+//   color: #8500bd;
+//   font-weight: 400;
+// }
+// .slider-product-button {
+//   padding: 20px 55px !important;
+//   border-radius: 30px !important;
+// }
+// .fa-check {
+//   font-weight: 400;
+//   width: 15px !important;
+//   height: auto;
+// }
+// .slider-content {
+//   padding: 20px 0 0 0 !important;
+//   left: 0;
+//   right: 0;
+//   transform: translateY(60px);
+//   animation-fill-mode: forwards;
+//   animation-name: slideTop;
+//   animation-duration: 1s;
+// }
 
-.caracteristic {
-  color: #fff; /* color: #9198aa; */
-  font-size: 18px !important;
-  transform: translateY(60px);
-  animation-fill-mode: forwards;
-  text-align: center;
-  animation-name: slideTop;
-  animation-duration: 1s;
-}
-.slider-btn {
-  top: -40px;
-  position: relative;
-  margin-top: 20px;
-}
-.slider-title {
-  font-family: "Bowlby One";
-  text-shadow: rgb(0 0 0 / 15%) 0px 15px 30px;
-  height: auto;
-  width: auto;
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  line-height: 146px;
-  letter-spacing: 0px;
-  font-weight: 400;
-  font-size: 10vw;
-  animation-name: slideTop;
-  animation-duration: 1s;
-  animation-delay: 0.1s;
-}
+// .caracteristic {
+//   color: #fff; /* color: #9198aa; */
+//   font-size: 18px !important;
+//   transform: translateY(60px);
+//   animation-fill-mode: forwards;
+//   text-align: center;
+//   animation-name: slideTop;
+//   animation-duration: 1s;
+// }
+// .slider-btn {
+//   top: -40px;
+//   position: relative;
+//   margin-top: 20px;
+// }
+// .slider-title {
+//   font-family: "Bowlby One";
+//   text-shadow: rgb(0 0 0 / 15%) 0px 15px 30px;
+//   height: auto;
+//   width: auto;
+//   color: rgb(255, 255, 255);
+//   text-decoration: none;
+//   line-height: 146px;
+//   letter-spacing: 0px;
+//   font-weight: 400;
+//   font-size: 10vw;
+//   animation-name: slideTop;
+//   animation-duration: 1s;
+//   animation-delay: 0.1s;
+// }
 
 
-.specification {
-  top: -40px;
-  position: relative;
-  animation-name: slideFade;
-  animation-duration: 1s;
-  animation-delay: 0.3s;
-}
-.add_to_cart {
-  padding: 40px;
-  height: 60px;
-  font-size: 16px;
-}
+// .specification {
+//   top: -40px;
+//   position: relative;
+//   animation-name: slideFade;
+//   animation-duration: 1s;
+//   animation-delay: 0.3s;
+// }
+// .add_to_cart {
+//   padding: 40px;
+//   height: 60px;
+//   font-size: 16px;
+// }
 
-@media screen and (min-width: 1400px) {
-  .slider-title {
-     font-size: 140px;
-  }
-}
+// @media screen and (min-width: 1400px) {
+//   .slider-title {
+//      font-size: 140px;
+//   }
+// }
 
-.slider-img {
-  max-width: 100%;
-  /* width: 1920px;
-  height: 600px; */
-  padding: 0px;
-  margin: 0px;
-  transform: translateY(60px);
-  animation-fill-mode: forwards;
-  opacity: 0;
-  animation-name: slideFade;
-  animation-duration: 1s;
-  animation-delay: 0.3s;
-  /* object-position: center;
-  object-fit: cover; */
-}
-.banner-wrap{
-  /* max-height: 600px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-@media (max-width: 768px) {
-  .slider-title {
-    font-size: 50px;
-    top: -40px;
-    position: relative;
-  }
-  .slider-content {
-    padding: 0 !important;
-  }
-}
+// .slider-img {
+//   max-width: 100%;
+//   padding: 0px;
+//   margin: 0px;
+//   transform: translateY(60px);
+//   animation-fill-mode: forwards;
+//   opacity: 0;
+//   animation-name: slideFade;
+//   animation-duration: 1s;
+//   animation-delay: 0.3s;
+// }
+// .banner-wrap{
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+// @media (max-width: 768px) {
+//   .slider-title {
+//     font-size: 50px;
+//     top: -40px;
+//     position: relative;
+//   }
+//   .slider-content {
+//     padding: 0 !important;
+//   }
+// }
 </style>
