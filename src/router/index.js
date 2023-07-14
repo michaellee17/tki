@@ -191,6 +191,11 @@ const routes = [
     name: 'LineLogin',
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/LineLogin.vue')
   },
+  {
+    path: '/apple-login',
+    name: 'AppleLogin',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/AppleLogin.vue')
+  },
   // { path: '/:catchAll(.*)', redirect: '/404' },  
    // {
   //   path: '/my-account',
