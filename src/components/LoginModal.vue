@@ -30,21 +30,6 @@
                 <img src="../assets/images/icons/line.png" alt="line" width="28" class="position-absolute">
                 <p class="my-2">使用 LINE 帳號</p>
               </button>
-              <vue-apple-login
-                ref="apple" class="d-none"
-                mode="center-align"
-                type="sign in"
-                color="black"
-                :border="true"
-                :radius="15"
-                width="100%"
-                height="10%"
-                logo-size="medium"
-                :logo-position="0"
-                :label-position="0"
-                class-name="vue-apple-login"
-                :on-success="callSuccess"
-                :on-failure="callFail" />
               <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative" @click="triggerApple">
                 <img src="../assets/images/icons/apple.png" alt="apple" width="28" class="position-absolute">
                 <p class="my-2">使用 APPLE 帳號</p>
@@ -272,8 +257,14 @@ export default {
   methods: {
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus','updateLoginData','cleanMemberData']),
+    //apple登入觸發跳窗
     triggerApple(){
-      this.$refs.apple.trigger()
+      const router = this.$router;
+      const routePath = '/apple-login'; // 替換為您的路徑
+      const fullPath = router.resolve(routePath).href;
+      const windowFeatures = 'width=500,height=600';
+      const appleWindow = window.open(fullPath,'line登入',windowFeatures);
+      // this.startListeningForLineId(newWindow);
     },
     //line登入觸發跳窗
     lineLogin(){
