@@ -6,6 +6,7 @@ export const user = {
     loginStatus: false,
     //會員資訊
     memberData: null,
+    memberData: null,
     //登入資訊包含token
     loginData:null,
   }),

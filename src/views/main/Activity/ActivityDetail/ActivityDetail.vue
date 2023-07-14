@@ -51,7 +51,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 export default {
-  mounted() {
+  created() {
     this.getData();
   },
   computed: mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),

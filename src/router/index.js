@@ -96,6 +96,11 @@ const routes = [
         name: 'MyTicket',
         component: () => import('../views/main/Member/MyTicket.vue')
       },
+      {
+        path: 'ticket-list/:memberID',
+        name: 'TicketList',
+        component: () => import('../views/main/Member/TicketList.vue')
+      },
     ]
   },
   {

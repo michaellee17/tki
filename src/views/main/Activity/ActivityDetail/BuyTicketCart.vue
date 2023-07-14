@@ -86,4 +86,17 @@ export default {
     cursor: pointer;
   }
 }
+.but-ticket-notice {
+  box-shadow: 0px 3px 6px #00000029;
+  height: 300px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: var(--bs-gray-200);
+  }
+  //bar 本體
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+  }
+}
 </style>
