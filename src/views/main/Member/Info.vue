@@ -22,19 +22,33 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
       <p class="fs-18">社群綁定</p>
       <ul class="text-center d-flex justify-content-between px-0">
-        <li>
+        <li v-if="googleBinding === false">
           <GoogleLogin :callback="callback" popup-type="TOKEN">
             <img src="../../../assets/images/icons/google.png" width="25" alt="google">
             <p class="mb-0 text-gray-800">尚未綁定</p>
           </GoogleLogin>
         </li>
-        <li @click="lineVertify">
+        <li v-if="googleBinding === true">
+          <GoogleLogin :callback="callback" popup-type="TOKEN">
+            <img src="../../../assets/images/icons/google.png" width="25" alt="google">
+            <p class="mb-0 text-gray-800">解除綁定</p>
+          </GoogleLogin>
+        </li>
+        <li v-if="lineBinding === false"  @click="lineVertify">
           <img src="../../../assets/images/icons/line.png" width="26" alt="google">
           <p class="mb-0 text-gray-800">尚未綁定</p>
         </li>
-        <li>
+        <li v-if="lineBinding === true" @click="lineVertify">
+          <img src="../../../assets/images/icons/line.png" width="26" alt="google">
+          <p class="mb-0 text-gray-800">解除綁定</p>
+        </li>
+        <li v-if="appleBinding === false">
           <img src="../../../assets/images/icons/apple.png" width="25" alt="google">
           <p class="mb-0 text-gray-800">尚未綁定</p>
+        </li>
+        <li v-if="appleBinding === true">
+          <img src="../../../assets/images/icons/apple.png" width="25" alt="google">
+          <p class="mb-0 text-gray-800">解除綁定</p>
         </li>
       </ul>
     </li>
@@ -50,9 +64,18 @@ export default {
     }
   },
   computed:{
-    ...mapGetters('user',['getMemberData','getLoginData']), 
+    ...mapGetters('user',['getMemberData','getLoginData','getMemberBinding']), 
     memberData(){
       return this.getMemberData.data;
+    },
+    googleBinding(){
+      return this.getMemberBinding[0]
+    },
+    lineBinding(){
+      return this.getMemberBinding[1]
+    },
+    appleBinding(){
+      return this.getMemberBinding[2]
     },
   },
   mounted(){

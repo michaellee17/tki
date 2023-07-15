@@ -53,6 +53,9 @@ export const user = {
     },
     getLoginData(state){
       return state.loginData;
-    }
+    },
+    getMemberBinding(state){
+      return state.memberData.data.platform_status
+    },
   },
 };

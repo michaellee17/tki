@@ -15,7 +15,7 @@ export default {
     ...mapActions('user', ['updateLoginData']),
     linkToLine() {
       const client_id = '2000112185';
-      const redirect_uri = 'http://localhost:8396/gc_tki_frontend/line-login';
+      const redirect_uri = 'https://demo2.gcreate.com.tw/gc_tki_frontend/line-login';
       const client_secret = 'ef136a36a0544abe79e736d3295e87a0';
       let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}&state=login&scope=openid%20profile`;
       window.location.href = link;
@@ -27,7 +27,7 @@ export default {
           // 使用 require 引入模組的方式引入qs模組
           const qs = require('qs');
           const client_id = '2000112185';
-          const redirect_uri = 'http://localhost:8396/gc_tki_frontend/line-login';
+          const redirect_uri = 'https://demo2.gcreate.com.tw/gc_tki_frontend/line-login';
           const client_secret = 'ef136a36a0544abe79e736d3295e87a0';
           const tokenResponse = await this.axios.post('https://api.line.me/oauth2/v2.1/token', qs.stringify({
             grant_type: 'authorization_code',
