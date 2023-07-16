@@ -8,8 +8,9 @@ export default {
     
   },
   mounted() {
-    this.linkToLine();
-    if(!this.isLineVertify)this.lineAfterRedirect();
+    let linelinked = localStorage.getItem('linelinked')
+    if(!linelinked)this.linkToLine();
+    this.lineAfterRedirect();
   },
   methods: {
     ...mapActions('user', ['updateLoginData']),
@@ -18,6 +19,7 @@ export default {
       const redirect_uri = 'https://demo2.gcreate.com.tw/gc_tki_frontend/line-login';
       const client_secret = 'ef136a36a0544abe79e736d3295e87a0';
       let link = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}&state=login&scope=openid%20profile`;
+      localStorage.setItem('linelinked',true)
       window.location.href = link;
     },
     async lineAfterRedirect() {
@@ -53,7 +55,9 @@ export default {
             }
           });
           const lineUserId = userInfoResponse.data.sub;
+          console.log(lineUserId);
           this.isLineVertify = true;
+          localStorage.removeItem('linelinked')
           localStorage.setItem('lineUserId',lineUserId);
           self.close();
         } catch (error) {

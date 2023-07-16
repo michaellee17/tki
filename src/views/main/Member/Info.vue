@@ -28,26 +28,24 @@
             <p class="mb-0 text-gray-800">尚未綁定</p>
           </GoogleLogin>
         </li>
-        <li v-if="googleBinding === true">
-          <GoogleLogin :callback="callback" popup-type="TOKEN">
-            <img src="../../../assets/images/icons/google.png" width="25" alt="google">
-            <p class="mb-0 text-gray-800">解除綁定</p>
-          </GoogleLogin>
+        <li v-if="googleBinding === true" @click="gooleUnbind">
+          <img src="../../../assets/images/icons/google.png" width="25" alt="google">
+          <p class="mb-0 text-gray-800">解除綁定</p>
         </li>
         <li v-if="lineBinding === false"  @click="lineVertify">
-          <img src="../../../assets/images/icons/line.png" width="26" alt="google">
+          <img src="../../../assets/images/icons/line.png" width="26" alt="line">
           <p class="mb-0 text-gray-800">尚未綁定</p>
         </li>
-        <li v-if="lineBinding === true" @click="lineVertify">
-          <img src="../../../assets/images/icons/line.png" width="26" alt="google">
+        <li v-if="lineBinding === true" @click="lineUnbind">
+          <img src="../../../assets/images/icons/line.png" width="26" alt="line">
           <p class="mb-0 text-gray-800">解除綁定</p>
         </li>
         <li v-if="appleBinding === false">
-          <img src="../../../assets/images/icons/apple.png" width="25" alt="google">
+          <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
           <p class="mb-0 text-gray-800">尚未綁定</p>
         </li>
         <li v-if="appleBinding === true">
-          <img src="../../../assets/images/icons/apple.png" width="25" alt="google">
+          <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
           <p class="mb-0 text-gray-800">解除綁定</p>
         </li>
       </ul>
@@ -55,7 +53,7 @@
   </ul>
 </template>
 <script>
-import { mapGetters  } from 'vuex';
+import { mapGetters,mapActions } from 'vuex';
 import Swal from "sweetalert2";
 export default {
   data () {
@@ -81,6 +79,63 @@ export default {
   mounted(){
   },
   methods:{
+    ...mapActions('user', ['updateBindingData','bindSuccessData']),
+    //GOOGLE解綁
+    gooleUnbind(){
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/unbind_platform`;
+      const requestData = {
+        method: "Google"
+      };
+      const accessToken = this.getLoginData.access_token
+      this.axios.post(apiUrl, requestData,{
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(res => { 
+        if (res.data.status_code === 'SYSTEM_1000') {
+          Swal.fire({
+            icon: 'success',
+            title: '解除綁定成功！',
+          });
+          this.updateBindingData(0);
+        }
+        if (res.data.status_code === 'SYSTEM_1001') {
+          Swal.fire({
+            icon: 'error',
+            title: '資料不完整',
+          });
+        }
+      });
+    },
+     //line解綁
+     lineUnbind(){
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/unbind_platform`;
+      const requestData = {
+        method: "Line"
+      };
+      const accessToken = this.getLoginData.access_token
+      this.axios.post(apiUrl, requestData,{
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(res => { 
+        if (res.data.status_code === 'SYSTEM_1000') {
+          Swal.fire({
+            icon: 'success',
+            title: '解除綁定成功！',
+          });
+          this.updateBindingData(1);
+        }
+        if (res.data.status_code === 'SYSTEM_1001') {
+          Swal.fire({
+            icon: 'error',
+            title: '資料不完整',
+          });
+        }
+      });
+    },
     lineVertify(){
       const router = this.$router;
       const routePath = '/line-login'; // 替換為您的路徑
@@ -89,7 +144,7 @@ export default {
       const newWindow = window.open(fullPath,'line登入',windowFeatures);
       this.startListeningForLineId(newWindow);
     },
-    //監聽回傳的lineid若有值的時候幫他登入
+    //監聽回傳的lineid若有值的時候幫他綁定
     startListeningForLineId(newWindow) {
     const lineIdPolling = setInterval(() => {
       if (newWindow.closed) {
@@ -107,22 +162,23 @@ export default {
           'Authorization': `Bearer ${accessToken}`
           }
         })
-          .then(res => { 
-            if (res.data.status_code === 'SYSTEM_1000') {
-              Swal.fire({
-                icon: 'success',
-                title: '綁定成功！',
-              });
-            }
-            if (res.data.status_code === 'SYSTEM_1001') {
-              Swal.fire({
-                icon: 'error',
-                title: '資料不完整',
-              });
-              localStorage.removeItem('lineUserId');
-            }
-          });
+        .then(res => { 
+          if (res.data.status_code === 'SYSTEM_1000') {
+            Swal.fire({
+              icon: 'success',
+              title: '綁定成功！',
+            });
+            this.bindSuccessData(1);
           }
+          if (res.data.status_code === 'SYSTEM_1001') {
+            Swal.fire({
+              icon: 'error',
+              title: '資料不完整',
+            });
+          }
+          localStorage.removeItem('lineUserId');
+        });
+        }
         }
       }, 1000);
     },
@@ -137,14 +193,16 @@ export default {
       })
       .then(response => {
         const googleId = response.data.id;
-        this.googleBinding(googleId);
+        if(googleId){
+          this.googleBind(googleId);
+        } 
       })
       .catch(error => {
         console.error(error);
       });
     },
     //google綁定
-    googleBinding(googleId){
+    googleBind(googleId){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/binding_platform`;
       const requestData = {
         platform_id: googleId,
@@ -156,20 +214,21 @@ export default {
           'Authorization': `Bearer ${accessToken}`
         }
       })
-        .then(res => { 
-          if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '綁定成功！',
-            });
-          }
-          if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-            });
-          }
-        });
+      .then(res => { 
+        if (res.data.status_code === 'SYSTEM_1000') {
+          Swal.fire({
+            icon: 'success',
+            title: '綁定成功！',
+          });
+          this.bindSuccessData(0);
+        }
+        if (res.data.status_code === 'SYSTEM_1001') {
+          Swal.fire({
+            icon: 'error',
+            title: '資料不完整',
+          });
+        }
+      });
     },
   },
 }
