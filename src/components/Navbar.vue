@@ -58,22 +58,22 @@
         </a>
       </form>
       <!-- login -->
-      <div class="nav-item dropdown login-dropdown order-1 order-sm-2">
+      <div class="nav-item dropdown login-dropdown order-1 order-sm-2 d-flex align-items-center">
         <!-- 尚未登入 -->
         <a
           v-if="loginStatus === false"
           class="nav-link pe-0 ps-4 d-flex align-items-center gap-2" href="#" role="button"
           @click.prevent="openLoginModal">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
-          <span>登入/註冊</span>
+          <span class="login-title">登入/註冊</span>
         </a>
         <!-- 已登入 -->
         <a
           v-if="loginStatus === true"
-          id="navbarDropdown" class="nav-link pe-0 ps-4 d-flex align-items-center gap-2" href="#" role="button"
+          id="navbarDropdown" class=" nav-link pe-0 ps-4 d-flex align-items-center gap-2" href="#" role="button"
           data-bs-toggle="dropdown" aria-expanded="false">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
-          <span>{{ memberName }}</span>
+          <span class="login-title">{{ memberName }}</span>
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
@@ -123,10 +123,8 @@ export default {
     //   hoveredItem: -1,
     };
   },
-    mounted(){
-        // console.log(this.getMemberData.data)
-        this.updateLoginStatus(false);
-    },
+  mounted(){
+  },
   computed: {
     ...mapGetters('user',['getLoginStatus','getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
     loginStatus() {
@@ -232,6 +230,9 @@ nav {
       padding-top: 5px;
       padding-bottom: 5px;
     }
+  }
+  & .login-title {
+    width: 84px;
   }
   & .login-dropdown {
     padding-top: 20px;

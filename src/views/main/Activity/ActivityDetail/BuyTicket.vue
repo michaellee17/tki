@@ -50,7 +50,6 @@
           </div>
         </swiper-slide>
       </swiper>
-      <section class="d-flex flex-wrap gap-3 mb-3" />
     </div>
   </div>
 </template>

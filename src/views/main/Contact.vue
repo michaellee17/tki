@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <TopHeader :title="'聯絡我們'" />
     <div class="container">
       <p class="description text-center fs-5 mb-5">請將您的寶貴意見以填寫表單方式送出，我們將於工作日由專人回覆您的問題</p>
@@ -38,16 +38,16 @@
         </form>
       </div>
     </div>
-  </layout-default>
+  </layout>
 </template>
 
 <script>
-import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
+import Layout from "../../components/Layout.vue";
 import TopHeader from "../../components/TopHeader.vue";
 
 export default {
   components: {
-    LayoutDefault, TopHeader
+    Layout, TopHeader
   },
   beforeCreate() {
     document.title = "聯絡我們 - T-KI";

@@ -1,13 +1,13 @@
 <template>
-  <LayoutDefault>
+  <Layout>
     <router-view />
-  </LayoutDefault>
+  </Layout>
 </template>
 
 <script>
-import LayoutDefault from "../../../components/organisms/LayoutDefault/LayoutDefault.vue"
+import Layout from "../../../components/Layout.vue"
 
 export default {
-    components: { LayoutDefault}
+    components: { Layout }
 }
 </script>

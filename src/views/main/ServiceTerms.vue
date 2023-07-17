@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <TopHeader :title="'用戶服務條款'"></TopHeader>
     <div class="container mt-5">
       <h5 class="mb-3">使用條款</h5>
@@ -11,16 +11,16 @@
       <p>因此，若你希望存取和檢視現行版本的《隱私保護政策》，請繼續閱讀此網頁。</p>
       <p>當你使用Klook平台時，我們可能蒐集你提供給我們的你個人相關資料，以及你如何使用Klook平台的資訊，包括你何時開設使用者帳戶（下稱「使用者帳戶」）、造訪Klook平台、預約、租賃及／或預訂任何想要的服務、或使用服務。</p>
     </div>
-  </layout-default>
+  </layout>
 </template>
 
 <script>
-import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
+import Layout from "../../components/Layout.vue";
 import TopHeader from "../../components/TopHeader.vue";
 
 export default {
   components: {
-    LayoutDefault, TopHeader
+    Layout, TopHeader
   },
   beforeCreate() {
     document.title = "隱私權條款 - T-KI";

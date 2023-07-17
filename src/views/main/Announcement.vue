@@ -18,7 +18,7 @@
 import FilterTitle from "../../components/atoms/Filter/FilterTitle.vue";
 import FilterListTags from "../../components/atoms/Filter/FilterListTags.vue";
 import BlogCard from "../../components/molecules/Blog/BlogCard.vue";
-import LayoutAnnouncement from "../../components/organisms/LayoutDefault/LayoutAnnouncement.vue";
+import LayoutAnnouncement from "../../components/LayoutAnnouncement.vue";
 import Breadcrumb from "../../components/atoms/Breadcrumb/Breadcrumb.vue";
 import PaginationButtons from "../../components/atoms/PaginationButtons/PaginationButtons.vue";
 // import BlogWidgets from "../../components/molecules/Blog/BlogWidgets.vue";
