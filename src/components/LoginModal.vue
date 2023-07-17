@@ -709,6 +709,7 @@ export default {
           }
         });
     },
+    //google取得token
     callback(response){
       //使用取得的accesstoken再打一次google api取得google id
       const accessToken = response.access_token;

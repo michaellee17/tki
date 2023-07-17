@@ -67,7 +67,6 @@ export default {
       if (location === '/') {
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
-        console.log(`Bearer ${accessToken}`)
         this.axios.get(apiUrl,{
           headers: {
           'Authorization': `Bearer ${accessToken}`

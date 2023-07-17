@@ -9,60 +9,39 @@ export default {
   },
   mounted() {
     this.linkToApple();
-    // if (!this.AppleVertify) this.AppleAfterRedirect();
   },
   methods: {
     ...mapActions('user', ['updateLoginData']),
     linkToApple() {
       AppleID.auth.init({
         clientId: 'demo2.gcreate.com.tw',
-        range: '姓名電子郵件',
+        scope: 'name email',
         redirectURI: 'https://demo2.gcreate.com.tw/gc_tki_frontend/apple-login',
         state: 'tki',
+        usePopup:false
       })
-      AppleID.auth.signIn();
+      
+      AppleID.auth.signIn((res) => {
+        if (res.authorization && res.authorization.code) {
+          const postData = {
+            code: res.authorization.code,
+            
+          };
+          console.log(code);
+          // 向后端发送POST请求
+          axios.post('/your-api-endpoint', postData)
+            .then(response => {
+            
+              const data = response.data;
+              
+            })
+            .catch(error => {
+              
+              console.error(error);
+            });
+        }
+      });
     },
-  //   AppleAfterRedirect() {
-  //     if (this.$route.query.code) {
-
-  //       const code = this.$route.query.code
-  //       // 使用 require 引入模組的方式引入qs模組
-  //       const qs = require('qs');
-  //       // 定義必要的參數
-  //       const authorizationCode = code;
-  //       const clientId = 'demo2.gcreate.com.tw';
-  //       const redirectUri = 'https://demo2.gcreate.com.tw/gc_tki_frontend/apple-login';
-  //       const state = 'tki';
-
-  //       // 發送POST請求
-  //       fetch('https://appleid.apple.com/auth/token', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/x-www-form-urlencoded',
-  //         },
-  //         body: new URLSearchParams({
-  //           code: authorizationCode,
-  //           client_id: clientId,
-  //           redirect_uri: redirectUri,
-  //           client_secret: clientSecret,
-  //           state: state,
-  //           grant_type: 'authorization_code',
-  //         }),
-  //       })
-  //         .then(response => response.json())
-  //         .then(data => {
-  //           // 獲取存取令牌的回應
-  //           const accessToken = data.access_token;
-  //           console.log(aceesToken);
-  //           // 在此處使用存取令牌進行後續操作，例如獲取用戶資訊等
-  //         })
-  //         .catch(error => {
-  //           // 處理錯誤
-  //           console.error(error);
-  //         });
-
-  //     }
-  //   },
    },
 
 }

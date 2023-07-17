@@ -6,7 +6,6 @@ export const user = {
     loginStatus: false,
     //會員資訊
     memberData: null,
-    memberData: null,
     //登入資訊包含token
     loginData:null,
   }),
@@ -32,6 +31,12 @@ export const user = {
     cleanMemberData({commit}){
       commit('setMemberData', []);
     },
+    bindSuccessData({commit},status){
+      commit('setBindingSucessData',status);
+    },
+    updateBindingData({commit},status){
+      commit('changeBindingData', status);
+    }
   },
   mutations: {
     setMemberData(state, data) {
@@ -43,6 +48,12 @@ export const user = {
     setLoginData(state, status) {
       state.loginData = status;
     },
+    setBindingSucessData(state,status){
+      state.memberData.data.platform_status[status] = true;
+    },
+    changeBindingData(state,status){
+      state.memberData.data.platform_status[status] = false;
+    },
   },
   getters: {
     getLoginStatus(state){
@@ -53,6 +64,9 @@ export const user = {
     },
     getLoginData(state){
       return state.loginData;
-    }
+    },
+    getMemberBinding(state){
+      return state.memberData.data.platform_status
+    },
   },
 };
