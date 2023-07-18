@@ -2,24 +2,39 @@
   <h2 class="text-primary mb-4">{{ title }}</h2>
   <section class="mb-5">
     <swiper
-      ref="mySwiperRef" 
-      :slides-per-view="'auto'"
+      :slides-per-view="'auto'" 
       :free-mode="true"
       :space-between="20"
-      :navigation="true"
-      class="mySwiper">
-      <div class="position-absolute top-0 left-0 d-flex gap-3">
-        <img src="../assets/images/icons/arrow_circle_right.svg" alt="">
-        <!-- <button type="button" @click="swiper.slideNext()">next</button> -->
-        <template v-for="event in data" :key="event.class_name">
+      class="mySwiper"
+      @swiper="onSwiper">
+      <div class="position-absolute top-0 left-0 w-100 d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-between">
+        <div class="d-flex gap-3 align-items-center">
+          
           <button
+            v-for="event in data" :key="event.class_name"
             type="button" :class="{ active : event.class_name === currentClass }"
-            class="btn btn-outline-primaryA" 
+            class="btn btn-outline-primaryA fs-18" 
             @click="currentClass = event.class_name">
             {{ event.class_name }}
           </button>
-        </template>
+        </div>
+        <div class="ms-auto ms-md-0">
+          <button type="button" class="btn" @click.stop="slider.slidePrev()">
+            <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
+          </button>
+          <button type="button" class="btn" @click.stop="slider.slideNext()">
+            <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
+          </button>
+        </div>
       </div>
+      <!-- <div class="position-absolute top-0 left-100 d-flex gap-3">
+        <button type="button" class="btn" @click.stop="slider.slidePrev()">
+          <img src="../assets/images/icons/arrow_circle_left.svg" alt="">
+        </button>
+        <button type="button" class="btn" @click.stop="slider.slideNext()">
+          <img src="../assets/images/icons/arrow_circle_right.svg" alt="">
+        </button>
+      </div> -->
       <swiper-slide v-for="eventData in findHotList.event_data" :key="eventData.event_id">
         <div
           class="event-card bg-cover text-white position-relative"
@@ -30,15 +45,26 @@
           </div>
         </div>
       </swiper-slide>
-      
-      <!-- <swiper-slide>
-        <div class="event-card bg-cover text-white position-relative">
+      <swiper-slide>
+        <div
+          class="event-card bg-cover text-white position-relative"
+          :style="{'backgroundImage': `url(${require('../assets/images/products/concert4.jpg')})`}">
           <div class="position-absolute bottom-0">
             <h3 class="fw-bold">楊丞琳</h3>
             <p class="fs-5">世界巡回演唱會</p>
           </div>
         </div>
-      </swiper-slide> -->
+      </swiper-slide>
+      <swiper-slide>
+        <div
+          class="event-card bg-cover text-white position-relative"
+          :style="{'backgroundImage': `url(${require('../assets/images/products/concert4.jpg')})`}">
+          <div class="position-absolute bottom-0">
+            <h3 class="fw-bold">楊丞琳</h3>
+            <p class="fs-5">世界巡回演唱會</p>
+          </div>
+        </div>
+      </swiper-slide>
     </swiper>
   </section>
 </template>
@@ -58,7 +84,8 @@
     props: ['title', 'data'],
     data () {
         return {
-          currentClass: '演唱會'
+          currentClass: '演唱會',
+          slider: null,
         }
     },
     computed: {
@@ -79,15 +106,11 @@
         if (this.data.length > 0) {
           this.currentClass = this.data[0].class_name;
         }
-      }
-    }
-    // setup() {
-    //   const swiper = useSwiper();
-
-    //   return {
-    //     swiper,
-    //   };
-    // },
+      },
+      onSwiper(swiper) {
+        this.slider = swiper;
+      },
+    },
 }
 </script>
 
@@ -106,16 +129,21 @@
   }
 }
 .mySwiper {
-    padding-top: 4rem;
+    padding-top: 5rem;
+    @media(max-width: 768px) {
+      padding-top: 7rem;
+    }
     /* 套用輪播 auto 效果 */
     & .swiper-slide {
         width: auto;
     }
-    & .swiper-button-next {
-        top: 0;
-    }
 }
-.swiper-button-next{}
+.arrow-icon {
+  filter: var(--grey-filter);
+  &:hover, &:focus {
+    filter: var(--primary-filter);
+  }
+}
 
 
 

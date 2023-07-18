@@ -1,16 +1,23 @@
 <template v-if="data.length > 0">
-  <h2 class="text-primary mb-4">{{ title }}</h2>
-  <section class="mb-5">
+ <section class="mb-5">
     <swiper
       ref="mySwiperRef" 
       :slides-per-view="'auto'"
       :free-mode="true"
       :space-between="20"
-      :navigation="true"
-      class="mySwiper">
-      <div class="position-absolute top-0 left-0 d-flex gap-3">
-        <img src="../assets/images/icons/arrow_circle_right.svg" alt="">
-        <!-- <button type="button" @click="swiper.slideNext()">next</button> -->
+      class="mySwiper"
+      @swiper="onSwiper">
+      <div class="position-absolute top-0 left-0 d-flex w-100 justify-content-between align-items-center">
+        <h2 class="text-primary">{{ title }}</h2>
+        <div>
+          <a href="#" class="fs-5 link-primary pe-3">查看更多</a>
+          <button type="button" class="btn" @click.stop="slider.slidePrev()">
+            <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
+          </button>
+          <button type="button" class="btn" @click.stop="slider.slideNext()">
+            <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
+          </button>
+        </div>
       </div>
       <swiper-slide v-for="event in data" :key="event.event_id">
         <div
@@ -41,20 +48,14 @@
     props: ['title', 'data'],
     data () {
         return {
-            
+          slider: null,
         }
     },
-    computed: {
+    methods: {
+      onSwiper(swiper) {
+        this.slider = swiper;
+      },
     },
-    mounted () {
-    },
-    // setup() {
-    //   const swiper = useSwiper();
-
-    //   return {
-    //     swiper,
-    //   };
-    // },
 }
 </script>
 
@@ -73,7 +74,7 @@
   }
 }
 .mySwiper {
-    padding-top: 4rem;
+    padding-top: 5rem;
     /* 套用輪播 auto 效果 */
     & .swiper-slide {
         width: auto;
@@ -82,7 +83,12 @@
         top: 0;
     }
 }
-.swiper-button-next{}
+.arrow-icon {
+  filter: var(--grey-filter);
+  &:hover, &:focus {
+    filter: var(--primary-filter);
+  }
+}
 
 
 

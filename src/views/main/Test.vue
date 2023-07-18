@@ -1,4 +1,4 @@
-<!-- 舊首頁 -->
+舊首頁
 
 <template>
   <layout-default>
