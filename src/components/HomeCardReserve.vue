@@ -12,21 +12,21 @@
         <h2 class="text-primary">{{ title }}</h2>
         <div>
           <a href="#" class="fs-5 link-primary pe-3">查看更多</a>
-          <button type="button" class="btn" @click.stop="slider.slidePrev()">
+          <a @click.stop="slider.slidePrev()" class="me-3">
             <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
-          </button>
-          <button type="button" class="btn" @click.stop="slider.slideNext()">
+          </a>
+          <a @click.stop="slider.slideNext()">
             <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
-          </button>
+          </a>
         </div>
       </div>
       <swiper-slide v-for="event in data" :key="event.event_id">
         <div
           class="event-card bg-cover text-white position-relative"
-          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.image_url + ')' }">
+          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.reserve_image_url + ')' }">
           <div class="position-absolute bottom-0">
-            <h3 class="fw-bold">{{ event.performer }}</h3>
-            <p class="fs-5">{{ event.event_name }}</p>
+            <h3 class="fw-bold">{{ event.event_name }}</h3>
+            <p class="fs-5">{{ event.ticket_number }} 張</p>
           </div>
         </div>
       </swiper-slide>
