@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
- import { store } from '../store/storeModules.js';
+import { store } from '../store/storeModules.js';
 const routes = [
   {
     path: '/',
@@ -58,11 +58,9 @@ const routes = [
     name: 'Member',
     component: () => import('../views/main/Member/Layout.vue'),
     beforeEnter: (to, from, next) => {
-      const loginStatus = store.getters['user/getLoginStatus'];
+      let loginStatus = store.getters['user/getLoginStatus'];
       if (loginStatus) {
         next(); 
-      } else {
-        next('/login');
       }
     },
     children: [
@@ -195,6 +193,11 @@ const routes = [
     path: '/apple-login',
     name: 'AppleLogin',
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/AppleLogin.vue')
+  },
+  {
+    path: '/apple-redirect',
+    name: 'AppleRedirect',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/AppleRedirect.vue')
   },
   // { path: '/:catchAll(.*)', redirect: '/404' },  
    // {

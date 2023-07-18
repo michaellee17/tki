@@ -38,7 +38,7 @@
                 type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
                 @click="showPage('loginBoard', 'accountLoginPage')">
                 <img src="../assets/images/icons/member.png" alt="member" width="28" class="position-absolute">
-                <p class="my-2">使用 會員 帳號</p>
+                <p class="my-2">使用 手機 號碼</p>
               </button>
             </div>
             <div class="">
@@ -137,11 +137,11 @@
         <div id="accountLoginPage" ref="accountLoginPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
-              <h1 class="modal-title fs-2 text-primary">使用會員帳號登入</h1>
+              <h1 class="modal-title fs-2 text-primary">使用手機號碼登入</h1>
             </div>
             <form>
               <div class="mb-2 row justify-content-center align-items-center">
-                <label for="loginTel" class="col-3 form-label">帳號</label>
+                <label for="loginTel" class="col-3 form-label">手機號碼</label>
                 <div class="col-9">
                   <input
                     id="loginTel" ref="loginPhone" type="tel" class="form-control" 
@@ -264,7 +264,53 @@ export default {
       const fullPath = router.resolve(routePath).href;
       const windowFeatures = 'width=500,height=600';
       const appleWindow = window.open(fullPath,'line登入',windowFeatures);
-      // this.startListeningForLineId(newWindow);
+      this.startListeningForAppleID(appleWindow);
+    },
+    startListeningForAppleID(appleWindow){
+      const appleIDpulling = setInterval(() => {
+      if (appleWindow.closed) {
+        clearInterval(appleIDpulling);
+        const appleID = localStorage.getItem('appleID');
+        if (appleID) {
+          const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
+          const requestData = {
+            platform_id: appleID,
+            method: "Apple"
+          };
+        const modalClose = this.$refs.modalClose;
+        this.axios.post(apiUrl, requestData)
+          .then(res => { 
+            if (res.data.status_code === 'SYSTEM_1000') {
+              Swal.fire({
+                icon: 'success',
+                title: '登入成功！',
+              });
+              localStorage.removeItem('appleID');
+              const loginData = res.data;
+              this.updateLoginData(loginData);
+              this.afterLogin();
+            }
+            if (res.data.status_code === 'USER_2013') {
+              Swal.fire({
+                icon: 'error',
+                title: '該用戶未綁定',
+              });
+              localStorage.removeItem('appleID');
+              //關閉modal回到原本瀏覽處
+              modalClose.click();
+            }
+            if (res.data.status_code === 'SYSTEM_1001') {
+              Swal.fire({
+                icon: 'error',
+                title: '資料不完整',
+              });
+            localStorage.removeItem('appleID');
+            modalClose.click();
+            }
+          });
+          }
+        }
+      }, 1000);
     },
     //line登入觸發跳窗
     lineLogin(){
@@ -279,6 +325,7 @@ export default {
     startListeningForLineId(newWindow) {
     const lineIdPolling = setInterval(() => {
       if (newWindow.closed) {
+        localStorage.removeItem('linelinked')
         clearInterval(lineIdPolling);
         const lineUserId = localStorage.getItem('lineUserId');
         if (lineUserId) {
@@ -287,6 +334,7 @@ export default {
             platform_id: lineUserId,
             method: "Line"
           };
+        const modalClose = this.$refs.modalClose;
         this.axios.post(apiUrl, requestData)
           .then(res => { 
             if (res.data.status_code === 'SYSTEM_1000') {
@@ -306,15 +354,15 @@ export default {
               });
               localStorage.removeItem('lineUserId');
               //關閉modal回到原本瀏覽處
-              const modalClose = this.$refs.modalClose;
-              loginModal.click();
+              modalClose.click();
             }
             if (res.data.status_code === 'SYSTEM_1001') {
               Swal.fire({
                 icon: 'error',
                 title: '資料不完整',
               });
-              localStorage.removeItem('lineUserId');
+            localStorage.removeItem('lineUserId');
+            modalClose.click();
             }
           });
           }
@@ -355,7 +403,7 @@ export default {
         });
         return;
       }
-      const apiUrl = `${process.env.VUE_APP_PATH}/forget_password`;
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/forget_password`;
       const requestData = {
        account:phone,
        password:psw1,
@@ -367,6 +415,8 @@ export default {
               icon: 'success',
               title: '設定新密碼成功',
             })
+            const modalClose = this.$refs.modalClose;
+            modalClose.click();
           }
           if(res.data.status_code === 'SYSTEM_100'){
             Swal.fire({

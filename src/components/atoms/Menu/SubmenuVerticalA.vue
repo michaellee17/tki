@@ -21,7 +21,6 @@
               v-if="link.icon"
               class="me-2"
               :icon="['fas', link.icon]" />
-
             <link-wrapper
               :remove-decorations="true" :location="link.location" :external="link.external" :target="link.target" 
               @click="handleLinkClick(link.location)">{{
@@ -81,6 +80,7 @@ export default {
                 icon: 'success',
                 title: '登出成功',
               })
+              this.$router.push('/');
             }
           });
       }
