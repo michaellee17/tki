@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <TopHeader :title="'關於我們'"></TopHeader>
     <div class="container">
       <p class="intro fs-5 mb-5">T-KI 致力於打造最專業、最順暢的購票平台，希望帶給使用者最棒的服務體驗。不再連不上售票網站；不再為了在機器前排隊數小時，不論在學校、公司、家裡、通勤中，只要在電腦前、手機旁，連著網路，就能在開賣的第一時間，上來買票！</p>
@@ -43,16 +43,16 @@
         </div>
       </section>  
     </div>
-  </layout-default>
+  </layout>
 </template>
 
 <script>
-import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
+import Layout from "../../components/Layout.vue";
 import TopHeader from "../../components/TopHeader.vue";
 
 export default {
   components: {
-    LayoutDefault, TopHeader
+    Layout, TopHeader
   },
   beforeCreate() {
     document.title = "關於我們 - T-KI";

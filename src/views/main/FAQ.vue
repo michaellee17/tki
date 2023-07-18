@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <TopHeader :title="'FAQ'"></TopHeader>
     <div class="container">
       <div class="row justify-content-between">
@@ -36,11 +36,11 @@
         </div>
       </div>
     </div>
-  </layout-default>
+  </layout>
 </template>
   
   <script>
-  import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
+  import Layout from "../../components/Layout.vue";
   import TopHeader from "../../components/TopHeader.vue";
   import "bootstrap/dist/js/bootstrap.bundle";
   export default {
@@ -52,7 +52,7 @@
       }
     },
     components: {
-      LayoutDefault, TopHeader
+      Layout, TopHeader
     },
     created() {
       document.title = "常見問題 - T-KI";

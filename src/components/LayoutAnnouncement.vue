@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import Layout from "../Layout/Layout.vue";
-import FilterTitle from "../../atoms/Filter/FilterTitle.vue";
-import FilterListTags from "../../atoms/Filter/FilterListTags.vue";
-import BlogCard from "../../molecules/Blog/BlogCard.vue";
-import Breadcrumb from "../../atoms/Breadcrumb/Breadcrumb.vue";
-import PaginationButtons from "../../atoms/PaginationButtons/PaginationButtons.vue";
+import Layout from "../components/Layout.vue";
+import FilterTitle from "../components/atoms/Filter/FilterTitle.vue";
+import FilterListTags from "../components/atoms/Filter/FilterListTags.vue";
+import BlogCard from "../components/molecules/Blog/BlogCard.vue";
+import Breadcrumb from "../components/atoms/Breadcrumb/Breadcrumb.vue";
+import PaginationButtons from "../components/atoms/PaginationButtons/PaginationButtons.vue";
 export default {
   created() {
     document.title = "最新公告 - T-KI";
@@ -54,7 +54,6 @@ export default {
     Layout,
     Breadcrumb,
     PaginationButtons,
-    // BlogWidgets,
   },
   data() {
     return {

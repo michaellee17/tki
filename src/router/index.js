@@ -185,11 +185,6 @@ const routes = [
       },
     ]
   },
-  {
-    path: '/buy-ticket-list',
-    name: 'BuyTicketList',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/BuyTicketList.vue')
-  },
   { path: '/404',     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/NotFound.vue')},  
   {
     path: '/line-login',

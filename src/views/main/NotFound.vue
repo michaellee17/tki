@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <div class="container text-center">
       <!-- <div class="m-5">
         <img class="image" :src="require('../../assets/images/misc/404.png')" alt="404 Page not found">
@@ -12,15 +12,15 @@
         </router-link>
       </div>
     </div>
-  </layout-default>
+  </layout>
 </template>
 
 <script>
-import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
+import Layout from "../../components/Layout.vue";
 
 
 export default {
-    components: {LayoutDefault},
+    components: {Layout},
   created() {
     document.title = "Page not found - iBid";
   }

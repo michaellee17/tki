@@ -1,26 +1,56 @@
 <template>
   <div class="wrap">
-    <Navbar></Navbar>
-    <div class="container" />
-    <!-- <PageHeader v-if="!this.$store.state.appView.view" />   -->
+    <Navbar v-if="!$store.state.appView.view" />
     <div class="mb-100">
       <slot><div class="text-center">No content yet.</div> </slot>
     </div>
-    <!-- <Footer v-if="!this.$store.state.appView.view" /> -->
+    <footer v-if="!$store.state.appView.view" class="mt-auto bg-primary text-white py-3">
+      <div class="container">
+        <div class="d-flex flex-column-reverse flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between">
+          <div>
+            <div class="mb-3">
+              <router-link to="/about" class="mb-2">關於我們</router-link>
+              <span class="mx-2">|</span>
+              <router-link to="/contact" class="mb-2">聯絡我們</router-link> 
+              <span class="mx-2">|</span>
+              <router-link to="/faq" class="mb-2">常見問題</router-link> 
+              <span class="mx-2">|</span>
+              <router-link to="/privacy-terms" class="mb-2">隱私權條款</router-link> 
+              <span class="mx-2">|</span>
+              <router-link to="/service-terms" class="mb-2">服務條款</router-link>
+              <span class="mx-2">|</span>
+              <router-link to="/" class="mb-2">客服時間</router-link>
+            </div>
+            <p class="mb-0">© Copyright 2023 . T-KI All rights reserved.</p>
+          </div>
+          <div class="social-media">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <p class="mb-0">追蹤我們</p>
+              <a href="#"><img src="../assets/images/icons/facebook.png" width="25" alt=""></a>
+              <a href="#"><img src="../assets/images/icons/instagram.png" width="25" alt=""></a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <p class=" mb-0">下載APP</p>
+              <a href="#"><img src="../assets/images/icons/apple-store.svg" height="25" alt=""></a>
+              <a href="#"><img src="../assets/images/icons/google-play.png" height="25" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
 import "bootstrap/dist/js/bootstrap.bundle";
 import Navbar from "../components/Navbar.vue"
-// import Footer from "../../molecules/Footer/Footer.vue";
-// import PageHeader from "../components/organisms/PageHeader.vue";
 
 export default {
+  components: {
+    Navbar,
+  },
   data () {
     return {
-      // internationalization,
-      // appView: false
     }
   },
   mounted () {
@@ -41,9 +71,6 @@ export default {
       }
     }
   },
-  components: {
-    Navbar,
-  },
 };
 </script>
 <style scoped="scoped" lang="scss">
@@ -53,81 +80,16 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 }
-// nav {
-//   padding-top: 0px;
-//   padding-bottom: 0px;
-//   @include screen-sm {
-//       padding-bottom: 20px;
-//     }
-//     & .navbar-nav {
-//       @include screen-sm {
-//         padding-top: 20px;
-//       }
-//     }
-//   & .logo-image{
-//     width: 90px;
-//     @include screen-sm {
-//       width: 70px;
-//     }
-//   }
-//   & .nav-link {
-//     color: #fff;
-//     letter-spacing: 3px;  
-//   }
-//   & .nav-item {
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//     @include screen-l {
-//       padding-top: 5px;
-//       padding-bottom: 5px;
-//     }
-//   }
-//   & .login-dropdown {
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//   }
-//   .login-dropdown
-//     & .dropdown-menu {
-//     left: -100%;
-//   }
-//   & .dropdown-menu {
-//     border: none;
-//     margin-top: 0;
-//     min-width: auto;
-//     padding: 1.5rem 1rem;
-//     opacity: 0.8;
-//     & a {
-//       letter-spacing: 3px;
-//     }
-//     & .dropdown-item:hover, .dropdown-item:focus {
-//       color: var(--primary-color);
-//       background-color: transparent;
-//     }
-//   }
-// }
-// .search-wrap {
-//   position: relative;
-//   @include screen-sm {
-//     flex-basis: 100%;
-//   }
-// }
-// .search-input {
-//   outline: 0;
-//   border: 0;
-//   border-radius: 24px;
-//   padding: 5px 35px 5px 15px;
-//   width: 200px;
-//   line-height: 35px;
-//   color: var(--primary-color);
-//   @include screen-sm {
-//     width: 100%;
-//   }
-// }
-// .search-icon {
-//   position: absolute;
-//   right: 1rem;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   color: var(--primary-color);
-// }
+footer {
+  & a {
+    color: #fff;
+    &:hover {
+      color: #000;
+    }
+  }
+  /* 與 navbar search 對齊 */
+  & .social-media {
+    width: 340px;
+  }
+}
 </style>

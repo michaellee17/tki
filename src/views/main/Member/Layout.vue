@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <div class="container row gap-3 mx-auto my-5">
       <div class="sidebar">
         <div class="profile d-flex justify-content-center align-items-center gap-3 py-3 mb-3">
@@ -53,15 +53,15 @@
         <router-view />
       </div>
     </div>
-  </layout-default> 
+  </layout> 
 </template>
 
 <script>
-import LayoutDefault from "../../../components/organisms/LayoutDefault/LayoutDefault.vue";
+import Layout from "../../../components/Layout.vue";
 import { mapGetters  } from 'vuex';
 export default {
   components: {
-    LayoutDefault
+    Layout
     
   },
   data () {

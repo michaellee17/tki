@@ -1,5 +1,5 @@
 <template>
-  <layout-default>
+  <layout>
     <div class="container cart ">
       <div class="cart-header border-bottom">
         <Breadcrumb />
@@ -71,13 +71,13 @@
         >
       </template>
     </div>
-  </layout-default>
+  </layout>
 </template>
 
 <script>
 import CartTotal from "../../components/molecules/Cart/CartTotal.vue";
 import ItemCart from "../../components/atoms/Cart/CartItemBig.vue";
-import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
+import Layout from "../../components/Layout.vue";
 import ButtonFilled from "../../components/atoms/Button/ButtonFilled.vue";
 import BasicInputText from "../../components/atoms/FormInput/BasicInputText.vue";
 import Breadcrumb from "../../components/atoms/Breadcrumb/Breadcrumb.vue";
@@ -91,7 +91,7 @@ export default {
     this.$store.commit("setLocation", [{ title: "Cart", location: "/cart" }]);
   },
   components: {
-    LayoutDefault,
+    Layout,
     CartTotal,
     ItemCart,
     ButtonFilled,
