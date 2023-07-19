@@ -122,6 +122,8 @@ export default {
         Swal.fire({
               icon: 'error',
               title: '兩次輸入的新密碼不同',
+              showConfirmButton: false,
+              timer: 1500,
         });
       }
       const requestData = {
@@ -139,6 +141,8 @@ export default {
             Swal.fire({
               icon: 'success',
               title: '修改密碼成功！',
+              showConfirmButton: false,
+              timer: 1500,
             });
             this.passwordChange = false;
           }
@@ -146,18 +150,24 @@ export default {
             Swal.fire({
               icon: 'error',
               title: '資料不完整',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
           if (res.data.status_code === 'USER_2051') {
             Swal.fire({
               icon: 'error',
               title: '舊密碼錯誤',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
           if (res.data.status_code === 'USER_2022') {
             Swal.fire({
               icon: 'error',
               title: '密碼格式不符',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });
@@ -171,6 +181,8 @@ export default {
         Swal.fire({
           icon: 'error',
           title: '姓名格式不符合',
+          showConfirmButton: false,
+          timer: 1500,
         });
         return;
       }
@@ -178,7 +190,9 @@ export default {
       if (email && !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
         Swal.fire({
           icon: 'error',
-          title: '邮箱格式不符合',
+          title: '信箱格式不符合',
+          showConfirmButton: false,
+          timer: 1500,
         });
         return;
       }
@@ -197,6 +211,8 @@ export default {
             Swal.fire({
               icon: 'success',
               title: '更新資料成功！',
+              showConfirmButton: false,
+              timer: 1500,
             });
             this.updateMemberName(fullname)
             this.updateMemberEmail(email)
@@ -205,18 +221,24 @@ export default {
             Swal.fire({
               icon: 'error',
               title: '資料不完整',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
           if (res.data.status_code === 'USER_2023') {
             Swal.fire({
               icon: 'error',
               title: '姓名格式不符合',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
           if (res.data.status_code === 'USER_2024') {
             Swal.fire({
               icon: 'error',
               title: '信箱格式不符合',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });
@@ -238,6 +260,8 @@ export default {
             Swal.fire({
               icon: 'success',
               title: '解除綁定成功！',
+              showConfirmButton: false,
+              timer: 1500,
             });
             this.updateBindingData(2);
           }
@@ -245,6 +269,8 @@ export default {
             Swal.fire({
               icon: 'error',
               title: '資料不完整',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });
@@ -280,6 +306,8 @@ export default {
                   Swal.fire({
                     icon: 'success',
                     title: '綁定成功！',
+                    showConfirmButton: false,
+                    timer: 1500,
                   });
                   this.bindSuccessData(2);
                 }
@@ -287,6 +315,8 @@ export default {
                   Swal.fire({
                     icon: 'error',
                     title: '資料不完整',
+                    showConfirmButton: false,
+                    timer: 1500,
                   });
                 }
                 localStorage.removeItem('appleID');
@@ -312,6 +342,8 @@ export default {
             Swal.fire({
               icon: 'success',
               title: '解除綁定成功！',
+              showConfirmButton: false,
+              timer: 1500,
             });
             this.updateBindingData(0);
           }
@@ -319,6 +351,8 @@ export default {
             Swal.fire({
               icon: 'error',
               title: '資料不完整',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });
@@ -340,6 +374,8 @@ export default {
             Swal.fire({
               icon: 'success',
               title: '解除綁定成功！',
+              showConfirmButton: false,
+              timer: 1500,
             });
             this.updateBindingData(1);
           }
@@ -347,6 +383,8 @@ export default {
             Swal.fire({
               icon: 'error',
               title: '資料不完整',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });
@@ -383,6 +421,8 @@ export default {
                   Swal.fire({
                     icon: 'success',
                     title: '綁定成功！',
+                    showConfirmButton: false,
+                    timer: 1500,
                   });
                   this.bindSuccessData(1);
                 }
@@ -390,6 +430,8 @@ export default {
                   Swal.fire({
                     icon: 'error',
                     title: '資料不完整',
+                    showConfirmButton: false,
+                    timer: 1500,
                   });
                 }
                 localStorage.removeItem('lineUserId');
@@ -435,6 +477,8 @@ export default {
             Swal.fire({
               icon: 'success',
               title: '綁定成功！',
+              showConfirmButton: false,
+              timer: 1500,
             });
             this.bindSuccessData(0);
           }
@@ -442,6 +486,8 @@ export default {
             Swal.fire({
               icon: 'error',
               title: '資料不完整',
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });

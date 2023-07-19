@@ -57,22 +57,19 @@ const routes = [
     path: '/member',
     name: 'Member',
     component: () => import('../views/main/Member/Layout.vue'),
-    beforeEnter: (to, from, next) => {
-      let loginStatus = store.getters['user/getLoginStatus'];
-      if (loginStatus) {
-        next(); 
-      }
-    },
+    meta: { requiresAuth: true },
+   
     children: [
       {
         path: 'index/:memberID',
         name: 'Index',
-        component: () => import('../views/main/Member/Index.vue')
+        component: () => import('../views/main/Member/Index.vue'),
+        meta: { requiresAuth: true },
       },
       {
         path: 'info/:memberID',
         name: 'Info',
-        component: () => import('../views/main/Member/Info.vue')
+        component: () => import('../views/main/Member/Info.vue'),
       },
       {
         path: 'order-history/:memberID',
@@ -258,11 +255,24 @@ const routes = [
     // },
 ]
 
+
+let loginStatus = store.getters['user/getLoginStatus'];
 const router = createRouter({
   mode: 'history',
   history: createWebHistory(process.env.VUE_APP_BUILD_PATH),
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let loginStatus = store.getters['user/getLoginStatus'];
+    if (!loginStatus) {
+      next('/');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

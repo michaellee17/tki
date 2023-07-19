@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-    //   memberID:'',
+       memberID:0,
     //   showMobileMenu: false,
     //   path: 'images/logos/logo-main-white.png',
     //   isActive: false,
@@ -125,6 +125,7 @@ export default {
   },
   mounted(){
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
     ...mapGetters('user',['getLoginStatus','getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
     loginStatus() {
@@ -136,43 +137,17 @@ export default {
     memberName() {
       return this.getMemberData && this.getMemberData.data && this.getMemberData.data.full_name ? this.getMemberData.data.full_name : '';
     },
-    // memberDataId(){
-    //   return this.getMemberData.data.id;
-    // },
     memberDataId() {
-  if (this.getMemberData && this.getMemberData.data && this.getMemberData.data.id) {
-    return this.getMemberData.data.id;
-  }
-  return null; // 或者返回适当的默认值
-},
-//     loggedInItems() {
-//   if (this.memberData && this.memberData.data && this.memberData.data.id) {
-//     const memberDataId = this.memberData.data.id;
-//     return [
-//       {
-//         links: [
-//           { location: `/member/info/${memberDataId}`, name: '會員中心' },
-//           { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
-//           { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
-//           { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
-//           { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
-//           { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
-//           { location: '/', name: '登出' },
-//         ],
-//       },
-//     ];
-//   }
-//   return [];
-// },
-
+      return this.getMemberData?.data?.id ? this.getMemberData.data.id : this.memberId;
+    },
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
-    handleLogOut () {
-        // this.updateLoginStatus(false);
+    handleLogOut (){
+        this.$router.push('/')
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
         this.axios.get(apiUrl,{
@@ -180,18 +155,28 @@ export default {
           'Authorization': `Bearer ${accessToken}`
         }
         })
-          .then(res => { 
-            if(res.data.status_code === 'SYSTEM_1000'){
-              this.updateLoginStatus(false);
-              this.updateLoginData([]);
-              this.cleanMemberData();
-              Swal.fire({
-                icon: 'success',
-                title: '登出成功',
-              })
-            }
-          });
-      
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.updateLoginStatus(false);
+            this.updateLoginData([]);
+            this.cleanMemberData();
+            Swal.fire({
+              icon: 'success',
+              title: '登出成功',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+           
+          }
+          if(res.data.status_code === 'SYSTEM_1001'){
+            Swal.fire({
+              icon: 'error',
+              title: '資訊不完整',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
+        });
     }
    },
 };
