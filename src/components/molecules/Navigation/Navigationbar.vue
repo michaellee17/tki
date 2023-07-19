@@ -1,16 +1,14 @@
 <template>
   <nav class="navbar navbar-expand-sm p-0">
     <div class="container justify-content-start">
-      <div class="navbar w-100 p-0" :class="{'show' :isActiveTablet}">
+      <div class="navbar w-100 p-0" :class="{ 'show': isActiveTablet }">
         <ul class="navbar-nav me-auto mb-2 ms-0 mb-lg-0 h-100 w-100 px-0">
           <!-- logo -->
           <li class="d-flex align-items-center pe-3">
             <div class="logo-section align-items-center justify-content-between ">
               <div class="logo logo-image">
                 <link-wrapper :location="'/'">
-                  <img
-                    :src="$getFileSource(path)"
-                    :alt="$store.state.app.settings.websiteName">
+                  <img :src="$getFileSource(path)" :alt="$store.state.app.settings.websiteName">
                 </link-wrapper>
               </div>
               <div class="icons d-md-none d-flex align-items-center">
@@ -27,25 +25,13 @@
               </div>
             </div>
           </li>
-          <li
-            v-for="(link, i) in links"
-            :key="link"
-            class="nav-item position-relative h-100 d-flex align-items-center"
-            @mouseover="hoveredItem = i"
-            @mouseleave="hoveredItem = -1">
-            <LinkWrapper
-              class="nav-link text-white fs-6"
-              :location="link.location"
-              :name="link.name"
-              :external="link.external"
-              :target="link.target" />
-            <template
-              v-if="link.component && link.componentProps !== undefined">
+          <li v-for="(link, i) in links" :key="link" class="nav-item position-relative h-100 d-flex align-items-center"
+            @mouseover="hoveredItem = i" @mouseleave="hoveredItem = -1">
+            <LinkWrapper class="nav-link text-white fs-6" :location="link.location" :name="link.name"
+              :external="link.external" :target="link.target" />
+            <template v-if="link.component && link.componentProps !== undefined">
               <transition name="showMenu">
-                <component
-                  :is="link.component"
-                  v-show="hoveredItem === i"
-                  v-bind="link.componentProps"
+                <component :is="link.component" v-show="hoveredItem === i" v-bind="link.componentProps"
                   class="menu-hover-main" />
               </transition>
             </template>
@@ -58,27 +44,17 @@
             </div>
           </li>
           <!-- login -->
-          <li
-            class="login-items nav-item position-relative h-100 d-flex align-items-center"
-            @mouseover="hoveredItem = 'login'"
-            @mouseleave="hoveredItem = -1">
+          <li class="login-items nav-item position-relative h-100 d-flex align-items-center"
+            @mouseover="hoveredItem = 'login'" @mouseleave="hoveredItem = -1">
             <!-- 尚未登入 -->
-            <LinkWrapper
-              v-if="loginStatus === false"
-              class="nav-link text-white fs-6 px-0" 
-              :name="'登入'"
+            <LinkWrapper v-if="loginStatus === false" class="nav-link text-white fs-6 px-0" :name="'登入'"
               @click="openLoginModal" />
             <!-- 已登入 -->
             <div v-if="loginStatus === true" class="d-flex">
               <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 me-1" />
-              <LinkWrapper
-                class="nav-link text-white fs-6 px-0" 
-                :name="memberName" />
+              <LinkWrapper class="nav-link text-white fs-6 px-0" :name="memberName" />
               <transition name="showMenu">
-                <SubmenuVerticalA
-                  v-show="hoveredItem === 'login'"
-                  :items="loggedInItems"
-                  class="menu-hover-login" />
+                <SubmenuVerticalA v-show="hoveredItem === 'login'" :items="loggedInItems" class="menu-hover-login" />
               </transition>
             </div>
           </li>
@@ -94,7 +70,7 @@ import loginModal from "../../LoginModal.vue"
 import SubmenuVerticalA from "../../atoms/Menu/SubmenuVerticalA.vue";
 import { links } from "../../../data/links.json";
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
-import { mapGetters  } from 'vuex';
+import { mapGetters } from 'vuex';
 
 
 export default {
@@ -105,7 +81,7 @@ export default {
   },
   data() {
     return {
-      memberID:'',
+      memberID: '',
       showMobileMenu: false,
       path: 'images/logos/logo-main-white.png',
       isActive: false,
@@ -114,42 +90,42 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('user',['getLoginStatus','getMemberData']), // 將 getLoginStatus 映射到計算屬性中
+    ...mapGetters('user', ['getLoginStatus', 'getMemberData']), // 將 getLoginStatus 映射到計算屬性中
     loginStatus() {
       return this.getLoginStatus; // 使用計算屬性取得 loginStatus
     },
-    memberData(){
+    memberData() {
       return this.getMemberData;
     },
     memberName() {
       return this.getMemberData && this.getMemberData.data && this.getMemberData.data.full_name ? this.getMemberData.data.full_name : '';
     },
     loggedInItems() {
-  if (this.memberData && this.memberData.data && this.memberData.data.id) {
-    const memberDataId = this.memberData.data.id;
-    return [
-      {
-        links: [
-          { location: `/member/index/${memberDataId}`, name: '會員中心' },
-          { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
-          { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
-          { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
-          { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
-          { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
-          { location: '/', name: '登出',logout: true },
-        ],
-      },
-    ];
-  }
-  return [];
-},
+      if (this.memberData && this.memberData.data && this.memberData.data.id) {
+        const memberDataId = this.memberData.data.id;
+        return [
+          {
+            links: [
+              { location: `/member/index/${memberDataId}`, name: '會員中心' },
+              { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
+              { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
+              { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
+              { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
+              { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
+              { location: '/', name: '登出' },
+            ],
+          },
+        ];
+      }
+      return [];
+    },
 
   },
   methods: {
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
-   },
+  },
 };
 </script>
 <style lang="scss">
@@ -181,18 +157,21 @@ export default {
   background-color: var(--primary-color);
   height: 70px;
 }
+
 .text-uppercase {
   cursor: pointer;
 }
+
 .nav-item a {
   letter-spacing: 3px;
 }
+
 // .nav-item a {
 //   color: #ffff;
 //   font-size: 14px !important;
 //   font-weight: 500 !important;
 // }
-li.nav-item > a:hover {
+li.nav-item>a:hover {
   -moz-transition: all 0.1s ease-in-out;
   -webkit-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.05s ease-in-out;
@@ -200,6 +179,7 @@ li.nav-item > a:hover {
   transition: all 0.1s ease-in-out;
   color: #000 !important;
 }
+
 /*Edit starts here*/
 // li > a::after {
 //   content: "";
@@ -221,35 +201,43 @@ li.nav-item > a:hover {
 .bot_nav_cat {
   box-shadow: 0 3px 25px rgb(0 0 0 / 10%);
 }
+
 li {
   transition: cubic-bezier(0.77, 0, 0.18, 1) 0.1s;
 }
+
 .collapse.navbar-collapse {
   height: 70px;
 }
 
-.nav-item > .menu-hover-main {
+.nav-item>.menu-hover-main {
   top: 100%;
   left: 0;
 }
-.nav-item > .menu-hover-login {
+
+.nav-item>.menu-hover-login {
   top: 100%;
   left: -50px;
 }
+
 .cat-icon {
-  margin-top:3px;
+  margin-top: 3px;
 }
+
 .sign-in span {
   color: #ffff;
   font-size: 14px !important;
   font-weight: 700 !important;
 }
+
 .dropdown {
   height: 70px;
 }
+
 .dropdown-toggle::after {
   content: none;
 }
+
 // .navbar a {
 //   text-align: left;
 //   box-sizing: border-box;
@@ -268,13 +256,15 @@ li {
   padding: 10px 36px;
   font-size: 13px;
 }
+
 .menu {
   display: block;
   margin: 0 auto;
   position: relative;
   width: 200px;
 }
-.menu > li > a {
+
+.menu>li>a {
   background: #000;
   color: #fff;
   display: block;
@@ -293,11 +283,13 @@ li {
   top: 35px;
   width: 100%;
 }
+
 .menu ul a {
   color: #000;
   display: block;
   padding: 5px 20px;
 }
+
 /* Animation */
 .navbar li ul {
   position: absolute;
@@ -305,6 +297,7 @@ li {
   top: 36px;
   z-index: 1;
 }
+
 .navbar li ul li {
   overflow: hidden;
   height: 0;
@@ -313,15 +306,19 @@ li {
   -o-transition: height 200ms ease-in;
   transition: height 200ms ease-in;
 }
-.navbar ul > li:hover ul li {
+
+.navbar ul>li:hover ul li {
   height: 36px;
 }
+
 .navbar .logo img {
-    max-width: 85px;
+  max-width: 85px;
 }
+
 .search-wrap {
   position: relative;
 }
+
 .search-input {
   outline: 0;
   border: 0;
@@ -331,6 +328,7 @@ li {
   line-height: 35px;
   color: var(--primary-color);
 }
+
 .search-icon {
   position: absolute;
   right: 1rem;
@@ -338,24 +336,27 @@ li {
   transform: translateY(-50%);
   color: var(--primary-color);
 }
+
 .login-items .submenu-vertical {
-    background-color: rgba(245, 116, 46, 0.8);
-    & a {
-      color: #fff;
-    }
-}
-.navbar-expand-sm .navbar-nav .nav-link {
-    padding: 0 6px !important;
+  background-color: rgba(245, 116, 46, 0.8);
+
+  & a {
+    color: #fff;
   }
+}
+
+.navbar-expand-sm .navbar-nav .nav-link {
+  padding: 0 6px !important;
+}
 
 
 @media (max-width: 768px) {
   .navbar {
     display: none !important;
   }
-  .logo-image img{
-    width: 5rem;
-}
-}
 
+  .logo-image img {
+    width: 5rem;
+  }
+}
 </style>

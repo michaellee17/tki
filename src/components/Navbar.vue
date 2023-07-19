@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-    //   memberID:'',
+       memberID:0,
     //   showMobileMenu: false,
     //   path: 'images/logos/logo-main-white.png',
     //   isActive: false,
@@ -125,6 +125,7 @@ export default {
   },
   mounted(){
   },
+  // eslint-disable-next-line vue/order-in-components
   computed: {
     ...mapGetters('user',['getLoginStatus','getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
     loginStatus() {
@@ -136,21 +137,23 @@ export default {
     memberName() {
       return this.getMemberData && this.getMemberData.data && this.getMemberData.data.full_name ? this.getMemberData.data.full_name : '';
     },
-    // memberDataId(){
-    //   return this.getMemberData.data.id;
-    // },
     memberDataId() {
+
+     
+
   if (this.getMemberData && this.getMemberData.data && this.getMemberData.data.id) {
     return this.getMemberData.data.id;
   }
   return null; // 或者返回适当的默认值
 },
+
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
+
     handleLogOut () {
         // this.updateLoginStatus(false);
         console.log('logout')
@@ -161,19 +164,28 @@ export default {
           'Authorization': `Bearer ${accessToken}`
         }
         })
-          .then(res => { 
-            if(res.data.status_code === 'SYSTEM_1000'){
-              this.updateLoginStatus(false);
-              this.updateLoginData([]);
-              this.cleanMemberData();
-              Swal.fire({
-                icon: 'success',
-                title: '登出成功',
-              })
-              this.$router.push('/');
-            }
-          });
-      
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.updateLoginStatus(false);
+            this.updateLoginData([]);
+            this.cleanMemberData();
+            Swal.fire({
+              icon: 'success',
+              title: '登出成功',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+           
+          }
+          if(res.data.status_code === 'SYSTEM_1001'){
+            Swal.fire({
+              icon: 'error',
+              title: '資訊不完整',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
+        });
     }
    },
 };
