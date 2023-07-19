@@ -33,7 +33,7 @@
           :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + eventData.main_imageH_url + ')' }">
           <div class="position-absolute bottom-0">
             <h3 class="fw-bold">{{ eventData.performer }}</h3>
-            <p class="fs-5">{{ eventData.event_name }}</p>
+            <p class="fs-5 ellipsis-3">{{ eventData.event_name }}</p>
           </div>
         </router-link>
       </swiper-slide>
@@ -111,6 +111,10 @@
         width: auto;
     }
 }
+// .swiper-wrapper {
+//   transform: translate3d(200px, 0px, 0px)!important;
+// }
+
 .arrow-icon {
   filter: var(--grey-filter);
   &:hover, &:focus {

@@ -127,4 +127,11 @@ ul li{
 .mb-100 {
   margin-bottom: 100px;
 }
+.ellipsis-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;  /* 限制元素顯示的行數為 3 行 */
+  -webkit-box-orient: vertical; /* 元素內容的排列方向為垂直方向 */
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 

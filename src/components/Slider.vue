@@ -4,7 +4,7 @@
     :loop="true"
     :initial-slide="1"
     :autoplay="{
-      delay: 250000,
+      delay: 2500,
       disableOnInteraction: false,
     }" 
     :space-between="30"
@@ -16,6 +16,17 @@
     class="mySwiper">
     <swiper-slide v-for="(item) in advertises" :id="item.title" :key="item.title">
       <a :href="item.link_url" target="_blank">
+        <img
+          :src="item.image_path_web"
+          class="banner-l img-fluid">
+        <img
+          :src="item.image_path"
+          class="banner-sm img-fluid">
+      </a>
+    </swiper-slide>
+    <!-- 原本的響應式設計 -->
+    <!-- <swiper-slide v-for="(item) in advertises" :id="item.title" :key="item.title">
+      <a :href="item.link_url" target="_blank">
         <div
           class="slider slider-top banner-l" 
           :style="{ backgroundImage: `url(${ item.image_path_web })` }" />
@@ -23,7 +34,7 @@
           class="slider slider-top banner-sm" 
           :style="{ backgroundImage: `url(${ item.image_path })` }" />
       </a>
-    </swiper-slide>
+    </swiper-slide> -->
   </swiper>
 </template>
 
@@ -67,24 +78,29 @@ export default {
 </script>
 <style lang="scss">
 @import "../assets/mixin.scss";
-
-.slider-top {
-  // web 16:5
-  height: 600px;
-  @include screen-xl {
-    height: 450px;
-  }
-  @include screen-l {
-    height: 320px;
-  }
-  @include screen-m {
-    height: 240px;
-  }
-  // app 16:9
-  @include screen-sm {
-    height: 324px;
-  }
-}
+// 原本的響應式設計
+// .slider-top {
+//   // web 16:5
+//   height: 600px;
+//   @include screen-xl {
+//     height: 450px;
+//   }
+//   @include screen-l {
+//     height: 320px;
+//   }
+//   @include screen-m {
+//     height: 240px;
+//   }
+//   // app 16:9
+//   @include screen-sm {
+//     height: 324px;
+//   }
+// }
+// .slider {
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   background-position: center;
+// }
 
 /* Pagination progress 置於下方 */
 .swiper-pagination {
@@ -117,13 +133,7 @@ export default {
 // .swiper-button-next::after {
 //   margin-right: 50px;
 // }
-.slider {
-  // padding: 30px;
-  // padding-bottom: 0 !important;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
+
 .banner-sm {
     display: none;
 }
