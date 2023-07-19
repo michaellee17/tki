@@ -1,30 +1,30 @@
 <template>
   <h3 class="text-primary mb-4">會員資訊</h3>
-  <ul class="row flex-column">
-    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
+  <ul class="row flex-column member-info">
+    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">姓名</p>
         <a class="text-primary edit" @click="updateProfile">編輯</a>
       </div>
       <input ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
     </li>
-    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
+    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">密碼</p>
         <a class="text-primary edit" @click="passwordChange = !passwordChange">編輯</a>
       </div>
       <p v-if="!passwordChange" class="fs-18">********</p>
       <div v-if="passwordChange">
-        <div class="d-flex gap-2">
-          <span class="fs-16">輸入舊密碼:</span>
+        <div class="d-flex gap-2 align-items-center mb-2 ">
+          <span class="fs-16">輸入舊密碼：</span>
           <input v-model="oldPsw" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
-        <div class="d-flex gap-2">
-          <span class="fs-16">輸入新密碼:</span>
+        <div class="d-flex gap-2 align-items-center mb-2">
+          <span class="fs-16">輸入新密碼：</span>
           <input v-model="newPsw" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
-        <div class="d-flex gap-2">
-          <span class="fs-16">確認新密碼:</span>
+        <div class="d-flex gap-2 align-items-center mb-2">
+          <span class="fs-16">確認新密碼：</span>
           <input v-model="newPsw2" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
         <div class="pt-2">
@@ -32,20 +32,20 @@
         </div>
       </div>
     </li>
-    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
+    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <p class="fs-18">手機驗證</p>
       <div class="d-flex justify-content-between text-secondary">
         <p>{{ memberData.account }}</p>
       </div>
     </li>
-    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
+    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">電子信箱</p>
         <a class="text-primary edit" @click="updateProfile">編輯</a>
       </div>
       <input ref="memberEmail" class="mb-0 text-gray-800" :value="memberData.email">
     </li>
-    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 bg-primary-light rounded">
+    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <p class="fs-18">社群綁定</p>
       <ul class="text-center d-flex justify-content-between px-0">
         <li v-if="googleBinding === false">
@@ -499,9 +499,12 @@ export default {
 input {
   border: 1px solid var(--primary-color);
   background-color: transparent;
+  padding: 5px 10px;
 }
-
 .edit {
   font-size: 14px;
+}
+.member-info > li {
+  background-color: rgba(245, 116, 46, 6%);
 }
 </style>
