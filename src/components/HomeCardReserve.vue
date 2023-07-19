@@ -23,7 +23,7 @@
       <swiper-slide v-for="event in data" :key="event.event_id">
         <div
           class="event-card bg-cover text-white position-relative"
-          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.reserve_image_url + ')' }">
+          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.main_imageH_url + ')' }">
           <div class="position-absolute bottom-0">
             <h3 class="fw-bold">{{ event.event_name }}</h3>
             <p class="fs-5">{{ event.ticket_number }} 張</p>

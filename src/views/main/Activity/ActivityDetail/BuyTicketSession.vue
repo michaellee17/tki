@@ -1,6 +1,8 @@
 <template>
   <h5 class="fs-18 text-secondary mb-3">購票資訊</h5>
-  <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
+  <div
+    v-if="this.ticket_info && this.ticket_info.session_info.length > 0" 
+    class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div class="">
         <img :src="ticket_info.ticket_image_url" class="img-fluid" alt="">
@@ -63,10 +65,10 @@ export default {
   data() {
     return {
       currentSessionName: '',
-      area_info: []
+      area_info: [],
     }
   },
-  mounted() {
+  created() {
     if (this.ticket_info && this.ticket_info.session_info.length > 0) {
       this.currentSessionName = this.ticket_info.session_info[0].session_name;
       this.init();

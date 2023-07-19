@@ -145,26 +145,6 @@ export default {
   }
   return null; // 或者返回适当的默认值
 },
-//     loggedInItems() {
-//   if (this.memberData && this.memberData.data && this.memberData.data.id) {
-//     const memberDataId = this.memberData.data.id;
-//     return [
-//       {
-//         links: [
-//           { location: `/member/info/${memberDataId}`, name: '會員中心' },
-//           { location: `/member/order-history/${memberDataId}`, name: '訂單記錄' },
-//           { location: `/member/reward/${memberDataId}`, name: '獲獎紀錄' },
-//           { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
-//           { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
-//           { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
-//           { location: '/', name: '登出' },
-//         ],
-//       },
-//     ];
-//   }
-//   return [];
-// },
-
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
