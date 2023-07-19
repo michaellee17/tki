@@ -136,7 +136,7 @@ export default {
           { location: `/member/my-collection/${memberDataId}`, name: '我的收藏' },
           { location: `/member/my-ticket/${memberDataId}`, name: '我的票券' },
           { location: `/member/buy-ticket-list/${memberDataId}`, name: '購票清單' },
-          { location: '/', name: '登出' },
+          { location: '/', name: '登出',logout: true },
         ],
       },
     ];

@@ -72,13 +72,13 @@ export default {
   computed:{
     ...mapGetters('user',['getMemberData']), 
     memberData(){
-      return this.getMemberData.data.id;
+      return this.getMemberData.data ? this.getMemberData.data.id : '';
     },
     memberName(){
-      return this.getMemberData.data.full_name;
+      return this.getMemberData.data ? this.getMemberData.data.full_name : '';
     },
     memberAccount(){
-      return this.getMemberData.data.account;
+      return this.getMemberData.data ?this.getMemberData.data.account : '';
     },
   },
   created () {

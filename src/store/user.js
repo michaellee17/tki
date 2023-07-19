@@ -36,9 +36,21 @@ export const user = {
     },
     updateBindingData({commit},status){
       commit('changeBindingData', status);
+    },
+    updateMemberName({commit},status){
+      commit('changeMemberName',status)
+    },
+    updateMemberEmail({commit},status){
+      commit('changeMemberEmail',status)
     }
   },
   mutations: {
+    changeMemberEmail(state,status){
+      state.memberData.data.email = status;
+    },
+    changeMemberName(state,status){
+      state.memberData.data.full_name = status;
+    },
     setMemberData(state, data) {
       state.memberData = data;
     },
