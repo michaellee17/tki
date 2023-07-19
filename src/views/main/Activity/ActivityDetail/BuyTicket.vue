@@ -69,7 +69,7 @@
         return parseInt(eventRoute[eventRoute.length - 1]);
       },
     },
-    beforeCreated() {
+    created() {
       this.getRecommendList();
     },
     methods: {
