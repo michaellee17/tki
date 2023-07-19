@@ -65,7 +65,7 @@
           class="nav-link pe-0 ps-4 d-flex align-items-center gap-2 text-nowrap" href="#" role="button"
           @click.prevent="openLoginModal">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
-          <span class="login-title">登入/註冊</span>
+          <span class="login-title">未登入</span>
         </a>
         <!-- 已登入 -->
         <a
@@ -153,6 +153,7 @@ export default {
     },
     handleLogOut () {
         // this.updateLoginStatus(false);
+        console.log('logout')
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
         this.axios.get(apiUrl,{
@@ -169,6 +170,7 @@ export default {
                 icon: 'success',
                 title: '登出成功',
               })
+              this.$router.push('/');
             }
           });
       
@@ -190,7 +192,7 @@ nav {
         padding-top: 20px;
       }
     }
-  & .logo-image{
+  & .logo-image {
     width: 90px;
     @include screen-sm {
       width: 70px;
@@ -199,7 +201,7 @@ nav {
   & .nav-link {
     color: #fff;
     letter-spacing: 3px;
-    &:hover:not(.login-dropdown .nav-link) {
+    &:hover{
         color: #000;
     }  
   }

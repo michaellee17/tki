@@ -12,9 +12,11 @@
         <!-- 登入 / 註冊首頁 -->
         <div id="loginBoard" ref="loginBoard">
           <div class="modal-body text-center text-second pb-5">
-            <div class="d-flex justify-content-center gap-2 mb-4">
+            <div class="d-flex justify-content-center gap-2 mb-4 align-items-center">
               <h1 id="loginModalLabel" class="modal-title fs-2">登入</h1>
-              <p class="fs-2 fw-bold text-primary">T-KI</p>
+              <div>
+                <img src="../assets/images/logos/logo-main.png" width="80" alt="logo">
+              </div>
             </div>
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
             <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">

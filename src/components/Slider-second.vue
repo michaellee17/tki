@@ -4,7 +4,7 @@
     :loop="true"
     :initial-slide="1"
     :autoplay="{
-      delay: 250000,
+      delay: 2500,
       disableOnInteraction: false,
     }"
     :options="swiperOptions"
@@ -15,14 +15,14 @@
       clickable: true,
     }"
     class="mySwiper">
-    <swiper-slide v-for="item in advertises" :key="item.adv_index">
+    <swiper-slide v-for="(item) in advertises" :id="item.title" :key="item.title">
       <a :href="item.link_url" target="_blank">
-        <div
-          class="slider slider-middle banner-l" 
-          :style="{ backgroundImage: `url(${ item.image_path_web })` }" />
-        <div
-          class="slider slider-middle banner-sm" 
-          :style="{ backgroundImage: `url(${ item.image_path })` }" />
+        <img
+          :src="item.image_path_web"
+          class="banner-l img-fluid w-100">
+        <img
+          :src="item.image_path"
+          class="banner-sm img-fluid w-100">
       </a>
     </swiper-slide>
   </swiper>
@@ -67,21 +67,21 @@ export default {
 <style scoped lang="scss">
 @import "../assets/mixin.scss";
 
-.slider-middle {
-  // web 16:3
-  height: 360px;
-  @include screen-xl {
-    height: 270px;
-  }
-  @include screen-l {
-    height: 192px;
-  }
-  @include screen-m {
-    height: 144px;
-  }
-  // app 16:9
-  @include screen-sm {
-    height: 324px;
-  }
-}
+// .slider-middle {
+//   // web 16:3
+//   height: 360px;
+//   @include screen-xl {
+//     height: 270px;
+//   }
+//   @include screen-l {
+//     height: 192px;
+//   }
+//   @include screen-m {
+//     height: 144px;
+//   }
+//   // app 16:9
+//   @include screen-sm {
+//     height: 324px;
+//   }
+// }
 </style>

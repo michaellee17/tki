@@ -1,7 +1,7 @@
 <template>
   <layout>
     <!-- 主要 slider -->
-    <Slider class="mb-5" />
+    <Slider class="mb-5"/>
     <div class="container">
       <HomeCardHot :title="'熱門活動'" :data="hotList" />
     </div>
@@ -89,8 +89,7 @@ export default {
       this.axios.get(`${process.env.VUE_APP_PATH}/event/get-district-class-list`)
       .then(res => { 
         if (res.data.status_code === 'SYSTEM_1000') {
-          this.classList = res.data.data ;
-          console.log(this.classList)
+          this.classList = res.data.data;
         } else {
           return false
         }
@@ -111,7 +110,6 @@ export default {
       .then(res => { 
         if (res.data.status_code === 'SYSTEM_1000') {
           this.reserveList = res.data.data;
-        } else {
           return false
         }
       });
@@ -119,3 +117,7 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+
+</style>
