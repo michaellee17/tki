@@ -1,6 +1,6 @@
 <template>
   <layout>
-    <div class="container row gap-3 mx-auto my-5">
+    <div v-if="this.getMemberData.data" class="container row gap-3 mx-auto my-5">
       <div class="sidebar">
         <div class="profile d-flex justify-content-center align-items-center gap-3 py-3 mb-3">
           <img src="../../../assets/images/icons/avatar.png" width="50" alt="">
@@ -9,7 +9,7 @@
             <p class="text-secondary mb-0">{{ memberAccount }}</p>
           </div>
         </div>
-        <ul class="slidebar-list fs-18 px-4 py-3">
+        <ul v-if="this.$route.params.memberID" class="slidebar-list fs-18 px-4 py-3">
           <li :class="{ active: $route.name ==='Info' }">
             <router-link :to="{ name: 'Info', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/member-Information.svg" width="30" class="icon" alt="member-Information">
@@ -42,7 +42,7 @@
           </li>
           <li :class="{ active: $route.name ==='MyTicket' }">
             <router-link :to="{ name: 'TicketList', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
-              <!-- <img src="../../../assets/images/icons/my-ticket.svg" width="30" class="icon" alt="my-ticket"> -->
+             
               icon
               <span>購票清單</span>
             </router-link>
@@ -66,23 +66,35 @@ export default {
   },
   data () {
     return {
-      // showMobileMenu: false,
     }
   },
   computed:{
     ...mapGetters('user',['getMemberData']), 
     memberData(){
-      return this.getMemberData.data ? this.getMemberData.data.id : '';
+      if (this.getMemberData.data && this.getMemberData.data.id) {
+        return this.getMemberData.data.id;
+      } else {
+        return '';
+      }
     },
     memberName(){
-      return this.getMemberData.data ? this.getMemberData.data.full_name : '';
+      if (this.getMemberData.data && this.getMemberData.data.full_name) {
+        return this.getMemberData.data.full_name;
+      } else {
+        return '';
+      }
     },
     memberAccount(){
-      return this.getMemberData.data ?this.getMemberData.data.account : '';
+      if (this.getMemberData.data && this.getMemberData.data.account) {
+        return this.getMemberData.data.account;
+      } else {
+        return '';
+      }
     },
   },
   created () {
     document.title = "會員中心 - T-KI"
+    console.log(this.getMemberData.data)
   },
 }
 </script>

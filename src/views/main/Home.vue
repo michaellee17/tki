@@ -110,7 +110,6 @@ export default {
       .then(res => { 
         if (res.data.status_code === 'SYSTEM_1000') {
           this.reserveList = res.data.data;
-          console.log(this.reserveList)
           return false
         }
       });

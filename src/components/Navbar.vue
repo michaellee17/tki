@@ -153,6 +153,7 @@ export default {
     },
     handleLogOut () {
         // this.updateLoginStatus(false);
+        console.log('logout')
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
         this.axios.get(apiUrl,{
@@ -169,6 +170,7 @@ export default {
                 icon: 'success',
                 title: '登出成功',
               })
+              this.$router.push('/');
             }
           });
       

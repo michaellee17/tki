@@ -18,10 +18,10 @@
       <a :href="item.link_url" target="_blank">
         <img
           :src="item.image_path_web"
-          class="banner-l img-fluid">
+          class="banner-l img-fluid w-100">
         <img
           :src="item.image_path"
-          class="banner-sm img-fluid">
+          class="banner-sm img-fluid w-100">
       </a>
     </swiper-slide>
     <!-- 原本的響應式設計 -->
