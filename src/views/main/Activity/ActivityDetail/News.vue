@@ -9,53 +9,19 @@
       }"
       :modules="modules"
       class="mySwiper">
-      <swiper-slide>
-        <router-link class="card-news-wrap d-flex" to="/activity/news-detail">
-        <div class="h-100 card-news rounded mb-5">
-          <div ref="cardNews" class="img-wrap-news bg-cover bg1" />
-          <div class="card-body p-3">
-            <p class="organizer text-primary fs-5">Live Nation Taiwan 理想國</p>
-            <p class="text-secondary">2023/04/23 19:35</p>
-            <p class="title fs-5">BLACKPINK WORLD TOUR [BORN PINK] KAOHSIUNG首場秒殺完售，加場公開 本週開賣</p>
+      <swiper-slide v-for="item in announcement_info" :key="item.announcement_id">
+        <router-link class="card-news-wrap d-flex" :to="'/activity/news-detail/' + $convertToSlug(item.title, item.announcement_id)">
+          <div class="h-100 card-news rounded mb-5">
+            <div
+              ref="cardNews" class="img-wrap-news bg-cover" 
+              :style="{ backgroundImage: `url(`+ item.image_url +`)` }" />
+            <div class="card-body p-3">
+              <p class="organizer text-primary fs-5">{{ item.created_by }}</p>
+              <p class="text-secondary">{{ item.release_date }}</p>
+              <p class="title fs-5">{{ item.title }}</p>
+            </div>
           </div>
-        </div>
-      </router-link>
-      </swiper-slide>
-      <swiper-slide>
-        <router-link class="card-news-wrap d-flex" to="/activity/news-detail">
-        <div class="h-100 card-news rounded mb-5">
-          <div ref="cardNews" class="img-wrap-news bg-cover bg1" />
-          <div class="card-body p-3">
-            <p class="organizer text-primary fs-5">Live Nation Taiwan 理想國</p>
-            <p class="text-secondary">2023/04/23 19:35</p>
-            <p class="title fs-5">BLACKPINK WORLD TOUR [BORN PINK] KAOHSIUNG首場秒殺完售，加場公開 本週開賣</p>
-          </div>
-        </div>
-      </router-link>
-      </swiper-slide>
-      <swiper-slide>
-        <router-link class="card-news-wrap d-flex" to="/activity/news-detail">
-        <div class="h-100 card-news rounded mb-5">
-          <div ref="cardNews" class="img-wrap-news bg-cover bg2" />
-          <div class="p-3">
-            <p class="organizer text-primary fs-5">Live Nation Taiwan 理想國</p>
-            <p class="text-secondary">2023/04/23 19:35</p>
-            <p class="title fs-5">BLACKPINK高雄站演唱會 2023票務詳情</p>
-          </div>
-        </div>
-      </router-link>
-      </swiper-slide>
-      <swiper-slide>
-        <router-link class="card-news-wrap d-flex" to="/activity/news-detail">
-        <div class="h-100 card-news rounded mb-5">
-          <div ref="cardNews" class="img-wrap-news bg-cover bg2" />
-          <div class="p-3">
-            <p class="organizer text-primary fs-5">Live Nation Taiwan 理想國</p>
-            <p class="text-secondary">2023/04/23 19:35</p>
-            <p class="title fs-5">BLACKPINK高雄站演唱會 2023票務詳情</p>
-          </div>
-        </div>
-      </router-link>
+        </router-link>
       </swiper-slide>
     </swiper>
   </div>
@@ -65,10 +31,14 @@
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import SwiperCore, { EffectFade, Navigation, Pagination } from "swiper";
   SwiperCore.use([EffectFade, Navigation, Pagination]);
-  
   import "swiper/swiper-bundle.css";
+  import { mapState } from 'vuex';
 
-  export default { 
+  export default {
+    components: {
+      Swiper,
+      SwiperSlide,
+    }, 
     data() {
       return {
         breakpoints: {
@@ -83,10 +53,9 @@
         }
       }
     },
-    components: {
-      Swiper,
-      SwiperSlide,
-    }
+    computed: {
+      ...mapState('activity', ['announcement_info']),
+    },
 }
 </script>
 
@@ -106,14 +75,6 @@
     font-size: 16px!important;
   }
 }
-}
-
-
-.bg1 {
-    background-image: url('../../../../assets/images/activity/news1.jpg');
-}
-.bg2 {
-    background-image: url('../../../../assets/images/activity/news3.jpg');
 }
 .swiper-slide {
   height: auto;

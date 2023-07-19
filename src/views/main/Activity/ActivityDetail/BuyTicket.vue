@@ -1,8 +1,8 @@
 <template>
-  <div v-if="!$store.state.appView.view" class="mb-4">
-    <h5 class="fs-18 text-secondary">主辦 / 協辦單位</h5>
-    <h5 class="text-primary">Live Nation Taiwan 理想國 / 高雄市政府</h5>
-    <p>史上首組登頂美國告示牌排行榜Billboard 200專輯榜冠軍的韓國女團新專輯&lt; Born Pink >首周狂賣200萬張，刷新韓國女團最高銷售紀錄新專輯主打歌&lt; Shut Down >發行當日全面制霸iTunes榜43國冠軍人氣席捲全球的現象級韓國女團BLACKPINK，全新世界巡迴演出降臨高雄國家體育場超越想像的最高規格製作 不計成本打造台灣史上最大規模女團演唱會3月18日 全台唯一場 生而為粉</p>
+  <div v-if="!$store.state.appView.view && ticket_info" class="mb-4">
+    <h5 class="fs-18 text-secondary">主辦<span v-if="ticket_info.co_organizer"> / 協辦單位</span></h5>
+    <h5 class="text-primary">{{ ticket_info.organizer }}<span v-if="ticket_info.co_organizer"> / {{ ticket_info.co_organizer }}</span></h5>
+    <p>{{ ticket_info.description }}</p>
   </div>
   <router-view />
   <div v-if="!$store.state.appView.view">
@@ -17,38 +17,33 @@
         :free-mode="true"
         :space-between="20"
         class="mySwiper">
-        <swiper-slide>
-          <div class="collection bg-cover rounded text-white position-relative">
-            <div class="position-absolute bottom-0">
-              <h3 class="fw-bold">楊丞琳</h3>
-              <p class="fs-5">世界巡回演唱會</p>
+        <swiper-slide v-for="event in recommendList" :key="event.event_id">
+          <router-link
+            :to="'/activity/detail/' + $convertToSlug(event.event_name, event.event_id) + '/buy-ticket/session'"
+            >
+            <div
+              class="collection bg-cover text-white position-relative"
+              :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.main_imageH_url + ')' }">
+              <div class="position-absolute bottom-0">
+                <h4 class="fw-bold">{{ event.performer }}</h4>
+                <p>{{ event.event_name }}</p>
+              </div>
+            </div>
+          </router-link>
+        </swiper-slide>
+        <!-- <swiper-slide v-for="event in recommendList" :key="event.event_id">
+          <div
+            @click="$router.push('/activity/detail/' + $convertToSlug(event.event_name, event.event_id) + '/buy-ticket/session')">
+            <div
+              class="collection bg-cover text-white position-relative"
+              :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.main_imageH_url + ')' }">
+              <div class="position-absolute bottom-0">
+                <h4 class="fw-bold">{{ event.performer }}</h4>
+                <p>{{ event.event_name }}</p>
+              </div>
             </div>
           </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="collection bg-cover rounded text-white position-relative">
-            <div class="position-absolute bottom-0">
-              <h3 class="fw-bold">楊丞琳</h3>
-              <p class="fs-5">世界巡回演唱會</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="collection bg-cover rounded text-white position-relative">
-            <div class="position-absolute bottom-0">
-              <h3 class="fw-bold">楊丞琳</h3>
-              <p class="fs-5">世界巡回演唱會</p>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="collection bg-cover rounded text-white position-relative">
-            <div class="position-absolute bottom-0">
-              <h3 class="fw-bold">楊丞琳</h3>
-              <p class="fs-5">世界巡回演唱會</p>
-            </div>
-          </div>
-        </swiper-slide>
+        </swiper-slide> -->
       </swiper>
     </div>
   </div>
@@ -58,30 +53,41 @@
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import SwiperCore, { EffectFade, Navigation } from "swiper";
   SwiperCore.use([EffectFade, Navigation]);
-  
   import "swiper/swiper-bundle.css";
+  import { mapActions, mapState } from 'vuex';
 
   export default {
     components: {
       Swiper,
       SwiperSlide,
     }, 
-    data () {
-        return {
-        }
-    }
+    computed: {
+      ...mapState('activity', ['ticket_info']),
+      ...mapState('activity', ['recommendList']),
+      eventId() {
+        const eventRoute = this.$route.params.activityId.split('-');
+        return parseInt(eventRoute[eventRoute.length - 1]);
+      },
+    },
+    created() {
+      this.getRecommendList();
+    },
+    methods: {
+    ...mapActions('activity', ['getRecommendList']),
+  }
 }
 </script>
 
 <style scoped lang="scss">
 
 .collection {
-  width: 380px;
+  width: 425px;
+  height: 239px;
+  border-radius: 20px;
   @media(max-width: 576px) {
-    width: 310px;
+    width: 305px;
+    height: 172px;
   }
-  height: 210px;
-  background-image: url('../../../../assets/images/products/concert4.jpg');
   & .position-absolute {
     left: 1rem;
   }

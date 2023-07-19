@@ -46,6 +46,10 @@
 
 <script>
 export default {
+  mounted () {
+    console.log(this.$route.params.activityId)
+    console.log('123')
+  }
 }
 </script>
 

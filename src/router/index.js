@@ -174,7 +174,7 @@ const routes = [
         ]
       },
       {
-        path: 'news-detail',
+        path: 'news-detail/:newsId',
         name: 'NewsDetail',
         component: () => import('../views/main/Activity/ActivityDetail/NewsDetail.vue')
       },
