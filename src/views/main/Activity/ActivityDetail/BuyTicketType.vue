@@ -1,4 +1,5 @@
 <template>
+  <h5 class="fs-18 text-secondary mb-3">購票資訊</h5>
   <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div class="">
@@ -6,18 +7,19 @@
       </div>
     </div>
     <div class="col-12 col-lg-6">
-      <p class="fs-5">場次日期：6/11</p>
-      <p class="fs-5">場次分區：平面座位特區</p>
+      <p class="fs-5">場次日期：{{ session_name }}</p>
+      <p class="fs-5">場次分區：{{ area_name }}</p>
       <div class="d-flex align-items-center mb-2">
         <p class="fs-5">場次票價：</p>
-        <p class="text-secondary text-decoration-line-through me-2">NTD 6,800</p>
-        <p class="text-danger fs-5">NTD 4,800</p>
+        <!-- <p class="text-secondary text-decoration-line-through me-2">NTD 6,800</p> -->
+        <p class="text-danger fs-5">NTD {{ ticketPrice }}</p>
       </div>
       <p>選擇您要購買的票種</p>
-      <select id="ticketType" name="ticketType" class="form-select mb-3">
-        <option value="一般票" selected>請選擇</option>
-        <option value="一般票">一般票</option>
-        <option value="一般票">敬老票</option>
+      <select
+        id="ticketType" v-model="selectedTicketName" name="ticketType"
+        class="form-select mb-3">
+        <option>請選擇</option>
+        <option v-for="ticket in ticket_type_info" :key="ticket.ticket_name" :value="ticket.ticket_name">{{ ticket.ticket_name }}</option>
       </select>
       <p>請選擇選位方式</p>
       <div class="position-relative choose-seat mb-3">
@@ -40,6 +42,29 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapState } from 'vuex';
+
+  export default {
+    data() {
+      return {
+        selectedTicketName: ''
+      }
+    },
+    mounted() {
+      this.selectedTicketName = this.ticket_type_info.length > 0 ? this.ticket_type_info[0].ticket_name : ''
+    },
+    computed: {
+      ...mapState('activity', ['session_name', 'area_name', 'area_status', 'ticket_type_info']),
+      ...mapState('activity', ['recommendList']),
+      ticketPrice() {
+        const selectedTicket = this.ticket_type_info.find(ticket => ticket.ticket_name === this.selectedTicketName);
+        return selectedTicket ? selectedTicket.ticket_price : '';
+      },
+    }
+  }
+</script>
 
 <style scoped lang="scss">
 .choose-seat input:checked+label {

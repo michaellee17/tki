@@ -62,7 +62,7 @@
         <!-- 尚未登入 -->
         <a
           v-if="loginStatus === false"
-          class="nav-link pe-0 ps-4 d-flex align-items-center gap-2" href="#" role="button"
+          class="nav-link pe-0 ps-4 d-flex align-items-center gap-2 text-nowrap" href="#" role="button"
           @click.prevent="openLoginModal">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
           <span class="login-title">登入/註冊</span>

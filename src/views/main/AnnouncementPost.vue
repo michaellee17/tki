@@ -42,7 +42,7 @@ export default {
        return parseInt(postRoute[postRoute.length - 1])
     },
   },
-  watch : {
+  watch: {
     announcementPost: function() {
       this.getAnnouncement();
     }

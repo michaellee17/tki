@@ -22,7 +22,7 @@ import Layout from "../../components/Layout.vue";
 export default {
     components: {Layout},
   created() {
-    document.title = "Page not found - iBid";
+    document.title = "404 - T-KI";
   }
 };
 </script>
