@@ -54,6 +54,11 @@ const routes = [
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/PrivacyTerms.vue')
   },
   {
+    path: '/search',
+    name: 'Search',
+    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Search.vue')
+  },
+  {
     path: '/member',
     name: 'Member',
     component: () => import('../views/main/Member/Layout.vue'),

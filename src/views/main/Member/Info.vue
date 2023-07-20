@@ -50,29 +50,29 @@
       <ul class="text-center d-flex justify-content-between px-0">
         <li v-if="googleBinding === false">
           <GoogleLogin :callback="callback" popup-type="TOKEN">
-            <img src="../../../assets/images/icons/google.png" width="25" alt="google">
-            <p class="mb-0 text-gray-800">尚未綁定</p>
+            <img src="../../../assets/images/icons/google.png" width="25" class="mb-1" alt="google">
+            <a class="text-gray-800 d-block">尚未綁定</a>
           </GoogleLogin>
         </li>
         <li v-if="googleBinding === true" @click="gooleUnbind">
           <img src="../../../assets/images/icons/google.png" width="25" alt="google">
-          <p class="mb-0 text-gray-800">解除綁定</p>
+          <a class="text-gray-800 d-block">解除綁定</a>
         </li>
         <li v-if="lineBinding === false" @click="lineVertify">
           <img src="../../../assets/images/icons/line.png" width="26" alt="line">
-          <p class="mb-0 text-gray-800">尚未綁定</p>
+          <a class="text-gray-800 d-block">尚未綁定</a>
         </li>
         <li v-if="lineBinding === true" @click="lineUnbind">
           <img src="../../../assets/images/icons/line.png" width="26" alt="line">
-          <p class="mb-0 text-gray-800">解除綁定</p>
+          <a class="text-gray-800 d-block">解除綁定</a>
         </li>
         <li v-if="appleBinding === false" @click="triggerApple">
           <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
-          <p class="mb-0 text-gray-800">尚未綁定</p>
+          <a class="text-gray-800 d-block">尚未綁定</a>
         </li>
         <li v-if="appleBinding === true" @click="appleUnbind">
           <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
-          <p class="mb-0 text-gray-800">解除綁定</p>
+          <a class="text-gray-800 d-block">解除綁定</a>
         </li>
       </ul>
     </li>
@@ -495,7 +495,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 input {
   border: 1px solid var(--primary-color);
   background-color: transparent;
@@ -506,5 +506,9 @@ input {
 }
 .member-info > li {
   background-color: rgba(245, 116, 46, 6%);
+  width: 300px;
+  & input {
+    width: 100%;
+  }
 }
 </style>

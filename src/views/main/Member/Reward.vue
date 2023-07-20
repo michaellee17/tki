@@ -1,7 +1,7 @@
 <template>
   <h3 class="text-primary mb-4">獲獎紀錄</h3>
   <SearchOrderDate />
-  <section class="d-flex flex-wrap gap-3 justify-content-center">
+  <section class="d-flex flex-wrap gap-4 mb-3">
     <OrderAngleCard>
         <h4 class="ellipsis-1">BLACKPINK高雄站演唱會</h4>
         <p>5/23 VIP A區．18:00 入場</p>
@@ -35,7 +35,9 @@
         </div>
     </OrderAngleCard>
   </section>
-  <PaginationA />
+  <div class="d-flex justify-content-end">
+    <PaginationA />
+  </div>
 </template>
 
 <script>

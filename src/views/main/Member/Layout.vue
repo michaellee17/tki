@@ -40,7 +40,7 @@
               <span>我的票券</span>
             </router-link>
           </li>
-          <li :class="{ active: $route.name ==='MyTicket' }">
+          <li :class="{ active: $route.name ==='TicketList' }">
             <router-link :to="{ name: 'TicketList', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
              
               icon

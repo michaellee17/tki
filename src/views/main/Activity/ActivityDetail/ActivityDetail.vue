@@ -54,8 +54,11 @@ export default {
     ...mapState('activity', ['basic_info']),
     // ...mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),
     eventId() {
-      const eventRoute = this.$route.params.activityId.split('-');
-      return parseInt(eventRoute[eventRoute.length - 1]);
+      if (this.$route.params.activityId) {
+        const eventRoute = this.$route.params.activityId.split('-');
+        return parseInt(eventRoute[eventRoute.length - 1]);
+
+      }
     },
   },
   watch: {
