@@ -156,7 +156,6 @@ export default {
     },
     handleLogOut() {
         // this.updateLoginStatus(false);
-        console.log('logout')
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
         this.axios.get(apiUrl,{
@@ -175,7 +174,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             })
-           
+            this.$router.push('/')
           }
           if(res.data.status_code === 'SYSTEM_1001'){
             Swal.fire({
