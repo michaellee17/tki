@@ -21,24 +21,9 @@
             </div>
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
             <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
-              <GoogleLogin :callback="callback" popup-type="TOKEN">
-                <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
-                  <img src="../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
-                  <p class="my-2">使用 GOOGLE 帳號</p>
-                </button>
-              </GoogleLogin>
-              <button
-                type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
-                @click="lineLogin">
-                <img src="../assets/images/icons/line.png" alt="line" width="28" class="position-absolute">
-                <p class="my-2">使用 LINE 帳號</p>
-              </button>
-              <button
-                type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
-                @click="triggerApple">
-                <img src="../assets/images/icons/apple.png" alt="apple" width="28" class="position-absolute">
-                <p class="my-2">使用 APPLE 帳號</p>
-              </button>
+              <Google @switch-pages="showPage" @after-login="afterLogin" />
+              <LineLogin @switch-pages="showPage" @after-login="afterLogin" @modal-close="clickClose" />
+              <Apple @switch-pages="showPage" @after-login="afterLogin" @modal-close="clickClose" />
               <button
                 type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
                 @click="showPage('loginBoard', 'accountLoginPage')">
@@ -54,9 +39,6 @@
             </div>
           </div>
         </div>
-
-        <!-- 導向第三方登入 -->
-
         <!-- 同意平台服務協議 -->
         <div id="termsPage" ref="termsPage">
           <div class="modal-body text-second pb-5">
@@ -82,8 +64,8 @@
             </div>
           </div>
         </div>
-
         <!-- 會員註冊 -->
+        <!-- <Register ref="memberInfoPageRef" @switch-pages="showPage" /> -->
         <div id="memberInfoPage" ref="memberInfoPage">
           <div class="modal-body text-second pb-5">
             <div class="text-center mb-5">
@@ -99,7 +81,7 @@
                     aria-describedby="name" required>
                 </div>
               </div>
-              <div class="mb-2 row justify-content-center align-items-center">
+              <div v-show="!isRegisterOTPVertify" class="mb-2 row justify-content-center align-items-center">
                 <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
                   <input
@@ -108,14 +90,14 @@
                     aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
-              <div class="mb-2 row justify-content-center align-items-center">
+              <div v-if="!isRegisterOTPVertify" class="mb-2 row justify-content-center align-items-center">
                 <p class="col-3" />
                 <div class="col-9">
                   <button v-if="!isRegisterOTPSend" class="btn btn-info link-light w-100" type="button" @click="sendOTP">發送驗證碼</button>
                   <button v-if="isRegisterOTPSend" class="btn btn-info link-light w-100" disabled>有效時間:{{ remainingTime }}(秒)</button>
                 </div>
               </div>
-              <div v-if="isRegisterOTPSend" class="mb-3 row justify-content-center align-items-center">
+              <div v-if="isRegisterOTPSend && !isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center">
                 <label for="code" class="col-3 form-label" />
                 <div class="col-9 d-flex align-items-center gap-2">
                   <input
@@ -149,7 +131,6 @@
             </form>
           </div>
         </div>
-
         <!-- 第三方註冊 -->
         <div ref="platformRegister">
           <div class="modal-body text-second pb-5">
@@ -166,29 +147,30 @@
                     aria-describedby="name" required>
                 </div>
               </div>
-              <div class="mb-2 row justify-content-center align-items-center">
+              <div v-show="!isplatformOTPVertify" class="mb-2 row justify-content-center align-items-center">
                 <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
                   <input
-                    id="tel" v-model="registerPhone" type="tel" class="form-control"
+                    id="tel" v-model="platformPhone" type="tel" class="form-control"
                     placeholder="0912345678"
                     aria-describedby="tel" minlength="10" required>
                 </div>
               </div>
-              <div class="mb-2 row justify-content-center align-items-center">
+              <div v-if="!isplatformOTPVertify" class="mb-2 row justify-content-center align-items-center">
                 <p class="col-3" />
                 <div class="col-9">
-                  <button class="btn btn-info link-light w-100" type="button" @click="sendOTP">發送驗證碼</button>
+                  <button v-if="!isplatformOTPSend" class="btn btn-info link-light w-100" type="button" @click="platformSendOTP">發送驗證碼</button>
+                  <button v-if="isplatformOTPSend" class="btn btn-info link-light w-100" disabled>有效時間:{{ remainingTime }}(秒)</button>
                 </div>
               </div>
-              <div class="mb-3 row justify-content-center align-items-center">
+              <div v-if="isplatformOTPSend && !isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center">
                 <label for="code" class="col-3 form-label" />
                 <div class="col-9 d-flex align-items-center gap-2">
                   <input
-                    id="code" v-model="registerOTP" type="text" class="form-control"
+                    id="code" v-model="platformOTP" type="text" class="form-control"
                     placeholder="輸入驗證碼"
                     aria-describedby="code" required>
-                  <button type="button" class="btn btn-info link-light w-50" @click="vertifyOTP">驗證</button>
+                  <button type="button" class="btn btn-info link-light w-50" @click="platformVertifyOTP">驗證</button>
                 </div>
               </div>
               <div class="mb-3 row justify-content-center align-items-center">
@@ -215,7 +197,6 @@
             </form>
           </div>
         </div>
-
         <!-- 使用會員帳號登入 -->
         <div id="accountLoginPage" ref="accountLoginPage">
           <div class="modal-body text-second pb-5">
@@ -253,7 +234,6 @@
             </form>
           </div>
         </div>
-
         <!--  忘記密碼 -->
         <div id="forgetPwdPage" ref="forgetPwdPage">
           <div class="modal-body text-second pb-5">
@@ -322,12 +302,22 @@
     </div>
   </div>
 </template>
-
 <script>
+import Google from "./gc/loginModal/Google.vue";
+import Line from "./gc/loginModal/Line.vue";
+import Apple from "./gc/loginModal/Apple.vue";
+import Register from "./gc/loginModal/Register.vue"
 import Modal from "bootstrap/js/dist/modal";
 import Swal from "sweetalert2";
 import { mapActions, mapGetters } from 'vuex';
 export default {
+  components: {
+    Google,
+    LineLogin:Line,
+    Apple,
+    Register,
+
+  },
   data() {
     return {
       isOTPVertify: false,
@@ -362,17 +352,15 @@ export default {
       platformPsw2: '',
     }
   },
-
   computed: {
     ...mapGetters('user', ['getLoginData']),
-  },
-  watch: {
-
   },
   beforeUnmount() {
     this.enterKeyupDestroyed();
   },
   mounted() {
+    console.log(this.$refs.memberInfoPageRef);
+    console.log(this.$refs.memberInfoPage);
     this.loginModal = new Modal(this.$refs.loginModal);
     this.initLoginBoard();
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
@@ -381,6 +369,11 @@ export default {
   methods: {
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+    //關閉登入modal
+    clickClose(){
+      const modalClose = this.$refs.modalClose;
+      modalClose.click();
+    },
     enterKeyupDestroyed() {
       document.removeEventListener("keyup", this.enterKey);
     },
@@ -396,7 +389,15 @@ export default {
           this.sendLogin();
         } //手機註冊流程
           else if (this.$refs.memberInfoPage.classList.contains('active')) {
-          this.sendRegister();
+          if(this.isRegisterOTPSend === false){
+            this.sendOTP()
+          }
+          if(this.isRegisterOTPSend === true && this.isRegisterOTPVertify === false){
+            this.vertifyOTP()
+          }
+          if(this.isRegisterOTPVertify === true){
+            this.sendRegister()
+          }
         } //忘記密碼流程
           else if (this.$refs.forgetPwdPage.classList.contains('active')) {
           if(this.isForgetOTPSend === false){
@@ -408,155 +409,25 @@ export default {
           if(this.isForgetOTPVertify === true){
             this.resetPsw()
           }
+        } //第三方流程流程
+          else if (this.$refs.platformRegister.classList.contains('active')) {
+          if(this.isplatformOTPSend === false){
+            this.platformSendOTP()
+          }
+          if(this.isplatformOTPSend === true && this.isplatformOTPVertify === false){
+            this.platformVertifyOTP()
+          }
+          if(this.isplatformOTPVertify === true){
+            this.sendPlatform()
+          }
         } 
       }
-    },
-
-    //apple登入觸發跳窗
-    triggerApple() {
-      const router = this.$router;
-      const routePath = '/apple-login';
-      const fullPath = router.resolve(routePath).href;
-      const windowWidth = 500;
-      const windowHeight = 550;
-      const windowLeft = window.screen.width - windowWidth;
-      const windowTop = window.screen.height / 2 - windowHeight / 2;
-      const windowFeatures = `width=${windowWidth},height=${windowHeight},left=${windowLeft},top=${windowTop}`;
-      const appleWindow = window.open(fullPath, 'line登入', windowFeatures);
-      this.startListeningForAppleID(appleWindow);
-    },
-    startListeningForAppleID(appleWindow) {
-      const appleIDpulling = setInterval(() => {
-        if (appleWindow.closed) {
-          clearInterval(appleIDpulling);
-          const appleID = localStorage.getItem('appleID');
-          if (appleID) {
-            const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
-            const requestData = {
-              platform_id: appleID,
-              method: "Apple"
-            };
-            const modalClose = this.$refs.modalClose;
-            this.axios.post(apiUrl, requestData)
-              .then(res => {
-                if (res.data.status_code === 'SYSTEM_1000') {
-                  Swal.fire({
-                    icon: 'success',
-                    title: '登入成功！',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                  localStorage.removeItem('appleID');
-                  const loginData = res.data;
-                  this.updateLoginData(loginData);
-                  this.afterLogin();
-                }
-                if (res.data.status_code === 'USER_2013') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '該用戶未綁定',
-                    showConfirmButton: true,
-                    confirmButtonText:'立即註冊',
-                    showCancelButton: true,
-                    cancelButtonText: '先不註冊',
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      this.showPage('loginBoard', 'platformRegister');
-                      localStorage.setItem('platform','Apple')
-                    }
-                  })
-                }
-                if (res.data.status_code === 'SYSTEM_1001') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '資料不完整',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                  localStorage.removeItem('appleID');
-                  modalClose.click();
-                }
-              });
-          }
-        }
-      }, 1000);
-    },
-    //line登入觸發跳窗
-    lineLogin() {
-      const router = this.$router;
-      const routePath = '/line-login'; // 替換為您的路徑
-      const fullPath = router.resolve(routePath).href;
-      const windowWidth = 500;
-      const windowHeight = 550;
-      const windowLeft = window.screen.width - windowWidth;
-      const windowTop = window.screen.height / 2 - windowHeight / 2;
-      const windowFeatures = `width=${windowWidth},height=${windowHeight},left=${windowLeft},top=${windowTop}`;
-      const newWindow = window.open(fullPath, 'line登入', windowFeatures);
-      this.startListeningForLineId(newWindow);
-    },
-    //監聽回傳的lineid若有值的時候幫他登入
-    startListeningForLineId(newWindow) {
-      const lineIdPolling = setInterval(() => {
-        if (newWindow.closed) {
-          localStorage.removeItem('linelinked')
-          clearInterval(lineIdPolling);
-          const lineUserId = localStorage.getItem('lineUserId');
-          if (lineUserId) {
-            const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
-            const requestData = {
-              platform_id: lineUserId,
-              method: "Line"
-            };
-            const modalClose = this.$refs.modalClose;
-            this.axios.post(apiUrl, requestData)
-              .then(res => {
-                if (res.data.status_code === 'SYSTEM_1000') {
-                  Swal.fire({
-                    icon: 'success',
-                    title: '登入成功！',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                  localStorage.removeItem('lineUserId');
-                  const loginData = res.data;
-                  this.updateLoginData(loginData);
-                  this.afterLogin();
-                }
-                if (res.data.status_code === 'USER_2013') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '該用戶未綁定',
-                    showConfirmButton: true,
-                    confirmButtonText:'立即註冊',
-                    showCancelButton: true,
-                    cancelButtonText: '先不註冊',
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      this.showPage('loginBoard', 'platformRegister');
-                      localStorage.setItem('platform','Line')
-                    }
-                  })
-                }
-                if (res.data.status_code === 'SYSTEM_1001') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '資料不完整',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                  localStorage.removeItem('lineUserId');
-                  modalClose.click();
-                }
-              });
-          }
-        }
-      }, 1000);
     },
     //登入後回到原頁面並更換NAVBAR的使用者資訊
     afterLogin() {
       //關閉modal回到原本瀏覽處
       const modalClose = this.$refs.modalClose;
-      loginModal.click();
+      modalClose.click();
       //將登入狀態存到vuex
       const access_token = this.getLoginData.access_token
       this.fetchMemberData(access_token)
@@ -843,7 +714,7 @@ export default {
       }
       // 驗證手機號碼格式
       const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
-      if (!phoneRegex.test(this.registerPhone)) {
+      if (!phoneRegex.test(this.platformPhone)) {
         Swal.fire({
           icon: 'error',
           title: '手機號碼格式不正確',
@@ -863,7 +734,7 @@ export default {
         });
         return;
       }
-      if (this.isOTPVertify === false) {
+      if (this.isplatformOTPVertify === false) {
         Swal.fire({
           icon: 'error',
           title: '請先完成手機驗證',
@@ -905,12 +776,11 @@ export default {
       }
       const requestData = {
         full_name: this.platformName,
-        account: this.registerPhone,
+        account: this.platformPhone,
         password: this.platformPsw1,
         method:method,
         platform_id:platform_id,
       };
-      console.log(requestData);
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
@@ -1029,7 +899,7 @@ export default {
         });
         return;
       }
-      if (this.isOTPVertify === false) {
+      if (this.isRegisterOTPVertify === false) {
         Swal.fire({
           icon: 'error',
           title: '請先完成手機驗證',
@@ -1158,11 +1028,47 @@ export default {
           }
         });
     },
-    //註冊送出otp
-    sendOTP() {
+      //第三方註冊驗證otp
+      platformVertifyOTP() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/verifyotp`;
+      const requestData = {
+        phone: this.platformPhone,
+        otp: this.platformOTP,
+      };
+      this.axios.post(apiUrl, requestData)
+        .then(res => {
+          if (res.data.status_code === 'SYSTEM_1000') {
+            this.isplatformOTPVertify = true
+            Swal.fire({
+              icon: 'success',
+              title: '驗證成功',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
+          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
+            Swal.fire({
+              icon: 'error',
+              title: '驗證碼錯誤',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          if (res.data.status_code === 'SYSTEM_2093') {
+            Swal.fire({
+              icon: 'error',
+              title: '驗證碼錯誤超過五次，驗證失敗',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+    },
+    //第三方註冊送出otp
+    platformSendOTP() {
       // 驗證手機號碼格式
       const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
-      if (!phoneRegex.test(this.registerPhone)) {
+      if (!phoneRegex.test(this.platformPhone)) {
         Swal.fire({
           icon: 'error',
           title: '手機號碼格式不正確',
@@ -1174,7 +1080,7 @@ export default {
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
       const requestData = {
-        phone: this.registerPhone,
+        phone: this.platformPhone,
         method: "register"
       };
       this.axios.post(apiUrl, requestData)
@@ -1186,6 +1092,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.isplatformOTPSend = true;
             this.startCountdown();
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'USER_2094') {
@@ -1225,68 +1132,75 @@ export default {
           }
         });
     },
-    //google取得token
-    callback(response) {
-      //使用取得的accesstoken再打一次google api取得google id
-      const accessToken = response.access_token;
-      this.axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      })
-        .then(response => {
-          const googleId = response.data.id;
-          this.googleLogin(googleId);
-        })
-        .catch(error => {
-          console.error(error);
+    //註冊送出otp
+    sendOTP() {
+      // 驗證手機號碼格式
+      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      if (!phoneRegex.test(this.registerPhone)) {
+        Swal.fire({
+          icon: 'error',
+          title: '手機號碼格式不正確',
+          text: '請輸入有效的手機號碼',
+          showConfirmButton: false,
+          timer: 1500,
         });
-    },
-    googleLogin(googleId) {
-      const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
+        return; // 停止繼續執行
+      }
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
       const requestData = {
-        platform_id: googleId,
-        method: "Google"
+        phone: this.registerPhone,
+        method: "register"
       };
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             Swal.fire({
               icon: 'success',
-              title: '登入成功！',
+              title: '發送簡訊驗證碼成功！',
               showConfirmButton: false,
               timer: 1500,
             });
-            const loginData = res.data;
-            this.updateLoginData(loginData);
-            this.afterLogin();
+            this.isRegisterOTPSend = true;
+            this.startCountdown();
           }
-          if (res.data.status_code === 'USER_2013') {
+          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'USER_2094') {
             Swal.fire({
               icon: 'error',
-              title: '該用戶未綁定',
-              showConfirmButton: true,
-              confirmButtonText:'立即註冊',
-              showCancelButton: true,
-              cancelButtonText: '先不註冊',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.showPage('loginBoard', 'platformRegister');
-                localStorage.setItem('googleID',googleId)
-                localStorage.setItem('platform','Google')
-              }
-            })
+              title: '手機號碼格式不正確',
+              text: '請輸入有效的手機號碼',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           }
-          if (res.data.status_code === 'SYSTEM_1001') {
+          if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
             Swal.fire({
               icon: 'error',
-              title: '資料不完整',
+              title: '請求過於頻繁',
+              text: '請稍後再嘗試',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          if (res.data.status_code === 'USER_2041') {
+            console.log(2041);
+            Swal.fire({
+              icon: 'error',
+              title: '手機已註冊過',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          if (res.data.status_code === 'USER_2099') {
+            Swal.fire({
+              icon: 'error',
+              title: 'OTP服務異常',
               showConfirmButton: false,
               timer: 1500,
             });
           }
         });
     },
+   
     initLoginBoard() {
       this.$refs.loginBoard.classList.remove('d-none');
       this.$refs.termsPage.classList.add('d-none');
@@ -1304,6 +1218,10 @@ export default {
       this.loginModal.show()
       this.isForgetOTPVertify = false
       this.isForgetOTPSend = false
+      this.isRegisterOTPSend = false
+      this.isRegisterOTPVertify = false
+      this.isplatformOTPSend = false
+      this.isplatformOTPVertify = false
     },
     submitTerms() {
       if (!this.$refs.agreenTermsBox.checked) {
@@ -1317,54 +1235,32 @@ export default {
       this.$refs[showedPage].classList.remove('d-none');
       this.$refs[showedPage].classList.add('active');
       this.$refs[closedPage].classList.remove('active');
-    }
+    },
   }
 }
 </script>
-
 <style scoped="scoped" lang="scss">
 .modal-header {
   border-bottom: none;
 }
-
 .btn.text-second {
   width: 22rem;
 }
-
 img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
 }
-
 .termsBox {
   height: 250px;
   overflow: auto;
 }
-
 a {
   cursor: pointer;
 }
-
 .form-label {
   margin-bottom: 0;
 }
-
-#memberInfoPage form {
-  // padding-right: 6.5rem;
-  // padding-left: 6.5rem;
-}
-
-#accountLoginPage form {
-  // padding-right: 8.5rem;
-  // padding-left: 8.5rem;
-}
-
-#forgetPwdPage form {
-  // padding-right: 0.5rem;
-  // padding-left: 0.5rem;
-}
-
 @media (max-width: 768px) {
   .navbar {
     display: none !important;

@@ -4,14 +4,23 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">姓名</p>
-        <a class="text-primary edit" @click="updateProfile">編輯</a>
+        <a v-if="!isNameEdit" class="text-primary edit" @click="isNameEdit = true">編輯</a>
+        <div v-if="isNameEdit" class="d-flex gap-2">
+          <a class="text-primary edit" @click="isNameEdit = false">返回</a>
+          <a class="text-primary edit" @click="updateProfile('name')">送出</a>
+        </div>
       </div>
-      <input ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
+      <p v-show="!isNameEdit">{{ memberData.full_name }}</p>
+      <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800 px-0" :value="memberData.full_name">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">密碼</p>
-        <a class="text-primary edit" @click="passwordChange = !passwordChange">編輯</a>
+        <a v-if="!passwordChange" class="text-primary edit" @click="passwordChange = !passwordChange">編輯</a>
+        <div v-if="passwordChange" class="d-flex gap-2">
+          <a class="text-primary edit" @click="passwordChange = false">返回</a>
+          <a class="text-primary edit" @click="sendPswChange">送出</a>
+        </div>
       </div>
       <p v-if="!passwordChange" class="fs-18">********</p>
       <div v-if="passwordChange">
@@ -27,9 +36,6 @@
           <span class="fs-16">確認新密碼：</span>
           <input v-model="newPsw2" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
-        <div class="pt-2">
-          <button class="btn-sm btn-primary" @click="sendPswChange">送出</button>
-        </div>
       </div>
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
@@ -41,9 +47,14 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">電子信箱</p>
-        <a class="text-primary edit" @click="updateProfile">編輯</a>
+        <a v-if="!isEmailEdit" class="text-primary edit" @click="isEmailEdit = true">編輯</a>
+        <div v-if="isEmailEdit" class="d-flex gap-2">
+          <a class="text-primary edit" @click="isEmailEdit = false">返回</a>
+          <a class="text-primary edit" @click="updateProfile('email')">送出</a>
+        </div>
       </div>
-      <input ref="memberEmail" class="mb-0 text-gray-800" :value="memberData.email">
+      <p v-show="!isEmailEdit">{{ memberData.email }}</p>
+      <input v-show="isEmailEdit" ref="memberEmail" class="mb-0 text-gray-800 px-0" :value="memberData.email">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <p class="fs-18">社群綁定</p>
@@ -90,6 +101,8 @@ export default {
       newPsw2:'',
       fullName:'',
       email:'',
+      isNameEdit:false,
+      isEmailEdit:false,
     }
   },
   computed: {
@@ -173,7 +186,7 @@ export default {
         });
     },
     //更新會員姓名和email
-    updateProfile() {
+    updateProfile(target) {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/update_info`;
       let fullname = this.$refs.memberName.value
       let email = this.$refs.memberEmail.value
@@ -214,6 +227,12 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            if(target === 'name'){
+              this.isNameEdit = false;
+            }
+            if(target === 'email'){
+              this.isEmailEdit = false
+            }
             this.updateMemberName(fullname)
             this.updateMemberEmail(email)
           }
@@ -224,6 +243,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+           
           }
           if (res.data.status_code === 'USER_2023') {
             Swal.fire({
