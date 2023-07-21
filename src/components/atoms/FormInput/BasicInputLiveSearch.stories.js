@@ -1,5 +1,5 @@
 import BasicInputLiveSearch from "./BasicInputLiveSearch.vue";
-import { countries } from "./assets/countries.json";
+import {  } from "./assets/countries.json";
 import { ref } from 'vue'
 
 export default {
