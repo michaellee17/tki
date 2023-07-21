@@ -17,6 +17,7 @@ import Slugerize from "./plugins/Slugerize.js"
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAppleLogin from 'vue-apple-login';
+import { timeFormatter } from './methods/timeFormatter.js'
 
 
 import "./icons/iconsSolid.js";
@@ -28,12 +29,14 @@ import "./icons/iconsBrands.js";
 //import 'vue-toast-notification/dist/theme-default.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
-const Vue = createApp(App);
+const app = createApp(App);
+
+app.config.globalProperties.$timeFormatter = timeFormatter
 
 const gAuthOptions = {
   clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',
 };
-Vue.use(vue3GoogleLogin,gAuthOptions)
+app.use(vue3GoogleLogin,gAuthOptions)
 
 
 /* 預設跳頁時滾動到頂部，以下條件除外， */
@@ -57,14 +60,14 @@ router.beforeEach((to, from) => {
   }
   store.commit("forceCloseModal")
 })
-Vue.use(VueAppleLogin, {
+app.use(VueAppleLogin, {
   clientId: 'demo2.gcreate.com.tw',
   scope: 'name email',
   redirectURI: 'https://example.com/redirect',
   state: 'test',
   usePopup: true,
 });
-Vue.use(VueZoomer)
+app.use(VueZoomer)
   .use(router)
   .use(store)
   .use(PriceFormatter)
@@ -78,4 +81,4 @@ Vue.use(VueZoomer)
   .mount("#app");
 
 
-  export default Vue
+  export default app

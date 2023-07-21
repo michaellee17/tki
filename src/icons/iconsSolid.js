@@ -1,5 +1,6 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+  faChevronCircleUp,
   faUserCircle,
   faSearch,
   faThList,
@@ -45,6 +46,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faChevronCircleUp,
   faUserCircle,
   faSearch,
   faThList,

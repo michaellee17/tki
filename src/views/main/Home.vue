@@ -1,7 +1,13 @@
 <template>
   <layout>
+    <a
+      ref="upButton" href="#" class="up-button d-none fs-2 position-fixed"
+      @click.prevent="scrollUp">
+      <font-awesome-icon
+        :icon="['fas', 'chevron-circle-up']" />
+    </a>
     <!-- 主要 slider -->
-    <Slider class="mb-5"/>
+    <Slider class="mb-5" />
     <div class="container">
       <HomeCardHot :title="'熱門活動'" :data="hotList" />
     </div>
@@ -37,28 +43,7 @@ export default {
   },
   data () {
     return {
-      classList:  [
-        {
-            "class_id": 2,
-            "class_name": "遊樂園"
-        },
-        {
-            "class_id": 1,
-            "class_name": "演唱會"
-        },
-        {
-            "class_id": 5,
-            "class_name": "運動賽事"
-        },
-        {
-            "class_id": 6,
-            "class_name": "藝文展演"
-        },
-        {
-            "class_id": 3,
-            "class_name": "其他"
-        }
-      ],
+      classList: [],
       hotList: [],
       typeList: {},
       reserveList:[]
@@ -67,9 +52,15 @@ export default {
   created() {
     this.getHotList();
     this.getClassList();
-    this.classList.forEach(item => this.getTypeList(item.class_id))
     this.getReserveList();
-    
+  },
+  mounted() {
+    this.$nextTick(() => {
+      window.addEventListener('scroll', this.showUpButton);
+    })
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.showUpButton);
   },
   beforeCreate() {
     document.title = "T-KI";
@@ -83,17 +74,24 @@ export default {
         } else {
           return false
         }
-      });
+      })
+      .catch(error => {
+          console.error('error occurred:', error);
+      })
     },
     getClassList() {
       this.axios.get(`${process.env.VUE_APP_PATH}/event/get-district-class-list`)
       .then(res => { 
         if (res.data.status_code === 'SYSTEM_1000') {
           this.classList = res.data.data;
+          this.classList.forEach(item => this.getTypeList(item.class_id))
         } else {
           return false
         }
-      });
+      })
+      .catch(error => {
+          console.error('error occurred:', error);
+      })
     },
     getTypeList(id) {
       this.axios.get(`${process.env.VUE_APP_PATH}/event/get-district-main-list?class_id=${id}`)
@@ -103,7 +101,10 @@ export default {
         } else {
           return false
         }
-      });
+      })
+      .catch(error => {
+          console.error('error occurred:', error);
+      })
     },
     getReserveList() {
       this.axios.get(`${process.env.VUE_APP_PATH}/event/get-reserve-main-list`)
@@ -112,12 +113,35 @@ export default {
           this.reserveList = res.data.data;
           return false
         }
+      })
+      .catch(error => {
+          console.error('error occurred:', error);
+      })
+    },
+    scrollUp() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' 
       });
     },
+    showUpButton() {
+      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        console.log('ref', this.$refs.upButton)
+        this.$refs.upButton.classList.remove('d-none');
+      } else {
+        this.$refs.upButton.classList.add('d-none');
+      }
+    }
   },
 }
 </script>
 
 <style scoped lang="scss">
-
+.up-button {
+  bottom: 2%;
+  right: 1%;
+  &:hover {
+    color: var(--primary-color);
+  }
+}
 </style>

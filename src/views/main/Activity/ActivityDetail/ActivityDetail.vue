@@ -7,7 +7,7 @@
         </div>
         <div class="title-top position-absolute text-white mb-1">
           <h1 class="fw-bold mb-3">{{ basic_info.performer }}</h1>
-          <p class="fs-4">{{ basic_info.release_date }}</p>
+          <p class="fs-4">{{ $timeFormatter(basic_info.release_date) }}</p>
           <!-- <p class="fs-4">2023/05/01 (週六) 19:00</p> -->
         </div>
         <div class="title-bottom position-absolute">
@@ -20,8 +20,9 @@
               <img src="../../../../assets/images/icons/share.svg" width="19" class="icon me-1" alt="">
               <span>分享</span>
             </button>
-            <button type="button" class="btn btn-outline-primaryA"
-              @click="updateCollection" :class="{ active: isCollected }">
+            <button
+              type="button" class="btn btn-outline-primaryA"
+              :class="{ active: isCollected }" @click="updateCollection">
               <img src="../../../../assets/images/icons/my-collection.svg" width="19" class="icon me-1" alt="">
               <span>收藏</span>
             </button>
@@ -46,11 +47,17 @@
       <router-view />
     </div>
   </div>
+  <loginModal ref="loginModal" />
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
+import loginModal from "../../../../components/LoginModal"
+
 export default {
+  components: {
+    loginModal
+  },
   data () {
     return {
       isCollected: ''
@@ -59,7 +66,7 @@ export default {
   computed: {
     ...mapState('activity', ['basic_info']),
     // ...mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),
-    ...mapGetters('user', ['getLoginData']),
+    ...mapGetters('user', ['getLoginData', 'getLoginStatus']),
     eventId() {
       if (this.$route.params.activityId) {
         const eventRoute = this.$route.params.activityId.split('-');
@@ -70,30 +77,33 @@ export default {
     },
   },
   watch: {
-      eventId: function() {
+    /* 點擊為您推薦會更換元件 */
+      eventId() {
         this.getData(this.eventId);
         window.scrollTo({
           top: 0,
           behavior: 'smooth' 
         });
       },
+      /* 登入後更新收藏狀態 */
+      getLoginStatus(){
+      this.checkCollection();
+    }
     },
   created() {
     this.getData(this.eventId);
-    this.checkCollection();
-    const apiUrl = `${process.env.VUE_APP_PATH}/user/get-collect-list?e`;
-      this.axios.get(apiUrl, {
-        headers: {
-          'Authorization': `Bearer ${this.getLoginData.access_token}`,
-        }
-      }).then(res => {
-        console.log(res.data)
-      })
+    if(this.getLoginStatus) {
+      this.checkCollection();
+    }
   },
   methods: {
     ...mapActions('activity', ['getData']),
     updateCollection() {
-      this.isCollected ? this.removeCollection() : this.addCollection();
+      if(this.getLoginStatus) {
+        this.isCollected ? this.removeCollection() : this.addCollection();
+      } else {
+        this.$refs.loginModal.showModal();
+      }
     },
     checkCollection() {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/check-collect?event_id=${this.eventId}`;
@@ -103,7 +113,8 @@ export default {
         }
       }).then(res => {
         this.isCollected = res.data.is_collect
-        console.log(this.isCollected)
+      }).catch(error => {
+          console.error('error occurred:', error);
       })
     },
     addCollection() {
@@ -116,6 +127,8 @@ export default {
         if(res.data.status_code === 'SYSTEM_1000') {
           this.isCollected = true;
         }
+      }).catch(error => {
+          console.error('error occurred:', error);
       })
     },
     removeCollection() {
@@ -128,6 +141,8 @@ export default {
         if(res.data.status_code === 'SYSTEM_1000') {
           this.isCollected = false;
         }
+      }).catch(error => {
+          console.error('error occurred:', error);
       })
     }
   }
@@ -140,10 +155,8 @@ export default {
 * {
     --img-top-width: 300px;
     --img-top-height: calc( var(--img-top-width) * 1.5 );
-    // --img-top-left: 11%;
     @include screen-m {
       --img-top-width: 150px;
-      // --img-top-left: 5%;
     }
 }
 
@@ -161,7 +174,6 @@ export default {
         height: var(--img-top-height);
         bottom: 0%;
         transform: translateY(50%);
-        // left: var(--img-top-left);
     }
     & .title-top {
         bottom: 0%;
@@ -180,7 +192,6 @@ export default {
 }
 .container.content {
     margin-top: calc( var(--img-top-height) / 2 + 48px );
-    // margin-top: calc( 40vh );
 }
 @include screen-m {
   .top-bg {
@@ -193,8 +204,6 @@ export default {
       left: calc( var(--img-top-width) + 6% )
     }
     & .title-bottom {
-      // bottom: 13%
-      // top: calc(100% + 150px);
       left: 3%
     }
   } 
