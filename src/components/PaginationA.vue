@@ -1,13 +1,11 @@
 <template>
-  <div class="pagination">
-    <ul class="d-flex ms-auto">
+    <ul class="pagination d-flex">
       <li><a href="#">&lt;</a></li>
       <li><a href="#" class="active">1</a></li>
       <li><a href="#">2</a></li>
       <li><a href="#">3</a></li>
       <li><a href="#">&gt;</a></li>
     </ul>
-  </div>
 </template>
 
 <style scoped>

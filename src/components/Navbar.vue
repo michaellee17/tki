@@ -24,13 +24,13 @@
               活動分類
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
+              <li class="border-bottom">
                 <router-link to="/activity/concert" class="dropdown-item">演唱會</router-link>
               </li>
-              <li>
+              <li class="border-bottom">
                 <router-link to="/activity/sport" class="dropdown-item">運動賽事</router-link>
               </li>
-              <li>
+              <li class="border-bottom">
                 <router-link to="/activity/show" class="dropdown-item">藝文展演</router-link>
               </li>
               <li>
@@ -51,12 +51,21 @@
       </div>
         
       <!-- search -->
-      <form class="search-wrap order-2 order-sm-1 ms-auto">
-        <input type="text" placeholder="搜尋活動..." class="search-input web">
-        <a type="button" class="search-icon">
-          <font-awesome-icon :icon="['fas', 'search']" />
-        </a>
-      </form>
+      <div class="search-wrap order-2 order-sm-1 ms-auto">
+        <form>
+          <input type="text" ref="searchInput" placeholder="搜尋活動..." class="search-input web">
+          <a type="button" class="search-icon">
+            <font-awesome-icon :icon="['fas', 'search']" />
+          </a>
+        </form>
+        <!-- search 歷史訊息 -->
+        <div ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
+          <p>最近搜尋</p>
+          <a class="ellipsis-1 link-primary d-block mb-2">BLACKPINK</a>
+          <a class="ellipsis-1 link-primary d-block mb-2">IVE</a>
+          <a class="ellipsis-1 link-primary d-block mb-2">陳奕迅演唱會演唱會演唱會演唱會</a>
+        </div>
+      </div>
       <!-- login -->
       <div class="nav-item dropdown login-dropdown order-1 order-sm-2 d-flex align-items-center">
         <!-- 尚未登入 -->
@@ -69,29 +78,29 @@
         </a>
         <!-- 已登入 -->
         <a
-          v-if="loginStatus === true"
-          id="navbarDropdown" class=" nav-link pe-0 ps-4 d-flex align-items-center gap-2" href="#" role="button"
+          v-if="loginStatus === true" ref="navbarLogin"
+          id="navbarDropdown" class=" nav-link pe-0 d-flex align-items-center gap-2" href="#" role="button"
           data-bs-toggle="dropdown" aria-expanded="false">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
           <span class="login-title">{{ memberName }}</span>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li>
+        <ul class="dropdown-menu" ref="dropdownMenuLogin" aria-labelledby="navbarDropdown">
+          <li class="border-bottom">
             <router-link :to="{ name: 'Info', params: { memberID: memberDataId } }" class="dropdown-item">會員中心</router-link>
           </li>
-          <li>
+          <li class="border-bottom">
             <router-link :to="{ name: 'OrderHistory', params: { memberID: memberDataId } }" class="dropdown-item">訂單記錄</router-link>
           </li>
-          <li>
+          <li class="border-bottom">
             <router-link :to="{ name: 'Reward', params: { memberID: memberDataId } }" class="dropdown-item">獲獎紀錄</router-link>
           </li>
-          <li>
+          <li class="border-bottom">
             <router-link :to="{ name: 'MyCollection', params: { memberID: memberDataId } }" class="dropdown-item">我的收藏</router-link>
           </li>
-          <li>
+          <li class="border-bottom">
             <router-link :to="{ name: 'MyTicket', params: { memberID: memberDataId } }" class="dropdown-item">我的票券</router-link>
           </li>
-          <li>
+          <li class="border-bottom">
             <router-link :to="{ name: 'TicketList', params: { memberID: memberDataId } }" class="dropdown-item">購票清單</router-link>
           </li>
           <li>
@@ -116,16 +125,12 @@ export default {
   },
   data() {
     return {
-       memberID:0,
-    //   showMobileMenu: false,
-    //   path: 'images/logos/logo-main-white.png',
-    //   isActive: false,
-    //   hoveredItem: -1,
+       memberID: 0,
     };
   },
   mounted(){
+    this.handleSearch();
   },
-  // eslint-disable-next-line vue/order-in-components
   computed: {
     ...mapGetters('user',['getLoginStatus','getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
     loginStatus() {
@@ -138,23 +143,18 @@ export default {
       return this.getMemberData && this.getMemberData.data && this.getMemberData.data.full_name ? this.getMemberData.data.full_name : '';
     },
     memberDataId() {
-
-     
-
-  if (this.getMemberData && this.getMemberData.data && this.getMemberData.data.id) {
-    return this.getMemberData.data.id;
-  }
-  return null; // 或者返回适当的默认值
-},
-
+      if (this.getMemberData && this.getMemberData.data && this.getMemberData.data.id) {
+        return this.getMemberData.data.id;
+      }
+      return null; // 或者返回适当的默认值
+    },
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
-
-    handleLogOut () {
+    handleLogOut() {
         // this.updateLoginStatus(false);
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
@@ -185,6 +185,14 @@ export default {
             })
           }
         });
+    },
+    handleSearch() {
+      this.$refs.searchInput.addEventListener('focus', () => {
+        this.$refs.searchDropdownMenu.classList.remove('d-none');
+      })
+      this.$refs.searchInput.addEventListener('blur', () => {
+        this.$refs.searchDropdownMenu.classList.add('d-none');
+      })
     }
    },
 };
@@ -227,19 +235,24 @@ nav {
   & .login-title {
     width: 84px;
   }
-  & .login-dropdown {
+  & .login-dropdown{
     padding-top: 20px;
     padding-bottom: 20px;
   }
-  & .login-dropdown .dropdown-menu {
-      left: 0;
+  .search-wrap{
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
-  & .dropdown-menu {
+  & .dropdown-menu, .search-dropdown-menu {
+    transition: all 0.5s ease;
     border: none;
     margin-top: 0;
     min-width: auto;
     padding: 1.5rem 1rem;
-    opacity: 0.8;
+    opacity: 0.9;
+    top: 100%;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 0px 0px 10px 10px;
     & a {
       letter-spacing: 3px;
     }
@@ -248,6 +261,14 @@ nav {
       background-color: transparent;
     }
   }
+}
+.search-dropdown-menu {
+  width: 200px;
+  background-color: #fff;
+  z-index: 10;
+  top: 100%;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 0px 0px 10px 10px;
 }
 .search-wrap {
   position: relative;

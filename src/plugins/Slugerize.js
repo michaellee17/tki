@@ -6,6 +6,7 @@ export default {
         title
           // .toLowerCase()
           .replace(/ /g, "-")
+          .replace(/[^\u4e00-\u9fa5a-zA-Z0-9-]+/g, "")
           // .replace(/[^\w-]+/g, "") +
        + "-" +
         id

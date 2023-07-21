@@ -1,9 +1,6 @@
 <template>
   <layout>
     <div class="container text-center">
-      <!-- <div class="m-5">
-        <img class="image" :src="require('../../assets/images/misc/404.png')" alt="404 Page not found">
-      </div> -->
       <h1 class="text-primary display-1 my-5">404</h1>
       <div>
         <p>找不到這個頁面，請確認網址是否正確。</p>
