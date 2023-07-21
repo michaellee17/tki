@@ -1,6 +1,5 @@
 <template>
   <h3 class="text-primary mb-4">我的收藏</h3>
-  <SearchOrderDate />
   <section class="d-flex flex-wrap gap-4 mb-3">
     <div class="collection bg-cover text-white position-relative">
       <div class="position-absolute bottom-0">
@@ -33,11 +32,10 @@
 </template>
 
 <script>
-import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
 
 export default {
-  components: { SearchOrderDate, PaginationA }
+  components: { PaginationA }
 }
 </script>
 
