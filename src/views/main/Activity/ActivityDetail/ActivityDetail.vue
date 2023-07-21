@@ -20,7 +20,8 @@
               <img src="../../../../assets/images/icons/share.svg" width="19" class="icon me-1" alt="">
               <span>分享</span>
             </button>
-            <button type="button" class="btn btn-outline-primaryA">
+            <button type="button" class="btn btn-outline-primaryA"
+              @click="updateCollection" :class="{ active: isCollected }">
               <img src="../../../../assets/images/icons/my-collection.svg" width="19" class="icon me-1" alt="">
               <span>收藏</span>
             </button>
@@ -48,14 +49,24 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 export default {
+  data () {
+    return {
+      isCollected: ''
+    }
+  },
   computed: {
     ...mapState('activity', ['basic_info']),
     // ...mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),
+    ...mapGetters('user', ['getLoginData']),
     eventId() {
-      const eventRoute = this.$route.params.activityId.split('-');
-      return parseInt(eventRoute[eventRoute.length - 1]);
+      if (this.$route.params.activityId) {
+        const eventRoute = this.$route.params.activityId.split('-');
+        return parseInt(eventRoute[eventRoute.length - 1]);
+      } else {
+        return 0
+      }
     },
   },
   watch: {
@@ -69,9 +80,56 @@ export default {
     },
   created() {
     this.getData(this.eventId);
+    this.checkCollection();
+    const apiUrl = `${process.env.VUE_APP_PATH}/user/get-collect-list?e`;
+      this.axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.getLoginData.access_token}`,
+        }
+      }).then(res => {
+        console.log(res.data)
+      })
   },
   methods: {
     ...mapActions('activity', ['getData']),
+    updateCollection() {
+      this.isCollected ? this.removeCollection() : this.addCollection();
+    },
+    checkCollection() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/check-collect?event_id=${this.eventId}`;
+      this.axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.getLoginData.access_token}`,
+        }
+      }).then(res => {
+        this.isCollected = res.data.is_collect
+        console.log(this.isCollected)
+      })
+    },
+    addCollection() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/add-collect?event_id=${this.eventId}`;
+      this.axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.getLoginData.access_token}`,
+        }
+      }).then(res => {
+        if(res.data.status_code === 'SYSTEM_1000') {
+          this.isCollected = true;
+        }
+      })
+    },
+    removeCollection() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/remove-collect?event_id=${this.eventId}`;
+      this.axios.get(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.getLoginData.access_token}`,
+        }
+      }).then(res => {
+        if(res.data.status_code === 'SYSTEM_1000') {
+          this.isCollected = false;
+        }
+      })
+    }
   }
 }
 </script>

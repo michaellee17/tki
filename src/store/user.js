@@ -10,7 +10,7 @@ export const user = {
     loginData:null,
   }),
   actions: {
-    fetchMemberData({ commit },loginToken) {
+    fetchMemberData({ commit }, loginToken) {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/get_info`;
       axios.get(apiUrl,{
         headers: {

@@ -1,19 +1,19 @@
 <template>
   <div>
     <swiper
-      :slides-per-view="2"
+      :navigation="true"
+      :slides-per-view="1"
       :space-between="15"
       :breakpoints="breakpoints"
       :pagination="{
         clickable: true,
       }"
-      :modules="modules"
       class="mySwiper">
       <swiper-slide v-for="item in announcement_info" :key="item.announcement_id">
         <router-link class="card-news-wrap d-flex" :to="'/activity/news-detail/' + $convertToSlug(item.title, item.announcement_id)">
-          <div class="h-100 card-news rounded mb-5">
+          <div class="h-100 w-100 card-news rounded mb-5">
             <div
-              ref="cardNews" class="img-wrap-news bg-cover" 
+              ref="cardNews" class="img-wrap-news bg-cover"
               :style="{ backgroundImage: `url(`+ item.image_url +`)` }" />
             <div class="card-body p-3">
               <p class="organizer text-primary fs-5">{{ item.created_by }}</p>
@@ -42,12 +42,8 @@
     data() {
       return {
         breakpoints: {
-          '768' : {
+          '576' : {
             slidesPerView: 2,
-            spaceBetween: 30,
-          },
-          '1024' : {
-            slidesPerView: 3,
             spaceBetween: 30,
           }
         }
@@ -62,12 +58,12 @@
 <style scoped lang="scss">
 /* 卡片等高 */
 .card-news-wrap {
-  height: 90%;
+  height: 95%;
   & .card-news {
     box-shadow: 0px 3px 6px #00000029;
   }
   & .img-wrap-news {
-    height: 30vh;
+    height: 585px;
     border-radius: 10px 10px 0px 0px;
   }
   @media(max-width: 768px) {

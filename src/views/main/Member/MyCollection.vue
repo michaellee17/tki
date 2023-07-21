@@ -1,7 +1,18 @@
 <template>
   <h3 class="text-primary mb-4">我的收藏</h3>
-  <SearchOrderDate />
-  <section class="d-flex flex-wrap gap-3 mb-3">
+  <section class="d-flex flex-wrap gap-4 mb-3">
+    <div class="collection bg-cover text-white position-relative">
+      <div class="position-absolute bottom-0">
+        <h4 class="fw-bold">楊丞琳</h4>
+        <p>世界巡回演唱會</p>
+      </div>
+    </div>
+    <div class="collection bg-cover text-white position-relative">
+      <div class="position-absolute bottom-0">
+        <h4 class="fw-bold">楊丞琳</h4>
+        <p>世界巡回演唱會</p>
+      </div>
+    </div>
     <div class="collection bg-cover text-white position-relative">
       <div class="position-absolute bottom-0">
         <h4 class="fw-bold">楊丞琳</h4>
@@ -15,24 +26,23 @@
       </div>
     </div>
   </section>
-  
-  <PaginationA />
+  <div class="d-flex justify-content-end">
+    <PaginationA />
+  </div>
 </template>
 
 <script>
-import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
 
 export default {
-  components: { SearchOrderDate, PaginationA }
+  components: { PaginationA }
 }
 </script>
 
 <style scoped lang="scss">
 .collection {
-  /* 最寬只能放 390 */
-  width: 390px;
-  height: 220px;
+  width: 465px;
+  height: 262px;
   border-radius: 20px;
   background-image: url('../../../assets/images/products/concert4.jpg');
   @media(max-width: 576px) {
