@@ -556,7 +556,7 @@ export default {
     afterLogin() {
       //關閉modal回到原本瀏覽處
       const modalClose = this.$refs.modalClose;
-      loginModal.click();
+      modalClose.click();
       //將登入狀態存到vuex
       const access_token = this.getLoginData.access_token
       this.fetchMemberData(access_token)

@@ -1,7 +1,7 @@
 <template>
   <h5 class="fs-18 text-secondary mb-3">購票資訊</h5>
   <div
-    v-if="this.ticket_info && this.ticket_info.session_info.length > 0" 
+    v-if="ticket_info && ticket_info.session_info.length > 0" 
     class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div class="">
@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="col-12 col-lg-6">
-      <p class="fs-5">售票時間：{{ ticket_info.ticket_date }}</p>
+      <p class="fs-5">售票時間：{{ $timeFormatter(ticket_info.ticket_date) }}</p>
       <swiper
         :slides-per-view="'auto'"
         :free-mode="true"
@@ -68,15 +68,20 @@ export default {
       area_info: [],
     }
   },
-  created() {
-    if (this.ticket_info && this.ticket_info.session_info.length > 0) {
-      this.currentSessionName = this.ticket_info.session_info[0].session_name;
-      this.init();
-    }
-  },
   computed: {
     ...mapState('activity', ['ticket_info', 'session_name']),
     // ...mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),
+  },
+  watch: {
+    ticket_info: {
+      immediate: true,
+      handler(newTicketInfo) {
+        if (newTicketInfo && newTicketInfo.session_info.length > 0) {
+          this.currentSessionName = newTicketInfo.session_info[0].session_name;
+          this.init();
+        }
+      },
+    },
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
@@ -92,8 +97,22 @@ export default {
       this.setTicketData({ stateData: 'area_status', data: status });
       this.setTicketData({ stateData: 'ticket_type_info', data: ticket });
       this.setTicketData({ stateData: 'session_name', data: this.currentSessionName });
+    },
+    // timeFormatter(time) {
+    //   if (time.includes('~')) {
+    //     const [startTime, endTime] = time.split(" ~ ");
+    //     // 去除起始時間和結束時間中的秒數
+    //     const formattedStartTime = startTime.split(":").slice(0, 2).join(":");
+    //     const formattedEndTime = endTime.split(":").slice(0, 2).join(":");
+    //     // 合併成新的時間字串，不包含秒數
+    //     const formattedTime = `${formattedStartTime} ~ ${formattedEndTime}`;
+    //     console.log(formattedTime);
+    //   } else {
+    //     const formattedTime = time.split(":").slice(0, 2).join(":");
+    //     console.log(formattedTime);
+    //   }
+    //   }
     }
-  }
 }
 </script>
 

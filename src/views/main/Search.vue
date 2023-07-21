@@ -18,6 +18,7 @@
         <button type="button" class="button btn-outline-primaryA active">演唱會</button>
         <button type="button" class="button btn-outline-primaryA">音樂祭</button>
       </div>
+      <!-- 預設一頁放 9 個活動 -->
       <div class="d-flex gap-4 flex-wrap mb-4">
         <div class="cardA bg-cover text-white position-relative">
           <div class="position-absolute bottom-0">
