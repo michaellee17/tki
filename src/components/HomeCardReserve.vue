@@ -1,34 +1,26 @@
 <template v-if="data.length > 0">
-  
+  <div class="d-flex align-items-center mb-4 gap-3 ">
+    <img src="../assets/images/icons/icon_time.svg" alt="hot-event">
+    <h2 class="mb-0 text-white">{{ title }}</h2>
+  </div>
   <section class="mb-5">
     <swiper
       ref="mySwiperRef" 
       :slides-per-view="'auto'"
-      :free-mode="true"
       :space-between="20"
-      class="mySwiper"
+      class="mySwiper card-reserve"
       @swiper="onSwiper">
-      <div class="position-absolute top-0 left-0 d-flex w-100 justify-content-between align-items-center">
-        <h2 class="text-primary">{{ title }}</h2>
-        <div>
-          <a href="#" class="fs-5 link-primary pe-3">查看更多</a>
-          <a @click.stop="slider.slidePrev()" class="me-3">
-            <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
-          </a>
-          <a @click.stop="slider.slideNext()">
-            <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
-          </a>
-        </div>
-      </div>
       <swiper-slide v-for="event in data" :key="event.event_id">
-        <div
-          class="event-card bg-cover text-white position-relative"
-          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.main_imageH_url + ')' }">
-          <div class="position-absolute bottom-0">
-            <h4 class="fw-bold ellipsis-3">{{ event.event_name }}</h4>
-            <p class="fs-5">{{ event.ticket_number }} 張</p>
+        <router-link class="d-block"
+          :to="'/activity/detail/' + $convertToSlug(event.event_name, event.event_id) + '/buy-ticket/session'">
+          <div
+            class="event-card bg-cover text-white position-relative mb-3"
+            :style="{ backgroundImage: `url(${event.main_imageH_url})` }" />
+          <div class="slide-content px-1">
+            <h5 class="fs-22 ellipsis-2">{{ event.event_name }}</h5>
+            <p class="">{{ event.ticket_number }} 張</p>
           </div>
-        </div>
+        </router-link>
       </swiper-slide>
     </swiper>
   </section>
@@ -49,48 +41,35 @@
     props: ['title', 'data'],
     data () {
         return {
-          slider: null,
         }
     },
     methods: {
-      onSwiper(swiper) {
-        this.slider = swiper;
-      },
     },
 }
 </script>
 
 <style scoped lang="scss">
-.event-card {
-  width: 320px;
-  height: 320px;
-  border-radius: 20px;
-//   background-image: url('../assets/images/products/concert4.jpg');
+* {
+  --card-width: 308px;
   @media(max-width: 576px) {
-    width: 160px;
-    height: 160px;
-  }
-  & .position-absolute {
-    left: 1rem;
+    --card-width: 160px
   }
 }
-.mySwiper {
-    padding-top: 5rem;
-    /* 套用輪播 auto 效果 */
-    & .swiper-slide {
-        width: auto;
-    }
-    & .swiper-button-next {
-        top: 0;
-    }
+.event-card {
+  width: var(--card-width);
+  height: var(--card-width);
+  border-radius: 20px;
+  box-shadow: 0px 3px 6px #00000029;
 }
-.arrow-icon {
-  filter: var(--grey-filter);
-  &:hover, &:focus {
-    filter: var(--primary-filter);
+.slide-content {
+  width: var(--card-width);
+}
+</style>
+
+<style lang="scss">
+.card-reserve {
+  & .swiper-slide {
+      width: auto;
   }
 }
-
-
-
 </style>

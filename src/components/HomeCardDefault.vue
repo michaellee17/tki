@@ -1,33 +1,31 @@
 <template v-if="data.length > 0">
- <section class="mb-5">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h2 class="text-primary title">{{ title }}</h2>
+    <a href="#" class="more fs-22 me-4">MORE<span class="ms-3 arrow-right" /></a> 
+  </div>
+  <section class="">
     <swiper
       ref="mySwiperRef" 
       :slides-per-view="'auto'"
-      :free-mode="true"
       :space-between="20"
-      class="mySwiper"
+      :pagination="{
+        type: 'progressbar',
+        clickable: true,
+      }"
+      class="mySwiper card-default"
       @swiper="onSwiper">
-      <div class="position-absolute top-0 left-0 d-flex w-100 justify-content-between align-items-center">
-        <h2 class="text-primary">{{ title }}</h2>
-        <div>
-          <a href="#" class="fs-5 link-primary pe-3">查看更多</a>
-          <a @click.stop="slider.slidePrev()" class="me-3">
-            <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
-          </a>
-          <a @click.stop="slider.slideNext()">
-            <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
-          </a>
-        </div>
-      </div>
       <swiper-slide v-for="event in data" :key="event.event_id">
-        <div
-          class="event-card bg-cover text-white position-relative"
-          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.main_imageH_url + ')' }">
-          <div class="position-absolute bottom-0">
-            <h3 class="fw-bold">{{ event.performer }}</h3>
-            <p class="fs-5 ellipsis-3">{{ event.event_name }}</p>
+        <router-link
+          class="d-block"
+          :to="'/activity/detail/' + $convertToSlug(event.event_name, event.event_id) + '/buy-ticket/session'">
+          <div
+            class="event-card bg-cover text-white mb-3"
+            :style="{ backgroundImage: `url(${event.main_imageH_url})` }" />
+          <div class="slide-content px-2">
+            <h5 class="fw-bold">{{ event.performer }}</h5>
+            <p class=" ellipsis-2">{{ event.event_name }}</p>
           </div>
-        </div>
+        </router-link>
       </swiper-slide>
     </swiper>
   </section>
@@ -60,37 +58,63 @@
 </script>
 
 <style scoped lang="scss">
-.event-card {
-  width: 576px;
-  height: 324px;
-  border-radius: 20px;
-//   background-image: url('../assets/images/products/concert4.jpg');
+* {
+  --card-width: 417px;
   @media(max-width: 576px) {
-    width: 288px;
-    height: 162px;
-  }
-  & .position-absolute {
-    left: 1rem;
+    --card-width: 288px;
   }
 }
-.mySwiper {
-    padding-top: 5rem;
+.event-card {
+  width: var(--card-width);
+  height: calc(var(--card-width) * 0.5625);
+  border-radius: 20px;
+  @media(max-width: 576px) {
+    width: var(--card-width);
+    height: calc(var(--card-width) * 0.5625);
+  }
+}
+.slide-content {
+  width: var(--card-width);
+}
+h2.title {
+  border-left: 8px solid var(--primary-color);
+  padding-left: 1rem;
+}
+.more {
+  letter-spacing: 2px;
+  &:hover span {
+    border: solid var(--primary-color);
+    border-width: 0px 2px 2px 0;
+  }
+}
+.arrow-right {
+  padding: 5px;
+  margin-bottom: 1px;
+}
+section {
+  margin-bottom: 100px;
+}
+</style>
+<style lang="scss">
+.card-default {
+  &.mySwiper {
+    padding-bottom: 50px;
     /* 套用輪播 auto 效果 */
     & .swiper-slide {
         width: auto;
     }
-    & .swiper-button-next {
-        top: 0;
+    & .swiper-pagination-progressbar {
+      top: 90%;
+      width: calc(var(--card-width) + var(--card-width) / 2);
+      background-color: var(--primary-color);
+      height: 2px;
+      display: flex;
+      align-items: center;
     }
+    & .swiper-pagination-progressbar-fill {
+      height: 8px;
+      top: -150%;
+    }
+  } 
 }
-.arrow-icon {
-  filter: var(--grey-filter);
-  &:hover, &:focus {
-    filter: var(--primary-filter);
-  }
-}
-
-
-
-
 </style>
