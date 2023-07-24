@@ -54,7 +54,7 @@ const routes = [
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/PrivacyTerms.vue')
   },
   {
-    path: '/search',
+    path: '/search/:searchText',
     name: 'Search',
     component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Search.vue')
   },
@@ -63,7 +63,6 @@ const routes = [
     name: 'Member',
     component: () => import('../views/main/Member/Layout.vue'),
     meta: { requiresAuth: true },
-   
     children: [
       {
         path: 'index/:memberID',

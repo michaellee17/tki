@@ -1,6 +1,6 @@
 <template>
   <layout>
-    <TopHeader :title="'「OOO」搜尋結果'" />
+    <TopHeader :title="`${searchInput}搜尋結果`" />
     <div class="container mt-5">
       <div class="d-flex gap-3 mb-4">
         <div class="icon-circle bg-primary d-flex justify-content-center align-items-center">
@@ -15,38 +15,20 @@
             </select>
           </div>
         </div>
-        <button type="button" class="button btn-outline-primaryA active">演唱會</button>
-        <button type="button" class="button btn-outline-primaryA">音樂祭</button>
+        <button v-for="item in hots" :key="item" type="button" class="button btn-outline-primaryA active">{{ item }}</button>
       </div>
       <!-- 預設一頁放 9 個活動 -->
       <div class="d-flex gap-4 flex-wrap mb-4">
-        <div class="cardA bg-cover text-white position-relative">
+        <div v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative">
+          <img :src="item.main_imageH_url" alt="Event Image">
           <div class="position-absolute bottom-0">
-            <h4 class="fw-bold">楊丞琳</h4>
-            <p>世界巡回演唱會</p>
+            <h4 class="fw-bold">{{ item.performer }}</h4>
+            <p>{{ item.event_name }}</p>
           </div>
         </div>
-        <div class="cardA bg-cover text-white position-relative">
-          <div class="position-absolute bottom-0">
-            <h4 class="fw-bold">楊丞琳</h4>
-            <p>世界巡回演唱會</p>
-          </div>
-        </div>
-        <div class="cardA bg-cover text-white position-relative">
-          <div class="position-absolute bottom-0">
-            <h4 class="fw-bold">楊丞琳</h4>
-            <p>世界巡回演唱會</p>
-          </div>
-        </div>
-        <div class="cardA bg-cover text-white position-relative">
-          <div class="position-absolute bottom-0">
-            <h4 class="fw-bold">楊丞琳</h4>
-            <p>世界巡回演唱會</p>
-          </div>
-        </div> 
       </div>
       <div class="d-flex justify-content-center">
-        <PaginationA /> 
+        <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
       </div>
     </div>
   </layout>
@@ -57,18 +39,75 @@ import Layout from "../../components/Layout.vue";
 import TopHeader from "../../components/TopHeader.vue";
 import PaginationA from "../../components/PaginationA.vue";
 import { countries } from "../../data/gc/countries.json";
-
+import { mapGetters } from "vuex";
 export default {
   components: {
     Layout, TopHeader, PaginationA
   },
-  data () {
+  data() {
     return {
-      countries: countries
+      countries: countries,
+      searchData: '',
+      lists:[],
+      currentPage: 1, // 當前分頁
+      itemsPerPage: 2, // 每頁顯示的項目數量
+      hots:[],
     }
+  },
+  computed: {
+    ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
+    totalPages() {
+        return Math.ceil(this.lists.length / this.itemsPerPage);
+    },
+    paginatedLists() {
+      const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+      const endIdx = startIdx + this.itemsPerPage;
+      return this.lists.slice(startIdx, endIdx);
+    },
+    searchInput () {
+      return this.$route.params.searchText
+    },
+  },
+  watch: {
+    searchInput (nVal, oVal) {
+      if (nVal){
+        this.getSearchData()
+      }
+    }
+  },
+  mounted() {
+    this.getSearchData()
   },
   beforeCreate() {
     document.title = "搜尋結果 - T-KI";
+  },
+  methods: {
+    changePage(page) {
+      // 分頁變更事件處理器
+      this.currentPage = page;
+    },
+    getSearchData() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/search`;
+      const accessToken = this.getLoginData.access_token;
+      const requestData = {
+        keyword: this.searchInput,
+        page:1, 
+        limit:9,
+      };
+      this.axios.post(apiUrl, requestData, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(res => {
+        if (res.data.status_code === 'SYSTEM_1000') {
+          console.log(res);
+          this.lists = res.data.data;
+          this.hots = res.data.hot_keywords;
+          localStorage.removeItem('search');
+        }
+      });
+    },
   },
 };
 </script>
@@ -77,15 +116,20 @@ export default {
   width: 410px;
   height: 230px;
   border-radius: 20px;
-  background-image: linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%), url('../../assets/images/products/concert4.jpg');
+  background-image: linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%);
+  & img{
+    width: 100%;
+  }
   @media(max-width: 576px) {
     width: 305px;
     height: 172px;
   }
+
   & .position-absolute {
     left: 1rem;
   }
 }
+
 .icon-circle {
   width: 40px;
   height: 40px;
@@ -103,9 +147,11 @@ select {
   width: 100%;
   cursor: inherit;
 }
+
 select::-ms-expand {
   display: none;
 }
+
 .select {
   background-color: var(--primary-color);
   border-radius: 28px;
@@ -116,8 +162,12 @@ select::-ms-expand {
   cursor: pointer;
   display: grid;
   grid-template-areas: "select";
-  align-items: center;        
+  align-items: center;
+  & option{
+    background-color: var(--primary-color);;
+  }
 }
+
 .select::after {
   content: "";
   width: 14px;
@@ -126,6 +176,7 @@ select::-ms-expand {
   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
   justify-self: end;
 }
+
 .select::before {
   content: "";
   width: 24px;
@@ -136,8 +187,10 @@ select::-ms-expand {
   background-repeat: no-repeat;
   justify-self: start;
 }
+
 select,
-.select:after, .select:before {
+.select:after,
+.select:before {
   grid-area: select;
 }
 </style>

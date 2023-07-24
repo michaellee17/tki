@@ -13,7 +13,6 @@
           <img src="../assets/images/logos/logo-main-white.png" class="logo-image" alt="logo">
         </router-link>
       </div>
-        
       <!-- item -->
       <div id="navbarSupportedContent" class="collapse navbar-collapse order-3 order-lg-1">
         <ul class="navbar-nav">
@@ -49,12 +48,13 @@
           </li>
         </ul>
       </div>
-        
       <!-- search -->
       <div class="search-wrap order-2 order-sm-1 ms-auto">
         <form>
-          <input type="text" ref="searchInput" placeholder="搜尋活動..." class="search-input web">
-          <a type="button" class="search-icon">
+          <input
+            ref="searchInput" v-model="searchData" type="text" placeholder="搜尋活動..." 
+            class="search-input web">
+          <a type="button" class="search-icon" @click="sendSearch">
             <font-awesome-icon :icon="['fas', 'search']" />
           </a>
         </form>
@@ -79,12 +79,12 @@
         <!-- 已登入 -->
         <a
           v-if="loginStatus === true" ref="navbarLogin"
-          id="navbarDropdown" class=" nav-link pe-0 d-flex align-items-center gap-2" href="#" role="button"
+          class=" nav-link pe-0 d-flex align-items-center gap-2" href="#" role="button"
           data-bs-toggle="dropdown" aria-expanded="false">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
           <span class="login-title">{{ memberName }}</span>
         </a>
-        <ul class="dropdown-menu" ref="dropdownMenuLogin" aria-labelledby="navbarDropdown">
+        <ul ref="dropdownMenuLogin" class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li class="border-bottom">
             <router-link :to="{ name: 'Info', params: { memberID: memberDataId } }" class="dropdown-item">會員中心</router-link>
           </li>
@@ -114,11 +114,9 @@
 </template>
 
 <script>
-import loginModal from "./LoginModal"
+import loginModal from "./LoginModal";
 import Swal from "sweetalert2";
 import { mapActions,mapGetters } from 'vuex';
-
-
 export default {
   components: {
     loginModal
@@ -126,10 +124,8 @@ export default {
   data() {
     return {
        memberID: 0,
+       searchData:'',
     };
-  },
-  mounted(){
-    this.handleSearch();
   },
   computed: {
     ...mapGetters('user',['getLoginStatus','getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
@@ -149,10 +145,22 @@ export default {
       return null; // 或者返回适当的默认值
     },
   },
+  mounted(){
+    this.handleSearch();
+  },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
     openLoginModal() {
       this.$refs.loginModal.showModal();
+    },
+    sendSearch() {
+      this.$router.push(`/search/${this.searchData}`);
+      // const currentPath = this.$route.path;
+      // if (currentPath === '/search') {
+      //   location.reload()
+      // } else {
+      //   this.$router.push(`/search/${this.searchData}`);
+      // }
     },
     handleLogOut() {
         // this.updateLoginStatus(false);

@@ -359,8 +359,6 @@ export default {
     this.enterKeyupDestroyed();
   },
   mounted() {
-    console.log(this.$refs.memberInfoPageRef);
-    console.log(this.$refs.memberInfoPage);
     this.loginModal = new Modal(this.$refs.loginModal);
     this.initLoginBoard();
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
@@ -435,7 +433,6 @@ export default {
           this.updateLoginStatus(true);
         })
         .catch(error => {
-          console.error('會員資訊出錯', error);
         });
     },
     //重設密碼
@@ -505,10 +502,8 @@ export default {
         phone: this.forgetPhone,
         otp: this.forgetCode
       };
-      console.log(requestData);
       this.axios.post(apiUrl, requestData)
         .then(res => {
-          console.log(res);
           if (res.data.status_code === 'SYSTEM_1000') {
             this.isForgetOTPVertify = true;
             Swal.fire({
@@ -573,7 +568,6 @@ export default {
       };
       this.axios.post(apiUrl, requestData)
         .then(res => {
-          console.log(res);
           if (res.data.status_code === 'SYSTEM_1000') {
             Swal.fire({
               icon: 'success',
@@ -1114,7 +1108,6 @@ export default {
             });
           }
           if (res.data.status_code === 'USER_2041') {
-            console.log(2041);
             Swal.fire({
               icon: 'error',
               title: '手機已註冊過',
@@ -1182,7 +1175,6 @@ export default {
             });
           }
           if (res.data.status_code === 'USER_2041') {
-            console.log(2041);
             Swal.fire({
               icon: 'error',
               title: '手機已註冊過',
@@ -1200,7 +1192,6 @@ export default {
           }
         });
     },
-   
     initLoginBoard() {
       this.$refs.loginBoard.classList.remove('d-none');
       this.$refs.termsPage.classList.add('d-none');
