@@ -1,6 +1,6 @@
 <template>
   <layout>
-    <TopHeader :title="`${searchData}搜尋結果`" />
+    <TopHeader :title="`${searchInput}搜尋結果`" />
     <div class="container mt-5">
       <div class="d-flex gap-3 mb-4">
         <div class="icon-circle bg-primary d-flex justify-content-center align-items-center">
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       countries: countries,
-      searchData: localStorage.getItem('search'),
+      searchData: '',
       lists:[],
       currentPage: 1, // 當前分頁
       itemsPerPage: 2, // 每頁顯示的項目數量
@@ -64,6 +64,16 @@ export default {
       const endIdx = startIdx + this.itemsPerPage;
       return this.lists.slice(startIdx, endIdx);
     },
+    searchInput () {
+      return this.$route.params.searchText
+    },
+  },
+  watch: {
+    searchInput (nVal, oVal) {
+      if (nVal){
+        this.getSearchData()
+      }
+    }
   },
   mounted() {
     this.getSearchData()
@@ -80,7 +90,7 @@ export default {
       const apiUrl = `${process.env.VUE_APP_PATH}/search`;
       const accessToken = this.getLoginData.access_token;
       const requestData = {
-        keyword: this.searchData,
+        keyword: this.searchInput,
         page:1, 
         limit:9,
       };

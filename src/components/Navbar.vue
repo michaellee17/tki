@@ -154,14 +154,13 @@ export default {
       this.$refs.loginModal.showModal();
     },
     sendSearch() {
-      const searchData = this.searchData;
-      localStorage.setItem('search', searchData);
-      const currentPath = this.$route.path;
-      if (currentPath === '/search') {
-        location.reload()
-      } else {
-        this.$router.push('/search');
-      }
+      this.$router.push(`/search/${this.searchData}`);
+      // const currentPath = this.$route.path;
+      // if (currentPath === '/search') {
+      //   location.reload()
+      // } else {
+      //   this.$router.push(`/search/${this.searchData}`);
+      // }
     },
     handleLogOut() {
         // this.updateLoginStatus(false);
