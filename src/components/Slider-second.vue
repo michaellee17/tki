@@ -4,17 +4,15 @@
     :loop="true"
     :initial-slide="1"
     :autoplay="{
-      delay: 2500,
+      delay: 250000,
       disableOnInteraction: false,
     }"
     :options="swiperOptions"
     :space-between="30"
-    :navigation="true"
     :pagination="{
-      type: 'progressbar',
       clickable: true,
     }"
-    class="mySwiper">
+    class="mySwiper banner">
     <swiper-slide v-for="(item) in advertises" :id="item.title" :key="item.title">
       <a :href="item.link_url" target="_blank">
         <img
