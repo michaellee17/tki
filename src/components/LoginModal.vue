@@ -315,8 +315,6 @@ export default {
     Google,
     LineLogin:Line,
     Apple,
-    Register,
-
   },
   data() {
     return {

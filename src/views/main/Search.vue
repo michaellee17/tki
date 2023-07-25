@@ -1,21 +1,26 @@
 <template>
   <layout>
     <TopHeader :title="`${searchInput}搜尋結果`" />
-    <div class="container mt-5">
+    <div v-if="lists.length > 0" class="container mt-5">
       <div class="d-flex gap-3 mb-4">
         <div class="icon-circle bg-primary d-flex justify-content-center align-items-center">
           <img src="../../assets/images/icons/icon_tuneshow.png" width="24" alt="">
         </div>
         <div>
           <div class="select">
-            <select>
+            <select v-model="areas">
+              <option value="" disabled>縣市</option>
               <template v-for="country in countries" :key="country.id">
                 <option :value="country.name">{{ country.name }}</option>
               </template>
             </select>
           </div>
         </div>
-        <button v-for="item in hots" :key="item" type="button" class="button btn-outline-primaryA active">{{ item }}</button>
+        <button
+          v-for="item in hots" :key="item" type="button" class="button btn-outline-primaryA active" 
+          @click="changeSearch(item)">
+          {{ item }}
+        </button>
       </div>
       <!-- 預設一頁放 9 個活動 -->
       <div class="d-flex gap-4 flex-wrap mb-4">
@@ -30,6 +35,9 @@
       <div class="d-flex justify-content-center">
         <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
       </div>
+    </div>
+    <div class="noData" v-if="lists.length === 0">
+      <h4>查無搜尋結果</h4>
     </div>
   </layout>
 </template>
@@ -46,6 +54,7 @@ export default {
   },
   data() {
     return {
+      areas:'',
       countries: countries,
       searchData: '',
       lists:[],
@@ -57,7 +66,7 @@ export default {
   computed: {
     ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
     totalPages() {
-        return Math.ceil(this.lists.length / this.itemsPerPage);
+      return Math.ceil(this.lists.length / this.itemsPerPage);
     },
     paginatedLists() {
       const startIdx = (this.currentPage - 1) * this.itemsPerPage;
@@ -71,29 +80,40 @@ export default {
   watch: {
     searchInput (nVal, oVal) {
       if (nVal){
-        this.getSearchData()
+        this.getSearchData(nVal)
+      }
+    },
+    areas (nVal, oVal){
+      if(nVal){
+        this.getSearchData(this.searchInput)
       }
     }
   },
   mounted() {
-    this.getSearchData()
+    this.getSearchData(this.searchInput)
   },
   beforeCreate() {
     document.title = "搜尋結果 - T-KI";
   },
   methods: {
+    changeSearch(item){
+      this.$router.push({name:'Search',params:{searchText:item}})
+    },
     changePage(page) {
       // 分頁變更事件處理器
       this.currentPage = page;
     },
-    getSearchData() {
+    getSearchData(searchText) {
       const apiUrl = `${process.env.VUE_APP_PATH}/search`;
       const accessToken = this.getLoginData.access_token;
       const requestData = {
-        keyword: this.searchInput,
+        keyword: searchText,
         page:1, 
         limit:9,
       };
+      if (this.areas) {
+        requestData.county = this.areas;
+      }
       this.axios.post(apiUrl, requestData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
@@ -101,10 +121,8 @@ export default {
       })
       .then(res => {
         if (res.data.status_code === 'SYSTEM_1000') {
-          console.log(res);
           this.lists = res.data.data;
           this.hots = res.data.hot_keywords;
-          localStorage.removeItem('search');
         }
       });
     },
@@ -112,6 +130,14 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.noData{
+  display: flex;
+  justify-content: center;
+  & h4{
+    font-size: 36px;
+    letter-spacing: 3.6px;
+  }
+}
 .cardA {
   width: 410px;
   height: 230px;

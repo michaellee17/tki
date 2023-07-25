@@ -23,17 +23,8 @@
               活動分類
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li class="border-bottom">
-                <router-link to="/activity/concert" class="dropdown-item">演唱會</router-link>
-              </li>
-              <li class="border-bottom">
-                <router-link to="/activity/sport" class="dropdown-item">運動賽事</router-link>
-              </li>
-              <li class="border-bottom">
-                <router-link to="/activity/show" class="dropdown-item">藝文展演</router-link>
-              </li>
-              <li>
-                <router-link to="/activity/other" class="dropdown-item">其他</router-link>
+              <li v-for="item in eventSubMenu" :key="item.class_id" class="border-bottom">
+                <router-link :to="'/activity/' + item.class_id" class="dropdown-item">{{ item.class_name }}</router-link>
               </li>
             </ul>
           </li>
@@ -50,14 +41,12 @@
       </div>
       <!-- search -->
       <div class="search-wrap order-2 order-sm-1 ms-auto">
-        <form>
-          <input
-            ref="searchInput" v-model="searchData" type="text" placeholder="搜尋活動..." 
-            class="search-input web">
-          <a type="button" class="search-icon" @click="sendSearch">
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </a>
-        </form>
+        <input
+          ref="searchInput" v-model="searchData" type="text" placeholder="搜尋活動..." 
+          class="search-input web">
+        <a type="button" class="search-icon" @click="sendSearch">
+          <font-awesome-icon :icon="['fas', 'search']" />
+        </a>
         <!-- search 歷史訊息 -->
         <div ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
           <p>最近搜尋</p>
@@ -125,6 +114,7 @@ export default {
     return {
        memberID: 0,
        searchData:'',
+       eventSubMenu:{},
     };
   },
   computed: {
@@ -145,25 +135,45 @@ export default {
       return null; // 或者返回适当的默认值
     },
   },
+  beforeUnmount() {
+    this.enterKeyupDestroyed();
+  },
   mounted(){
     this.handleSearch();
+    this.enterKeyup();
+    this.getEventSubMenu();
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
+    getEventSubMenu(){
+        const apiUrl = `${process.env.VUE_APP_PATH}/event/get-district-class-list`;
+        this.axios.get(apiUrl)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.eventSubMenu = res.data.data
+          }
+        });
+    },
+    enterKeyupDestroyed() {
+      document.removeEventListener("keyup", this.enterKey);
+    },
+     //表單enter事件綁定
+    enterKeyup() {
+      document.addEventListener("keyup", this.enterKey);
+    },
+    //表單enter送出事件
+    enterKey(event) {
+      if (event.key === 'Enter' && this.searchData) {
+        this.sendSearch()
+      }
+    },
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
     sendSearch() {
       this.$router.push(`/search/${this.searchData}`);
-      // const currentPath = this.$route.path;
-      // if (currentPath === '/search') {
-      //   location.reload()
-      // } else {
-      //   this.$router.push(`/search/${this.searchData}`);
-      // }
     },
     handleLogOut() {
-        // this.updateLoginStatus(false);
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
         this.axios.get(apiUrl,{
@@ -199,7 +209,9 @@ export default {
         this.$refs.searchDropdownMenu.classList.remove('d-none');
       })
       this.$refs.searchInput.addEventListener('blur', () => {
-        this.$refs.searchDropdownMenu.classList.add('d-none');
+        if(this.$refs.searchDropdownMenu){
+          this.$refs.searchDropdownMenu.classList.add('d-none');
+        } 
       })
     }
    },

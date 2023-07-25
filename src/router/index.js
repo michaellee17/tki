@@ -108,20 +108,8 @@ const routes = [
     component: () => import('../views/main/Activity/Layout.vue'),
     children: [
       {
-        path: 'concert',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Concert.vue')
-      },
-      {
-        path: 'sport',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Sport.vue')
-      },
-      {
-        path: 'other',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Other.vue')
-      },
-      {
-        path: 'show',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Show.vue')
+        path: ':activityId',
+        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Inner.vue')
       },
       {
         path: 'detail/:activityId',

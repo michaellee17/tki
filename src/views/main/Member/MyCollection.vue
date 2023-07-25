@@ -49,16 +49,13 @@ export default {
     getColletions(){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/get-collect-list`;
       const accessToken = this.getLoginData.access_token
-      const requestData = {
-        limit:4, //總回傳筆數，預設為4
-        page:1, //總回傳頁數，預設為1
-      };
       this.axios.get(apiUrl,{
         headers: {
           'Authorization': `Bearer ${accessToken}`
         },
         params:{
-          requestData,
+          limit:4, //總回傳筆數，預設為4
+          page:1, //總回傳頁數，預設為1
         },
       })
       .then(res => {
