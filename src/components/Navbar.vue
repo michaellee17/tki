@@ -80,9 +80,10 @@
           <li class="border-bottom">
             <router-link :to="{ name: 'OrderHistory', params: { memberID: memberDataId } }" class="dropdown-item">訂單記錄</router-link>
           </li>
-          <li class="border-bottom">
+          <!-- 獲獎紀錄先隱藏 -->
+          <!-- <li class="border-bottom">
             <router-link :to="{ name: 'Reward', params: { memberID: memberDataId } }" class="dropdown-item">獲獎紀錄</router-link>
-          </li>
+          </li> -->
           <li class="border-bottom">
             <router-link :to="{ name: 'MyCollection', params: { memberID: memberDataId } }" class="dropdown-item">我的收藏</router-link>
           </li>
@@ -218,7 +219,7 @@ export default {
 };
 </script>
 
-<style scoped="scoped" lang="scss">
+<style scoped lang="scss">
 @import "../assets/mixin.scss";
 nav {
   padding-top: 0px;

@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <Navbar v-if="!$store.state.appView.view" />
-    <div class="mb-100">
+    <div :class="{ 'mb-100': $route.name !== 'Home'}">
       <slot><div class="text-center">No content yet.</div> </slot>
     </div>
     <footer v-if="!$store.state.appView.view" class="mt-auto bg-primary text-white py-3">
@@ -73,7 +73,7 @@ export default {
   },
 };
 </script>
-<style scoped="scoped" lang="scss">
+<style scoped lang="scss">
 @import "../assets/mixin.scss";
 .wrap {
   display: flex;

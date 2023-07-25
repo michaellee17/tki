@@ -1228,7 +1228,7 @@ export default {
   }
 }
 </script>
-<style scoped="scoped" lang="scss">
+<style scoped lang="scss">
 .modal-header {
   border-bottom: none;
 }
@@ -1251,10 +1251,6 @@ a {
   margin-bottom: 0;
 }
 @media (max-width: 768px) {
-  .navbar {
-    display: none !important;
-  }
-
   #memberInfoPage form {
     padding-right: 0.5rem;
     padding-left: 0.5rem;

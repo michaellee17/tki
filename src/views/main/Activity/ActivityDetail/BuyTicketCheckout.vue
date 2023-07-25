@@ -2,8 +2,8 @@
   <h5 class="fs-18 text-secondary mb-3">票券內容</h5>
   <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0 mb-4">
     <div class="col-12 col-lg-6">
-      <div class="">
-        <img src="../../../../assets/images/activity/blackpink-m.jpg" class="img-fluid roundedM" alt="">
+      <div>
+        <img :src="ticket_info.ticket_image_url" class="img-fluid roundedM" alt="">
       </div>
     </div>
     <div class="col-12 col-lg-6">
@@ -61,13 +61,16 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
   data() {
     return {
     }
   },
-  methods: {
-  }
+  computed: {
+    ...mapState('activity', ['ticket_info']),
+  },
 }
 </script>
 

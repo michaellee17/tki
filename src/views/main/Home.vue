@@ -13,9 +13,10 @@
     <div class="container">
       <HomeCardReserve :title="'預約搶票'" :data="reserveList" />
     </div>
-    <div v-for="eventClass in classList" :key="eventClass.class_id" class="position-relative">
+    <div v-for="(eventClass, i) in classList" :key="eventClass.class_id" class="position-relative"
+    :class="{ 'event-area': i !== classList.length - 1 }">
       <div class="event-bg position-absolute" />
-      <div class="container">
+      <div class="container ">
         <div>
           <HomeCardDefault
             v-if="typeList[eventClass.class_id] && typeList[eventClass.class_id].length > 0"
@@ -152,7 +153,7 @@ export default {
   top: 99%;
   z-index: -1;
   @media(max-width: 576px) {
-    height: 220px;
+    height: 180px;
   }
 }
 .up-button {
@@ -167,5 +168,8 @@ export default {
   width: 100%;
   height: 240px;
   top: 50%;
+}
+.event-area{
+  margin-bottom: 100px;
 }
 </style>

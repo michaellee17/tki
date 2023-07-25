@@ -22,12 +22,13 @@
               <span>訂單記錄</span>
             </router-link>
           </li>
-          <li :class="{ active: $route.name ==='Reward' }">
+          <!-- 獲獎紀錄先隱藏 -->
+          <!-- <li :class="{ active: $route.name ==='Reward' }">
             <router-link :to="{ name: 'Reward', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/awards.svg" width="30" class="icon" alt="awards">
               <span>獲獎紀錄</span>
             </router-link>
-          </li>
+          </li> -->
           <li :class="{ active: $route.name ==='MyCollection' }">
             <router-link :to="{ name: 'MyCollection', params: { memberID: memberData } }" class="d-flex justify-content-center align-items-center gap-3">
               <img src="../../../assets/images/icons/my-collection.svg" width="30" class="icon" alt="my-collection">
@@ -94,7 +95,6 @@ export default {
   },
   created () {
     document.title = "會員中心 - T-KI"
-    console.log(this.getMemberData.data)
   },
 }
 </script>

@@ -4,13 +4,20 @@
     <h2 class="mb-0">{{ title }}</h2>
   </div>
   <div class="d-flex gap-3 align-items-center mb-4">
-    <button
-      v-for="event in data" :key="event.class_name"
-      type="button" :class="{ active : event.class_name === currentClass }"
-      class="btn btn-outline-primaryA fs-18" 
-      @click="currentClass = event.class_name">
-      {{ event.class_name }}
-    </button>
+    <swiper
+      :slides-per-view="'auto'"
+      :free-mode="true"
+      :space-between="20"
+      class="mySwiper tab-class">
+      <swiper-slide v-for="event in data" :key="event.class_name">
+        <button
+          type="button" :class="{ active : event.class_name === currentClass }"
+          class="btn btn-outline-primaryA fs-18" 
+          @click="currentClass = event.class_name">
+          {{ event.class_name }}
+        </button>
+      </swiper-slide>
+    </swiper>
   </div>
   <section class="mb-5">
     <swiper
@@ -73,7 +80,6 @@
     },
     created () {
       this.init();
-        // console.log(this.title, this.findHotList,)
     },
     methods: {
       init() {
@@ -123,13 +129,19 @@
 </style>
 
 <style lang="scss">
-.card-hot {
-  &.mySwiper {
+/* 熱門活動分類 */
+ .tab-class.mySwiper {
+  margin-left: 0;
+  & .swiper-slide {
+      width: auto;
+  }
+ }
+/* 熱門活動 card */
+.card-hot.mySwiper {
       /* 套用輪播 auto 效果 */
       & .swiper-slide {
           width: auto;
       }
-  }
   & .arrow-icon {
     filter: var(--white-filter);
     &:hover, &:focus {
@@ -147,25 +159,6 @@
   & .btn-prev, .btn-next {
     right: 20px; 
   }
-  // & .swiper-button-prev::after,
-  // .swiper-button-next::after {
-  //     background: #000;
-  //     background: rgba(0, 0, 0, 0.5);
-  //     width: 40px;
-  //     height:40px;
-  //     position: absolute;
-  //     display: block;
-  //     font-size: 18px;
-  //     z-index: 1000;
-  //     color: white;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  // }
-  // & .swiper-button-prev::after,
-  // .swiper-button-next::after {
-  //   background-image: url(../assets/images/icons/arrow_circle_left.svg);
-  // }
 }
 
 </style>

@@ -1,11 +1,12 @@
 <template>
   <h3 class="text-primary mb-4">訂單記錄</h3>
   <div class="border-bottom row text-center mb-3">
-    <p class="col-4 nav-tab-primary py-2 active">代付款</p>
+    <p class="col-4 nav-tab-primary py-2 active">待付款</p>
     <p class="col-4 nav-tab-primary py-2">付款成功</p>
     <p class="col-4 nav-tab-primary py-2">付款失敗</p>
   </div>
-  <SearchOrderDate />
+  <!-- 訂單篩選時間先隱藏 -->
+  <!-- <SearchOrderDate /> -->
   <section class="d-flex flex-wrap gap-4">
     <OrderAngleCard>
       <ul>

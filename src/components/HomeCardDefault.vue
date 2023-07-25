@@ -3,7 +3,7 @@
     <h2 class="text-primary title">{{ title }}</h2>
     <a href="#" class="more fs-22 me-4">MORE<span class="ms-3 arrow-right" /></a> 
   </div>
-  <section class="">
+  <section>
     <swiper
       ref="mySwiperRef" 
       :slides-per-view="'auto'"
@@ -90,9 +90,6 @@ h2.title {
 .arrow-right {
   padding: 5px;
   margin-bottom: 1px;
-}
-section {
-  margin-bottom: 100px;
 }
 </style>
 <style lang="scss">

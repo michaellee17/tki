@@ -4,7 +4,7 @@
     :loop="true"
     :initial-slide="1"
     :autoplay="{
-      delay: 250000,
+      delay: 2500,
       disableOnInteraction: false,
     }" 
     :space-between="30"

@@ -95,7 +95,7 @@ export default {
   }
 };
 </script>
-<style scoped="scoped">
+<style scoped>
 .blog-pagination {
   margin-top: 40px;
   margin-bottom: 80px;
