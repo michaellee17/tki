@@ -1,7 +1,7 @@
 <template>
   <layout>
     <TopHeader :title="`${searchInput}搜尋結果`" />
-    <div class="container mt-5">
+    <div v-if="lists.length > 0" class="container mt-5">
       <div class="d-flex gap-3 mb-4">
         <div class="icon-circle bg-primary d-flex justify-content-center align-items-center">
           <img src="../../assets/images/icons/icon_tuneshow.png" width="24" alt="">
@@ -9,6 +9,7 @@
         <div>
           <div class="select">
             <select v-model="areas">
+              <option value="" disabled>縣市</option>
               <template v-for="country in countries" :key="country.id">
                 <option :value="country.name">{{ country.name }}</option>
               </template>
@@ -34,6 +35,9 @@
       <div class="d-flex justify-content-center">
         <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
       </div>
+    </div>
+    <div class="noData" v-if="lists.length === 0">
+      <h4>查無搜尋結果</h4>
     </div>
   </layout>
 </template>
@@ -126,6 +130,14 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.noData{
+  display: flex;
+  justify-content: center;
+  & h4{
+    font-size: 36px;
+    letter-spacing: 3.6px;
+  }
+}
 .cardA {
   width: 410px;
   height: 230px;

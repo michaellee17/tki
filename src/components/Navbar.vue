@@ -23,17 +23,8 @@
               活動分類
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li class="border-bottom">
-                <router-link to="/activity/concert" class="dropdown-item">演唱會</router-link>
-              </li>
-              <li class="border-bottom">
-                <router-link to="/activity/sport" class="dropdown-item">運動賽事</router-link>
-              </li>
-              <li class="border-bottom">
-                <router-link to="/activity/show" class="dropdown-item">藝文展演</router-link>
-              </li>
-              <li>
-                <router-link to="/activity/other" class="dropdown-item">其他</router-link>
+              <li v-for="item in eventSubMenu" :key="item.class_id" class="border-bottom">
+                <router-link :to="'/activity/' + item.class_id" class="dropdown-item">{{ item.class_name }}</router-link>
               </li>
             </ul>
           </li>
@@ -123,6 +114,7 @@ export default {
     return {
        memberID: 0,
        searchData:'',
+       eventSubMenu:{},
     };
   },
   computed: {
@@ -149,9 +141,19 @@ export default {
   mounted(){
     this.handleSearch();
     this.enterKeyup();
+    this.getEventSubMenu();
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
+    getEventSubMenu(){
+        const apiUrl = `${process.env.VUE_APP_PATH}/event/get-district-class-list`;
+        this.axios.get(apiUrl)
+        .then(res => { 
+          if(res.data.status_code === 'SYSTEM_1000'){
+            this.eventSubMenu = res.data.data
+          }
+        });
+    },
     enterKeyupDestroyed() {
       document.removeEventListener("keyup", this.enterKey);
     },
@@ -161,7 +163,6 @@ export default {
     },
     //表單enter送出事件
     enterKey(event) {
-      console.log(this.searchData);
       if (event.key === 'Enter' && this.searchData) {
         this.sendSearch()
       }
@@ -173,7 +174,6 @@ export default {
       this.$router.push(`/search/${this.searchData}`);
     },
     handleLogOut() {
-        // this.updateLoginStatus(false);
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
         const accessToken = this.getLoginData.access_token
         this.axios.get(apiUrl,{
@@ -205,7 +205,6 @@ export default {
         });
     },
     handleSearch() {
-      console.log(this.$refs.searchDropdownMenu);
       this.$refs.searchInput.addEventListener('focus', () => {
         this.$refs.searchDropdownMenu.classList.remove('d-none');
       })
