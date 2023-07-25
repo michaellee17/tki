@@ -50,7 +50,7 @@
 import SectionLatestAuctions from "../../components/organisms/Section/SectionLatestAuctions.vue";
 import SectionLatestAuctionsWithCategoryName from "../../components/organisms/Section/SectionLatestAuctionsWithCategoryName.vue";
 import SectionMasonry from "../../components/organisms/Section/SectionMasonry.vue";
-import Slider from "../../components/atoms/Carousel/Slider.vue";
+import Slider from "../../components/atoms/Carousel/Slider.copy.vue";
 import SliderSecond from "../../components/atoms/Carousel/Slider-second.vue";
 import LayoutDefault from "../../components/organisms/LayoutDefault/LayoutDefault.vue";
 

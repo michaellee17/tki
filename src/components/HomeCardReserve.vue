@@ -1,5 +1,5 @@
 <template v-if="data.length > 0">
-  <div class="d-flex align-items-center mb-4 gap-3 ">
+  <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-4 gap-3 ">
     <img src="../assets/images/icons/icon_time.svg" alt="hot-event">
     <h2 class="mb-0 text-white">{{ title }}</h2>
   </div>
@@ -52,7 +52,7 @@
 * {
   --card-width: 308px;
   @media(max-width: 576px) {
-    --card-width: 160px
+    --card-width: 170px
   }
 }
 .event-card {

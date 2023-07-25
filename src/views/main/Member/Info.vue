@@ -11,7 +11,7 @@
         </div>
       </div>
       <p v-show="!isNameEdit">{{ memberData.full_name }}</p>
-      <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800 px-0" :value="memberData.full_name">
+      <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
@@ -24,16 +24,16 @@
       </div>
       <p v-if="!passwordChange" class="fs-18">********</p>
       <div v-if="passwordChange">
-        <div class="d-flex gap-2 align-items-center mb-2 ">
-          <span class="fs-16">輸入舊密碼：</span>
+        <div class="d-flex gap-2 align-items-center mb-2">
+          <span class="fs-16 text-nowrap">輸入舊密碼：</span>
           <input v-model="oldPsw" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
         <div class="d-flex gap-2 align-items-center mb-2">
-          <span class="fs-16">輸入新密碼：</span>
+          <span class="fs-16 text-nowrap">輸入新密碼：</span>
           <input v-model="newPsw" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
         <div class="d-flex gap-2 align-items-center mb-2">
-          <span class="fs-16">確認新密碼：</span>
+          <span class="fs-16 text-nowrap">確認新密碼：</span>
           <input v-model="newPsw2" type="password" class="mb-0 text-gray-800 mb-1">
         </div>
       </div>
@@ -54,7 +54,7 @@
         </div>
       </div>
       <p v-show="!isEmailEdit">{{ memberData.email }}</p>
-      <input v-show="isEmailEdit" ref="memberEmail" class="mb-0 text-gray-800 px-0" :value="memberData.email">
+      <input v-show="isEmailEdit" ref="memberEmail" class="mb-0 text-gray-800" :value="memberData.email">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <p class="fs-18">社群綁定</p>
@@ -526,7 +526,7 @@ input {
 }
 .member-info > li {
   background-color: rgba(245, 116, 46, 6%);
-  width: 300px;
+  width: 350px;
   & input {
     width: 100%;
   }

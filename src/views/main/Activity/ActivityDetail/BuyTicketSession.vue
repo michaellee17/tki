@@ -4,7 +4,7 @@
     v-if="ticket_info && ticket_info.session_info.length > 0" 
     class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
-      <div class="">
+      <div>
         <img :src="ticket_info.ticket_image_url" class="img-fluid" alt="">
       </div>
     </div>
@@ -98,20 +98,6 @@ export default {
       this.setTicketData({ stateData: 'ticket_type_info', data: ticket });
       this.setTicketData({ stateData: 'session_name', data: this.currentSessionName });
     },
-    // timeFormatter(time) {
-    //   if (time.includes('~')) {
-    //     const [startTime, endTime] = time.split(" ~ ");
-    //     // 去除起始時間和結束時間中的秒數
-    //     const formattedStartTime = startTime.split(":").slice(0, 2).join(":");
-    //     const formattedEndTime = endTime.split(":").slice(0, 2).join(":");
-    //     // 合併成新的時間字串，不包含秒數
-    //     const formattedTime = `${formattedStartTime} ~ ${formattedEndTime}`;
-    //     console.log(formattedTime);
-    //   } else {
-    //     const formattedTime = time.split(":").slice(0, 2).join(":");
-    //     console.log(formattedTime);
-    //   }
-    //   }
     }
 }
 </script>

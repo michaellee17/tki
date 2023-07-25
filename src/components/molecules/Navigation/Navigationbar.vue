@@ -128,7 +128,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .grow-enter-active,
 .grow-leave-active {
   transition: max-height 0.5s ease;
@@ -152,7 +152,7 @@ export default {
   opacity: 0;
 }
 </style>
-<style lang="scss">
+<style lang="scss" scoped>
 .navbar {
   background-color: var(--primary-color);
   height: 70px;

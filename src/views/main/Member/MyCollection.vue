@@ -1,10 +1,11 @@
 <template>
   <h3 class="text-primary mb-4">我的收藏</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
-    <div v-for="item in paginatedLists" :key="item.event_id" class="collection bg-cover text-white position-relative">
-      <img :src="item.main_imageH_url" alt="Event Image">
+    <div
+      v-for="item in paginatedLists" :key="item.event_id" class="collection bg-cover text-white position-relative"
+      :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + item.main_imageH_url + ')' }">
       <div class="position-absolute bottom-0">
-        <h4 class="fw-bold">{{ item.performer}}</h4>
+        <h4 class="fw-bold">{{ item.performer }}</h4>
         <p>{{ item.event_name }}</p>
       </div>
     </div>
