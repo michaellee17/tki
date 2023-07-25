@@ -1,26 +1,35 @@
 <template>
   <layout>
+    <!-- 主要 slider -->
+    <Slider class="mb-5" />
+    <div class="container">
+      <HomeCardHot :title="'熱門活動'" :data="hotList" />
+    </div>
+    <div class="position-relative">
+      <!-- 次要 slider -->
+      <SliderSecond class="mb-5" />
+      <div class="oval bg-primary position-absolute" />
+    </div>
+    <div class="container">
+      <HomeCardReserve :title="'預約搶票'" :data="reserveList" />
+    </div>
+    <div v-for="eventClass in classList" :key="eventClass.class_id" class="position-relative">
+      <div class="event-bg position-absolute" />
+      <div class="container">
+        <div>
+          <HomeCardDefault
+            v-if="typeList[eventClass.class_id] && typeList[eventClass.class_id].length > 0"
+            :title="eventClass.class_name" :data="typeList[eventClass.class_id]" />
+        </div>
+      </div>
+    </div>
+    <!-- 一鍵回上方 -->
     <a
       ref="upButton" href="#" class="up-button d-none fs-2 position-fixed"
       @click.prevent="scrollUp">
       <font-awesome-icon
         :icon="['fas', 'chevron-circle-up']" />
     </a>
-    <!-- 主要 slider -->
-    <Slider class="mb-5" />
-    <div class="container">
-      <HomeCardHot :title="'熱門活動'" :data="hotList" />
-    </div>
-    <!-- 次要 slider -->
-    <SliderSecond class="mb-5" />
-    <div class="container">
-      <HomeCardReserve :title="'預約搶票'" :data="reserveList" />
-      <div v-for="eventClass in classList" :key="eventClass.class_id">
-        <HomeCardDefault
-          v-if="typeList[eventClass.class_id] && typeList[eventClass.class_id].length > 0"
-          :title="eventClass.class_name" :data="typeList[eventClass.class_id]" />
-      </div>
-    </div>
   </layout>
 </template>
 
@@ -125,8 +134,7 @@ export default {
       });
     },
     showUpButton() {
-      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-        console.log('ref', this.$refs.upButton)
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
         this.$refs.upButton.classList.remove('d-none');
       } else {
         this.$refs.upButton.classList.add('d-none');
@@ -137,11 +145,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.oval {
+  width: 100%;
+  height: 320px;
+  border-radius: 50% / 0 0 100% 100%;
+  top: 99%;
+  z-index: -1;
+  @media(max-width: 576px) {
+    height: 220px;
+  }
+}
 .up-button {
   bottom: 2%;
   right: 1%;
   &:hover {
     color: var(--primary-color);
   }
+}
+.event-bg {
+  background-color: #F5742E0F;
+  width: 100%;
+  height: 240px;
+  top: 50%;
 }
 </style>

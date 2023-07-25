@@ -1,39 +1,41 @@
 <template v-if="data.length > 0">
-  <h2 class="text-primary mb-4">{{ title }}</h2>
+  <div class="d-flex align-items-center mb-4 gap-3">
+    <img src="../assets/images/icons/icon_star.svg" alt="hot-event">
+    <h2 class="mb-0">{{ title }}</h2>
+  </div>
+  <div class="d-flex gap-3 align-items-center mb-4">
+    <button
+      v-for="event in data" :key="event.class_name"
+      type="button" :class="{ active : event.class_name === currentClass }"
+      class="btn btn-outline-primaryA fs-18" 
+      @click="currentClass = event.class_name">
+      {{ event.class_name }}
+    </button>
+  </div>
   <section class="mb-5">
     <swiper
-      :slides-per-view="'auto'" 
-      :free-mode="true"
+      :slides-per-view="'auto'"
       :space-between="20"
-      class="mySwiper"
+      class="mySwiper card-hot"
       @swiper="onSwiper">
-      <div class="position-absolute top-0 left-0 w-100 d-flex flex-column flex-md-row gap-2 gap-md-0 justify-content-between">
-        <div class="d-flex gap-3 align-items-center">
-          <button
-            v-for="event in data" :key="event.class_name"
-            type="button" :class="{ active : event.class_name === currentClass }"
-            class="btn btn-outline-primaryA fs-18" 
-            @click="currentClass = event.class_name">
-            {{ event.class_name }}
-          </button>
-        </div>
-        <div class="ms-auto ms-md-0">
-          <a class="me-3" @click.stop="slider.slidePrev()">
-            <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
-          </a>
-          <a @click.stop="slider.slideNext()">
-            <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
-          </a>
-        </div>
+      <div class="btn-prev position-absolute">
+        <a class="me-3" @click.stop="slider.slidePrev()">
+          <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
+        </a>
+      </div>
+      <div class="btn-next position-absolute">
+        <a @click.stop="slider.slideNext()">
+          <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
+        </a>
       </div>
       <swiper-slide v-for="eventData in findHotList.event_data" :key="eventData.event_id">
         <router-link
           :to="'/activity/detail/' + $convertToSlug(eventData.event_name, eventData.event_id) + '/buy-ticket/session'"
           class="event-card d-block bg-cover text-white position-relative"
           :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + eventData.main_imageH_url + ')' }">
-          <div class="position-absolute bottom-0">
-            <h3 class="fw-bold">{{ eventData.performer }}</h3>
-            <p class="fs-5 ellipsis-3">{{ eventData.event_name }}</p>
+          <div class="slider-content position-absolute bottom-0">
+            <h3 class="fw-bold mb-1">{{ eventData.performer }}</h3>
+            <p class="ellipsis-1">{{ eventData.event_name }}</p>
           </div>
         </router-link>
       </swiper-slide>
@@ -68,7 +70,6 @@
             return {}
           }
         },
-        
     },
     created () {
       this.init();
@@ -88,41 +89,83 @@
 </script>
 
 <style scoped lang="scss">
-.event-card {
-  width: 576px;
-  height: 324px;
-  border-radius: 20px;
-//   background-image: url('../assets/images/products/concert4.jpg');
+* {
+  --card-width: 417px;
   @media(max-width: 576px) {
-    width: 288px;
-    height: 162px;
+    --card-width: 288px;
   }
-  & .position-absolute {
+}
+.event-card {
+  width: var(--card-width);
+  height: calc(var(--card-width) * 0.5625);
+  border-radius: 20px;
+  @media(max-width: 576px) {
+    width: var(--card-width);
+    height: calc(var(--card-width) * 0.5625);
+  }
+  & .slider-content {
     left: 1rem;
+    width: calc(var(--card-width) - 2rem);
+    & p {
+        font-size: 20px;
+      }
+    @media(max-width: 576px) {
+      & h3 {
+        font-size: 16px;
+      }
+      & p {
+        font-size: 14px;
+        margin-bottom: 0.5rem;
+      }
+    }
   }
 }
-.mySwiper {
-    padding-top: 5rem;
-    @media(max-width: 768px) {
-      padding-top: 7rem;
-    }
-    /* 套用輪播 auto 效果 */
-    & .swiper-slide {
-        width: auto;
-    }
-}
-// .swiper-wrapper {
-//   transform: translate3d(200px, 0px, 0px)!important;
-// }
+</style>
 
-.arrow-icon {
-  filter: var(--grey-filter);
-  &:hover, &:focus {
-    filter: var(--primary-filter);
+<style lang="scss">
+.card-hot {
+  &.mySwiper {
+      /* 套用輪播 auto 效果 */
+      & .swiper-slide {
+          width: auto;
+      }
   }
+  & .arrow-icon {
+    filter: var(--white-filter);
+    &:hover, &:focus {
+      filter: var(--primary-filter);
+    }
+  }
+  & .btn-prev, .btn-next {
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  & .btn-prev {
+    left: 20px;
+  }
+  & .btn-prev, .btn-next {
+    right: 20px; 
+  }
+  // & .swiper-button-prev::after,
+  // .swiper-button-next::after {
+  //     background: #000;
+  //     background: rgba(0, 0, 0, 0.5);
+  //     width: 40px;
+  //     height:40px;
+  //     position: absolute;
+  //     display: block;
+  //     font-size: 18px;
+  //     z-index: 1000;
+  //     color: white;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  // }
+  // & .swiper-button-prev::after,
+  // .swiper-button-next::after {
+  //   background-image: url(../assets/images/icons/arrow_circle_left.svg);
+  // }
 }
-
-
-
 
 </style>

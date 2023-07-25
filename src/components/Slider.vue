@@ -4,16 +4,14 @@
     :loop="true"
     :initial-slide="1"
     :autoplay="{
-      delay: 2500,
+      delay: 250000,
       disableOnInteraction: false,
     }" 
     :space-between="30"
-    :navigation="true"
     :pagination="{
-      type: 'progressbar',
       clickable: true,
     }"
-    class="mySwiper">
+    class="mySwiper banner">
     <swiper-slide v-for="(item) in advertises" :id="item.title" :key="item.title">
       <a :href="item.link_url" target="_blank">
         <img
@@ -102,16 +100,6 @@ export default {
 //   background-position: center;
 // }
 
-/* Pagination progress 置於下方 */
-.swiper-pagination {
-  bottom: 0 !important;
-  top: unset !important;
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  font-size: 30px;
-}
 // .swiper-button-prev::after,
 // .swiper-button-next::after {
 //   background: #000;
@@ -127,12 +115,18 @@ export default {
 //   align-items: center;
 //   justify-content: center;
 // }
-// .swiper-button-prev::after {
-//   margin-left: 50px;
-// }
-// .swiper-button-next::after {
-//   margin-right: 50px;
-// }
+.banner {
+  & .swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    background-color: var(--primary-color);
+  }
+  & .swiper-pagination-bullet-active {
+    opacity: 1;
+  }
+}
+
 
 .banner-sm {
     display: none;
