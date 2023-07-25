@@ -50,14 +50,12 @@
       </div>
       <!-- search -->
       <div class="search-wrap order-2 order-sm-1 ms-auto">
-        <form>
-          <input
-            ref="searchInput" v-model="searchData" type="text" placeholder="搜尋活動..." 
-            class="search-input web">
-          <a type="button" class="search-icon" @click="sendSearch">
-            <font-awesome-icon :icon="['fas', 'search']" />
-          </a>
-        </form>
+        <input
+          ref="searchInput" v-model="searchData" type="text" placeholder="搜尋活動..." 
+          class="search-input web">
+        <a type="button" class="search-icon" @click="sendSearch">
+          <font-awesome-icon :icon="['fas', 'search']" />
+        </a>
         <!-- search 歷史訊息 -->
         <div ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
           <p>最近搜尋</p>
@@ -145,22 +143,34 @@ export default {
       return null; // 或者返回适当的默认值
     },
   },
+  beforeUnmount() {
+    this.enterKeyupDestroyed();
+  },
   mounted(){
     this.handleSearch();
+    this.enterKeyup();
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
+    enterKeyupDestroyed() {
+      document.removeEventListener("keyup", this.enterKey);
+    },
+     //表單enter事件綁定
+    enterKeyup() {
+      document.addEventListener("keyup", this.enterKey);
+    },
+    //表單enter送出事件
+    enterKey(event) {
+      console.log(this.searchData);
+      if (event.key === 'Enter' && this.searchData) {
+        this.sendSearch()
+      }
+    },
     openLoginModal() {
       this.$refs.loginModal.showModal();
     },
     sendSearch() {
       this.$router.push(`/search/${this.searchData}`);
-      // const currentPath = this.$route.path;
-      // if (currentPath === '/search') {
-      //   location.reload()
-      // } else {
-      //   this.$router.push(`/search/${this.searchData}`);
-      // }
     },
     handleLogOut() {
         // this.updateLoginStatus(false);
@@ -195,11 +205,14 @@ export default {
         });
     },
     handleSearch() {
+      console.log(this.$refs.searchDropdownMenu);
       this.$refs.searchInput.addEventListener('focus', () => {
         this.$refs.searchDropdownMenu.classList.remove('d-none');
       })
       this.$refs.searchInput.addEventListener('blur', () => {
-        this.$refs.searchDropdownMenu.classList.add('d-none');
+        if(this.$refs.searchDropdownMenu){
+          this.$refs.searchDropdownMenu.classList.add('d-none');
+        } 
       })
     }
    },
