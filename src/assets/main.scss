@@ -143,6 +143,13 @@ ul li{
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.ellipsis-1s {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;  
+  -webkit-box-orient: vertical; 
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .arrow-right {
   border: solid black;
   border-width: 0px 2px 2px 0;
