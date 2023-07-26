@@ -48,12 +48,12 @@
           <font-awesome-icon :icon="['fas', 'search']" />
         </a>
         <!-- search 歷史訊息 -->
-        <div v-show="searchHistory.length > 0" ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
+        <div v-show="limitSearchList.length > 0" ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
           <div class="d-flex justify-content-between mb-1">
             <p class="recentSearch">最近搜尋</p>
             <button class="closeBtn" @click="closeDropdown">X</button>
           </div>
-          <a v-for="item in searchHistory" :key="item" class="ellipsis-1 link-primary d-block mb-2" @click="triggerSearch(item)">{{ item }}</a>
+          <a v-for="item in limitSearchList" :key="item" class="ellipsis-1 link-primary d-block mb-2" @click="triggerSearch(item)">{{ item }}</a>
         </div>
       </div>
       <!-- login -->
@@ -137,6 +137,9 @@ export default {
       }
       return null; // 或者返回适当的默认值
     },
+    limitSearchList(){
+      return this.searchHistory.slice(-10);
+    },
   },
   beforeUnmount() {
     this.enterKeyupDestroyed();
@@ -155,6 +158,7 @@ export default {
     triggerSearch(item) {
       this.searchData = item;
       this.sendSearch();
+     
     },
     getEventSubMenu(){
         const apiUrl = `${process.env.VUE_APP_PATH}/event/get-district-class-list`;
@@ -202,7 +206,9 @@ export default {
       if (historyString) {
         this.searchHistory = JSON.parse(historyString);
       }
+      
       this.$router.push(`/search/${this.searchData}`);
+      this.searchData = '';
     },
     handleLogOut() {
         const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
