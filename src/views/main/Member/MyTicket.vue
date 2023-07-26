@@ -60,7 +60,7 @@
     </OrderAngleCard>
   </section>
   <div class="d-flex justify-content-end">
-    <PaginationA />
+    <PaginationA :total-pages="1" :current-page="1" @page-changed="changePage" />
   </div>
 </template>
 <script>

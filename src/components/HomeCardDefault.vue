@@ -22,8 +22,8 @@
             class="event-card bg-cover text-white mb-3"
             :style="{ backgroundImage: `url(${event.main_imageH_url})` }" />
           <div class="slide-content px-2">
-            <h5 class="fw-bold">{{ event.performer }}</h5>
-            <p class=" ellipsis-2">{{ event.event_name }}</p>
+            <h5 class="ellipsis-1 fw-bold">{{ event.performer }}</h5>
+            <p class="ellipsis-1">{{ event.event_name }}</p>
           </div>
         </router-link>
       </swiper-slide>

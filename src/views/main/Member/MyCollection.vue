@@ -24,7 +24,7 @@ export default {
     return{
       lists:[], //列表
       currentPage: 1, // 當前分頁
-      itemsPerPage: 2, // 每頁顯示的項目數量
+      itemsPerPage: 4, // 每頁顯示的項目數量
     }
   },
   computed: {

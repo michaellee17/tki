@@ -41,7 +41,7 @@
           class="event-card d-block bg-cover text-white position-relative"
           :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + eventData.main_imageH_url + ')' }">
           <div class="slider-content position-absolute bottom-0">
-            <h3 class="fw-bold mb-1">{{ eventData.performer }}</h3>
+            <h3 class="ellipsis-1 fw-bold mb-1">{{ eventData.performer }}</h3>
             <p class="ellipsis-1">{{ eventData.event_name }}</p>
           </div>
         </router-link>
@@ -105,10 +105,6 @@
   width: var(--card-width);
   height: calc(var(--card-width) * 0.5625);
   border-radius: 20px;
-  @media(max-width: 576px) {
-    width: var(--card-width);
-    height: calc(var(--card-width) * 0.5625);
-  }
   & .slider-content {
     left: 1rem;
     width: calc(var(--card-width) - 2rem);
