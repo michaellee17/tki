@@ -1,8 +1,8 @@
 <template>
   <layout>
-    <TopHeader :title="`${searchInput}搜尋結果`" />
+    <TopHeader :title="`「${searchInput}」搜尋結果`" />
     <div v-if="lists.length > 0" class="container mt-5">
-      <div class="d-flex gap-3 mb-4">
+      <div class="d-flex flex-wrap gap-3 mb-4">
         <div class="icon-circle bg-primary d-flex justify-content-center align-items-center">
           <img src="../../assets/images/icons/icon_tuneshow.png" width="24" alt="">
         </div>
@@ -23,13 +23,14 @@
         </button>
       </div>
       <!-- 預設一頁放 9 個活動 -->
-      <div class="d-flex gap-4 flex-wrap mb-4">
-        <router-link v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
-          :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'">
-          <img :src="item.main_imageH_url" alt="Event Image">
-          <div class="position-absolute bottom-0">
-            <h4 class="fw-bold">{{ item.performer }}</h4>
-            <p>{{ item.event_name }}</p>
+      <div class="d-flex justify-content-center gap-4 flex-wrap mb-4">
+        <router-link
+          v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
+          :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'"
+          :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + item.main_imageH_url + ')' }">
+          <div class="slider-content position-absolute bottom-0">
+            <h4 class="ellipsis-1 fw-bold">{{ item.performer }}</h4>
+            <p class="ellipsis-1">{{ item.event_name }}</p>
           </div>
         </router-link>
       </div>
@@ -37,8 +38,8 @@
         <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
       </div>
     </div>
-    <div class="noData" v-if="lists.length === 0">
-      <h4>查無搜尋結果</h4>
+    <div v-if="lists.length === 0" class="noData">
+      <h5>查無搜尋結果，請重新搜尋。</h5>
     </div>
   </layout>
 </template>
@@ -60,7 +61,7 @@ export default {
       searchData: '',
       lists:[],
       currentPage: 1, // 當前分頁
-      itemsPerPage: 2, // 每頁顯示的項目數量
+      itemsPerPage: 9, // 每頁顯示的項目數量
       hots:[],
     }
   },
@@ -126,6 +127,12 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+* {
+  --card-width: 410px;
+  @media(max-width: 576px) {
+    --card-width: 305px;
+  }
+}
 .noData{
   display: flex;
   justify-content: center;
@@ -135,20 +142,24 @@ export default {
   }
 }
 .cardA {
-  width: 410px;
-  height: 230px;
+  width: var(--card-width);
+  height: calc(var(--card-width) * 0.5625);
   border-radius: 20px;
-  background-image: linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%);
-  & img{
-    width: 100%;
-  }
-  @media(max-width: 576px) {
-    width: 305px;
-    height: 172px;
-  }
-
-  & .position-absolute {
+  & .slider-content {
     left: 1rem;
+    width: calc(var(--card-width) - 2rem);
+    & p {
+        font-size: 20px;
+      }
+    @media(max-width: 576px) {
+      & h3 {
+        font-size: 16px;
+      }
+      & p {
+        font-size: 14px;
+        margin-bottom: 0.5rem;
+      }
+    }
   }
 }
 

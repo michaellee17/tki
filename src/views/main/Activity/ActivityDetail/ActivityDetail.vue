@@ -48,15 +48,18 @@
     </div>
   </div>
   <loginModal ref="loginModal" />
+  <messageModal ref="messageModal" />
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex';
-import loginModal from "../../../../components/LoginModal"
+import loginModal from "../../../../components/LoginModal";
+import messageModal from "../../../../components/gc/messageModal.vue";
 
 export default {
   components: {
-    loginModal
+    loginModal,
+    messageModal
   },
   data () {
     return {
@@ -95,6 +98,9 @@ export default {
     if(this.getLoginStatus) {
       this.checkCollection();
     }
+  },
+  mounted() {
+    // this.$refs.messageModal.showModal();
   },
   methods: {
     ...mapActions('activity', ['getData']),

@@ -18,8 +18,8 @@
             class="event-card bg-cover text-white position-relative mb-3"
             :style="{ backgroundImage: `url(${event.main_imageH_url})` }" />
           <div class="slide-content px-1">
-            <h5 class="fs-22 ellipsis-2">{{ event.event_name }}</h5>
-            <p class="">{{ event.ticket_number }} 張</p>
+            <h5 class="fs-22 ellipsis-1">{{ event.event_name }}</h5>
+            <p class="ellipsis-1">{{ event.ticket_number }} 張</p>
           </div>
         </router-link>
       </swiper-slide>

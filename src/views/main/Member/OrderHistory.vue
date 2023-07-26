@@ -10,111 +10,111 @@
   <section class="d-flex flex-wrap gap-4">
     <OrderAngleCard>
       <ul>
-            <li>
-              <h4 class="fw-bold">5/23 BLACKPINK</h4>
-            </li>
-            <li>
-              <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>訂單編號 : E01-P000-000-001</p>
-              <p>2/16</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>張數</p>
-              <p>2張</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>線上刷卡</p>
-              <p>NTD 8,800</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>19:32:48</p>
-              <p>信用卡付款成功</p>
-            </li>
-          </ul>
-    </OrderAngleCard>
-    <OrderAngleCard>
-      <ul >
-            <li>
-              <h4 class="fw-bold">5/23 BLACKPINK</h4>
-            </li>
-            <li>
-              <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>訂單編號 : E01-P000-000-001</p>
-              <p>2/16</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>張數</p>
-              <p>2張</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>線上刷卡</p>
-              <p>NTD 8,800</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>19:32:48</p>
-              <p>信用卡付款成功</p>
-            </li>
-          </ul>
+        <li>
+          <h4 class="fw-bold">5/23 BLACKPINK</h4>
+        </li>
+        <li>
+          <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>訂單編號 : E01-P000-000-001</p>
+          <p>2/16</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>張數</p>
+          <p>2張</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>線上刷卡</p>
+          <p>NTD 8,800</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>19:32:48</p>
+          <p>信用卡付款成功</p>
+        </li>
+      </ul>
     </OrderAngleCard>
     <OrderAngleCard>
       <ul>
-            <li>
-              <h4 class="fw-bold">5/23 BLACKPINK</h4>
-            </li>
-            <li>
-              <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>訂單編號 : E01-P000-000-001</p>
-              <p>2/16</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>張數</p>
-              <p>2張</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>線上刷卡</p>
-              <p>NTD 8,800</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>19:32:48</p>
-              <p>信用卡付款成功</p>
-            </li>
-          </ul>
+        <li>
+          <h4 class="fw-bold">5/23 BLACKPINK</h4>
+        </li>
+        <li>
+          <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>訂單編號 : E01-P000-000-001</p>
+          <p>2/16</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>張數</p>
+          <p>2張</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>線上刷卡</p>
+          <p>NTD 8,800</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>19:32:48</p>
+          <p>信用卡付款成功</p>
+        </li>
+      </ul>
     </OrderAngleCard>
     <OrderAngleCard>
       <ul>
-            <li>
-              <h4 class="fw-bold">5/23 BLACKPINK</h4>
-            </li>
-            <li>
-              <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>訂單編號 : E01-P000-000-001</p>
-              <p>2/16</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>張數</p>
-              <p>2張</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>線上刷卡</p>
-              <p>NTD 8,800</p>
-            </li>
-            <li class="d-flex justify-content-between">
-              <p>19:32:48</p>
-              <p>信用卡付款成功</p>
-            </li>
-          </ul>
+        <li>
+          <h4 class="fw-bold">5/23 BLACKPINK</h4>
+        </li>
+        <li>
+          <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>訂單編號 : E01-P000-000-001</p>
+          <p>2/16</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>張數</p>
+          <p>2張</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>線上刷卡</p>
+          <p>NTD 8,800</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>19:32:48</p>
+          <p>信用卡付款成功</p>
+        </li>
+      </ul>
+    </OrderAngleCard>
+    <OrderAngleCard>
+      <ul>
+        <li>
+          <h4 class="fw-bold">5/23 BLACKPINK</h4>
+        </li>
+        <li>
+          <p>BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>訂單編號 : E01-P000-000-001</p>
+          <p>2/16</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>張數</p>
+          <p>2張</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>線上刷卡</p>
+          <p>NTD 8,800</p>
+        </li>
+        <li class="d-flex justify-content-between">
+          <p>19:32:48</p>
+          <p>信用卡付款成功</p>
+        </li>
+      </ul>
     </OrderAngleCard>
   </section>
   <div class="d-flex justify-content-end">
-    <PaginationA />
+    <PaginationA :total-pages="1" :current-page="1" @page-changed="changePage" />
   </div>
 </template>
 <script>
