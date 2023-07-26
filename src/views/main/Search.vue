@@ -17,13 +17,13 @@
           </div>
         </div>
         <button
-          v-for="item in hots" :key="item" type="button" class="button btn-outline-primaryA active" 
+          v-for="item in hots" :key="item" type="button" class="btn btn-outline-primaryA text-nowrap ellipsis-1s active" 
           @click="changeSearch(item)">
           {{ item }}
         </button>
       </div>
       <!-- 預設一頁放 9 個活動 -->
-      <div class="d-flex justify-content-center gap-4 flex-wrap mb-4">
+      <div class="d-flex justify-content-center justify-content-md-start gap-4 flex-wrap mb-4">
         <router-link
           v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
           :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'"
