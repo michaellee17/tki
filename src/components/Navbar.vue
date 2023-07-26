@@ -48,11 +48,12 @@
           <font-awesome-icon :icon="['fas', 'search']" />
         </a>
         <!-- search 歷史訊息 -->
-        <div ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
-          <p>最近搜尋</p>
-          <a class="ellipsis-1 link-primary d-block mb-2">BLACKPINK</a>
-          <a class="ellipsis-1 link-primary d-block mb-2">IVE</a>
-          <a class="ellipsis-1 link-primary d-block mb-2">陳奕迅演唱會演唱會演唱會演唱會</a>
+        <div v-show="searchHistory.length > 0" ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
+          <div class="d-flex justify-content-between mb-1">
+            <p class="recentSearch">最近搜尋</p>
+            <button class="closeBtn" @click="closeDropdown">X</button>
+          </div>
+          <a v-for="item in searchHistory" :key="item" class="ellipsis-1 link-primary d-block mb-2" @click="triggerSearch(item)">{{ item }}</a>
         </div>
       </div>
       <!-- login -->
@@ -116,6 +117,7 @@ export default {
        memberID: 0,
        searchData:'',
        eventSubMenu:{},
+       searchHistory:[],
     };
   },
   computed: {
@@ -143,9 +145,17 @@ export default {
     this.handleSearch();
     this.enterKeyup();
     this.getEventSubMenu();
+    const historyString = localStorage.getItem('searchHistory');
+    if (historyString) {
+      this.searchHistory = JSON.parse(historyString);
+    }
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
+    triggerSearch(item) {
+      this.searchData = item;
+      this.sendSearch();
+    },
     getEventSubMenu(){
         const apiUrl = `${process.env.VUE_APP_PATH}/event/get-district-class-list`;
         this.axios.get(apiUrl)
@@ -172,6 +182,26 @@ export default {
       this.$refs.loginModal.showModal();
     },
     sendSearch() {
+      if (this.searchData.trim() === '') {
+        Swal.fire({
+          icon: 'error',
+          title: '搜尋值不得為空',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        return;
+      }
+      if (localStorage.getItem('searchHistory')) {
+        let historyArray = JSON.parse(localStorage.getItem('searchHistory')); 
+        historyArray.push(this.searchData); 
+        localStorage.setItem('searchHistory', JSON.stringify(historyArray)); 
+      } else {
+        localStorage.setItem('searchHistory', JSON.stringify([this.searchData])); 
+      }
+      const historyString = localStorage.getItem('searchHistory');
+      if (historyString) {
+        this.searchHistory = JSON.parse(historyString);
+      }
       this.$router.push(`/search/${this.searchData}`);
     },
     handleLogOut() {
@@ -209,11 +239,14 @@ export default {
       this.$refs.searchInput.addEventListener('focus', () => {
         this.$refs.searchDropdownMenu.classList.remove('d-none');
       })
-      this.$refs.searchInput.addEventListener('blur', () => {
-        if(this.$refs.searchDropdownMenu){
-          this.$refs.searchDropdownMenu.classList.add('d-none');
-        } 
-      })
+      // this.$refs.searchInput.addEventListener('blur', () => {
+      //   if(this.$refs.searchDropdownMenu ){
+      //     this.$refs.searchDropdownMenu.classList.add('d-none');
+      //   } 
+      // })
+    },
+    closeDropdown(){
+      this.$refs.searchDropdownMenu.classList.add('d-none');
     }
    },
 };
@@ -315,5 +348,12 @@ nav {
   top: 50%;
   transform: translateY(-50%);
   color: var(--primary-color);
+}
+.closeBtn{
+  border: none;
+  background-color: white;
+}
+.recentSearch{
+  margin-bottom: 0;
 }
 </style>

@@ -11,7 +11,8 @@
       class="mySwiper card-reserve"
       @swiper="onSwiper">
       <swiper-slide v-for="event in data" :key="event.event_id">
-        <router-link class="d-block"
+        <router-link
+          class="d-block"
           :to="'/activity/detail/' + $convertToSlug(event.event_name, event.event_id) + '/buy-ticket/session'">
           <div
             class="event-card bg-cover text-white position-relative mb-3"

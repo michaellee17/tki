@@ -82,7 +82,7 @@ export default{
     getInfo(){
       const apiUrl = `${process.env.VUE_APP_PATH}/event/get-district-main-list`;
       const params = {
-        limit:9, //總回傳筆數，預設為4
+        limit:99, //總回傳筆數，預設為4
         page:1, //總回傳頁數，預設為1
       };
       if(this.innerIndex != 0){
