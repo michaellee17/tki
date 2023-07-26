@@ -2,12 +2,12 @@
   <TopHeader :title="'活動專區'" />
   <div class="container mt-5">
     <div class="d-flex gap-3 mb-4 flex-column flex-md-row">
-      <router-link :to="'/activity/0'" class="button btn-outline-primaryA" :class="{'active': innerIndex === 0}">全部</router-link>
+      <router-link :to="'/activity/0'" class="button btn-outline-primaryA" :class="{'active': innerIndex === 0}" @click="currentPage = 1">全部</router-link>
       <router-link
         v-for="item in tags"
         :key="item.class_id"
         :to="'/activity/' + item.class_id"
-        class="button btn-outline-primaryA" :class="{'active': innerIndex === item.class_id}">
+        class="button btn-outline-primaryA" :class="{'active': innerIndex === item.class_id}" @click="currentPage = 1">
         {{ item.class_name }}
       </router-link>
     </div>

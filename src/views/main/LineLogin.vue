@@ -55,7 +55,6 @@ export default {
             }
           });
           const lineUserId = userInfoResponse.data.sub;
-          console.log(lineUserId);
           this.isLineVertify = true;
           localStorage.removeItem('linelinked')
           localStorage.setItem('lineUserId',lineUserId);
