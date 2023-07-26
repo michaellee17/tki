@@ -13,14 +13,15 @@
     <div class="container">
       <HomeCardReserve :title="'預約搶票'" :data="reserveList" />
     </div>
-    <div v-for="(eventClass, i) in classList" :key="eventClass.class_id" class="position-relative"
-    :class="{ 'event-area': i !== classList.length - 1 }">
+    <div
+      v-for="(eventClass, i) in classList" :key="eventClass.class_id" class="position-relative"
+      :class="{ 'event-area': i !== classList.length - 1 }">
       <div class="event-bg position-absolute" />
       <div class="container ">
         <div>
           <HomeCardDefault
             v-if="typeList[eventClass.class_id] && typeList[eventClass.class_id].length > 0"
-            :title="eventClass.class_name" :data="typeList[eventClass.class_id]" />
+            :title="eventClass.class_name" :data="typeList[eventClass.class_id]" :index="eventClass.class_id" />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template v-if="data.length > 0">
   <div class="d-flex align-items-center justify-content-between mb-4">
     <h2 class="text-primary title">{{ title }}</h2>
-    <a href="#" class="more fs-22 me-4">MORE<span class="ms-3 arrow-right" /></a> 
+    <router-link class="more fs-22 me-4" :to="'/activity/' + index">MORE<span class="ms-3 arrow-right" /></router-link>
   </div>
   <section>
     <swiper
@@ -43,7 +43,7 @@
       Swiper,
       SwiperSlide,
     },
-    props: ['title', 'data'],
+    props: ['title', 'data','index'],
     data () {
         return {
           slider: null,

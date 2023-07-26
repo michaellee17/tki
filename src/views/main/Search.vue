@@ -106,7 +106,6 @@ export default {
     },
     getSearchData(searchText) {
       const apiUrl = `${process.env.VUE_APP_PATH}/search`;
-      const accessToken = this.getLoginData.access_token;
       const requestData = {
         keyword: searchText,
         page:1, 
@@ -115,11 +114,7 @@ export default {
       if (this.areas) {
         requestData.county = this.areas;
       }
-      this.axios.post(apiUrl, requestData, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      })
+      this.axios.post(apiUrl, requestData)
       .then(res => {
         if (res.data.status_code === 'SYSTEM_1000') {
           this.lists = res.data.data;

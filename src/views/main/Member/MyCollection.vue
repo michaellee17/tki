@@ -24,7 +24,7 @@ export default {
     return{
       lists:[], //列表
       currentPage: 1, // 當前分頁
-      itemsPerPage: 2, // 每頁顯示的項目數量
+      itemsPerPage: 4, // 每頁顯示的項目數量
     }
   },
   computed: {
@@ -55,7 +55,7 @@ export default {
           'Authorization': `Bearer ${accessToken}`
         },
         params:{
-          limit:4, //總回傳筆數，預設為4
+          limit:99, //總回傳筆數，預設為4
           page:1, //總回傳頁數，預設為1
         },
       })
