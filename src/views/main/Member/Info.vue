@@ -13,6 +13,14 @@
       <p v-show="!isNameEdit">{{ memberData.full_name }}</p>
       <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
     </li>
+    <!-- 身分證字號還沒串 api -->
+    <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
+      <div class="d-flex justify-content-between">
+        <p class="fs-18">身分證字號</p>
+      </div>
+      <p>K*********</p>
+      <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
+    </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">密碼</p>
