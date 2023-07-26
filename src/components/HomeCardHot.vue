@@ -70,7 +70,7 @@
         }
     },
     computed: {
-        findHotList () {
+        findHotList() {
           if (this.data.length > 0) {
             return this.data.find( (item) => item.class_name === this.currentClass )
           } else {
