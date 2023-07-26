@@ -4,6 +4,7 @@ import router from '../router';
 export const activity = {
   namespaced: true,
   state: () => ({
+    /* 活動資訊 */
     basic_info: {},
     announcement_info: {},
     ticket_info: {},
@@ -14,8 +15,11 @@ export const activity = {
     session_name: '',
     area_name: '',
     area_status: 0,
-    ticket_type_info: []
-
+    ticket_type_info: [],
+    /* 訂單 */
+    selectedTicketName: '',
+    type_id: 0,
+    ticket_number: 1
   }),
   mutations: {
     getData(state, data) {
@@ -29,9 +33,17 @@ export const activity = {
     getRecommendList(state, data) {
       state.recommendList = data;
     },
+    minusQty (state) {
+      if (state.ticket_number > 1) {
+        state.ticket_number--;
+      }
+    },
+    plusQty (state) {
+      state.ticket_number++;
+    },
     setTicketData(state, { stateData, data }) {
       state[stateData] = data;
-    }
+    },
   },
   actions: {
      /* 取得活動資訊 */
@@ -59,5 +71,10 @@ export const activity = {
       });
     }
   },
-  getters: {}
+  getters: {
+    ticketPrice(state) {
+      const selectedTicket = state.ticket_type_info.find(ticket => ticket.ticket_name === state.selectedTicketName);
+      return selectedTicket ? selectedTicket.ticket_price : '';
+    },
+  }
 }

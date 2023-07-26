@@ -1,17 +1,15 @@
 <template>
-  <div ref="messageModal" class="modal" tabindex="-1">
+  <div ref="messageModal" class="modal messageModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <slot>
+            <p>no content yet</p>
+          </slot>
+          <!-- <button type="button" class="ms-auto mt-2 btn btn-outline-primaryB px-2">確認</button> -->
         </div>
       </div>
     </div>
@@ -37,3 +35,28 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.messageModal {
+  & .modal-dialog {
+    width: 250px;
+  }
+  & .modal-body {
+    padding: 0rem 1rem 2rem 1rem;
+  }
+  & .modal-content {
+    // background-color: var(--primary-color);
+    // color: #fff;
+    background-color: var(--primary-light-color);
+    border-radius: 20px;
+    text-align: center;
+  }
+  & .modal-header {
+    border-bottom: none;
+    & .btn-close {
+      padding: 0.5rem;
+      font-size: 12px;
+    }
+  }
+}
+</style>

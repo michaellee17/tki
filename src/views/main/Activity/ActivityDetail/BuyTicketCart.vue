@@ -8,35 +8,49 @@
     </div>
     <div class="col-12 col-lg-6">
       <div class="roundedM bg-primary text-white p-4 mb-3">
-        <p class="fs-5 mb-1">BLACKPINK</p>
-        <p class="fs-18 border-bottom pb-3">BLACKPINK高雄站演唱會 2023｜BORN PINK</p>
-        <h4 class="mb-3">BORN PINK座位特區 (票價含Sound Check 粉絲福利)</h4>
-        <h4 class="border-bottom pb-3 mb-3">早鳥票 · A排 · 347</h4>
+        <p class="fs-5 mb-1">{{ basic_info.performer }}</p>
+        <p class="fs-18 border-bottom pb-3">{{ basic_info.event_name }}</p>
+        <h4 class="mb-3">{{ area_name }}</h4>
+        <h4 class="border-bottom pb-3 mb-3">{{ selectedTicketName }}</h4>
+        <!-- <h4 class="border-bottom pb-3 mb-3">早鳥票 · A排 · 347</h4> -->
         <div class="d-flex justify-content-between">
-          <h4 class="mb-0">$ 4800 x 1</h4>
+          <h4 class="mb-0">$ {{ ticketPrice }} x {{ ticket_number }}</h4>
           <div class="num-wrap d-flex justify-content-center align-items-center gap-3 position-relative">
-            <img src="../../../../assets/images/icons/remove.svg" alt="minus" 
-            class="icon position-absolute start-0"
-            @click="minusQty">
-            <h4 class="mb-0">{{ ticketNum }}</h4>
-            <img src="../../../../assets/images/icons/add.svg" alt="plus" 
-            class="icon position-absolute end-0"
-            @click="plusQty">
+            <img
+              src="../../../../assets/images/icons/remove.svg" alt="minus" 
+              class="icon-qty position-absolute start-0"
+              @click="minusQty">
+            <div>
+              <input v-model="ticket_number" type="text" class="fs-4 text-center text-white" readonly>
+            </div>
+            <img
+              src="../../../../assets/images/icons/add.svg" alt="plus" 
+              class="icon-qty position-absolute end-0"
+              @click="plusQty">
           </div>
         </div>
       </div>
       <div class="text-end mb-4">
         <h6 class="fw-bold">總計支付金額</h6>
-        <h3 class="text-danger fw-bold">NTD 4800</h3>
+        <h3 class="text-danger fw-bold">NTD {{ totalAmount }}</h3>
       </div>
       <div class="d-flex justify-content-end gap-3">
-        <button type="button" class="btn btn-outline-primaryA">加入購票清單</button>
-        <router-link to="checkout">
-          <button type="button" class="btn btn-outline-primaryA d-flex gap-2 active">
-            <p class="mb-0">直接結帳</p>
-            <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
-          </button>
-        </router-link>
+        <button
+          type="button" class="btn btn-outline-primaryA"
+          @click.prevent="() => $router.go(-1)">
+          重新選擇
+        </button>
+        <button
+          type="button" class="btn btn-outline-primaryA"
+          @click.prevent="addToTicketList">
+          加入購票清單
+        </button>
+        <button
+          type="button" class="btn btn-outline-primaryA d-flex gap-2"
+          @click.prevent="goCheckout">
+          <p class="mb-0">直接結帳</p>
+          <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
+        </button>
       </div>
     </div>
   </div>
@@ -50,32 +64,67 @@
       <li class="mb-2">•配合政府防疫政策，主辦單位及場館鼓勵民眾於參加活動前先下載及使用「台灣社交距離」APP </li>
       <li class="mb-2">•入場須配合安檢及防疫入場須知，禁止攜帶飲食(水除外)、除手機之外的任何形式之拍攝及錄音電子設備、自拍棒與危險物品（依主辦單位定義）等入場，場館無設置置物櫃，主辦單位有權立即請違反者離開現場自行另覓處所寄物。相關規定請關注Live Nation Taiwan (@livenationtw)臉書、Instagram、Twitter與官網 獲得最新資訊。</li>
       <li class="mb-2">•以上活動內容，主辦單位保留異動之權力</li>
-
     </ul>
   </div>
+  <loginModal ref="loginModal" />
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
+import loginModal from "../../../../components/LoginModal";
 
 export default {
+  components: {
+    loginModal
+  },
   data() {
     return {
-      ticketNum : 1
     }
   },
   computed: {
-    ...mapState('activity', ['ticket_info']),
+    ...mapState('activity', ['basic_info', 'ticket_info', 'ticket_number', 'area_name' , 'selectedTicketName']),
+    ...mapGetters('user', ['getLoginData', 'getLoginStatus']),
+    ...mapGetters('activity', ['ticketPrice']),
+    totalAmount() {
+      return this.ticketPrice * this.ticket_number;
+    }
+  },
+  mounted() {
+    this.buyTicktet()
   },
   methods: {
-    minusQty () {
-      if (this.ticketNum > 0) {
-        this.ticketNum--;
+    ...mapMutations('activity', ['setTicketData', 'ticket_number', 'minusQty','plusQty']),
+    addToTicketList() {
+      if(this.getLoginStatus) {
+        console.log('continue')
+      } else {
+        this.$refs.loginModal.showModal();
       }
     },
-    plusQty () {
-      this.ticketNum++;
-    }
+    goCheckout() {
+      if(this.getLoginStatus) {
+        console.log('continue')
+        this.$router.push('checkout');
+      } else {
+        this.$refs.loginModal.showModal();
+      }
+    },
+    buyTicktet() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/event/buy-ticket?type_id=16&ticket_number=1`;
+      this.axios.post(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.getLoginData.access_token}`,
+        }
+      }).then(res => {
+          console.log(res.data)
+      }).catch(error => {
+          console.error('error occurred:', error);
+      })
+    },
+    setData() {
+      this.setTicketData({ stateData: 'type_id', data: this.ticketNum });
+      this.setTicketData({ stateData: 'ticket_number', data: this.ticketNum });
+    },
   }
 }
 </script>
@@ -83,8 +132,21 @@ export default {
 <style scoped lang="scss">
 .num-wrap {
   width: 100px;
+  & input {
+    width: 50px;
+    outline: 0;
+    border: 0;
+    background: transparent;
+  }
 }
 .icon {
+  filter: none;
+  &:hover{
+    filter: var(--white-filter);
+    cursor: pointer;
+  }
+}
+.icon-qty {
   filter: var(--white-filter);
   &:hover{
     filter: none;

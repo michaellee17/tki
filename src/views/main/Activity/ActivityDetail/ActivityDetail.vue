@@ -16,7 +16,9 @@
             <p class="text-primary me-3">{{ basic_info.event_tags }}</p>
           </div>
           <div class="d-flex gap-4">
-            <button type="button" class="btn btn-outline-primaryA">
+            <button
+              type="button" class="btn btn-outline-primaryA"
+              @click.prevent="share">
               <img src="../../../../assets/images/icons/share.svg" width="19" class="icon me-1" alt="">
               <span>分享</span>
             </button>
@@ -48,7 +50,8 @@
     </div>
   </div>
   <loginModal ref="loginModal" />
-  <messageModal ref="messageModal" />
+  <messageModal ref="messageModal">已複製網址！
+  </messageModal>
 </template>
 
 <script>
@@ -101,6 +104,7 @@ export default {
   },
   mounted() {
     // this.$refs.messageModal.showModal();
+    // console.log(this.getLoginData.access_token);
   },
   methods: {
     ...mapActions('activity', ['getData']),
@@ -150,7 +154,11 @@ export default {
       }).catch(error => {
           console.error('error occurred:', error);
       })
-    }
+    },
+    share() {
+      this.$refs.messageModal.showModal();
+      navigator.clipboard.writeText(window.location.href);
+    },
   }
 }
 </script>

@@ -50,8 +50,7 @@
       SwiperSlide,
     }, 
     computed: {
-      ...mapState('activity', ['ticket_info']),
-      ...mapState('activity', ['recommendList']),
+      ...mapState('activity', ['ticket_info', 'recommendList']),
       eventId() {
         const eventRoute = this.$route.params.activityId.split('-');
         return parseInt(eventRoute[eventRoute.length - 1]);
