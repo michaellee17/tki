@@ -3,9 +3,7 @@
     <h4 class="mb-4">{{ venue_info.venue_name }}</h4>
     <h5 class="fs-18 text-secondary mb-3">位置資訊</h5>
     <p>{{ venue_info.venue_address }}</p>
-    <!-- 待串 google map -->
-    <div class="img-location bg-cover mb-4" />
-    <div class="google-map mb-4 d-none" id="map"></div>
+    <div class="google-map mb-4" id="map" ref="map"></div>
     <div v-html="venue_info.venue_content" />
   </div>
 </template>
@@ -18,8 +16,7 @@ import { mapState } from 'vuex';
     data() {
       return {
         map: null,
-        position: { lat: -34.397, lng: 150.644 },
-        position2: {},
+        position: { lat: 0, lng: 0 },
         marker: null
       }
     },
@@ -35,25 +32,37 @@ import { mapState } from 'vuex';
           apiKey: "AIzaSyCEc9TsAD_4Tb87-lHy9rTFe4CbyGW-jII",
           version: "weekly",
         });
-        /* google map 設定 */
+        
         loader.load().then(async () => {
           const { Map } = await google.maps.importLibrary("maps");
           const { Marker } = await google.maps.importLibrary("marker");
-          const { Geocode } = await google.maps.importLibrary("geocoding")
+          const { Geocoder } = await google.maps.importLibrary("geocoding")
+          
+          /* 將地址轉為經緯度 */
+          const geocoder = new Geocoder();
+          geocoder.geocode({ 'address': this.venue_info.venue_address }, (results, status) => {
+            if (status === 'OK') {
+              this.position.lat = results[0].geometry.location.lat(); 
+              this.position.lng = results[0].geometry.location.lng(); 
 
-          this.map = new Map(document.getElementById("map"), {
-            center: this.position,
-            zoom: 10,
+              /* google map 設定 */
+              this.map = new Map(document.getElementById("map"), {
+              center: this.position,
+              zoom: 15,
+              });
+
+              /* 地標 */
+              this.marker = new Marker({
+                map: this.map,
+                position: this.position,
+              })
+            } else {
+              this.$refs.map.classList.add('d-none');
+              console.error('查無座標：', status);
+            }
           });
-           /* 地標 */
-          this.marker = new Marker({
-            map: this.map,
-            position: this.position,
-            // title: "Uluru",
-          });
-          // this.position2 = new Geocode({
-          //   address: '高雄市左營區世運大道100號 高雄國家體育場'
-          // });
+          
+          
         });
       }
     },
@@ -62,11 +71,6 @@ import { mapState } from 'vuex';
 </script>
 
 <style>
-.img-location {
-    background-image: url('../../../../assets/images/activity/location.png');
-    width: 100%;
-    height: 200px;
-}
 .google-map {
     width: 100%;
     height: 300px;
