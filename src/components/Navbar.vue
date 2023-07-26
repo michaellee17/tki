@@ -265,7 +265,7 @@ nav {
   padding-top: 0px;
   padding-bottom: 0px;
   @include screen-sm {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
     }
     & .navbar-nav {
       @include screen-sm {
@@ -322,15 +322,20 @@ nav {
       background-color: transparent;
     }
   }
+  & .search-dropdown-menu {
+    width: 200px;
+    background-color: #fff;
+    z-index: 10;
+    top: 100%;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 0px 0px 10px 10px;
+    @include screen-sm {
+        width: 100%;
+        top: calc(100% + 10px);
+    }
+  }
 }
-.search-dropdown-menu {
-  width: 200px;
-  background-color: #fff;
-  z-index: 10;
-  top: 100%;
-  box-shadow: 0px 3px 6px #00000029;
-  border-radius: 0px 0px 10px 10px;
-}
+
 .search-wrap {
   position: relative;
   @include screen-sm {

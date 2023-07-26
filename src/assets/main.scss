@@ -135,14 +135,6 @@ ul li{
   white-space: nowrap;
   overflow: hidden;
 }
-/* 限制元素顯示的行數為 2 行 */
-.ellipsis-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;  
-  -webkit-box-orient: vertical; 
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
 /* 限制元素顯示的行數為 3 行 */
 .ellipsis-3 {
   display: -webkit-box;
