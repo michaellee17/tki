@@ -138,7 +138,7 @@ export default {
       return null; // 或者返回适当的默认值
     },
     limitSearchList(){
-      return this.searchHistory.slice(-10);
+      return this.searchHistory.slice(-10).reverse();
     },
   },
   beforeUnmount() {
