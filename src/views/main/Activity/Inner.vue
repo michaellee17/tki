@@ -1,7 +1,7 @@
 <template>
   <TopHeader :title="'活動專區'" />
   <div class="container mt-5">
-    <div class="d-flex gap-3 mb-4">
+    <div class="d-flex gap-3 mb-4 flex-column flex-md-row">
       <router-link :to="'/activity/0'" class="button btn-outline-primaryA" :class="{'active': innerIndex === 0}">全部</router-link>
       <router-link
         v-for="item in tags"
@@ -11,9 +11,10 @@
         {{ item.class_name }}
       </router-link>
     </div>
-    <div class="d-flex gap-4 flex-wrap mb-4">
-      <router-link v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
-          :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'">
+    <div class="d-flex justify-content-center justify-content-md-start gap-4 flex-wrap mb-4">
+      <router-link
+        v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
+        :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'">
         <img :src="item.main_imageH_url" alt="Event Image">
         <div class="position-absolute bottom-0">
           <h4 class="fw-bold">{{ item.performer }}</h4>
