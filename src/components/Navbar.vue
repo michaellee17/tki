@@ -48,7 +48,6 @@
           <font-awesome-icon :icon="['fas', 'search']" />
         </a>
         <!-- search 歷史訊息 -->
-        {{ limitSearchList }}
         <div v-show="limitSearchList.length > 0" ref="searchDropdownMenu" class="search-dropdown-menu d-none position-absolute">
           <div class="d-flex justify-content-between mb-1">
             <p class="recentSearch">最近搜尋</p>
