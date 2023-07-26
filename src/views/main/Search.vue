@@ -24,13 +24,14 @@
       </div>
       <!-- 預設一頁放 9 個活動 -->
       <div class="d-flex gap-4 flex-wrap mb-4">
-        <div v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative">
+        <router-link v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
+          :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'">
           <img :src="item.main_imageH_url" alt="Event Image">
           <div class="position-absolute bottom-0">
             <h4 class="fw-bold">{{ item.performer }}</h4>
             <p>{{ item.event_name }}</p>
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="d-flex justify-content-center">
         <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
