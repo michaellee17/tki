@@ -32,7 +32,7 @@
     </OrderAngleCard>
   </section>
   <div class="d-flex justify-content-end">
-    <PaginationA :total-pages="1" :current-page="1" @page-changed="changePage" />
+    <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
 </template>
 <script>
@@ -45,10 +45,23 @@ export default {
   data() {
     return {
       tickets: [],
+      currentPage: 1, // 當前分頁
+      itemsPerPage: 4, // 每頁顯示的項目數量
+      total:'',
     }
   },
   computed: {
     ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
+    totalPages() {
+      return Math.ceil(this.total / this.itemsPerPage);
+    },
+  },
+  watch:{
+    currentPage(nVal,oVal){
+      if(nVal){
+        this.getTickets()
+      }
+    }
   },
   mounted() {
     this.getTickets()
@@ -58,8 +71,8 @@ export default {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/my-tickets`;
       const accessToken = this.getLoginData.access_token
       const params = {
-        limit:99, //總回傳筆數，預設為4
-        page:1, //總回傳頁數，預設為1
+        limit:4, //總回傳筆數，預設為4
+        page:this.currentPage, //總回傳頁數，預設為1
       };
       this.axios.get(apiUrl, {
         headers: {
@@ -70,7 +83,7 @@ export default {
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
-            console.log(this.tickets);
+            this.total = res.data.total
           }
         });
     },
