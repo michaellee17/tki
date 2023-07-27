@@ -5,6 +5,7 @@ export const activity = {
   namespaced: true,
   state: () => ({
     /* 活動資訊 */
+    routeActivityId: '',
     basic_info: {},
     announcement_info: {},
     ticket_info: {},
