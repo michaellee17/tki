@@ -83,7 +83,10 @@ export default {
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
+<<<<<<< HEAD
             this.total = res.data.total
+=======
+>>>>>>> 330029b6e92167a0df4460f4b2955b02cd883203
           }
         });
     },

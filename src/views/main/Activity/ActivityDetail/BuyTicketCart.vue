@@ -38,7 +38,7 @@
         <button
           type="button" class="btn btn-outline-primaryA"
           @click.prevent="() => $router.go(-1)">
-          重新選擇
+          重新選位
         </button>
         <button
           type="button" class="btn btn-outline-primaryA"
@@ -46,6 +46,7 @@
           加入購票清單
         </button>
         <button
+          v-if="basic_info.event_status === 2"
           type="button" class="btn btn-outline-primaryA d-flex gap-2"
           @click.prevent="goCheckout">
           <p class="mb-0">直接結帳</p>
@@ -67,64 +68,99 @@
     </ul>
   </div>
   <loginModal ref="loginModal" />
+  <messageModal ref="messageModal">
+    <p>已成功加入購票清單！</p>
+      <button 
+      @click.prevent="goTicketList"
+      type="button" class="ms-auto mt-2 btn btn-outline-primaryB px-2">確認</button>
+   
+  </messageModal>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import loginModal from "../../../../components/LoginModal";
+import messageModal from "../../../../components/gc/messageModal.vue";
 
 export default {
   components: {
-    loginModal
+    loginModal, messageModal
   },
   data() {
     return {
     }
   },
   computed: {
-    ...mapState('activity', ['basic_info', 'ticket_info', 'ticket_number', 'area_name' , 'selectedTicketName']),
-    ...mapGetters('user', ['getLoginData', 'getLoginStatus']),
-    ...mapGetters('activity', ['ticketPrice']),
+    ...mapState('activity', ['basic_info', 'ticket_info', 'ticket_number', 'area_name' , 
+    'selectedTicketName', 'area_status', 'orderData']),
+    ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
+    ...mapGetters('activity', ['ticketPrice', 'ticket_id']),
     totalAmount() {
       return this.ticketPrice * this.ticket_number;
     }
   },
   mounted() {
-    this.buyTicktet()
+    // this.buyTicktet()
   },
   methods: {
-    ...mapMutations('activity', ['setTicketData', 'ticket_number', 'minusQty','plusQty']),
+    ...mapMutations('activity', ['setTicketData', 'minusQty','plusQty']),
     addToTicketList() {
       if(this.getLoginStatus) {
-        console.log('continue')
+        const apiUrl = `${process.env.VUE_APP_PATH}/user/add-ticket-list`;
+        this.axios.post(apiUrl, 
+          {
+            type_id: this.ticket_id,
+            ticket_number: this.ticket_number
+          },
+          {
+            headers: {
+              'Authorization': `Bearer ${this.getLoginData.access_token}`,
+            }
+          }).then(res => {
+            if (res.data.status_code === 'SYSTEM_1000') {
+              console.log(res.data);
+              this.$refs.messageModal.showModal();
+            }
+          }).catch(error => {
+              console.error('error occurred:', error);
+          })
       } else {
         this.$refs.loginModal.showModal();
       }
     },
+  /* event_status = 1 已發佈未開售
+     event_status = 2 已發佈已開賣 */
     goCheckout() {
       if(this.getLoginStatus) {
-        console.log('continue')
-        this.$router.push('checkout');
+        this.buyTicktet();
       } else {
         this.$refs.loginModal.showModal();
       }
     },
     buyTicktet() {
-      const apiUrl = `${process.env.VUE_APP_PATH}/event/buy-ticket?type_id=16&ticket_number=1`;
-      this.axios.post(apiUrl, {
-        headers: {
-          'Authorization': `Bearer ${this.getLoginData.access_token}`,
-        }
-      }).then(res => {
-          console.log(res.data)
-      }).catch(error => {
-          console.error('error occurred:', error);
-      })
+      const apiUrl = `${process.env.VUE_APP_PATH}/event/buy-ticket`;
+      this.axios.post(apiUrl, 
+        {
+          type_id: this.ticket_id,
+          ticket_number: this.ticket_number
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.getLoginData.access_token}`,
+          }
+        }).then(res => {
+          if (res.data.status_code === 'SYSTEM_1000') {
+            this.setTicketData({ stateData: 'orderData', data: res.data.data });
+            this.$router.push('checkout');
+          }
+        }).catch(error => {
+            console.error('error occurred:', error);
+        })
     },
-    setData() {
-      this.setTicketData({ stateData: 'type_id', data: this.ticketNum });
-      this.setTicketData({ stateData: 'ticket_number', data: this.ticketNum });
-    },
+    goTicketList() {
+      this.$refs.messageModal.hideModal();
+      this.$router.push({ name: 'TicketList', params: { memberID: this.getMemberData.data.id } });
+    }
   }
 }
 </script>

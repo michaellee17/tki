@@ -83,6 +83,9 @@ export default {
       },
     },
   },
+  mounted(){
+    this.setTicketData({ stateData: 'routeActivityId', data: this.$route.params.activityId });
+  },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
     init() {

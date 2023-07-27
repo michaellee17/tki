@@ -87,6 +87,7 @@ import { mapState, mapMutations, mapGetters } from 'vuex';
     mounted() {
       this.setTicketData({ stateData: 'selectedTicketName', data: this.ticket_type_info[0].ticket_name });
       // this.selectedTicketName = this.ticket_type_info.length > 0 ? this.ticket_type_info[0].ticket_name : ''
+      this.setTicketData({ stateData: 'ticket_number', data: 1 });
     },
     methods: {
       ...mapMutations('activity', ['setTicketData', 'minusQty','plusQty' ]),

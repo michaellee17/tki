@@ -31,6 +31,9 @@ export default {
   methods: {
     showModal() {
       this.messageModal.show()
+    },
+    hideModal() {
+      this.messageModal.hide()
     }
   }
 }

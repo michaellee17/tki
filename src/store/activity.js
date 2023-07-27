@@ -5,6 +5,7 @@ export const activity = {
   namespaced: true,
   state: () => ({
     /* 活動資訊 */
+    routeActivityId: '',
     basic_info: {},
     announcement_info: {},
     ticket_info: {},
@@ -14,12 +15,15 @@ export const activity = {
     /* 購票 */
     session_name: '',
     area_name: '',
+   /*  status = 1 啟用座位、啟用自行選位
+       status = 2 啟用座位、禁用自行選位
+       status = 3 不啟用座位 */
     area_status: 0,
     ticket_type_info: [],
-    /* 訂單 */
     selectedTicketName: '',
-    type_id: 0,
-    ticket_number: 1
+    ticket_number: 1,
+    /* 訂單 */
+    orderData: {}
   }),
   mutations: {
     getData(state, data) {
@@ -76,5 +80,9 @@ export const activity = {
       const selectedTicket = state.ticket_type_info.find(ticket => ticket.ticket_name === state.selectedTicketName);
       return selectedTicket ? selectedTicket.ticket_price : '';
     },
+    ticket_id(state) {
+      const selectedTicket = state.ticket_type_info.find(ticket => ticket.ticket_name === state.selectedTicketName);
+      return selectedTicket ? selectedTicket.ticket_id : '';
+    }
   }
 }
