@@ -38,7 +38,8 @@
       <router-link :to="'/activity/detail/' + $route.params.activityId + '/news'" :class="{ active: $route.name ==='News' }" class="col-3 nav-tab-primary py-2">活動消息</router-link>
       <router-link
         :to="'/activity/detail/' + $route.params.activityId + '/buy-ticket/session'" 
-        :class="{ active: $route.name ==='BuyTicketSession' || $route.name ==='BuyTicketType' || $route.name ==='BuyTicketSeat' || $route.name ==='BuyTicketCart' || $route.name ==='BuyTicketCheckout'}" 
+        :class="{ active: $route.name ==='BuyTicketSession' || $route.name ==='BuyTicketType' || $route.name ==='BuyTicketSeat' 
+        || $route.name ==='BuyTicketCart' || $route.name ==='BuyTicketCheckout'|| $route.name ==='BuyTicketPayment'}" 
         class="col-3 nav-tab-primary py-2">
         活動購票
       </router-link>

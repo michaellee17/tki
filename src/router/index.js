@@ -150,6 +150,11 @@ const routes = [
                 name: 'BuyTicketCheckout',
                 component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCheckout.vue')
               },
+              {
+                path: 'payment',
+                name: 'BuyTicketPayment',
+                component: () => import('../views/main/Activity/ActivityDetail/BuyTicketPayment.vue')
+              },
             ]
           },
           
@@ -171,6 +176,12 @@ const routes = [
         component: () => import('../views/main/Activity/ActivityDetail/NewsDetail.vue')
       },
     ]
+  },
+  {
+    path: '/newebpay-callback',
+    name: 'BuyTicketCallback',
+    // component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCallback.vue')
+    component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCallback.vue')
   },
   { path: '/404',     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/NotFound.vue')},  
   {

@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     changeSearch(item){
-      this.$router.push({name:'Search',params:{searchText:item}})
+      this.$router.push({ name: 'Search', params: {searchText:item} })
     },
     changePage(page) {
       // 分頁變更事件處理器
