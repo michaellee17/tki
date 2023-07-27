@@ -62,7 +62,7 @@
     </OrderAngleCard>
   </section>
   <div class="d-flex justify-content-end">
-    <PaginationA :total-pages="1" :current-page="1" @page-changed="changePage" />
+    <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
 </template>
 <script>
@@ -79,13 +79,24 @@ export default {
       // 3 = 付款失敗
       orders: [],
       order_status: 1,
+      currentPage: 1, // 當前分頁
+      itemsPerPage: 4, // 每頁顯示的項目數量
+      total:'',
     }
   },
   computed: {
     ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
+    totalPages() {
+      return Math.ceil(this.total / this.itemsPerPage);
+    },
   },
   watch:{
     order_status(nVal,oVal){
+      if(nVal){
+        this.getOrders()
+      }
+    },
+    currentPage(nVal,oVal){
       if(nVal){
         this.getOrders()
       }
@@ -100,7 +111,7 @@ export default {
       const accessToken = this.getLoginData.access_token
       const params = {
         payment_type:this.order_status,
-        limit:99, //總回傳筆數，預設為4
+        limit:this.currentPage, //總回傳筆數，預設為4
         page:1, //總回傳頁數，預設為1
       };
       this.axios.post(apiUrl, params, {
@@ -111,7 +122,7 @@ export default {
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.orders = res.data.data
-            console.log(this.orders);
+            this.total = res.data.total
           }
         });
     },

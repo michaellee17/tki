@@ -2,7 +2,7 @@
   <h3 class="text-primary mb-4">我的收藏</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
     <router-link :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'"
-      v-for="item in paginatedLists" :key="item.event_id" class="collection bg-cover text-white position-relative"
+      v-for="item in lists" :key="item.event_id" class="collection bg-cover text-white position-relative"
       :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + item.main_imageH_url + ')' }">
       <div class="position-absolute bottom-0">
         <h4 class="fw-bold">{{ item.performer }}</h4>
@@ -22,6 +22,7 @@ export default {
   components: { PaginationA },
   data(){
     return{
+      total:'',
       lists:[], //列表
       currentPage: 1, // 當前分頁
       itemsPerPage: 4, // 每頁顯示的項目數量
@@ -31,13 +32,15 @@ export default {
     ...mapGetters('user', ['getMemberData', 'getLoginData', 'getMemberBinding']),
     // 計算總頁數
     totalPages() {
-        return Math.ceil(this.lists.length / this.itemsPerPage);
+        return Math.ceil(this.total / this.itemsPerPage);
     },
-    paginatedLists() {
-      const startIdx = (this.currentPage - 1) * this.itemsPerPage;
-      const endIdx = startIdx + this.itemsPerPage;
-      return this.lists.slice(startIdx, endIdx);
-    },
+  },
+  watch:{
+    currentPage(nVal,oVal){
+      if(nVal){
+        this.getColletions()
+      }
+    }
   },
   mounted(){
     this.getColletions()
@@ -55,14 +58,15 @@ export default {
           'Authorization': `Bearer ${accessToken}`
         },
         params:{
-          limit:99, //總回傳筆數，預設為4
-          page:1, //總回傳頁數，預設為1
+          limit:4, 
+          page:this.currentPage, 
         },
       })
       .then(res => {
         console.log(res);
         if (res.data.status_code === 'SYSTEM_1000') {
           this.lists = res.data.data
+          this.total = res.data.total
         }
       });
     },

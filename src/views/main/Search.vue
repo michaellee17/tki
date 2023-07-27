@@ -25,7 +25,7 @@
       <!-- 預設一頁放 9 個活動 -->
       <div class="d-flex justify-content-center justify-content-md-start gap-4 flex-wrap mb-4">
         <router-link
-          v-for="item in paginatedLists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
+          v-for="item in lists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
           :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'"
           :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + item.main_imageH_url + ')' }">
           <div class="slider-content position-absolute bottom-0">
@@ -63,18 +63,19 @@ export default {
       currentPage: 1, // 當前分頁
       itemsPerPage: 9, // 每頁顯示的項目數量
       hots:[],
+      total:'',
     }
   },
   computed: {
     ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
     totalPages() {
-      return Math.ceil(this.lists.length / this.itemsPerPage);
+      return Math.ceil(this.total / this.itemsPerPage);
     },
-    paginatedLists() {
-      const startIdx = (this.currentPage - 1) * this.itemsPerPage;
-      const endIdx = startIdx + this.itemsPerPage;
-      return this.lists.slice(startIdx, endIdx);
-    },
+    // paginatedLists() {
+    //   const startIdx = (this.currentPage - 1) * this.itemsPerPage;
+    //   const endIdx = startIdx + this.itemsPerPage;
+    //   return this.lists.slice(startIdx, endIdx);
+    // },
     searchInput () {
       return this.$route.params.searchText
     },
@@ -88,6 +89,11 @@ export default {
     areas (nVal, oVal){
       if(nVal){
         this.getSearchData(this.searchInput)
+      }
+    },
+    currentPage(nVal,oVal){
+      if(nVal){
+        this.getSearchData()
       }
     }
   },
@@ -109,7 +115,7 @@ export default {
       const apiUrl = `${process.env.VUE_APP_PATH}/search`;
       const requestData = {
         keyword: searchText,
-        page:1, 
+        page:this.currentPage, 
         limit:9,
       };
       if (this.areas) {
@@ -120,6 +126,7 @@ export default {
         if (res.data.status_code === 'SYSTEM_1000') {
           this.lists = res.data.data;
           this.hots = res.data.hot_keywords;
+          this.total = res.data.total;
         }
       });
     },
