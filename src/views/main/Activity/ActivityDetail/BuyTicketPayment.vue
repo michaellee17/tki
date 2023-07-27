@@ -26,15 +26,20 @@
         <h4 class="">{{ orderData.ticket_type_name }}</h4>
         <!-- <h4 class="">早鳥票 · A排 · 347</h4> -->
       </div>
-      <div class="">
+      <div v-if="bankData !== {}">
         <h5 class="fs-18 text-secondary mb-3">付款資訊</h5>
         <div class="d-flex gap-4 align-items-center rounded bg-primary text-white p-4 mb-3">
           <img src="../../../../assets/images/icons/atm.svg" alt="atm" width="53" class="icon">
-          <p class="mb-0 fs-5">帳號 204561234879</p>
-          <p class="mb-0 fs-5">中國信託 822</p>
+          <p class="mb-0 fs-5">帳號 {{ bankData.code_number }}</p>
+          <!-- <p class="mb-0 fs-5">帳號 204561234879</p> -->
+          <p class="mb-0 fs-5">{{ bankData.bank_code  }}</p>
+          <!-- <p class="mb-0 fs-5">中國信託 822</p> -->
         </div>
       </div>
-      <h5 class="fs-18 text-secondary mb-3">本次交易付款剩餘時間：<span class="text-danger">{{ timer }}</span></h5>
+      <h5 class="fs-18 text-secondary mb-3">付款有效時間：
+        <span class="text-danger">{{ bankData.payment_time_limit }}</span>
+      </h5>
+      {{ currentTime }}
     
     </div>
   </div>
@@ -50,17 +55,24 @@
       <li class="mb-2">•以上活動內容，主辦單位保留異動之權力</li>
     </ul>
   </div>
+  <messageModal ref="messageModal">
+    已超過
+  </messageModal> 
 </template>
 
 <script>
-import { onUnmounted } from 'vue';
+import messageModal from "../../../../components/gc/messageModal.vue";
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
+  components: {
+    messageModal
+  },
   data() {
     return {
       bankData: {},
-      timer : 3
+      timer : 3,
+      currentTime: ''
     }
   },
   computed: {
@@ -72,8 +84,22 @@ export default {
       const day = String(currentDate.getDate()).padStart(2, '0');
       return `${month}/${day}`;
     },
-    
   },
+  // watch: {
+  //   currentDate: {
+  //     immediate: true,
+  //     handler() {
+  //       let expiredTime = new Date('2023-07-27 17:15:52');
+  //         console.log(this.currentDate);
+  //         if(this.currentDate > expiredTime) {
+  //           console.log('watch')
+  //           if(this.$refs.messageModal && this.$refs.messageModal.style.display === 'none') {
+  //             this.$refs.messageModal.showModal();
+  //           }
+  //         }
+  //     },
+  //   }
+  // },
   methods: {
     getBankData() {
       const apiUrl = `${process.env.VUE_APP_PATH}/order/get-bank-code?order_id=${this.orderData.order_id}`;
@@ -83,28 +109,42 @@ export default {
             'Authorization': `Bearer ${this.getLoginData.access_token}`,
           }
         }).then(res => {
-          console.log(res.data)
           if (res.data.status_code === 'SYSTEM_1000'){
-            this.bankData = res.data.data;
-            console.log(this.bankData);
+            this.bankData = res.data;
           }
         }).catch(error => {
             console.error('error occurred:', error);
         })
     },
-    countDown() {
-      let paymentCountDown = setInterval(()=> {
-        this.timer--;
-        if(this.timer === 0) {
-        clearInterval(paymentCountDown);
-        }
-      }, 1000);
-    }
+    checkTime(){
+      let timer = setInterval( () => {
+        this.currentTime = new Date();
+        let expiredTime = new Date('2023-07-27 17:15:52');
+          if(this.currentDate > expiredTime) {
+            clearInterval(timer);
+          }
+      }, 1000 )
+    },
+    // countDown() {
+    //   let paymentCountDown = setInterval(()=> {
+    //     this.timer--;
+    //     if(this.timer === 0) {
+    //     clearInterval(paymentCountDown);
+    //     }
+    //   }, 1000);
+    // }
+    // checkTime() {
+    //   let currentDate = new Date();
+    //   let expiredTime = new Date('2023-07-27 17:15:52');
+    //   console.log(currentDate);
+    //   if(currentDate > expiredTime) {
+    //     this.$refs.messageModal.showModal();
+    //   }
+    // }
   },
   mounted() {
     this.getBankData();
-    this.countDown(); 
-    console.log(this.$route)
+    this.checkTime();
   },
 }
 </script>
