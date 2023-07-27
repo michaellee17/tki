@@ -95,7 +95,6 @@ export default {
     countDown() {
       let paymentCountDown = setInterval(()=> {
         this.timer--;
-        console.log(this.timer);
         if(this.timer === 0) {
         clearInterval(paymentCountDown);
         }
@@ -105,6 +104,7 @@ export default {
   mounted() {
     this.getBankData();
     this.countDown(); 
+    console.log(this.$route)
   },
 }
 </script>
