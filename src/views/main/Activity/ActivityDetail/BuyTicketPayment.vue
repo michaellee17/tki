@@ -27,28 +27,15 @@
         <!-- <h4 class="">早鳥票 · A排 · 347</h4> -->
       </div>
       <div class="">
-        <h5 class="fs-18 text-secondary mb-3">選擇支付方式</h5>
-        <div class="payment-method row justify-content-between">
-          <div class="col-6">
-            <button 
-            @click.prevent="checkout('VACC')"
-            type="button" class=" btn btn-outline-primaryB border-primary w-100 d-flex flex-column flex-lg-row justify-content-between">
-              <img src="../../../../assets/images/icons/atm.svg" alt="atm" class="icon">
-              <p class="mb-0">ATM付款</p>
-              <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
-            </button>
-          </div>
-          <div class="col-6">
-            <button 
-            @click.prevent="checkout('CREDIT')"
-            type="button" class="btn btn-outline-primaryB border-primary w-100 d-flex flex-column flex-lg-row justify-content-between">
-              <img src="../../../../assets/images/icons/credit-card.svg" alt="credit-card" class="icon">
-              <p class="mb-0">信用卡付款</p>
-              <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
-            </button>
-          </div>
+        <h5 class="fs-18 text-secondary mb-3">付款資訊</h5>
+        <div class="d-flex gap-4 align-items-center rounded bg-primary text-white p-4 mb-3">
+          <img src="../../../../assets/images/icons/atm.svg" alt="atm" width="53" class="icon">
+          <p class="mb-0 fs-5">帳號 204561234879</p>
+          <p class="mb-0 fs-5">中國信託 822</p>
         </div>
       </div>
+      <h5 class="fs-18 text-secondary mb-3">本次交易付款剩餘時間：<span class="text-danger">{{ timer }}</span></h5>
+    
     </div>
   </div>
   <div class="but-ticket-notice p-3">
@@ -66,11 +53,14 @@
 </template>
 
 <script>
+import { onUnmounted } from 'vue';
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
   data() {
     return {
+      bankData: {},
+      timer : 3
     }
   },
   computed: {
@@ -81,16 +71,13 @@ export default {
       const month = String(currentDate.getMonth() + 1).padStart(2, '0');
       const day = String(currentDate.getDate()).padStart(2, '0');
       return `${month}/${day}`;
-    }
+    },
+    
   },
   methods: {
-    checkout(method) {
-      const apiUrl = `${process.env.VUE_APP_PATH}/event/create-payment`;
-      this.axios.post(apiUrl, 
-        {
-          order_id: this.orderData.order_id,
-          payment_method: method
-        },
+    getBankData() {
+      const apiUrl = `${process.env.VUE_APP_PATH}/order/get-bank-code?order_id=${this.orderData.order_id}`;
+      this.axios.get(apiUrl,
         {
           headers: {
             'Authorization': `Bearer ${this.getLoginData.access_token}`,
@@ -98,15 +85,32 @@ export default {
         }).then(res => {
           console.log(res.data)
           if (res.data.status_code === 'SYSTEM_1000'){
-            document.location.href = res.data.data
+            this.bankData = res.data.data;
+            console.log(this.bankData);
           }
         }).catch(error => {
             console.error('error occurred:', error);
         })
     },
-  }
+    countDown() {
+      let paymentCountDown = setInterval(()=> {
+        this.timer--;
+        console.log(this.timer);
+        if(this.timer === 0) {
+        clearInterval(paymentCountDown);
+        }
+      }, 1000);
+    }
+  },
+  mounted() {
+    this.getBankData();
+    this.countDown(); 
+  },
 }
 </script>
 
 <style scoped lang="scss">
+.icon {
+    filter: var(--white-filter);
+}
 </style>
