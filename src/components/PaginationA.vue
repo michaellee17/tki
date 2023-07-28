@@ -1,13 +1,13 @@
 <template>
-  <ul class="pagination d-flex">
+  <ul class="pagination d-flex" v-if="totalPages > 0">
     <li>
-      <a href="#" :disabled="currentPage === 1" class="page_link" @click.prevent="changePage(currentPage - 1)" >&lt;</a>
+      <a href="#" :class="{ 'page_link': true, 'disabled-link': currentPage === 1 }" @click.prevent="changePage(currentPage - 1)" >&lt;</a>
     </li>
     <li v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
       <a href="#" @click.prevent="changePage(page)">{{ page }}</a>
     </li>
     <li>
-      <a href="#" :disabled="currentPage === totalPages" class="page_link" @click.prevent="changePage(currentPage + 1)">&gt;</a>
+      <a href="#" :class="{ 'page_link': true, 'disabled-link': currentPage === totalPages }" @click.prevent="changePage(currentPage + 1)">&gt;</a>
     </li>
   </ul>
 </template>
@@ -38,5 +38,13 @@ export default {
 }
 .pagination li.active a {
   color: var(--primary-color);
+}
+a.disabled-link {
+  color: gray; 
+  cursor: not-allowed; 
+}
+a.disabled-link:hover {
+  color: gray; 
+  cursor: not-allowed; 
 }
 </style>
