@@ -2,21 +2,7 @@
   <h3 class="text-primary mb-4">我的票券</h3>
   <!-- <TicketAngleCard /> -->
   <section class="d-flex flex-wrap gap-4">
-    <OrderAngleCard>
-      <ul>
-        <li>
-          <h4 class="fw-bold">BLACKPINK高雄站演唱會</h4>
-        </li>
-        <li>
-          <p>5/23 VIP A區．18:00 入場</p>
-        </li>
-        <li class="d-flex justify-content-between align-items-center pb-3">
-          <p class="mb-0">活動詳情</p>
-          <button type="button" class="btn btn-outline-light rounded-pill px-3">下載 APP</button>
-        </li>
-      </ul>
-    </OrderAngleCard>
-    <OrderAngleCard v-for="item in tickets" :key="item.event_id">
+    <OrderAngleCard  v-for="item in tickets" :key="item.event_id" :top-image="item.main_imageH_url">
       <ul>
         <li>
           <h4 class="fw-bold">{{ item.event_name }}</h4>
@@ -25,7 +11,7 @@
           <p>{{ item.session_area }}</p>
         </li>
         <li class="d-flex justify-content-between align-items-center pb-3">
-          <p class="mb-0">活動詳情</p>
+          <router-link :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'" class="mb-0 link">活動詳情</router-link>
           <button type="button" class="btn btn-outline-light rounded-pill px-3">下載 APP</button>
         </li>
       </ul>
@@ -67,6 +53,10 @@ export default {
     this.getTickets()
   },
   methods: {
+    changePage(page) {
+      // 分頁變更事件處理器
+      this.currentPage = page;
+    },
     getTickets() {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/my-tickets`;
       const accessToken = this.getLoginData.access_token
@@ -83,10 +73,8 @@ export default {
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
-<<<<<<< HEAD
             this.total = res.data.total
-=======
->>>>>>> 330029b6e92167a0df4460f4b2955b02cd883203
+            console.log(res.data);
           }
         });
     },
@@ -94,6 +82,12 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.link{
+  color:white;
+}
+.link:hover{
+  opacity: 0.6;
+}
 h4 {
   text-overflow: ellipsis;
   white-space: nowrap;
