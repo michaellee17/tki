@@ -1,6 +1,6 @@
 <template>
   <div
-    id="loginModal" ref="loginModal" class="modal fade" tabindex="-1"
+    id="loginModal" ref="loginModal" class="modal login-modal fade" tabindex="-1"
     aria-labelledby="loginModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -929,8 +929,18 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.modal-header {
-  border-bottom: none;
+.modal.login-modal {
+  top: 55%;
+  transform: translateY(-50%);
+ & .modal-header .btn-close {
+    padding: 1rem;
+  }
+  & .modal-header {
+    border-bottom: none;
+  }
+  & .modal-body {
+    padding: 1rem 2rem 2rem 2rem;
+  }
 }
 .btn.text-second {
   width: 22rem;

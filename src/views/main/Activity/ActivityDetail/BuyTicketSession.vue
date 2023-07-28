@@ -19,7 +19,7 @@
           <button
             type="button" class="btn btn-outline-primaryA"
             :class="{ active: currentSessionName === session.session_name }"
-            @click.prevent="updateSession(session.session_name)">
+            @click.prevent="updateSession(session.session_name, session.ticket_limit)">
             {{ session.session_name }}
           </button>
         </swiper-slide>
@@ -78,6 +78,7 @@ export default {
       handler(newTicketInfo) {
         if (newTicketInfo && newTicketInfo.session_info.length > 0) {
           this.currentSessionName = newTicketInfo.session_info[0].session_name;
+          this.setTicketData({ stateData: 'ticket_limit', data: newTicketInfo.session_info[0].ticket_limit });
           this.init();
         }
       },
@@ -91,8 +92,9 @@ export default {
     init() {
       this.area_info = this.ticket_info.session_info.filter( item => item.session_name === this.currentSessionName)[0].area_info;
     },
-    updateSession(name) {
+    updateSession(name, limit) {
       this.currentSessionName = name;
+      this.setTicketData({ stateData: 'ticket_limit', data: limit });
       this.init();
     },
     setData(name, status, ticket) {

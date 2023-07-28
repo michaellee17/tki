@@ -63,12 +63,19 @@
       <li class="mb-2">•以上活動內容，主辦單位保留異動之權力</li>
     </ul>
   </div>
+  <MessageModal ref="errorModal">
+    <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
+  </MessageModal>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import MessageModal from "../../../../components/gc/MessageModal.vue";
 
 export default {
+  components: {
+    MessageModal
+  },
   data() {
     return {
     }
@@ -99,6 +106,8 @@ export default {
           console.log(res.data)
           if (res.data.status_code === 'SYSTEM_1000'){
             document.location.href = res.data.data
+          } else {
+            this.$refs.errorModal.showModal();
           }
         }).catch(error => {
             console.error('error occurred:', error);

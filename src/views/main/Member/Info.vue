@@ -7,7 +7,7 @@
         <a v-if="!isNameEdit" class="text-primary edit" @click="isNameEdit = true">編輯</a>
         <div v-if="isNameEdit" class="d-flex gap-2">
           <a class="text-primary edit" @click="isNameEdit = false">返回</a>
-          <a class="text-primary edit" @click="updateProfile('name')">送出</a>
+          <a class="text-primary edit" @click="updateProfile('name')">保存</a>
         </div>
       </div>
       <p v-show="!isNameEdit">{{ memberData.full_name }}</p>
@@ -17,9 +17,14 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">身分證字號</p>
+        <a v-if="!isIdentityEdit" class="text-primary edit" @click="isIdentityEdit = true">編輯</a>
+        <div v-if="isIdentityEdit" class="d-flex gap-2">
+          <a class="text-primary edit" @click="isIdentityEdit = false">返回</a>
+          <a class="text-primary edit" @click="isIdentityEdit = false">保存</a>
+        </div>
       </div>
-      <p>K*********</p>
-      <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
+      <p v-show="!isIdentityEdit">A*********</p>
+      <input v-show="isIdentityEdit" ref="memberName" class="mb-0 text-gray-800" value="A*********">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
@@ -27,22 +32,19 @@
         <a v-if="!passwordChange" class="text-primary edit" @click="passwordChange = !passwordChange">編輯</a>
         <div v-if="passwordChange" class="d-flex gap-2">
           <a class="text-primary edit" @click="passwordChange = false">返回</a>
-          <a class="text-primary edit" @click="sendPswChange">送出</a>
+          <a class="text-primary edit" @click="sendPswChange">保存</a>
         </div>
       </div>
       <p v-if="!passwordChange" class="fs-18">********</p>
       <div v-if="passwordChange">
         <div class="d-flex gap-2 align-items-center mb-2">
-          <span class="fs-16 text-nowrap">輸入舊密碼：</span>
-          <input v-model="oldPsw" type="password" class="mb-0 text-gray-800 mb-1">
+          <input v-model="oldPsw" type="password" placeholder="輸入舊密碼" class="mb-0 text-gray-800 mb-1">
         </div>
         <div class="d-flex gap-2 align-items-center mb-2">
-          <span class="fs-16 text-nowrap">輸入新密碼：</span>
-          <input v-model="newPsw" type="password" class="mb-0 text-gray-800 mb-1">
+          <input v-model="newPsw" type="password" placeholder="輸入新密碼" class="mb-0 text-gray-800 mb-1">
         </div>
         <div class="d-flex gap-2 align-items-center mb-2">
-          <span class="fs-16 text-nowrap">確認新密碼：</span>
-          <input v-model="newPsw2" type="password" class="mb-0 text-gray-800 mb-1">
+          <input v-model="newPsw2" type="password" placeholder="確認新密碼" class="mb-0 text-gray-800 mb-1">
         </div>
       </div>
     </li>
@@ -58,7 +60,7 @@
         <a v-if="!isEmailEdit" class="text-primary edit" @click="isEmailEdit = true">編輯</a>
         <div v-if="isEmailEdit" class="d-flex gap-2">
           <a class="text-primary edit" @click="isEmailEdit = false">返回</a>
-          <a class="text-primary edit" @click="updateProfile('email')">送出</a>
+          <a class="text-primary edit" @click="updateProfile('email')">保存</a>
         </div>
       </div>
       <p v-show="!isEmailEdit">{{ memberData.email }}</p>
@@ -111,6 +113,7 @@ export default {
       email:'',
       isNameEdit:false,
       isEmailEdit:false,
+      isIdentityEdit: false
     }
   },
   computed: {
@@ -525,16 +528,23 @@ export default {
 </script>
 <style scoped lang="scss">
 input {
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--primary-light-color);
+  border-radius: 5px;
   background-color: transparent;
   padding: 5px 10px;
+  &::placeholder {
+    color: var(--secondary-color)!important;
+  }
+  &:focus {
+    border: 1px solid var(--primary-color);
+  }
 }
 .edit {
   font-size: 14px;
 }
 .member-info > li {
   background-color: rgba(245, 116, 46, 6%);
-  width: 350px;
+  width: 330px;
   & input {
     width: 100%;
   }
