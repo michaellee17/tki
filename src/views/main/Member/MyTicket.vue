@@ -74,7 +74,6 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
-            console.log(res.data);
           }
         });
     },

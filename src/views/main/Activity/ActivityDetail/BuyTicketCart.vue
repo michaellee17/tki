@@ -1,4 +1,8 @@
 <template>
+  <Loading
+    :active="isLoading"
+    :color="'#f5742e'"
+    :opacity="0.7" />
   <h5 class="fs-18 text-secondary mb-3">票券內容</h5>
   <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0 mb-4">
     <div class="col-12 col-lg-6">
@@ -68,31 +72,43 @@
     </ul>
   </div>
   <loginModal ref="loginModal" />
-  <messageModal ref="messageModal">
-    <p>已成功加入購票清單！</p>
-      <button 
-      @click.prevent="goTicketList"
-      type="button" class="ms-auto mt-2 btn btn-outline-primaryB px-2">確認</button>
-   
-  </messageModal>
+  <MessageModal ref="ticketPlusModal">
+    <p class="text-center mb-0">您已經超過購買數量限制，請依照購買限制數量選擇您的票券。</p>
+  </MessageModal>
+  <MessageModal ref="ticketMinusModal">
+    <p class="text-center mb-0">購買數量不得小於 1 張。</p>
+  </MessageModal>
+  <MessageModal ref="ticketListModal">
+    <p class="text-center mb-0">已加入購票清單！</p>
+  </MessageModal>
+  <MessageModal ref="soldOutModal">
+    <p class="text-center mb-0">購票失敗，票券已完售！</p>
+  </MessageModal>
+  <MessageModal ref="busyModal">
+    <p class="text-center mb-0">系統忙碌中，請稍後再試。</p>
+  </MessageModal>
+  <MessageModal ref="errorModal">
+    <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
+  </MessageModal>
 </template>
+<!-- 補寫購票清單導向過來的邏輯，只會顯示「直接結帳」和「結帳倒數」 -->
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import loginModal from "../../../../components/LoginModal";
-import messageModal from "../../../../components/gc/messageModal.vue";
+import MessageModal from "../../../../components/gc/MessageModal.vue";
 
 export default {
   components: {
-    loginModal, messageModal
+    loginModal, MessageModal
   },
   data() {
     return {
     }
   },
   computed: {
-    ...mapState('activity', ['basic_info', 'ticket_info', 'ticket_number', 'area_name' , 
-    'selectedTicketName', 'area_status', 'orderData']),
+    ...mapState('activity', ['isLoading', 'basic_info', 'ticket_info', 'ticket_limit',
+     'ticket_number', 'area_name' , 'selectedTicketName', 'area_status', 'orderData', 'routeActivityId']),
     ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
     ...mapGetters('activity', ['ticketPrice', 'ticket_id']),
     totalAmount() {
@@ -100,10 +116,26 @@ export default {
     }
   },
   mounted() {
-    // this.buyTicktet()
   },
   methods: {
-    ...mapMutations('activity', ['setTicketData', 'minusQty','plusQty']),
+    ...mapMutations('activity', ['setTicketData', 'minus','plus']),
+    minusQty() {
+      if(this.ticket_number === 1) {
+        this.$refs.ticketMinusModal.showModal();
+      }
+      if(this.ticket_number > 1) {
+        this.minus();
+      }
+    },
+    plusQty() {
+      console.log(this.ticket_limit)
+      if(this.ticket_number === this.ticket_limit) {
+        this.$refs.ticketPlusModal.showModal();
+      }
+      if(this.ticket_number === -1 || this.ticket_number < this.ticket_limit){
+        this.plus();
+      }
+    },
     addToTicketList() {
       if(this.getLoginStatus) {
         const apiUrl = `${process.env.VUE_APP_PATH}/user/add-ticket-list`;
@@ -119,7 +151,11 @@ export default {
           }).then(res => {
             if (res.data.status_code === 'SYSTEM_1000') {
               console.log(res.data);
-              this.$refs.messageModal.showModal();
+              this.$refs.ticketListModal.showModal();
+              setTimeout(() => {
+                this.$refs.ticketListModal.hideModal();
+                this.$router.push({ name: 'TicketList', params: { memberID: this.getMemberData.data.id } });
+              }, 3000);
             }
           }).catch(error => {
               console.error('error occurred:', error);
@@ -138,6 +174,7 @@ export default {
       }
     },
     buyTicktet() {
+      this.setTicketData({ stateData: 'isLoading', data: true });
       const apiUrl = `${process.env.VUE_APP_PATH}/event/buy-ticket`;
       this.axios.post(apiUrl, 
         {
@@ -149,18 +186,42 @@ export default {
             'Authorization': `Bearer ${this.getLoginData.access_token}`,
           }
         }).then(res => {
-          if (res.data.status_code === 'SYSTEM_1000') {
-            this.setTicketData({ stateData: 'orderData', data: res.data.data });
-            this.$router.push('checkout');
+          switch(res.data.status_code){
+            case 'SYSTEM_1000':
+              this.setTicketData({ stateData: 'orderData', data: res.data.data });
+              this.$router.push('checkout');
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              break;
+            /* 已完售 */
+            case 'TICKET_3011':
+              this.$refs.soldOutModal.showModal();
+              setTimeout(() => {
+                this.$refs.soldOutModal.hideModal();
+                this.$router.push({ name: 'BuyTicketSession', params: { activityId: this.routeActivityId } });
+              }, 3000);
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              break;
+            /* 系統忙碌中 */
+            case 'TICKET_3099':
+              this.$refs.busyModal.showModal();
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              break;
+            /* 錯誤處理 */
+            default:
+              this.$refs.errorModal.showModal();
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              break;
           }
+          // if (res.data.status_code === 'SYSTEM_1000') {
+          //   this.setTicketData({ stateData: 'orderData', data: res.data.data });
+          //   this.$router.push('checkout');
+          //   this.setTicketData({ stateData: 'isLoading', data: false });
+          // }
         }).catch(error => {
             console.error('error occurred:', error);
+            this.setTicketData({ stateData: 'isLoading', data: false });
         })
     },
-    goTicketList() {
-      this.$refs.messageModal.hideModal();
-      this.$router.push({ name: 'TicketList', params: { memberID: this.getMemberData.data.id } });
-    }
   }
 }
 </script>

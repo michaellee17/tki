@@ -4,6 +4,11 @@ import router from "./router";
 
 import VueZoomer from 'vue-zoomer';
 import vue3GoogleLogin from 'vue3-google-login';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueAppleLogin from 'vue-apple-login';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 import SplitCarousel from "vue-split-carousel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -14,9 +19,6 @@ import PriceFormatter from "./plugins/PriceFormatter.js"
 import DateFormatter from "./plugins/DateFormatter.js"
 import FileSource from "./plugins/FileSource.js"
 import Slugerize from "./plugins/Slugerize.js"
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import VueAppleLogin from 'vue-apple-login';
 import { timeFormatter } from './methods/timeFormatter.js'
 
 
@@ -50,13 +52,17 @@ router.beforeEach((to, from) => {
     case 'BuyTicketCheckout':
     case 'Location':
     case 'Notes':
-      break;
+      break;  
     default:
       /* 從 activity/detail 跳頁到 BuyTicketSession 不會滾動到頂部 */
       if (to.name === 'BuyTicketSession' && from.path.includes('activity/detail')) {
         break;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' 
+      });
+      break;
   }
   store.commit("forceCloseModal")
 })
@@ -78,6 +84,7 @@ app.use(VueZoomer)
   .use(SplitCarousel)
   .use(VueAxios, axios)
   .component("font-awesome-icon", FontAwesomeIcon)
+  .component("Loading", Loading)
   .mount("#app");
 
 

@@ -61,18 +61,28 @@
       </div>
     </div>
   </div>
+  <MessageModal ref="ticketPlusModal">
+    <p class="text-center mb-0">您已經超過購買數量限制，請依照購買限制數量選擇您的票券。</p>
+  </MessageModal>
+  <MessageModal ref="ticketMinusModal">
+    <p class="text-center mb-0">購買數量不得小於 1 張。</p>
+  </MessageModal>
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex';
+import MessageModal from "../../../../components/gc/MessageModal.vue";
 
   export default {
+    components: {
+      MessageModal,
+    },
     data() {
       return {
       }
     },
     computed: {
-      ...mapState('activity', ['session_name', 'area_name', 'area_status', 'ticket_type_info', 
+      ...mapState('activity', ['session_name', 'ticket_limit', 'area_name', 'area_status', 'ticket_type_info', 
       'recommendList', 'ticket_number', 'selectedTicketName']),
       ...mapGetters('activity', ['ticketPrice']),
       TicketName: {
@@ -90,7 +100,24 @@ import { mapState, mapMutations, mapGetters } from 'vuex';
       this.setTicketData({ stateData: 'ticket_number', data: 1 });
     },
     methods: {
-      ...mapMutations('activity', ['setTicketData', 'minusQty','plusQty' ]),
+      ...mapMutations('activity', ['setTicketData', 'minus', 'plus' ]),
+      minusQty() {
+        if(this.ticket_number === 1) {
+          this.$refs.ticketMinusModal.showModal();
+        }
+        if(this.ticket_number > 1) {
+          this.minus();
+        }
+      },
+      plusQty() {
+        console.log(this.ticket_limit)
+        if(this.ticket_number === this.ticket_limit) {
+          this.$refs.ticketPlusModal.showModal();
+        }
+        if(this.ticket_number === -1 || this.ticket_number < this.ticket_limit){
+          this.plus();
+        }
+      },
     }
   }
 </script>
