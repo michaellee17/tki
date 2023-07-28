@@ -134,19 +134,6 @@ export default{
      changePage(){
       this.$emit('register-hide');
      },
-     afterLogin() {
-      //關閉modal回到原本瀏覽處
-      const modalClose = this.$refs.modalClose;
-      this.$emit('modal-close')
-      //將登入狀態存到vuex
-      const access_token = this.getLoginData.access_token
-      this.fetchMemberData(access_token)
-        .then(() => {
-          this.updateLoginStatus(true);
-        })
-        .catch(error => {
-        });
-    },
     startCountdown(){
       this.remainingTime = 300;
       const intervalId = setInterval(() => {
@@ -227,7 +214,7 @@ export default{
             })
             const loginData = res.data;
             this.updateLoginData(loginData);
-            this.afterLogin();
+            this.$emit('after-login');
             this.registerName = '';
             this.registerPhone = '';
             this.registerPsw1 = '';

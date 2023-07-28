@@ -65,7 +65,7 @@
           </div>
         </div>
         <!-- 會員註冊 -->
-        <Register v-show="isRegisterOpen" ref="memberInfoPage" :open="isRegisterOpen" @modal-close="clickClose" @register-hide="handleRegister(false)"/>
+        <Register v-show="isRegisterOpen" ref="memberInfoPage" :open="isRegisterOpen" @modal-close="clickClose" @register-hide="handleRegister(false)" @after-login="handleRegister('close')"/>
         <!-- 第三方註冊 -->
         <div ref="platformRegister">
           <div class="modal-body text-second pb-5">
@@ -298,9 +298,12 @@ export default {
       if(show === true){
         this.isRegisterOpen = true
         this.$refs.loginBoard.classList.add('d-none')
-      }else{
+      }else if(show === false){
         this.isRegisterOpen = false
         this.$refs.loginBoard.classList.remove('d-none')
+      }else if(show === 'close'){
+        this.isRegisterOpen =false
+        this.afterLogin()
       }
     },
     //關閉登入modal
