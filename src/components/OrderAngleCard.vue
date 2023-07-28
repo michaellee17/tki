@@ -1,6 +1,6 @@
 <template>
   <div class="angle-card">
-    <div class="angle-card-top" />
+    <div class="angle-card-top" :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + topImage + ')' }" />
     <div class="angle-card-body bg-primary text-white pt-3 px-3">
       <slot>沒有資料</slot>
     </div>
@@ -8,6 +8,15 @@
 </template>
 
 <script>
+export default{
+  props: {
+    topImage: {
+      type: String,
+      required: true,
+    },
+    
+  },
+}
 </script>
 
 <style scoped lang="scss">
@@ -21,7 +30,6 @@
 
 .angle-card-top {
   height: 262px;
-  background-image: url('../assets/images/products/concert3.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
