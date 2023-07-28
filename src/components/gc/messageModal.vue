@@ -9,7 +9,7 @@
           <slot>
             <p>no content yet</p>
           </slot>
-          <!-- <button type="button" class="ms-auto mt-2 btn btn-outline-primaryB px-2">確認</button> -->
+          <!-- <button type="button" class="ms-auto mt-2 btn btn-light link-primary rounded-pill px-3">確認</button> -->
         </div>
       </div>
     </div>
@@ -40,19 +40,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.messageModal {
+.modal.messageModal {
+  top: 70%;
+  transform: translateY(-50%);
   & .modal-dialog {
-    width: 250px;
+    width: 280px;
   }
   & .modal-body {
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 1rem 1.5rem 2rem 1.5rem;
   }
   & .modal-content {
     // background-color: var(--primary-color);
     // color: #fff;
-    background-color: var(--primary-light-color);
+    // background-color: var(--primary-light-color);
     border-radius: 20px;
-    text-align: center;
   }
   & .modal-header {
     border-bottom: none;

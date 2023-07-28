@@ -4,6 +4,7 @@ import router from '../router';
 export const activity = {
   namespaced: true,
   state: () => ({
+    isLoading: false,
     /* 活動資訊 */
     routeActivityId: '',
     basic_info: {},
@@ -14,6 +15,7 @@ export const activity = {
     recommendList: [],
     /* 購票 */
     session_name: '',
+    ticket_limit: 2,
     area_name: '',
    /*  status = 1 啟用座位、啟用自行選位
        status = 2 啟用座位、禁用自行選位
@@ -32,17 +34,16 @@ export const activity = {
       state.ticket_info = data.ticket_info;
       state.venue_info = data.venue_info;
       state.matter_content = data.matter_content;
+      state.isLoading = false;
       // console.log('mutation')
     },
     getRecommendList(state, data) {
       state.recommendList = data;
     },
-    minusQty (state) {
-      if (state.ticket_number > 1) {
-        state.ticket_number--;
-      }
+    minus (state) {
+      state.ticket_number--;
     },
-    plusQty (state) {
+    plus (state) {
       state.ticket_number++;
     },
     setTicketData(state, { stateData, data }) {

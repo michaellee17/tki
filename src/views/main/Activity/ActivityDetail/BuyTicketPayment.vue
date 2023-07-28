@@ -32,15 +32,14 @@
           <img src="../../../../assets/images/icons/atm.svg" alt="atm" width="53" class="icon">
           <p class="mb-0 fs-5">帳號 {{ bankData.code_number }}</p>
           <!-- <p class="mb-0 fs-5">帳號 204561234879</p> -->
-          <p class="mb-0 fs-5">{{ bankData.bank_code  }}</p>
+          <p class="mb-0 fs-5">{{ bankData.bank_code }}</p>
           <!-- <p class="mb-0 fs-5">中國信託 822</p> -->
         </div>
       </div>
-      <h5 class="fs-18 text-secondary mb-3">付款有效時間：
+      <h5 class="fs-18 text-secondary mb-3">
+        付款有效時間：
         <span class="text-danger">{{ bankData.payment_time_limit }}</span>
       </h5>
-      {{ currentTime }}
-    
     </div>
   </div>
   <div class="but-ticket-notice p-3">
@@ -55,18 +54,25 @@
       <li class="mb-2">•以上活動內容，主辦單位保留異動之權力</li>
     </ul>
   </div>
-  <messageModal ref="messageModal">
-    已超過
-  </messageModal> 
+  <MessageModal ref="beforePaymentModal">
+    <p class="text-center mb-0">請於時限內至 ATM 付款。</p>
+  </MessageModal> 
+  <MessageModal ref="afterPaymentModal">
+    <h4 class="text-center text-primary mb-3">已超過可購票時間</h4>
+    <p class="text-center mb-0">您已經超過可購票時間，請重新選擇票券並重新付款。</p>
+  </MessageModal> 
+  <MessageModal ref="errorModal">
+    <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
+  </MessageModal>
 </template>
 
 <script>
-import messageModal from "../../../../components/gc/messageModal.vue";
+import MessageModal from "../../../../components/gc/MessageModal.vue";
 import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: {
-    messageModal
+    MessageModal
   },
   data() {
     return {
@@ -76,7 +82,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('activity', ['ticket_info', 'orderData']),
+    ...mapState('activity', ['ticket_info', 'orderData', 'routeActivityId']),
     ...mapGetters('user', ['getLoginData']),
     orderDate() {
       let currentDate = new Date();
@@ -85,22 +91,18 @@ export default {
       return `${month}/${day}`;
     },
   },
-  // watch: {
-  //   currentDate: {
-  //     immediate: true,
-  //     handler() {
-  //       let expiredTime = new Date('2023-07-27 17:15:52');
-  //         console.log(this.currentDate);
-  //         if(this.currentDate > expiredTime) {
-  //           console.log('watch')
-  //           if(this.$refs.messageModal && this.$refs.messageModal.style.display === 'none') {
-  //             this.$refs.messageModal.showModal();
-  //           }
-  //         }
-  //     },
-  //   }
-  // },
+  mounted() {
+    this.scrollToPosition();
+    this.getBankData();
+    this.checkTime();
+  },
   methods: {
+    ...mapMutations('activity', ['setTicketData']),
+    scrollToPosition(){
+      window.scrollTo({
+        top: 895,
+        behavior: 'smooth' })
+      },
     getBankData() {
       const apiUrl = `${process.env.VUE_APP_PATH}/order/get-bank-code?order_id=${this.orderData.order_id}`;
       this.axios.get(apiUrl,
@@ -109,42 +111,46 @@ export default {
             'Authorization': `Bearer ${this.getLoginData.access_token}`,
           }
         }).then(res => {
-          if (res.data.status_code === 'SYSTEM_1000'){
-            this.bankData = res.data;
-          }
-        }).catch(error => {
-            console.error('error occurred:', error);
-        })
+          this.setTicketData({ stateData: 'isLoading', data: true });
+          switch(res.data.status_code){
+            case 'SYSTEM_1000':
+              this.bankData = res.data;
+              this.$refs.beforePaymentModal.showModal();
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              break;
+            /* 取號失敗: 未選擇ATM付款/訂單失敗/訂單超時 */
+            case 'ORDER_4011':
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              this.$router.push('/');
+              break;
+            /* 錯誤處理 */
+            default:
+              this.$refs.errorModal.showModal();
+              setTimeout(() => {
+                this.$refs.errorModal.hideModal();
+                this.$router.push('/');
+              }, 3000);
+              this.setTicketData({ stateData: 'isLoading', data: false });
+              break;
+          }}).catch(error => {
+              console.error('error occurred:', error);
+          })
     },
-    checkTime(){
+    checkTime() {
       let timer = setInterval( () => {
         this.currentTime = new Date();
-        let expiredTime = new Date('2023-07-27 17:15:52');
-          if(this.currentDate > expiredTime) {
+        let expiredTime = new Date(this.bankData.payment_time_limit.replace(' ', 'T'));
+        let test = new Date('2023-07-28 19:32:21'.replace(' ', 'T'));
+          if(this.currentTime.getTime() > test.getTime()) {
+            this.$refs.afterPaymentModal.showModal();
+            setTimeout(() => {
+              this.$refs.afterPaymentModal.hideModal();
+              this.$router.replace({ name: 'BuyTicketSession', params: { activityId: this.routeActivityId } });
+            }, 3000);
             clearInterval(timer);
           }
       }, 1000 )
     },
-    // countDown() {
-    //   let paymentCountDown = setInterval(()=> {
-    //     this.timer--;
-    //     if(this.timer === 0) {
-    //     clearInterval(paymentCountDown);
-    //     }
-    //   }, 1000);
-    // }
-    // checkTime() {
-    //   let currentDate = new Date();
-    //   let expiredTime = new Date('2023-07-27 17:15:52');
-    //   console.log(currentDate);
-    //   if(currentDate > expiredTime) {
-    //     this.$refs.messageModal.showModal();
-    //   }
-    // }
-  },
-  mounted() {
-    this.getBankData();
-    this.checkTime();
   },
 }
 </script>

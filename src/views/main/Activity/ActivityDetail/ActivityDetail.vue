@@ -1,4 +1,8 @@
 <template>
+  <Loading
+    :active="isLoading"
+    :color="'#f5742e'"
+    :opacity="0.7" />
   <div v-if="!$store.state.appView.view && basic_info" class="top-bg">
     <div class="blur">
       <div class="container bg position-relative">
@@ -39,7 +43,7 @@
       <router-link
         :to="'/activity/detail/' + $route.params.activityId + '/buy-ticket/session'" 
         :class="{ active: $route.name ==='BuyTicketSession' || $route.name ==='BuyTicketType' || $route.name ==='BuyTicketSeat' 
-        || $route.name ==='BuyTicketCart' || $route.name ==='BuyTicketCheckout'|| $route.name ==='BuyTicketPayment'}" 
+          || $route.name ==='BuyTicketCart' || $route.name ==='BuyTicketCheckout'|| $route.name ==='BuyTicketPayment'}" 
         class="col-3 nav-tab-primary py-2">
         活動購票
       </router-link>
@@ -51,27 +55,31 @@
     </div>
   </div>
   <loginModal ref="loginModal" />
-  <messageModal ref="messageModal">已複製網址！
-  </messageModal>
+  <MessageModal ref="messageModal">
+    <p class="text-center mb-0">已複製網址！</p>
+  </MessageModal>
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import loginModal from "../../../../components/LoginModal";
-import messageModal from "../../../../components/gc/messageModal.vue";
+import MessageModal from "../../../../components/gc/MessageModal.vue";
+
+// import Loading from 'vue-loading-overlay';
+// import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
   components: {
     loginModal,
-    messageModal
+    MessageModal,
   },
   data () {
     return {
-      isCollected: ''
+      isCollected: '',
     }
   },
   computed: {
-    ...mapState('activity', ['basic_info']),
+    ...mapState('activity', ['isLoading', 'basic_info']),
     // ...mapState('activity', ['basic_info', 'announcement_info', 'ticket_info', 'venue_info', 'matter_content']),
     ...mapGetters('user', ['getLoginData', 'getLoginStatus']),
     eventId() {
@@ -98,16 +106,14 @@ export default {
     }
     },
   created() {
+    this.setTicketData({ stateData: 'isLoading', data: true });
     this.getData(this.eventId);
     if(this.getLoginStatus) {
       this.checkCollection();
     }
   },
-  mounted() {
-    // this.$refs.messageModal.showModal();
-    // console.log(this.getLoginData.access_token);
-  },
   methods: {
+    ...mapMutations('activity', ['setTicketData']),
     ...mapActions('activity', ['getData']),
     updateCollection() {
       if(this.getLoginStatus) {
