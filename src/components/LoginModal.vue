@@ -65,7 +65,7 @@
           </div>
         </div>
         <!-- 會員註冊 -->
-        <Register v-show="isRegisterOpen" ref="memberInfoPage" :open="isRegisterOpen" @modal-close="clickClose" @register-hide="handleRegister(false)" @after-login="handleRegister('close')"/>
+        <Register v-show="isRegisterOpen" ref="memberInfoPage" :open="isRegisterOpen"  @register-hide="handleRegister(false)" @after-login="handleRegister('close')"/>
         <!-- 第三方註冊 -->
         <div ref="platformRegister">
           <div class="modal-body text-second pb-5">
@@ -163,81 +163,19 @@
                   @click="showPage('accountLoginPage', 'loginBoard')">回上一步</a>
                 <a
                   class="text-decoration-none link-secondary"
-                  @click="showPage('accountLoginPage', 'forgetPwdPage')">忘記密碼</a>
+                  @click="handleForget(true)">忘記密碼</a>
               </div>
               <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendLogin">登入</button>
             </form>
           </div>
         </div>
-        <!--  忘記密碼 -->
-        <div id="forgetPwdPage" ref="forgetPwdPage">
-          <div class="modal-body text-second pb-5">
-            <div class="text-center mb-5">
-              <h1 class="modal-title fs-2 text-primary">忘記密碼</h1>
-            </div>
-            <form>
-              <div v-show="!isForgetOTPVertify">
-                <h5 class="mb-3">請先驗證您的手機號碼</h5>
-                <div class="mb-2 row justify-content-center align-items-center">
-                  <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
-                  <div class="col-9">
-                    <input
-                      id="forgetTel" v-model="forgetPhone" type="tel" class="form-control"
-                      placeholder="0912345678"
-                      aria-describedby="tel" minlength="10" required>
-                  </div>
-                </div>
-                <div class="mb-2 row justify-content-center align-items-center">
-                  <p class="col-3" />
-                  <div class="col-9">
-                    <button v-if="!isForgetOTPSend && !isForgetOTPVertify" type="button" class="btn btn-info link-light w-100" @click="forgetOTP">發送驗證碼</button>
-                    <button v-if="isForgetOTPSend && !isForgetOTPVertify" class="btn btn-info link-light w-100" disabled>有效時間:{{ remainingTime }}(秒)</button>
-                  </div>
-                </div>
-                <div v-if="isForgetOTPSend && !isForgetOTPVertify" class="mb-5 row justify-content-center align-items-center">
-                  <label for="forgetCode" class="col-3 form-label" />
-                  <div class="col-9 d-flex align-items-center gap-2">
-                    <input
-                      id="forgetCode" v-model="forgetCode" type="text" class="form-control"
-                      placeholder="輸入驗證碼"
-                      aria-describedby="code" required>
-                    <button type="button" class="btn btn-info link-light w-50" @click="forgetVertifyOTP">驗證</button>
-                  </div>
-                </div>
-              </div>
-              <div v-show="isForgetOTPVertify">
-                <h5 class="mb-3">重新設定密碼</h5>
-                <div class="mb-3 row justify-content-center align-items-center">
-                  <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
-                  <div class="col-9">
-                    <input
-                      id="forgetPassword" v-model="forgetPsw1" type="password" class="form-control"
-                      placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
-                  </div>
-                </div>
-                <div class="mb-4 row justify-content-center align-items-center">
-                  <label for="forgetPasswordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
-                  <div class="col-9">
-                    <input
-                      id="orgetPasswordCmf" v-model="forgetPsw2" type="password" class="form-control"
-                      placeholder="再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
-                  </div>
-                </div>
-                <div class="text-end mb-2 d-flex">
-                  <a
-                    class="text-decoration-none link-secondary"
-                    @click="showPage('forgetPwdPage', 'accountLoginPage')">回上一步</a>
-                </div>
-                <button type="button" class="btn btn-primary link-light w-100 py-2" @click="resetPsw">送出</button>
-              </div>
-            </form>
-          </div>
-        </div>
+        <Forget v-show="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)" @after-forget="handleForget('close')" />
       </div>
     </div>
   </div>
 </template>
 <script>
+import Forget from "./gc/loginModal/Forget.vue";
 import Google from "./gc/loginModal/Google.vue";
 import Line from "./gc/loginModal/Line.vue";
 import Apple from "./gc/loginModal/Apple.vue";
@@ -251,9 +189,11 @@ export default {
     LineLogin:Line,
     Apple,
     Register,
+    Forget,
   },
   data() {
     return {
+      isForgetOpen:false,
       isRegisterOpen:false,
       isOTPVertify: false,
       data: '',
@@ -262,13 +202,6 @@ export default {
       //登入
       loginPhone: '',
       loginPsw: '',
-      //忘記密碼
-      forgetPhone: '',
-      forgetCode: '',
-      forgetPsw1: '',
-      forgetPsw2: '',
-      isForgetOTPSend: false,
-      isForgetOTPVertify: false,
       //第三方註冊
       isplatformOTPSend:false,
       isplatformOTPVertify:false,
@@ -294,6 +227,20 @@ export default {
   methods: {
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+    //控制忘記密碼收合
+    handleForget(show){
+      if(show === true){
+        this.isForgetOpen = true
+        this.$refs.accountLoginPage.classList.add('d-none')
+      }else if(show === false){
+        this.isForgetOpen = false
+        this.$refs.accountLoginPage.classList.remove('d-none')
+      }else if(show === 'close'){
+        this.isForgetOpen =false
+        this.clickClose()
+      }
+    },
+    //控制一般註冊收合
     handleRegister(show){
       if(show === true){
         this.isRegisterOpen = true
@@ -324,18 +271,8 @@ export default {
         if (this.$refs.accountLoginPage.classList.contains('active')) {
           //登入流程
           this.sendLogin();
-        }  //忘記密碼流程
-          else if (this.$refs.forgetPwdPage.classList.contains('active')) {
-          if(this.isForgetOTPSend === false){
-            this.forgetOTP()
-          }
-          if(this.isForgetOTPSend === true && this.isForgetOTPVertify === false){
-            this.forgetVertifyOTP()
-          }
-          if(this.isForgetOTPVertify === true){
-            this.resetPsw()
-          }
-        } //第三方流程流程
+        } 
+           //第三方流程流程
           else if (this.$refs.platformRegister.classList.contains('active')) {
           if(this.isplatformOTPSend === false){
             this.platformSendOTP()
@@ -894,23 +831,15 @@ export default {
       this.$refs.loginBoard.classList.remove('d-none');
       this.$refs.termsPage.classList.add('d-none');
       this.$refs.termsPage.classList.remove('active');
-      // this.$refs.memberInfoPage.classList.add('d-none');
-      // this.$refs.memberInfoPage.classList.remove('active');
       this.$refs.accountLoginPage.classList.add('d-none')
       this.$refs.accountLoginPage.classList.remove('active');
-      this.$refs.forgetPwdPage.classList.add('d-none');
-      this.$refs.forgetPwdPage.classList.remove('active');
       this.$refs.platformRegister.classList.add('d-none');
       this.$refs.platformRegister.classList.remove('active');
     },
     showModal() {
       this.loginModal.show()
-      this.isForgetOTPVertify = false
-      this.isForgetOTPSend = false
-      this.isRegisterOTPSend = false
-      this.isRegisterOTPVertify = false
-      this.isplatformOTPSend = false
-      this.isplatformOTPVertify = false
+      this.isForgetOpen = false
+      this.isRegisterOpen = false
     },
     submitTerms() {
       if (!this.$refs.agreenTermsBox.checked) {

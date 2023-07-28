@@ -83,11 +83,10 @@ export default{
       type: Boolean,
       required: true,
     },
- 
   },
   data(){
     return{
-       //註冊
+      remainingTime:300,
       isRegisterOTPSend:false,
       isRegisterOTPVertify:false,
       registerName: '',
