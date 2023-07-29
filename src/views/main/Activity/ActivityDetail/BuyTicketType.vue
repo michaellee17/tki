@@ -110,7 +110,6 @@ import MessageModal from "../../../../components/gc/MessageModal.vue";
         }
       },
       plusQty() {
-        console.log(this.ticket_limit)
         if(this.ticket_number === this.ticket_limit) {
           this.$refs.ticketPlusModal.showModal();
         }

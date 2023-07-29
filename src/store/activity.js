@@ -25,7 +25,9 @@ export const activity = {
     selectedTicketName: '',
     ticket_number: 1,
     /* 訂單 */
-    orderData: {}
+    orderData: {},
+    /* 購票清單導向 cart */
+    l_ticket_start_date: ''
   }),
   mutations: {
     getData(state, data) {

@@ -11,11 +11,19 @@ export default {
     switch (this.$route.query.status) {
       /* 信用卡失敗 */
       case '0':
-        this.$router.push({ name: 'OrderHistory', params: { memberID: this.getMemberData.data.id } });
+        this.$router.push({ 
+          name: 'OrderHistory', 
+          params: { memberID: this.getMemberData.data.id }, 
+          query: { status: 0 }
+        });
         break;
       /* 信用卡成功 */
       case '1':
-        this.$router.push({ name: 'MyTicket', params: { memberID: this.getMemberData.data.id } });
+        this.$router.push({ 
+          name: 'MyTicket', 
+          params: { memberID: this.getMemberData.data.id },
+          query: { status: 1 }
+        });
         break;
       /* ATM取號 */
       case '2':

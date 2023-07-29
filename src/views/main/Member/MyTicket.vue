@@ -20,14 +20,18 @@
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
+  <MessageModal ref="successModal">
+    <p class="text-center mb-0">費用已支付完成！</p>
+  </MessageModal>
 </template>
 <script>
 import PaginationA from "../../../components/PaginationA.vue";
 import TicketAngleCard from "../../../components/TicketAngleCard.vue";
 import OrderAngleCard from "../../../components/OrderAngleCard.vue";
+import MessageModal from "../../../components/gc/MessageModal.vue";
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  components: { TicketAngleCard, PaginationA, OrderAngleCard },
+  components: { TicketAngleCard, PaginationA, OrderAngleCard, MessageModal },
   data() {
     return {
       tickets: [],
@@ -51,6 +55,9 @@ export default {
   },
   mounted() {
     this.getTickets()
+    if(this.$route.query.status && this.$route.query.status === '1') {
+      this.$refs.successModal.showModal();
+    }
   },
   methods: {
     changePage(page) {

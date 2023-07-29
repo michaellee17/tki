@@ -1,14 +1,17 @@
 <template>
-  <h3 class="text-primary mb-4">等待搶票</h3>
+  <h3 class="text-primary mb-4">購票清單</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
-    <router-link :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/cart'" v-for="item in tickets" :key="item.event_id" class="d-flex cardMain">
-      <div class="flex-1 d-flex align-items-end cardLeft" :style="{ backgroundImage: `url('https://demo2.gcreate.com.tw/gc_tki/storage/images/14f15a4e-a45f-4c2f-a959-fd8f92aaf71b-1689645303.jpg')`, backgroundSize: '110% 100%' }" />
-      <div class="flex-1 flex-column cardRight d-flex">
-        <div class="d-flex flex-column flex-1 rightTop px-3">
-          <p class="subject">{{ item.performer }}</p>
+    <a href="#"
+      v-for="item in tickets"
+      :key="item.event_id" class="d-flex cardMain" 
+      @click.prevent="goCart(item.session_area, '', item.ticket_price, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
+      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${item.main_imageH_url}')` }" />
+      <div class="flex-column cardRight d-flex flex-shrink-1">
+        <div class="d-flex flex-column rightTop px-3">
+          <p class="subject ellipsis-1">{{ item.performer }}</p>
           <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
           <p class="small">{{ item.session_area }}</p>
-          <h3 class="price">$ {{ item.ticket_price }} x{{ item.ticket_number }}</h3>
+          <h3 class="price">$ {{ item.ticket_price }} x {{ item.ticket_number }}</h3>
           <p class="countDown d-flex gap-2">
             <img src="../../../assets/images/icons/icon_schedule.svg">
             <span v-if="isTicketing(item.ticket_start_date)" class="grabbing">搶票中</span>
@@ -16,7 +19,7 @@
           </p>
         </div>
       </div>
-    </router-link>
+    </a>
   </section>
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
@@ -26,7 +29,7 @@
 <script>
 import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   components: { SearchOrderDate, PaginationA },
   data() {
@@ -54,6 +57,7 @@ export default {
     this.getTickets()
   },
   methods: {
+    ...mapMutations('activity', ['setTicketData']),
      isTicketing(ticketStartDate) {
       const startDate = new Date(ticketStartDate).getTime(); 
       const now = Date.now(); 
@@ -67,7 +71,7 @@ export default {
       const days = Math.floor(diffInMinutes / (60 * 24));
       const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
       const minutes = diffInMinutes % 60;
-      return `${days}日${hours}時${minutes}分`;
+      return `${days} 日 ${hours} 時 ${minutes} 分`;
     },
     changePage(page) {
       // 分頁變更事件處理器
@@ -93,6 +97,17 @@ export default {
           }
         });
     },
+    goCart(area_name, ticket_name, ticket_price, ticket_number, ticket_start_date, event_name, event_id) {
+      this.setTicketData({ stateData: 'area_name', data: area_name });
+      // this.setTicketData({ stateData: 'selectedTicketName', data: ticket_name });
+      // this.setTicketData({ stateData: 'l_ticket_price', data: ticket_price });
+      this.setTicketData({ stateData: 'ticket_number', data: ticket_number });
+      this.setTicketData({ stateData: 'l_ticket_start_date', data: ticket_start_date });
+      this.$router.push({
+        path: '/activity/detail/' + this.$convertToSlug(event_name, event_id) + '/buy-ticket/cart',
+        query: { pre: true }
+      });
+    }
   },
 }
 </script>
@@ -105,10 +120,15 @@ export default {
   box-shadow: 0px 2px 5px #00000066;
   border-radius: 10px;
   opacity: 1;
-  // @media(max-width: 576px) {
-  //   width: 305px;
-  //   height: 172px;
-  // }
+  @media(max-width: 576px) {
+    width: 305px;
+    height: 172px;
+  }
+  &:hover {
+    & .subject {
+      color: var(--primary-color);
+    }
+  }
 
   & .position-absolute {
     left: 1rem;
@@ -145,6 +165,9 @@ export default {
     width: 220px;
     height: 220px;
   }
+  & .cardRight{
+    width: 245px;
+  }
   & .countDown{
     font-size:16px;
   }
@@ -152,11 +175,7 @@ export default {
     padding-top:26px;
   }
   & .event_name{
-    max-width: 180px;
     margin-bottom: 5px;
   }
-}
-.flex-1 {
-    flex: 1; /* 子元素均等占据可用空间 */
 }
 </style>

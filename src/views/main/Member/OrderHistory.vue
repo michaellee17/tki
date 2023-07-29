@@ -93,14 +93,19 @@
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
+  <MessageModal ref="failModal">
+    <p class="text-center mb-0">支付沒有完成，請重新操作！</p>
+  </MessageModal>
 </template>
 <script>
 import SearchOrderDate from "../../../components/SearchOrderDate.vue";
 import PaginationA from "../../../components/PaginationA.vue";
 import OrderAngleCard from "../../../components/OrderAngleCard.vue";
+import MessageModal from "../../../components/gc/MessageModal.vue";
+
 import { mapGetters, mapActions } from 'vuex';
 export default {
-  components: { SearchOrderDate, OrderAngleCard, PaginationA },
+  components: { SearchOrderDate, OrderAngleCard, PaginationA, MessageModal },
   data() {
     return {
       // 1 = 待付款訂單
@@ -133,6 +138,9 @@ export default {
   },
   mounted() {
     this.getOrders()
+    if(this.$route.query.status && this.$route.query.status === '0') {
+      this.$refs.failModal.showModal();
+    }
   },
   methods: {
     changePage(page) {
