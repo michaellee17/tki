@@ -25,8 +25,10 @@
               活動分類
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li v-for="item in eventSubMenu" :key="item.class_id" class="border-bottom">
-                <router-link :to="'/activity/' + item.class_id" class="dropdown-item">{{ item.class_name }}</router-link>
+              <li v-for="(item, i) in eventSubMenu" :key="item.class_id">
+                <router-link :to="'/activity/' + item.class_id" class="dropdown-item" :class="{'border-bottom' : i !== eventSubMenu.length-1 }">
+                  {{ item.class_name }}
+                </router-link>
               </li>
             </ul>
           </li>

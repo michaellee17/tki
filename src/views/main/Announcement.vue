@@ -39,7 +39,7 @@ export default {
     return {
       announcements: [],
       numberOfItems: null,
-      itemsPerPage: 2,
+      itemsPerPage: 3,
       currentPage: null,
       test: "",
       selectedValue: "",

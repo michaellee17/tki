@@ -41,16 +41,23 @@
       <div class="d-flex justify-content-end gap-3">
         <button
           type="button" class="btn btn-outline-primaryA"
-          @click.prevent="() => $router.go(-1)">
+          @click.prevent="() => $router.push({ name: 'BuyTicketType' })">
           重新選位
         </button>
         <button
+          v-if="!pre"
           type="button" class="btn btn-outline-primaryA"
           @click.prevent="addToTicketList">
           加入購票清單
         </button>
         <button
-          v-if="basic_info.event_status === 2"
+          v-if="pre && !isTicketing(l_ticket_start_date)" 
+          type="button" class="btn btn-outline-primaryA d-flex gap-2 disable-btn" disabled>
+          <img src="../../../../assets/images/icons/icon_schedule.svg" class="time-icon">
+          {{ getRemainingTime(l_ticket_start_date) }} 後可以購買
+        </button>
+        <button
+          v-if="basic_info.event_status === 2 || isTicketing(l_ticket_start_date)"
           type="button" class="btn btn-outline-primaryA d-flex gap-2"
           @click.prevent="goCheckout">
           <p class="mb-0">直接結帳</p>
@@ -104,18 +111,23 @@ export default {
   },
   data() {
     return {
+      pre: false
     }
   },
   computed: {
     ...mapState('activity', ['isLoading', 'basic_info', 'ticket_info', 'ticket_limit',
-     'ticket_number', 'area_name' , 'selectedTicketName', 'area_status', 'orderData', 'routeActivityId']),
-    ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
+     'ticket_number', 'area_name' , 'selectedTicketName', 'area_status', 'orderData', 'routeActivityId', 'l_ticket_start_date']),
+     ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
     ...mapGetters('activity', ['ticketPrice', 'ticket_id']),
     totalAmount() {
       return this.ticketPrice * this.ticket_number;
     }
   },
   mounted() {
+    if(this.$route.query.pre) {
+      this.pre = true;
+    }
+    console.log(this.basic_info.event_status);
   },
   methods: {
     ...mapMutations('activity', ['setTicketData', 'minus','plus']),
@@ -128,7 +140,6 @@ export default {
       }
     },
     plusQty() {
-      console.log(this.ticket_limit)
       if(this.ticket_number === this.ticket_limit) {
         this.$refs.ticketPlusModal.showModal();
       }
@@ -149,8 +160,8 @@ export default {
               'Authorization': `Bearer ${this.getLoginData.access_token}`,
             }
           }).then(res => {
+            console.log(res.data);
             if (res.data.status_code === 'SYSTEM_1000') {
-              console.log(res.data);
               this.$refs.ticketListModal.showModal();
               setTimeout(() => {
                 this.$refs.ticketListModal.hideModal();
@@ -212,15 +223,25 @@ export default {
               this.setTicketData({ stateData: 'isLoading', data: false });
               break;
           }
-          // if (res.data.status_code === 'SYSTEM_1000') {
-          //   this.setTicketData({ stateData: 'orderData', data: res.data.data });
-          //   this.$router.push('checkout');
-          //   this.setTicketData({ stateData: 'isLoading', data: false });
-          // }
         }).catch(error => {
             console.error('error occurred:', error);
             this.setTicketData({ stateData: 'isLoading', data: false });
         })
+    },
+    isTicketing(ticketStartDate) {
+      const startDate = new Date(ticketStartDate).getTime(); 
+      const now = Date.now(); 
+      return now >= startDate;
+    },
+    getRemainingTime(ticketStartDate) {
+      const startDate = new Date(ticketStartDate).getTime(); 
+      const now = Date.now();
+      const diffInMillis = startDate - now;
+      const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
+      const days = Math.floor(diffInMinutes / (60 * 24));
+      const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
+      const minutes = diffInMinutes % 60;
+      return `${days} 日 ${hours} 時 ${minutes} 分`;
     },
   }
 }
@@ -262,5 +283,13 @@ export default {
   &::-webkit-scrollbar-thumb {
     background-color: var(--primary-color);
   }
+}
+.disable-btn {
+  color: #fff;
+  background-color: var(--secondary-color);
+  border: none;
+}
+.time-icon {
+  filter: var(--white-filter);
 }
 </style>
