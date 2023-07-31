@@ -160,6 +160,7 @@ export default {
 .up-button {
   bottom: 2%;
   right: 1%;
+  z-index: 100;
   &:hover {
     color: var(--primary-color);
   }

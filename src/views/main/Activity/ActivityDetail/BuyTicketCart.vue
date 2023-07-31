@@ -50,19 +50,23 @@
           @click.prevent="addToTicketList">
           加入購票清單
         </button>
-        <button
-          v-if="pre && !isTicketing(l_ticket_start_date)" 
-          type="button" class="btn btn-outline-primaryA d-flex gap-2 disable-btn" disabled>
-          <img src="../../../../assets/images/icons/icon_schedule.svg" class="time-icon">
-          {{ getRemainingTime(l_ticket_start_date) }} 後可以購買
-        </button>
-        <button
-          v-if="basic_info.event_status === 2 || isTicketing(l_ticket_start_date)"
-          type="button" class="btn btn-outline-primaryA d-flex gap-2"
-          @click.prevent="goCheckout">
-          <p class="mb-0">直接結帳</p>
-          <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
-        </button>
+        <div
+          v-show="pre && !isTicketing(l_ticket_start_date)"
+          id="countdownWrap">
+          <button
+            type="button" class="btn btn-outline-primaryA d-flex disable-btn" disabled>
+            <img src="../../../../assets/images/icons/icon_schedule.svg" class="time-icon me-2">
+            <span id="countdown">{{ getRemainingTime(l_ticket_start_date) }}</span>後可以購買
+          </button>
+        </div>
+        <div v-show="basic_info.event_status === 2 || isTicketing(l_ticket_start_date)" id="ticketing">
+          <button
+            type="button" class="btn btn-outline-primaryA d-flex gap-2"
+            @click.prevent="goCheckout">
+            <p class="mb-0">直接結帳</p>
+            <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -80,7 +84,10 @@
   </div>
   <loginModal ref="loginModal" />
   <MessageModal ref="ticketPlusModal">
-    <p class="text-center mb-0">您已經超過購買數量限制，請依照購買限制數量選擇您的票券。</p>
+    <p class="text-center mb-0">
+      您已經超過購買數量限制：<span class="text-danger px-1">{{ ticket_limit }}</span>張
+      ，請依照購買限制選擇您的票券。
+    </p>
   </MessageModal>
   <MessageModal ref="ticketMinusModal">
     <p class="text-center mb-0">購買數量不得小於 1 張。</p>
@@ -98,7 +105,6 @@
     <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
   </MessageModal>
 </template>
-<!-- 補寫購票清單導向過來的邏輯，只會顯示「直接結帳」和「結帳倒數」 -->
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
@@ -111,11 +117,16 @@ export default {
   },
   data() {
     return {
-      pre: false
+      pre: false,
+      timer: null
     }
   },
+  unmounted() {
+    clearInterval(this.timer);
+    console.log('clearcart')
+  },
   computed: {
-    ...mapState('activity', ['isLoading', 'basic_info', 'ticket_info', 'ticket_limit',
+    ...mapState('activity', ['l_ticket_name', 'isLoading', 'isUpdated', 'basic_info', 'ticket_info', 'ticket_limit', 'session_name',
      'ticket_number', 'area_name' , 'selectedTicketName', 'area_status', 'orderData', 'routeActivityId', 'l_ticket_start_date']),
      ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
     ...mapGetters('activity', ['ticketPrice', 'ticket_id']),
@@ -123,14 +134,18 @@ export default {
       return this.ticketPrice * this.ticket_number;
     }
   },
-  mounted() {
-    if(this.$route.query.pre) {
-      this.pre = true;
-    }
-    console.log(this.basic_info.event_status);
-  },
+  watch: {
+    isUpdated: {
+      immediate: true,
+      handler() {
+        if(this.$route.query.pre && this.isUpdated) {
+          this.preInit();
+        }
+      }
+    },
+    },
   methods: {
-    ...mapMutations('activity', ['setTicketData', 'minus','plus']),
+    ...mapMutations('activity', ['setTicketData', 'setListTicketData', 'minus','plus']),
     minusQty() {
       if(this.ticket_number === 1) {
         this.$refs.ticketMinusModal.showModal();
@@ -234,15 +249,43 @@ export default {
       return now >= startDate;
     },
     getRemainingTime(ticketStartDate) {
-      const startDate = new Date(ticketStartDate).getTime(); 
-      const now = Date.now();
-      const diffInMillis = startDate - now;
-      const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
-      const days = Math.floor(diffInMinutes / (60 * 24));
-      const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
-      const minutes = diffInMinutes % 60;
-      return `${days} 日 ${hours} 時 ${minutes} 分`;
+      if(!this.isTicketing(this.l_ticket_start_date)) {
+        this.$nextTick(()=>{
+        this.timer = setInterval(() => {
+          let countDownTime =''
+          const countDownWrap = document.getElementById(`countdownWrap`)
+          const countDownEl = document.getElementById(`countdown`)
+          const ticketingEl = document.getElementById(`ticketing`)
+          const startDate = new Date(ticketStartDate).getTime(); 
+          const now = Date.now(); 
+          const diffInMillis = startDate - now;
+          const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
+          const diffInSeconds = Math.floor(diffInMillis / 1000);
+          const days = Math.floor(diffInMinutes / (60 * 24));
+          const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
+          const minutes = diffInMinutes % 60;
+          const seconds = diffInSeconds % 60;
+          countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
+          console.log(countDownTime)
+          countDownEl.textContent = countDownTime;
+          if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
+            clearInterval(this.timer);
+            console.log('clear')
+            countDownWrap.style.display = 'none';
+            ticketingEl.style.display = 'block';
+          }
+        }, 1000)
+        })   
+      }
     },
+    preInit() {
+      // console.log('2', this.l_ticket_start_date)
+      this.pre = true;
+      this.setListTicketData();
+      const area_info = this.ticket_info.session_info.find( item => item.session_name === this.session_name).area_info;
+      const ticket_type_info = area_info.find( item => item.area_name === this.area_name).ticket_type_info;
+      this.setTicketData({ stateData: 'ticket_type_info', data: ticket_type_info });
+    }
   }
 }
 </script>

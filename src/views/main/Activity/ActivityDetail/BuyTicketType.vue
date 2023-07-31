@@ -3,7 +3,7 @@
   <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div class="">
-        <img src="../../../../assets/images/activity/news2.jpg" class="img-fluid" alt="">
+        <img :src="ticket_info.ticket_image_url" class="img-fluid" alt="">
       </div>
     </div>
     <div class="col-12 col-lg-6">
@@ -62,7 +62,9 @@
     </div>
   </div>
   <MessageModal ref="ticketPlusModal">
-    <p class="text-center mb-0">您已經超過購買數量限制，請依照購買限制數量選擇您的票券。</p>
+    <p class="text-center mb-0">您已經超過購買數量限制：<span class="text-danger px-1">{{ ticket_limit }}</span>張
+      ，請依照購買限制選擇您的票券。
+    </p>
   </MessageModal>
   <MessageModal ref="ticketMinusModal">
     <p class="text-center mb-0">購買數量不得小於 1 張。</p>
@@ -82,7 +84,7 @@ import MessageModal from "../../../../components/gc/MessageModal.vue";
       }
     },
     computed: {
-      ...mapState('activity', ['session_name', 'ticket_limit', 'area_name', 'area_status', 'ticket_type_info', 
+      ...mapState('activity', ['ticket_info', 'session_name', 'ticket_limit', 'area_name', 'area_status', 'ticket_type_info', 
       'recommendList', 'ticket_number', 'selectedTicketName']),
       ...mapGetters('activity', ['ticketPrice']),
       TicketName: {
@@ -113,7 +115,8 @@ import MessageModal from "../../../../components/gc/MessageModal.vue";
         if(this.ticket_number === this.ticket_limit) {
           this.$refs.ticketPlusModal.showModal();
         }
-        if(this.ticket_number === -1 || this.ticket_number < this.ticket_limit){
+        console.log(this.ticket_number === -1);
+        if(this.ticket_limit === -1 || this.ticket_number < this.ticket_limit){
           this.plus();
         }
       },

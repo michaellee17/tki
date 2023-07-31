@@ -44,10 +44,10 @@ export default {
   top: 70%;
   transform: translateY(-50%);
   & .modal-dialog {
-    width: 280px;
+    width: 300px;
   }
   & .modal-body {
-    padding: 1rem 1.5rem 2rem 1.5rem;
+    padding: 1rem 1.5rem 2.5rem 1.5rem;
   }
   & .modal-content {
     // background-color: var(--primary-color);
