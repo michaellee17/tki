@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       bankData: {},
-      timer : 3,
+      timer : null,
       currentTime: ''
     }
   },
@@ -95,6 +95,9 @@ export default {
     this.scrollToPosition();
     this.getBankData();
     this.checkTime();
+  },
+  unmounted() {
+    clearInterval(this.timer);
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
@@ -137,17 +140,17 @@ export default {
           })
     },
     checkTime() {
-      let timer = setInterval( () => {
+      timer = setInterval( () => {
         this.currentTime = new Date();
         let expiredTime = new Date(this.bankData.payment_time_limit.replace(' ', 'T'));
-        let test = new Date('2023-07-28 19:32:21'.replace(' ', 'T'));
-          if(this.currentTime.getTime() > test.getTime()) {
+        // let test = new Date('2023-07-28 19:32:21'.replace(' ', 'T'));
+          if(this.currentTime.getTime() > expiredTime.getTime()) {
             this.$refs.afterPaymentModal.showModal();
             setTimeout(() => {
               this.$refs.afterPaymentModal.hideModal();
               this.$router.replace({ name: 'BuyTicketSession', params: { activityId: this.routeActivityId } });
             }, 3000);
-            clearInterval(timer);
+            clearInterval(this.timer);
           }
       }, 1000 )
     },

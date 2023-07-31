@@ -55,6 +55,9 @@
   background-repeat: no-repeat;
 }
 /* button */
+.btn:focus {
+  box-shadow: none!important;
+}
 .btn-outline-primaryA {
   border-radius: 28px;
   border: 1px solid var(--primary-color);

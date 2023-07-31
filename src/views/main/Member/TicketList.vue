@@ -2,21 +2,21 @@
   <h3 class="text-primary mb-4">購票清單</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
     <a
-      v-for="item in tickets"
+      v-for="(item, i) in tickets"
       :key="item.event_id"
       href="#" class="d-flex cardMain" 
-      @click.prevent="goCart(item.session_area, '', item.ticket_price, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
-      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${item.reserve_image_url}')` }" />
+      @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
+      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
           <p class="subject ellipsis-1">{{ item.performer }}</p>
           <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
-          <p class="small">{{ item.session_area }}</p>
+          <p class="small">{{ item.session_name }} {{ item.area_name }}</p>
           <h3 class="price">$ {{ item.ticket_price }} x {{ item.ticket_number }}</h3>
           <p class="countDown d-flex gap-2">
             <img src="../../../assets/images/icons/icon_schedule.svg">
-            <span v-if="isTicketing(item.ticket_start_date)" class="grabbing">搶票中</span>
-            <span v-else class="grabbing">{{ getRemainingTime(item.ticket_start_date) }}</span>
+            <span v-show="isTicketing(item.ticket_start_date)" :id="'ticketing'+i" class="grabbing">搶票中</span>
+            <span v-show="!isTicketing(item.ticket_start_date)" :id="'countdown'+i" class="grabbing">{{ getRemainingTime(item.ticket_start_date, i) }}</span>
           </p>
         </div>
       </div>
@@ -30,19 +30,25 @@
 <script>
 import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   components: { SearchOrderDate, PaginationA },
   data() {
     return {
       tickets: [],
-      currentPage: 1, // 當前分頁
+      currentPage: 8, // 當前分頁
       itemsPerPage: 4, // 每頁顯示的項目數量
       total:'',
+      timer: null
     }
+  },
+  unmounted() {
+    clearInterval(this.timer);
+    console.log('clearlist')
   },
   computed: {
     ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
+    ...mapState('activity', ['ticket_info',]),
     totalPages() {
       return Math.ceil(this.total / this.itemsPerPage);
     },
@@ -56,23 +62,46 @@ export default {
   },
   mounted() {
     this.getTickets()
+    console.log(this.tickets)
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
      isTicketing(ticketStartDate) {
       const startDate = new Date(ticketStartDate).getTime(); 
-      const now = Date.now(); 
+      const now = Date.now()
       return now >= startDate;
     },
-    getRemainingTime(ticketStartDate) {
-      const startDate = new Date(ticketStartDate).getTime(); 
-      const now = Date.now(); // 获取当前时间的时间戳（毫秒）
-      const diffInMillis = startDate - now;
-      const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
-      const days = Math.floor(diffInMinutes / (60 * 24));
-      const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
-      const minutes = diffInMinutes % 60;
-      return `${days} 日 ${hours} 時 ${minutes} 分`;
+    getRemainingTime(ticketStartDate, i) {
+      if(!this.isTicketing(ticketStartDate)) {
+        this.$nextTick(()=> {
+        this.timer = setInterval(() => {
+        // let ticketStartDate = '2023-07-31 19:21:50'
+        let countDownTime =''
+        const countDownEl = document.getElementById(`countdown${i}`)
+        const ticketingEl = document.getElementById(`ticketing${i}`)
+        const startDate = new Date(ticketStartDate).getTime(); 
+        const now = Date.now(); // 获取当前时间的时间戳（毫秒）
+        const diffInMillis = startDate - now;
+        const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
+        const diffInSeconds = Math.floor(diffInMillis / 1000);
+        const days = Math.floor(diffInMinutes / (60 * 24));
+        const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
+        const minutes = diffInMinutes % 60;
+        const seconds = diffInSeconds % 60;
+        countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
+        console.log(countDownEl)
+        if(countDownEl) {
+          countDownEl.textContent = countDownTime
+          if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
+            clearInterval(this.timer);
+            countDownEl.style.display = 'none';
+            ticketingEl.style.display = 'block';
+          }
+
+        }
+      }, 1000)
+      })
+      }
     },
     changePage(page) {
       // 分頁變更事件處理器
@@ -94,16 +123,17 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
-            console.log(res.data);
           }
         });
     },
-    goCart(area_name, ticket_name, ticket_price, ticket_number, ticket_start_date, event_name, event_id) {
-      this.setTicketData({ stateData: 'area_name', data: area_name });
-      // this.setTicketData({ stateData: 'selectedTicketName', data: ticket_name });
-      // this.setTicketData({ stateData: 'l_ticket_price', data: ticket_price });
-      this.setTicketData({ stateData: 'ticket_number', data: ticket_number });
+    goCart(session_name, area_name, ticket_name, ticket_number, ticket_start_date, event_name, event_id) {
+      this.setTicketData({ stateData: 'l_session_name', data: session_name });
+      this.setTicketData({ stateData: 'l_area_name', data: area_name });
+      this.setTicketData({ stateData: 'l_ticket_name', data: ticket_name });
+      this.setTicketData({ stateData: 'l_ticket_number', data: ticket_number });
       this.setTicketData({ stateData: 'l_ticket_start_date', data: ticket_start_date });
+      // this.setTicketData({ stateData: 'isUpdated', data: true });
+
       this.$router.push({
         path: '/activity/detail/' + this.$convertToSlug(event_name, event_id) + '/buy-ticket/cart',
         query: { pre: true }
@@ -165,6 +195,7 @@ export default {
   & .cardLeft{
     width: 220px;
     height: 220px;
+    border-radius: 10px 0px 0px 10px;
   }
   & .cardRight{
     width: 245px;

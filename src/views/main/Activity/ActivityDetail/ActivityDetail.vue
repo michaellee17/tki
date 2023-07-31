@@ -106,11 +106,15 @@ export default {
     }
     },
   created() {
+    // this.setTicketData({ stateData: 'isUpdated', data: false });
     this.setTicketData({ stateData: 'isLoading', data: true });
     this.getData(this.eventId);
     if(this.getLoginStatus) {
       this.checkCollection();
     }
+  },
+  mounted() {
+    this.setTicketData({ stateData: 'routeActivityId', data: this.$route.params.activityId });
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),

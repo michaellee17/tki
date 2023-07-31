@@ -315,8 +315,7 @@ nav {
   & .nav-link {
     color: #fff;
     letter-spacing: 3px;
-
-    &:hover {
+    &:hover:not(.login-dropdown .nav-link) {
       color: #000;
     }
   }
