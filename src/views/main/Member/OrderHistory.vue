@@ -152,7 +152,7 @@ export default {
       const accessToken = this.getLoginData.access_token
       const params = {
         payment_type:this.order_status,
-        limit:4, //總回傳筆數，預設為4
+        limit:this.itemsPerPage, //總回傳筆數，預設為4
         page:this.currentPage, //總回傳頁數，預設為1
       };
       this.axios.post(apiUrl, params, {

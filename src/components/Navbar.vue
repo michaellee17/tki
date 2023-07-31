@@ -48,7 +48,7 @@
         <input
           ref="searchInput" v-model="searchData" type="text" placeholder="搜尋活動..."
           class="search-input web"
-          @mouseenter="handleMouseEnter">
+          @focus="handleMouseEnter">
         <a type="button" class="search-icon" @click="sendSearch">
           <font-awesome-icon :icon="['fas', 'search']" />
         </a>

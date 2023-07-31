@@ -48,7 +48,7 @@
             <button type="button" class="btn btn-info link-light w-50" @click="vertifyOTP">驗證</button>
           </div>
         </div>
-        <div class="mb-3 row justify-content-center align-items-center">
+        <div v-if="isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center">
           <label for="password" class="col-3 form-label text-nowrap">密碼</label>
           <div class="col-9">
             <input
@@ -57,7 +57,7 @@
               aria-describedby="password" minlength="8" required>
           </div>
         </div>
-        <div class="mb-4 row justify-content-center align-items-center">
+        <div v-if="isRegisterOTPVertify" class="mb-4 row justify-content-center align-items-center">
           <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
           <div class="col-9">
             <input
@@ -69,7 +69,7 @@
         <div class="text-end mb-2 d-flex">
           <a class="text-decoration-none link-secondary" @click="changePage">回上一步</a>
         </div>
-        <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendRegister">送出</button>
+        <button v-if="isRegisterOTPVertify" type="button" class="btn btn-primary link-light w-100 py-2" @click="sendRegister">送出</button>
       </form>
     </div>
   </div>
@@ -219,6 +219,8 @@ export default{
             this.registerPsw1 = '';
             this.registerPsw2 = '';
             this.registerOTP = '';
+            this.isRegisterOTPSend = false;
+            this.isRegisterOTPVertify = false;
           }
           if (res.data.status_code === 'SYSTEM_1001') {
             Swal.fire({

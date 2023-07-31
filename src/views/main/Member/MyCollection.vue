@@ -1,8 +1,9 @@
 <template>
   <h3 class="text-primary mb-4">我的收藏</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
-    <router-link :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'"
-      v-for="item in lists" :key="item.event_id" class="collection bg-cover text-white position-relative"
+    <router-link
+      v-for="item in lists"
+      :key="item.event_id" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'" class="collection bg-cover text-white position-relative"
       :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + item.main_imageH_url + ')' }">
       <div class="position-absolute bottom-0">
         <h4 class="fw-bold">{{ item.performer }}</h4>
@@ -58,7 +59,7 @@ export default {
           'Authorization': `Bearer ${accessToken}`
         },
         params:{
-          limit:4, 
+          limit:this.itemsPerPage, 
           page:this.currentPage, 
         },
       })
