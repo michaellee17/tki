@@ -2,13 +2,16 @@
   <layout-announcement>
     <div class="col-sm-12 col-lg-8  blog-post-list">
       <BlogCard v-for="announcement in announcements" :key="announcement.id" v-bind="announcement" />
-      <div class="blog-pagination d-flex align-items-start">
-        <pagination-buttons
+      <!-- <div class="blog-pagination d-flex align-items-start">
+       <pagination-buttons
           v-if="numberOfItems / itemsPerPage > 1"
           class="my-2"
           :page-numbers="numberOfItems / itemsPerPage"
           :current-page="currentPage"
           @onChangePageNoRequest="changePage" />
+      </div> -->
+      <div class="d-flex justify-content-end">
+        <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
       </div>
     </div>
   </layout-announcement>
@@ -21,6 +24,7 @@ import BlogCard from "../../components/molecules/Blog/BlogCard.vue";
 import LayoutAnnouncement from "../../components/LayoutAnnouncement.vue";
 import Breadcrumb from "../../components/atoms/Breadcrumb/Breadcrumb.vue";
 import PaginationButtons from "../../components/atoms/PaginationButtons/PaginationButtons.vue";
+import PaginationA from "../../components/PaginationA.vue";
 // import BlogWidgets from "../../components/molecules/Blog/BlogWidgets.vue";
 
 
@@ -33,6 +37,7 @@ export default {
     LayoutAnnouncement,
     Breadcrumb,
     PaginationButtons,
+    PaginationA,
     // BlogWidgets,
   },
   data() {
@@ -48,6 +53,9 @@ export default {
     };
   },
   computed: {
+    totalPages() {
+      return Math.ceil(this.numberOfItems / this.itemsPerPage);
+    },
     pageId() {
       return this.$route.params.pageId;
     },
@@ -70,7 +78,12 @@ export default {
   watch: {
     pageId: function() { 
       this.getAnnouncements();
-     } 
+     },
+    currentPage(nVal,oVal){
+      if(nVal){
+        this.getAnnouncements();
+      }
+    },
   },
   created() {
     document.title = "最新公告 - T-KI";
@@ -87,6 +100,7 @@ export default {
       this.axios.get(`${process.env.VUE_APP_PATH}/announcement/get_list?page=${this.currentPage}&limit=${this.itemsPerPage}`)
       .then(res => { 
         if (res.data.status_code === 'SYSTEM_1000') {
+          console.log(res);
           this.announcements = res.data.data ;
           this.numberOfItems = res.data.total;
         } else {

@@ -1,11 +1,12 @@
 <template>
   <h3 class="text-primary mb-4">購票清單</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
-    <a href="#"
+    <a
       v-for="item in tickets"
-      :key="item.event_id" class="d-flex cardMain" 
+      :key="item.event_id"
+      href="#" class="d-flex cardMain" 
       @click.prevent="goCart(item.session_area, '', item.ticket_price, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
-      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${item.main_imageH_url}')` }" />
+      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${item.reserve_image_url}')` }" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
           <p class="subject ellipsis-1">{{ item.performer }}</p>

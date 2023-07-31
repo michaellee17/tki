@@ -65,7 +65,9 @@
           </div>
         </div>
         <!-- 會員註冊 -->
-        <Register v-show="isRegisterOpen" ref="memberInfoPage" :open="isRegisterOpen"  @register-hide="handleRegister(false)" @after-login="handleRegister('close')"/>
+        <Register
+          v-if="isRegisterOpen" :open="isRegisterOpen" @register-hide="handleRegister(false)" 
+          @after-login="handleRegister('close')" />
         <!-- 第三方註冊 -->
         <div ref="platformRegister">
           <div class="modal-body text-second pb-5">
@@ -169,7 +171,7 @@
             </form>
           </div>
         </div>
-        <Forget v-show="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)" @after-forget="handleForget('close')" />
+        <Forget v-if="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)" @after-forget="handleForget('close')" />
       </div>
     </div>
   </div>
@@ -258,6 +260,7 @@ export default {
       const modalClose = this.$refs.modalClose;
       modalClose.click();
     },
+    //解綁
     enterKeyupDestroyed() {
       document.removeEventListener("keyup", this.enterKey);
     },
@@ -271,19 +274,18 @@ export default {
         if (this.$refs.accountLoginPage.classList.contains('active')) {
           //登入流程
           this.sendLogin();
-        } 
-           //第三方流程流程
-          else if (this.$refs.platformRegister.classList.contains('active')) {
-          if(this.isplatformOTPSend === false){
-            this.platformSendOTP()
-          }
-          if(this.isplatformOTPSend === true && this.isplatformOTPVertify === false){
-            this.platformVertifyOTP()
-          }
-          if(this.isplatformOTPVertify === true){
-            this.sendPlatform()
-          }
-        } 
+      } //第三方流程流程
+        else if (this.$refs.platformRegister.classList.contains('active')) {
+        if(this.isplatformOTPSend === false){
+          this.platformSendOTP()
+        }
+        if(this.isplatformOTPSend === true && this.isplatformOTPVertify === false){
+          this.platformVertifyOTP()
+        }
+        if(this.isplatformOTPVertify === true){
+          this.sendPlatform()
+        }
+      } 
       }
     },
     //登入後回到原頁面並更換NAVBAR的使用者資訊

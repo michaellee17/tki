@@ -68,7 +68,7 @@ export default {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/my-tickets`;
       const accessToken = this.getLoginData.access_token
       const params = {
-        limit:4, //總回傳筆數，預設為4
+        limit:this.itemsPerPage, //總回傳筆數，預設為4
         page:this.currentPage, //總回傳頁數，預設為1
       };
       this.axios.get(apiUrl, {
