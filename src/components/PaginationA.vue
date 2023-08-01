@@ -48,6 +48,7 @@ export default {
   methods: {
     changePage(page) {
       if (page >= 1 && page <= this.totalPages) {
+        window.scrollTo(0, 0);
         this.$emit('page-changed', page);
       }
     },

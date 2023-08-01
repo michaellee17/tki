@@ -17,7 +17,7 @@ export default {
     //line登入觸發跳窗
     lineLogin() {
       const router = this.$router;
-      const routePath = '/line-login'; // 替換為您的路徑
+      const routePath = '/line-login';
       const fullPath = router.resolve(routePath).href;
       const windowWidth = 500;
       const windowHeight = 550;

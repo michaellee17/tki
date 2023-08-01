@@ -311,7 +311,7 @@ export default{
      //註冊送出otp
      sendOTP() {
       // 驗證手機號碼格式
-      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      const phoneRegex = /^[0-9]{10}$/; 
       if (!phoneRegex.test(this.registerPhone)) {
         Swal.fire({
           icon: 'error',
