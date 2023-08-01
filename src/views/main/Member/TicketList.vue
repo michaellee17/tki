@@ -1,4 +1,8 @@
 <template>
+  <Loading
+    :active="isLoading"
+    :color="'#f5742e'"
+    :opacity="0.7" />
   <h3 class="text-primary mb-4">購票清單</h3>
   <section class="d-flex flex-wrap gap-4 mb-3">
     <div
@@ -39,16 +43,13 @@ export default {
   components: { SearchOrderDate, PaginationA },
   data() {
     return {
+      isLoading: true,
       tickets: [],
-      currentPage: 8, // 當前分頁
+      currentPage: 1, // 當前分頁
       itemsPerPage: 4, // 每頁顯示的項目數量
-      total:'',
-      timer: null
+      total: '',
+      timer: []
     }
-  },
-  unmounted() {
-    clearInterval(this.timer);
-    console.log('clearlist')
   },
   computed: {
     ...mapGetters('user', ['getLoginStatus', 'getMemberData', 'getLoginData']), // 將 getLoginStatus 映射到計算屬性中
@@ -68,6 +69,12 @@ export default {
         this.getTickets()
       }
     },
+  },
+  unmounted() {
+    this.cleanTimer();
+  },
+  updated(){
+    this.cleanTimer();
   },
   mounted() {
     this.getTickets()
@@ -104,7 +111,7 @@ export default {
     getRemainingTime(ticketStartDate, i) {
       if(!this.isTicketing(ticketStartDate)) {
         this.$nextTick(()=> {
-        this.timer = setInterval(() => {
+        this.timer[i] = setInterval(() => {
         // let ticketStartDate = '2023-07-31 19:21:50'
         let countDownTime =''
         const countDownEl = document.getElementById(`countdown${i}`)
@@ -119,23 +126,32 @@ export default {
         const minutes = diffInMinutes % 60;
         const seconds = diffInSeconds % 60;
         countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
-        console.log(countDownEl)
-        if(countDownEl) {
+        // console.log(this.timer[i])
           countDownEl.textContent = countDownTime
+          this.isLoading = false;
           if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
-            clearInterval(this.timer);
+            clearInterval(this.timer[i]);
+            this.timer[i] = '';
             countDownEl.style.display = 'none';
             ticketingEl.style.display = 'block';
           }
-
-        }
-      }, 1000)
+        }, 1000);
       })
+      } else {
+        this.isLoading = false;
       }
+    },
+    cleanTimer() {
+      this.timer.forEach((item, i)=> {
+      clearInterval(item)
+      // console.log('clear',i)
+      });
+      this.timer = [];
     },
     changePage(page) {
       // 分頁變更事件處理器
       this.currentPage = page;
+      // this.cleanTimer();
     },
     getTickets() {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/get-ticket-list`;
@@ -150,9 +166,14 @@ export default {
         },
       })
         .then(res => {
+          console.log(res.data.status_code)
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
+            // this.isLoading = false;
+            console.log('isLoading', this.isLoading)
+          } else {
+            // this.isLoading = false;
           }
         });
     },

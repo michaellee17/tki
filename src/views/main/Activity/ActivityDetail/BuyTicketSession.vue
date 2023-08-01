@@ -39,7 +39,7 @@
                   <span v-for="(ticket, i) in area.ticket_type_info" :key="ticket.ticket_name">NTD {{ ticket.ticket_price }}<span v-if="i !== area.ticket_type_info.length - 1"> / </span></span>
                 </p>
               </div>
-              <p class="fs-5 text-secondary mb-0 remain-ticket">{{ area.remain_ticket }} ></p>
+              <p class="fs-5 link-secondary mb-0 remain-ticket">{{ area.remain_ticket }}<span class="ms-3 arrow-right" /></p>
             </div>
           </router-link>
         </div>
@@ -132,6 +132,10 @@ export default {
     & a:hover .remain-ticket, a:hover .link-dark {
       color: var(--primary-color)!important;
     }
+    & a:hover .arrow-right {
+      border: 1px solid var(--primary-color);
+      border-width: 0px 2px 2px 0;
+    }
 }
 .soldout {
     opacity: 0.5;
@@ -142,5 +146,11 @@ export default {
 }
 .swiper-slide {
     width: auto;
+}
+.arrow-right {
+  border: 1px solid var(--secondary-color);
+  border-width: 0px 2px 2px 0;
+  padding: 5px;
+  margin-bottom: 1px;
 }
 </style>
