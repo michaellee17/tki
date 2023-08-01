@@ -40,7 +40,7 @@ export default{
       tags:{},
       lists:[],
       currentPage: 1, // 當前分頁
-      itemsPerPage: 9, // 每頁顯示的項目數量
+      itemsPerPage: 1, // 每頁顯示的項目數量
     }
   },
   computed:{
@@ -84,7 +84,7 @@ export default{
     getInfo(){
       const apiUrl = `${process.env.VUE_APP_PATH}/event/get-district-main-list`;
       const params = {
-        limit:9, 
+        limit:this.itemsPerPage, 
         page:this.currentPage,
       };
       if(this.innerIndex != 0){

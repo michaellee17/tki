@@ -20,11 +20,11 @@
         <a v-if="!isIdentityEdit" class="text-primary edit" @click="isIdentityEdit = true">編輯</a>
         <div v-if="isIdentityEdit" class="d-flex gap-2">
           <a class="text-primary edit" @click="isIdentityEdit = false">返回</a>
-          <a class="text-primary edit" @click="isIdentityEdit = false">保存</a>
+          <a class="text-primary edit" @click="updateProfile('ID')">保存</a>
         </div>
       </div>
       <p v-show="!isIdentityEdit">A*********</p>
-      <input v-show="isIdentityEdit" ref="memberName" class="mb-0 text-gray-800" value="A*********">
+      <input v-show="isIdentityEdit" ref="memberID" class="mb-0 text-gray-800">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
@@ -201,6 +201,7 @@ export default {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/update_info`;
       let fullname = this.$refs.memberName.value
       let email = this.$refs.memberEmail.value
+      let ID = this.$refs.memberID.value
       if (fullname && !/^[\u4e00-\u9fa5a-zA-Z\s]+$/.test(fullname)) {
         Swal.fire({
           icon: 'error',
@@ -210,7 +211,6 @@ export default {
         });
         return;
       }
-      // 验证email格式是否正确
       if (email && !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
         Swal.fire({
           icon: 'error',
@@ -220,9 +220,37 @@ export default {
         });
         return;
       }
+      if (ID && !/^[A-Z]\d{9}$/.test(ID)) {
+        Swal.fire({
+          icon: 'error',
+          title: '身分證格式不符合',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      if(target === 'email' && email === ''){
+        Swal.fire({
+          icon: 'error',
+          title: '請輸入信箱資料',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
+      if(target === 'ID' && ID === ''){
+        Swal.fire({
+          icon: 'error',
+          title: '請輸入身份證字號',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        return;
+      }
       const requestData = {
         full_name: fullname,
-        email:email
+        email:email,
+        identification:ID
       };
       const accessToken = this.getLoginData.access_token
       this.axios.post(apiUrl, requestData, {
@@ -243,6 +271,9 @@ export default {
             }
             if(target === 'email'){
               this.isEmailEdit = false
+            }
+            if(target === 'ID'){
+              this.isIdentityEdit = false
             }
             this.updateMemberName(fullname)
             this.updateMemberEmail(email)

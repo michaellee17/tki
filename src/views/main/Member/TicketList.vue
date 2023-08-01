@@ -9,16 +9,19 @@
     <p>目前尚無資料。</p>
   </div>
   <section class="d-flex flex-wrap gap-4 mb-3">
-    <a
+    <div
       v-for="(item, i) in tickets"
       :key="item.event_id"
-      href="#" class="d-flex cardMain" 
-      @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
-      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" />
+       class="d-flex cardMain" 
+     >
+      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
-          <p class="subject ellipsis-1">{{ item.performer }}</p>
-          <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
+          <img class="close" src="../../../assets/images/icons/close1437.jpg" width="30" @click="deleteTicket(item.buy_ticket_id)">
+          <div @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
+            <p class="subject ellipsis-1"  >{{ item.performer }}</p>
+            <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
+          </div>
           <p class="small">{{ item.session_name }} {{ item.area_name }}</p>
           <h3 class="price">$ {{ item.ticket_price }} x {{ item.ticket_number }}</h3>
           <p class="countDown d-flex gap-2">
@@ -28,7 +31,7 @@
           </p>
         </div>
       </div>
-    </a>
+    </div>
   </section>
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
@@ -39,6 +42,7 @@
 import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import Swal from "sweetalert2";
 export default {
   components: { SearchOrderDate, PaginationA },
   data() {
@@ -63,7 +67,12 @@ export default {
       if(nVal){
         this.getTickets()
       }
-    }
+    },
+    tickets(nVal,oVal){
+      if(nVal){
+        this.getTickets()
+      }
+    },
   },
   unmounted() {
     this.cleanTimer();
@@ -76,6 +85,28 @@ export default {
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
+    deleteTicket(id){
+      const apiUrl = `${process.env.VUE_APP_PATH}/user/remove-ticket-list`;
+      const accessToken = this.getLoginData.access_token
+      const params = {
+        id:id
+      };
+      this.axios.post(apiUrl, params,{
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
+      })
+        .then(res => {
+          if (res.data.status_code === 'SYSTEM_1000') {
+            Swal.fire({
+              icon: 'success',
+              title: '移除購票清單成功',
+              showConfirmButton: false,
+              timer: 1500,
+            })
+          }
+        });
+    },
      isTicketing(ticketStartDate) {
       const startDate = new Date(ticketStartDate).getTime(); 
       const now = Date.now()
@@ -90,7 +121,7 @@ export default {
         const countDownEl = document.getElementById(`countdown${i}`)
         const ticketingEl = document.getElementById(`ticketing${i}`)
         const startDate = new Date(ticketStartDate).getTime(); 
-        const now = Date.now(); // 获取当前时间的时间戳（毫秒）
+        const now = Date.now(); 
         const diffInMillis = startDate - now;
         const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
         const diffInSeconds = Math.floor(diffInMillis / 1000);
@@ -131,7 +162,7 @@ export default {
       const accessToken = this.getLoginData.access_token
       const params = {
         limit:4, 
-        page:this.currentPage, //總回傳頁數，預設為1
+        page:this.currentPage,
       };
       this.axios.post(apiUrl, params,{
         headers: {
@@ -218,6 +249,7 @@ export default {
     margin-left: 10px;
   }
   & .subject{
+    cursor: pointer;
     color:black;
     font-size:20px;
     font-weight:600;
@@ -241,14 +273,30 @@ export default {
   & .grabbing{
     color:var(--primary-color);
   }
+  & .cardLeft{
+    cursor: pointer;
+    width: 220px;
+    height: 220px;
+    border-radius: 10px 0px 0px 10px;
+  }
+  & .cardRight{
+    width: 245px;
+  }
   & .countDown{
     font-size:16px;
   }
   & .rightTop{
+    position: relative;
     padding-top:26px;
   }
   & .event_name{
     margin-bottom: 5px;
   }
 }
+.close{
+  position: absolute;
+  right:0;
+  top:5px;
+}
+
 </style>

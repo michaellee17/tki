@@ -158,8 +158,8 @@ export default {
       const accessToken = this.getLoginData.access_token
       const params = {
         payment_type:this.order_status,
-        limit:this.itemsPerPage, //總回傳筆數，預設為4
-        page:this.currentPage, //總回傳頁數，預設為1
+        limit:this.itemsPerPage, 
+        page:this.currentPage, 
       };
       this.axios.post(apiUrl, params, {
         headers: {
@@ -170,7 +170,6 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.orders = res.data.data
             this.total = res.data.total
-            console.log(this.orders);
           }
         });
     },
