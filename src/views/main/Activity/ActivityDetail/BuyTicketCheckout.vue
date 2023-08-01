@@ -28,20 +28,20 @@
       </div>
       <div class="">
         <h5 class="fs-18 text-secondary mb-3">選擇支付方式</h5>
-        <div class="payment-method row justify-content-between">
-          <div class="col-6">
+        <div class="payment-method row justify-content-end flex-column flex-sm-row gap-3 gap-sm-0">
+          <div class="col-12 col-sm-6">
             <button 
             @click.prevent="checkout('VACC')"
-            type="button" class=" btn btn-outline-primaryB border-primary w-100 d-flex flex-column flex-lg-row justify-content-between">
+            type="button" class=" btn btn-outline-primaryB border-primary w-100 d-flex justify-content-between ">
               <img src="../../../../assets/images/icons/atm.svg" alt="atm" class="icon">
               <p class="mb-0">ATM付款</p>
               <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
             </button>
           </div>
-          <div class="col-6">
+          <div class="col-12 col-sm-6">
             <button 
             @click.prevent="checkout('CREDIT')"
-            type="button" class="btn btn-outline-primaryB border-primary w-100 d-flex flex-column flex-lg-row justify-content-between">
+            type="button" class="btn btn-outline-primaryB border-primary w-100 d-flex justify-content-between">
               <img src="../../../../assets/images/icons/credit-card.svg" alt="credit-card" class="icon">
               <p class="mb-0">信用卡付款</p>
               <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">

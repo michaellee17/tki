@@ -24,7 +24,7 @@
               aria-expanded="false">
               活動分類
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu animate slideIn" aria-labelledby="navbarDropdown">
               <li v-for="(item, i) in eventSubMenu" :key="item.class_id">
                 <router-link :to="'/activity/' + item.class_id" class="dropdown-item" :class="{'border-bottom' : i !== eventSubMenu.length-1 }">
                   {{ item.class_name }}
@@ -55,7 +55,7 @@
         <!-- search 歷史訊息 -->
         <div
           v-show="limitSearchList.length > 0" ref="searchDropdownMenu"
-          class="search-dropdown-menu d-none position-absolute">
+          class="search-dropdown-menu animate slideIn d-none position-absolute">
           <p class="recentSearch">最近搜尋</p>
           <a
             v-for="item in limitSearchList" :key="item" class="ellipsis-1 link-primary d-block mb-2"
@@ -78,7 +78,7 @@
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
           <span class="login-title">{{ memberName }}</span>
         </a>
-        <ul ref="dropdownMenuLogin" class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <ul ref="dropdownMenuLogin" class="dropdown-menu animate slideIn" aria-labelledby="navbarDropdown">
           <li class="border-bottom">
             <router-link
               :to="{ name: 'Info', params: { memberID: memberDataId } }"
@@ -366,7 +366,6 @@ nav {
       background-color: transparent;
     }
   }
-
   & .search-dropdown-menu {
     width: 200px;
     background-color: #fff;
@@ -411,12 +410,66 @@ nav {
   transform: translateY(-50%);
   color: var(--primary-color);
 }
-
 .closeBtn {
   border: none;
   background-color: white;
 }
-
 .recentSearch {
   margin-bottom: 0;
-}</style>
+}
+/* 將 click 改為滑入展開 */
+.dropdown-menu li:hover .sub-menu {
+  visibility: visible;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+/* dropdown-menu transition 效果 */
+@media (min-width: 576px) {
+  .animate {
+    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.5s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+@keyframes slideIn {
+  0% {
+    // transform: translateY(-1rem);
+    opacity: 0;
+  }
+
+  100% {
+    // transform: translateY(0rem);
+    opacity: 1;
+  }
+
+  0% {
+    // transform: translateY(-1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    // -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+
+  100% {
+    // -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+
+  0% {
+    // -webkit-transform: translateY(-1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
+
+</style>

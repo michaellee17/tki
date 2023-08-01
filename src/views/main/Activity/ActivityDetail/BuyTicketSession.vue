@@ -1,7 +1,7 @@
 <template>
   <h5 class="fs-18 text-secondary mb-3">購票資訊</h5>
   <div
-    v-if="ticket_info && ticket_info.session_info.length > 0" 
+    v-if="ticket_info.session_info && ticket_info.session_info.length > 0" 
     class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div>
@@ -36,7 +36,7 @@
               <div>
                 <h6 class="mb-1 link-dark">{{ area.area_name }}</h6>
                 <p class="text-primary mb-0">
-                  <span v-for="(ticket, i) in area.ticket_type_info" :key="ticket.ticket_name">NTD {{ ticket.ticket_price }}<span v-if="i !== area.ticket_type_info.length - 1"> / </span></span>
+                  <span v-for="(ticket, i) in area.ticket_type_info" :key="ticket.ticket_name">NTD {{ $currency(ticket.ticket_price) }}<span v-if="i !== area.ticket_type_info.length - 1"> / </span></span>
                 </p>
               </div>
               <p class="fs-5 link-secondary mb-0 remain-ticket">{{ area.remain_ticket }}<span class="ms-3 arrow-right" /></p>
@@ -74,7 +74,7 @@ export default {
     ticket_info: {
       immediate: true,
       handler(newTicketInfo) {
-        if (newTicketInfo && newTicketInfo.session_info.length > 0) {
+        if (newTicketInfo.session_info && newTicketInfo.session_info.length > 0) {
           this.currentSessionName = newTicketInfo.session_info[0].session_name;
           this.setTicketData({ stateData: 'ticket_limit', data: newTicketInfo.session_info[0].ticket_limit });
           this.init();

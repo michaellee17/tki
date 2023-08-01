@@ -18,7 +18,7 @@
         <h4 class="border-bottom pb-3 mb-3">{{ selectedTicketName }}</h4>
         <!-- <h4 class="border-bottom pb-3 mb-3">早鳥票 · A排 · 347</h4> -->
         <div class="d-flex justify-content-between">
-          <h4 class="mb-0">$ {{ ticketPrice }} x {{ ticket_number }}</h4>
+          <h4 class="mb-0">$ {{ $currency(ticketPrice) }} x {{ ticket_number }}</h4>
           <div class="num-wrap d-flex justify-content-center align-items-center gap-3 position-relative">
             <img
               src="../../../../assets/images/icons/remove.svg" alt="minus" 
@@ -36,9 +36,9 @@
       </div>
       <div class="text-end mb-4">
         <h6 class="fw-bold">總計支付金額</h6>
-        <h3 class="text-danger fw-bold">NTD {{ totalAmount }}</h3>
+        <h3 class="text-danger fw-bold">NTD {{ $currency(totalAmount) }}</h3>
       </div>
-      <div class="d-flex justify-content-end gap-3">
+      <div class="d-flex flex-column flex-sm-row  justify-content-end gap-3">
         <button
           type="button" class="btn btn-outline-primaryA"
           @click.prevent="() => $router.push({ name: 'BuyTicketType' })">
@@ -67,6 +67,12 @@
             <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
           </button>
         </div>
+        <button
+            type="button" class="btn btn-outline-primaryA d-flex gap-2"
+            @click.prevent="goCheckout">
+            <p class="mb-0">直接結帳</p>
+            <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
+          </button>
       </div>
     </div>
   </div>
@@ -341,5 +347,10 @@ export default {
 }
 .time-icon {
   filter: var(--white-filter);
+}
+@media(max-width:1200px){
+  .btn-outline-primaryA {
+    padding: 0.4rem 1.5rem;
+  }
 }
 </style>

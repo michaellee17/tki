@@ -20,6 +20,7 @@ import DateFormatter from "./plugins/DateFormatter.js"
 import FileSource from "./plugins/FileSource.js"
 import Slugerize from "./plugins/Slugerize.js"
 import { timeFormatter } from './methods/timeFormatter.js'
+import { currency } from './methods/currencyFilter.js'
 
 
 import "./icons/iconsSolid.js";
@@ -33,7 +34,8 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 
 const app = createApp(App);
 
-app.config.globalProperties.$timeFormatter = timeFormatter
+app.config.globalProperties.$timeFormatter = timeFormatter;
+app.config.globalProperties.$currency = currency;
 
 const gAuthOptions = {
   clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',

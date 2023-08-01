@@ -1,12 +1,18 @@
 <template>
   <h3 class="text-primary mb-4">訂單記錄</h3>
-  <div class="border-bottom row text-center mb-3">
+  <div class="order-status border-bottom row text-center mb-4">
     <p class="col-4 nav-tab-primary py-2" :class="{ 'active': order_status === 1 }" @click="order_status = 1">待付款</p>
     <p class="col-4 nav-tab-primary py-2" :class="{ 'active': order_status === 2 }" @click="order_status = 2">付款成功</p>
     <p class="col-4 nav-tab-primary py-2" :class="{ 'active': order_status === 3 }" @click="order_status = 3">付款失敗</p>
   </div>
   <!-- 訂單篩選時間先隱藏 -->
   <!-- <SearchOrderDate /> -->
+  <div
+    v-if="(order_status === 1 && orders.waiting_payment && orders.waiting_payment.length === 0) || 
+      (order_status === 2 && orders.success_payment && orders.success_payment.length === 0) || 
+      (order_status === 1 && orders.fail_payment && orders.fail_payment.length === 0)" class="text-center mt-2">
+    <p>目前尚無資料。</p>
+  </div>
   <section>
     <div v-if="order_status === 1" class="d-flex flex-wrap gap-4">
       <OrderAngleCard v-for="item in orders.waiting_payment" :key="item.order_id" :top-image="item.main_imageH_url">
@@ -80,7 +86,7 @@
           </li>
           <li class="d-flex justify-content-between">
             <p>訂單金額</p>
-            <p>NTD {{ item.order_amount.toLocaleString()}}</p>
+            <p>NTD {{ item.order_amount.toLocaleString() }}</p>
           </li>
           <li class="d-flex justify-content-between">
             <p>{{ item.created_at }}</p>
@@ -192,5 +198,13 @@ h4 {
   height: 29px;
   color:white;
   text-align: center;
+}
+.nav-tab-primary:hover {
+  cursor: pointer;
+}
+@media(max-width: 576px) {
+  .order-status p {
+    font-size: 1rem;
+  }
 }
 </style>
