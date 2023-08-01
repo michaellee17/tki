@@ -1,8 +1,8 @@
 <template>
-  <Loading
+  <!-- <Loading
     :active="isLoading"
     :color="'#f5742e'"
-    :opacity="0.7" />
+    :opacity="0.7" /> -->
   <h3 class="text-primary mb-4">購票清單</h3>
   <div
     v-if="tickets.length === 0" class="text-center mt-2">
@@ -12,14 +12,13 @@
     <div
       v-for="(item, i) in tickets"
       :key="item.event_id"
-       class="d-flex cardMain" 
-     >
+      class="d-flex cardMain">
       <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
           <img class="close" src="../../../assets/images/icons/close1437.jpg" width="30" @click="deleteTicket(item.buy_ticket_id)">
           <div @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
-            <p class="subject ellipsis-1"  >{{ item.performer }}</p>
+            <p class="subject ellipsis-1">{{ item.performer }}</p>
             <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
           </div>
           <p class="small">{{ item.session_name }} {{ item.area_name }}</p>
@@ -47,7 +46,7 @@ export default {
   components: { SearchOrderDate, PaginationA },
   data() {
     return {
-      isLoading: true,
+      isLoading: false,
       tickets: [],
       currentPage: 1, // 當前分頁
       itemsPerPage: 4, // 每頁顯示的項目數量
@@ -68,17 +67,18 @@ export default {
         this.getTickets()
       }
     },
-    tickets(nVal,oVal){
-      if(nVal){
-        this.getTickets()
-      }
-    },
   },
-  unmounted() {
+  beforeUnmount() {
+    // console.log('beforeUnmount')
     this.cleanTimer();
   },
+  // unmounted() {
+  //   console.log('unmounted')
+  //   this.cleanTimer();
+  // },
   updated(){
     this.cleanTimer();
+    // console.log('updated')
   },
   mounted() {
     this.getTickets();
@@ -115,34 +115,37 @@ export default {
     getRemainingTime(ticketStartDate, i) {
       if(!this.isTicketing(ticketStartDate)) {
         this.$nextTick(()=> {
-        this.timer[i] = setInterval(() => {
-        // let ticketStartDate = '2023-07-31 19:21:50'
-        let countDownTime =''
-        const countDownEl = document.getElementById(`countdown${i}`)
-        const ticketingEl = document.getElementById(`ticketing${i}`)
-        const startDate = new Date(ticketStartDate).getTime(); 
-        const now = Date.now(); 
-        const diffInMillis = startDate - now;
-        const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
-        const diffInSeconds = Math.floor(diffInMillis / 1000);
-        const days = Math.floor(diffInMinutes / (60 * 24));
-        const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
-        const minutes = diffInMinutes % 60;
-        const seconds = diffInSeconds % 60;
-        countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
-        // console.log(this.timer[i])
-          countDownEl.textContent = countDownTime
-          this.isLoading = false;
+        this.timer[i] = setInterval(setTimer(), 5000);
+        
+        function setTimer() {
+          let countDownTime =''
+          const countDownEl = document.getElementById(`countdown${i}`)
+          const ticketingEl = document.getElementById(`ticketing${i}`)
+          const startDate = new Date(ticketStartDate).getTime(); 
+          const now = Date.now(); 
+          const diffInMillis = startDate - now;
+          const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
+          const diffInSeconds = Math.floor(diffInMillis / 1000);
+          const days = Math.floor(diffInMinutes / (60 * 24));
+          const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
+          const minutes = diffInMinutes % 60;
+          const seconds = diffInSeconds % 60;
+          countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
+          countDownEl.textContent = countDownTime;
+
           if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
-            clearInterval(this.timer[i]);
-            this.timer[i] = '';
-            countDownEl.style.display = 'none';
-            ticketingEl.style.display = 'block';
-          }
-        }, 1000);
+          clearInterval(this.timer[i]);
+          this.timer[i] = '';
+          countDownEl.style.display = 'none';
+          ticketingEl.style.display = 'block';
+        }
+        }
+        // this.isLoading = false;
       })
       } else {
-        this.isLoading = false;
+        // console.log('else')
+        // this.isLoading = false;
+        return
       }
     },
     cleanTimer() {
@@ -154,8 +157,8 @@ export default {
     },
     changePage(page) {
       // 分頁變更事件處理器
+      this.cleanTimer();
       this.currentPage = page;
-      // this.cleanTimer();
     },
     getTickets() {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/get-ticket-list`;
@@ -173,8 +176,7 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
-            // this.isLoading = false;
-            console.log('isLoading', this.isLoading)
+            console.log('123')
           } else {
             this.isLoading = false;
           }
