@@ -27,6 +27,7 @@ export default {
       lists:[], //列表
       currentPage: 1, // 當前分頁
       itemsPerPage: 4, // 每頁顯示的項目數量
+      timer: null
     }
   },
   computed: {
@@ -45,6 +46,11 @@ export default {
   },
   mounted(){
     this.getColletions()
+    // this.timer = setInterval(()=>{
+    //   let num = 1;
+    //   num++
+    //   console.log(num)
+    // }, 1000)
   },
   methods: {
     changePage(page) {

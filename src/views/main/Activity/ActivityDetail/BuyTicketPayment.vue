@@ -97,7 +97,10 @@ export default {
     this.checkTime();
   },
   unmounted() {
-    clearInterval(this.timer);
+    this.cleanTimer();
+  },
+  updated(){
+    this.cleanTimer();
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
@@ -153,6 +156,11 @@ export default {
             clearInterval(this.timer);
           }
       }, 1000 )
+    },
+    cleanTimer() {
+      clearInterval(this.timer);
+      this.timer = null;
+      // console.log('clearpayment')
     },
   },
 }

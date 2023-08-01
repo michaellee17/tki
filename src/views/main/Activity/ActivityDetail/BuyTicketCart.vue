@@ -14,7 +14,7 @@
       <div class="roundedM bg-primary text-white p-4 mb-3">
         <p class="fs-5 mb-1">{{ basic_info.performer }}</p>
         <p class="fs-18 border-bottom pb-3">{{ basic_info.event_name }}</p>
-        <h4 class="mb-3">{{ area_name }}</h4>
+        <h4 class="mb-3">{{ session_name }} {{ area_name }}</h4>
         <h4 class="border-bottom pb-3 mb-3">{{ selectedTicketName }}</h4>
         <!-- <h4 class="border-bottom pb-3 mb-3">早鳥票 · A排 · 347</h4> -->
         <div class="d-flex justify-content-between">
@@ -121,14 +121,10 @@ export default {
       timer: null
     }
   },
-  unmounted() {
-    clearInterval(this.timer);
-    console.log('clearcart')
-  },
   computed: {
     ...mapState('activity', ['l_ticket_name', 'isLoading', 'isUpdated', 'basic_info', 'ticket_info', 'ticket_limit', 'session_name',
-     'ticket_number', 'area_name' , 'selectedTicketName', 'area_status', 'orderData', 'routeActivityId', 'l_ticket_start_date']),
-     ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
+    'ticket_number', 'area_name' , 'selectedTicketName', 'area_status', 'orderData', 'routeActivityId', 'l_ticket_start_date']),
+    ...mapGetters('user', ['getLoginData', 'getLoginStatus', 'getMemberData']),
     ...mapGetters('activity', ['ticketPrice', 'ticket_id']),
     totalAmount() {
       return this.ticketPrice * this.ticket_number;
@@ -143,7 +139,13 @@ export default {
         }
       }
     },
-    },
+  },
+  unmounted() {
+    this.cleanTimer();
+  },
+  updated(){
+    this.cleanTimer();
+  },
   methods: {
     ...mapMutations('activity', ['setTicketData', 'setListTicketData', 'minus','plus']),
     minusQty() {
@@ -266,7 +268,7 @@ export default {
           const minutes = diffInMinutes % 60;
           const seconds = diffInSeconds % 60;
           countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
-          console.log(countDownTime)
+          // console.log(countDownTime)
           countDownEl.textContent = countDownTime;
           if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
             clearInterval(this.timer);
@@ -277,6 +279,11 @@ export default {
         }, 1000)
         })   
       }
+    },
+    cleanTimer() {
+      clearInterval(this.timer);
+      this.timer = null;
+      // console.log('clearcart')
     },
     preInit() {
       // console.log('2', this.l_ticket_start_date)
