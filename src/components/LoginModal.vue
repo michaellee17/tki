@@ -492,7 +492,7 @@ export default {
     },
     //登入
     sendLogin() {
-      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      const phoneRegex = /^[0-9]{10}$/; 
       if (!phoneRegex.test(this.loginPhone)) {
         Swal.fire({
           icon: 'error',
@@ -562,7 +562,7 @@ export default {
     },
     //第三方註冊
     sendPlatform() {
-      const nameRegex = /^[a-zA-Z\s\u4E00-\u9FFF]+$/; // 只能包含中文、英文和空格
+      const nameRegex = /^[a-zA-Z\s\u4E00-\u9FFF]+$/; 
       if (!nameRegex.test(this.platformName)) {
         Swal.fire({
           icon: 'error',
@@ -574,7 +574,7 @@ export default {
         return;
       }
       // 驗證手機號碼格式
-      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
+      const phoneRegex = /^[0-9]{10}$/; 
       if (!phoneRegex.test(this.platformPhone)) {
         Swal.fire({
           icon: 'error',
@@ -774,7 +774,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-        return; // 停止繼續執行
+        return; 
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
       const requestData = {

@@ -110,7 +110,7 @@ export default {
         const countDownEl = document.getElementById(`countdown${i}`)
         const ticketingEl = document.getElementById(`ticketing${i}`)
         const startDate = new Date(ticketStartDate).getTime(); 
-        const now = Date.now(); // 获取当前时间的时间戳（毫秒）
+        const now = Date.now(); 
         const diffInMillis = startDate - now;
         const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
         const diffInSeconds = Math.floor(diffInMillis / 1000);
