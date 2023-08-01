@@ -4,6 +4,10 @@
     :color="'#f5742e'"
     :opacity="0.7" />
   <h3 class="text-primary mb-4">購票清單</h3>
+  <div
+    v-if="tickets.length === 0" class="text-center mt-2">
+    <p>目前尚無資料。</p>
+  </div>
   <section class="d-flex flex-wrap gap-4 mb-3">
     <div
       v-for="(item, i) in tickets"
@@ -77,7 +81,7 @@ export default {
     this.cleanTimer();
   },
   mounted() {
-    this.getTickets()
+    this.getTickets();
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
@@ -166,14 +170,13 @@ export default {
         },
       })
         .then(res => {
-          console.log(res.data.status_code)
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
             // this.isLoading = false;
             console.log('isLoading', this.isLoading)
           } else {
-            // this.isLoading = false;
+            this.isLoading = false;
           }
         });
     },
@@ -211,10 +214,36 @@ export default {
       color: var(--primary-color);
     }
   }
-
   & .position-absolute {
     left: 1rem;
   }
+  & .cardLeft{
+    width: 220px;
+    height: 220px;
+    border-radius: 10px 0px 0px 10px;
+    @media(max-width: 576px) {
+      width: 172px;
+      height: 172px;
+    }
+  }
+  & .cardRight{
+    width: 245px;
+    @media(max-width: 576px) {
+      width: 133px;
+    }
+  }
+  @media(max-width: 576px) {
+    div.rightTop {
+      padding-top: 10px;
+    }
+    .cardRight p, h3.price {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .cardRight img {
+      width: 16px;
+    }
+    }
   & .title{
     color:white;
     margin-left: 10px;

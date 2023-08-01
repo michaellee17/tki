@@ -11,7 +11,7 @@
         </div>
         <div class="title-top position-absolute text-white mb-1">
           <h1 class="fw-bold mb-3">{{ basic_info.performer }}</h1>
-          <p class="fs-4">{{ $timeFormatter(basic_info.release_date) }}</p>
+          <p class="fs-4">{{ basic_info.release_date ? $timeFormatter(basic_info.release_date) : '' }}</p>
           <!-- <p class="fs-4">2023/05/01 (週六) 19:00</p> -->
         </div>
         <div class="title-bottom position-absolute">
@@ -116,8 +116,11 @@ export default {
   mounted() {
     this.setTicketData({ stateData: 'routeActivityId', data: this.$route.params.activityId });
   },
+  unmounted() {
+    this.cleanData();
+  },
   methods: {
-    ...mapMutations('activity', ['setTicketData']),
+    ...mapMutations('activity', ['setTicketData', 'cleanData']),
     ...mapActions('activity', ['getData']),
     updateCollection() {
       if(this.getLoginStatus) {

@@ -145,6 +145,7 @@
     }
   }
   & .btn-prev, .btn-next {
+    width: 40px;
     z-index: 10;
     top: 50%;
     transform: translateY(-50%);

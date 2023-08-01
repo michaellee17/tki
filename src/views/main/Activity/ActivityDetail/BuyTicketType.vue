@@ -12,7 +12,7 @@
       <div class="d-flex align-items-center mb-2">
         <p class="fs-5">場次票價：</p>
         <!-- <p class="text-secondary text-decoration-line-through me-2">NTD 6,800</p> -->
-        <p v-if="ticketPrice" class="text-danger fs-5 v-">NTD {{ ticketPrice }}</p>
+        <p v-if="ticketPrice" class="text-danger fs-5 v-">NTD {{ $currency(ticketPrice) }}</p>
       </div>
       <p>選擇您要購買的票種</p>
       <div class="d-flex gap-4 align-items-center mb-3">
@@ -143,5 +143,8 @@ import MessageModal from "../../../../components/gc/MessageModal.vue";
 .choose-seat input:checked+label {
   color: #fff;
   background-color: var(--primary-color);
+}
+.choose-seat label:hover {
+  cursor: pointer;
 }
 </style>

@@ -1,5 +1,9 @@
 <template>
   <h3 class="text-primary mb-4">我的收藏</h3>
+  <div
+    v-if="lists.length === 0" class="text-center mt-2">
+    <p>目前尚無資料。</p>
+  </div>
   <section class="d-flex flex-wrap gap-4 mb-3">
     <router-link
       v-for="item in lists"
@@ -46,11 +50,6 @@ export default {
   },
   mounted(){
     this.getColletions()
-    // this.timer = setInterval(()=>{
-    //   let num = 1;
-    //   num++
-    //   console.log(num)
-    // }, 1000)
   },
   methods: {
     changePage(page) {
@@ -70,10 +69,10 @@ export default {
         },
       })
       .then(res => {
-        console.log(res);
         if (res.data.status_code === 'SYSTEM_1000') {
           this.lists = res.data.data
           this.total = res.data.total
+          console.log(this.lists);
         }
       });
     },

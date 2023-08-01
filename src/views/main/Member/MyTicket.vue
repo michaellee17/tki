@@ -1,6 +1,10 @@
 <template>
   <h3 class="text-primary mb-4">我的票券</h3>
   <!-- <TicketAngleCard /> -->
+  <div
+    v-if="tickets.length === 0" class="text-center mt-2">
+    <p>目前尚無資料。</p>
+  </div>
   <section class="d-flex flex-wrap gap-4">
     <OrderAngleCard  v-for="item in tickets" :key="item.event_id" :top-image="item.main_imageH_url">
       <ul>

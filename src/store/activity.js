@@ -37,13 +37,6 @@ export const activity = {
   }),
   mutations: {
     getData(state, data) {
-      /* 初始化 */
-      // state.basic_info = {};
-      // state.announcement_info = {};
-      // state.ticket_info = {};
-      // state.venue_info = {};
-      // state.matter_content = {};
-
       state.isLoading = false;
       state.basic_info = data.basic_info;
       state.announcement_info = data.announcement_info;
@@ -51,6 +44,13 @@ export const activity = {
       state.venue_info = data.venue_info;
       state.matter_content = data.matter_content;
       // console.log('mutation')
+    },
+    cleanData(state) {
+      state.basic_info = {};
+      state.announcement_info = {};
+      state.ticket_info = {};
+      state.venue_info = {};
+      state.matter_content = {};
     },
     getRecommendList(state, data) {
       state.recommendList = data;
