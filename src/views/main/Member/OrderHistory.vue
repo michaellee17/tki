@@ -164,7 +164,6 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.orders = res.data.data
             this.total = res.data.total
-            console.log(this.orders);
           }
         });
     },
