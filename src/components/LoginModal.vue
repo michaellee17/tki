@@ -79,7 +79,7 @@
                 <label for="name" class="col-3 form-label  text-nowrap mr-2">會員姓名</label>
                 <div class="col-9">
                   <input
-                    id="name" v-model="platformName" type="text" class="form-control" 
+                    id="name" ref="platformName" v-model="platformName" type="text" class="form-control" 
                     placeholder="輸入姓名"
                     aria-describedby="name" required>
                 </div>
@@ -88,7 +88,7 @@
                 <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
                 <div class="col-9">
                   <input
-                    id="tel" v-model="platformPhone" type="tel" class="form-control"
+                    id="tel" ref="platformPhone" v-model="platformPhone" type="tel" class="form-control"
                     placeholder="0912345678"
                     aria-describedby="tel" minlength="10" required>
                 </div>
@@ -104,7 +104,7 @@
                 <label for="code" class="col-3 form-label" />
                 <div class="col-9 d-flex align-items-center gap-2">
                   <input
-                    id="code" v-model="platformOTP" type="text" class="form-control"
+                    id="code" ref="platformOTP" v-model="platformOTP" type="text" class="form-control"
                     placeholder="輸入驗證碼"
                     aria-describedby="code" required>
                   <button type="button" class="btn btn-info link-light w-50" @click="platformVertifyOTP">驗證</button>
@@ -114,7 +114,7 @@
                 <label for="password" class="col-3 form-label text-nowrap">密碼</label>
                 <div class="col-9">
                   <input
-                    id="password" v-model="platformPsw1" type="password" class="form-control"
+                    id="password" ref="platformPsw1" v-model="platformPsw1" type="password" class="form-control"
                     placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
                 </div>
               </div>
@@ -145,7 +145,8 @@
                 <label for="loginTel" class="col-3 form-label">手機號碼</label>
                 <div class="col-9">
                   <input
-                    id="loginTel" v-model="loginPhone" type="tel" class="form-control"
+                    id="loginTel" ref="loginTel" v-model="loginPhone" type="tel"
+                    class="form-control"
                     placeholder="請輸入手機號碼"
                     aria-describedby="tel" minlength="10" required>
                 </div>
@@ -154,7 +155,7 @@
                 <label for="loginPassword" class="col-3 form-label">密碼</label>
                 <div class="col-9">
                   <input
-                    id="loginPassword" v-model="loginPsw" type="password" class="form-control"
+                    id="loginPassword" ref="loginPsw" v-model="loginPsw" type="password" class="form-control"
                     placeholder="請輸入密碼"
                     aria-describedby="password" minlength="8" required>
                 </div>
@@ -302,185 +303,7 @@ export default {
         .catch(error => {
         });
     },
-    //重設密碼
-    resetPsw() {
-      if (this.forgetPsw1 !== this.forgetPsw2) {
-        Swal.fire({
-          icon: 'error',
-          title: '兩次輸入的密碼不同',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-      const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
-      if (!passwordRegex.test(this.forgetPsw1)) {
-        Swal.fire({
-          icon: 'error',
-          title: '密碼格式不符合要求',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return;
-      }
-      const apiUrl = `${process.env.VUE_APP_PATH}/user/forget_password`;
-      const requestData = {
-        account: this.forgetPhone,
-        password: this.forgetPsw1,
-      };
-      this.axios.post(apiUrl, requestData)
-        .then(res => {
-          if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '設定新密碼成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
-            this.forgetCode = '';
-            this.forgetPhone = '';
-            this.forgetPsw1 = '';
-            this.forgetPsw2 = '';
-            const modalClose = this.$refs.modalClose;
-            modalClose.click();
-          }
-          if (res.data.status_code === 'SYSTEM_100') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不齊全',
-              showConfirmButton: false,
-              timer: 1500,
-            })
-          }
-          if (res.data.status_code === 'USER_2043') {
-            Swal.fire({
-              icon: 'error',
-              title: '用戶不存在',
-              showConfirmButton: false,
-              timer: 1500,
-            })
-          }
-        });
-    },
-    //忘記密碼驗證otp
-    forgetVertifyOTP() {
-      const apiUrl = `${process.env.VUE_APP_PATH}/user/verifyotp`;
-      const requestData = {
-        phone: this.forgetPhone,
-        otp: this.forgetCode
-      };
-      this.axios.post(apiUrl, requestData)
-        .then(res => {
-          if (res.data.status_code === 'SYSTEM_1000') {
-            this.isForgetOTPVertify = true;
-            Swal.fire({
-              icon: 'success',
-              title: '驗證成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
-          }
-          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
-            Swal.fire({
-              icon: 'error',
-              title: '驗證碼錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (res.data.status_code === 'SYSTEM_2093') {
-            Swal.fire({
-              icon: 'error',
-              title: '驗證碼錯誤超過五次，驗證失敗',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (res.data.status_code === 'USER_2091') {
-            Swal.fire({
-              icon: 'error',
-              title: '發送簡訊次數過於頻繁',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (res.data.status_code === 'USER_2099') {
-            Swal.fire({
-              icon: 'error',
-              title: 'OPT服務異常',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
 
-    },
-    //忘記密碼發送otp
-    forgetOTP() {
-      const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
-      if (!phoneRegex.test(this.forgetPhone)) {
-        Swal.fire({
-          icon: 'error',
-          title: '手機號碼格式不正確',
-          text: '請輸入有效的手機號碼',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        return; // 停止繼續執行
-      }
-      const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
-      const requestData = {
-        phone: this.forgetPhone,
-        method: "forget"
-      };
-      this.axios.post(apiUrl, requestData)
-        .then(res => {
-          if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '發送簡訊驗證碼成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            this.isForgetOTPSend = true;
-            this.startCountdown();
-          }
-          if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2094') {
-            Swal.fire({
-              icon: 'error',
-              title: '手機號碼格式不正確',
-              text: '請輸入有效的手機號碼',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
-            Swal.fire({
-              icon: 'error',
-              title: '請求過於頻繁',
-              text: '請稍後再嘗試',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (res.data.status_code === 'USER_2043') {
-            Swal.fire({
-              icon: 'error',
-              title: '用戶不存在',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-          if (res.data.status_code === 'USER_2099') {
-            Swal.fire({
-              icon: 'error',
-              title: 'OTP服務異常',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
-    },
     startCountdown(){
       this.remainingTime = 300;
       const intervalId = setInterval(() => {
@@ -499,8 +322,10 @@ export default {
           title: '手機號碼格式不正確',
           text: '請輸入有效的手機號碼',
           showConfirmButton: false,
+          keydownListenerCapture:true,
           timer: 1500,
         });
+        this.$refs.loginTel.focus()
         return; // 停止繼續執行
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
@@ -511,6 +336,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.loginPsw.focus()
         return;
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/login`;
@@ -540,6 +366,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.loginTel.focus()
           }
           if (res.data.status_code === 'USER_2011') {
             Swal.fire({
@@ -548,6 +375,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.loginTel.focus()
           }
           if (res.data.status_code === 'USER_2012') {
             Swal.fire({
@@ -556,6 +384,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.loginTel.focus()
           }
         });
 
@@ -571,6 +400,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.platformName.focus();
         return;
       }
       // 驗證手機號碼格式
@@ -583,6 +413,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.platformPhone.focus()
         return; // 停止繼續執行
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
@@ -593,6 +424,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.platformPsw1.focus()
         return;
       }
       if (this.isplatformOTPVertify === false) {
@@ -602,6 +434,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.platformOTP.focus()
         return;
       }
       if (this.platformPsw1 !== this.platformPsw2) {
@@ -611,6 +444,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.platformPsw1.focus()
         return;
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/register`;
@@ -682,6 +516,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformName.focus()
           }
           if (res.data.status_code === 'USER_2021') {
             Swal.fire({
@@ -690,6 +525,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'USER_2022') {
             Swal.fire({
@@ -698,6 +534,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPsw1.focus()
           }
           if (res.data.status_code === 'USER_2023') {
             Swal.fire({
@@ -706,6 +543,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformName.focus()
           }
           if (res.data.status_code === 'USER_2041') {
             Swal.fire({
@@ -714,6 +552,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPsw1.focus()
           }
           if (res.data.status_code === 'USER_2082' || res.data.status_code === 'USER_2081') {
             Swal.fire({
@@ -722,6 +561,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPsw1.focus()
           }
         });
     },
@@ -751,6 +591,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformOTP.focus()
           }
           if (res.data.status_code === 'SYSTEM_2093') {
             Swal.fire({
@@ -759,6 +600,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformOTP.focus()
           }
         });
     },
@@ -774,6 +616,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.platformPhone.focus()
         return; 
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
@@ -801,6 +644,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
             Swal.fire({
@@ -810,6 +654,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'USER_2041') {
             Swal.fire({
@@ -818,6 +663,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'USER_2099') {
             Swal.fire({
@@ -826,6 +672,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.platformPhone.focus()
           }
         });
     },
