@@ -182,9 +182,9 @@ h4 {
   white-space: nowrap;
   overflow: hidden;
 }
-.event_name{
-  max-width: 350px;
-}
+// .event_name{
+//   max-width: 350px;
+// }
 .price{
   font-size:24px;
 }

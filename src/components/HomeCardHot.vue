@@ -12,7 +12,7 @@
       <swiper-slide v-for="event in data" :key="event.class_name">
         <button
           type="button" :class="{ active : event.class_name === currentClass }"
-          class="btn btn-outline-primaryA fs-18" 
+          class="btn btn-outline-primaryA fs-18 my-1" 
           @click="currentClass = event.class_name">
           {{ event.class_name }}
         </button>
