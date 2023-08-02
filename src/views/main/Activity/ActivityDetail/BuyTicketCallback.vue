@@ -27,6 +27,7 @@ export default {
         break;
       /* ATM取號 */
       case '2':
+        console.log(this.routeActivityId)
         this.$router.push({ name: 'BuyTicketPayment', params: { activityId: this.routeActivityId } });
         break;
       default:

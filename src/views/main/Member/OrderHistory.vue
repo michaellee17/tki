@@ -26,11 +26,11 @@
           <li class="d-flex justify-content-between">
             <p>{{ item.session_area }}</p>
           </li>
-          <li class="d-flex justify-content-between">
+          <li class="d-flex justify-content-between align-items-center">
             <p class="price">${{ item.ticket_price.toLocaleString() }} x {{ item.ticket_number }}</p>
-            <router-link v-if="item.order_status === 0" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="link_button">付款</router-link>
-            <router-link v-if="item.order_status === 1" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="link_button">重新付款</router-link>
-            <router-link v-if="item.order_status === 2" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="link_button">ATM付款詳情</router-link>
+            <router-link v-if="item.order_status === 0" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn px-3 link_button">付款</router-link>
+            <router-link v-if="item.order_status === 1" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn px-3 link_button">重新付款</router-link>
+            <router-link v-if="item.order_status === 2" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn px-3 link_button">ATM付款詳情</router-link>
           </li>
           <li class="d-flex justify-content-between">
             <p>{{ item.created_at }}</p>
@@ -189,14 +189,17 @@ h4 {
   font-size:24px;
 }
 .link_button{
-  background: #FFFFFF1F 0% 0% no-repeat padding-box;
+  background: #FFFFFF1F;
   border: 1px solid #FFFFFF;
   border-radius: 28px;
   opacity: 1;
-  width: 70px;
-  height: 29px;
+  // width: 70px;
+  // height: 30px;
   color:white;
   text-align: center;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 .nav-tab-primary:hover {
   cursor: pointer;

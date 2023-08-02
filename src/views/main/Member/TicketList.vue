@@ -116,7 +116,7 @@ export default {
     getRemainingTime(ticketStartDate, i) {
       if(!this.isTicketing(ticketStartDate)) {
         this.$nextTick(()=> {
-        this.timer[i] = setInterval(setTimer(), 5000);
+        this.timer[i] = setInterval(setTimer(), 1000);
         
         function setTimer() {
           let countDownTime =''
@@ -140,7 +140,7 @@ export default {
           countDownEl.style.display = 'none';
           ticketingEl.style.display = 'block';
         }
-        }
+      }
         // this.isLoading = false;
       })
       } else {
