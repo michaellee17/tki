@@ -115,7 +115,7 @@ export default {
     getRemainingTime(ticketStartDate, i) {
       if(!this.isTicketing(ticketStartDate)) {
         this.$nextTick(()=> {
-        this.timer[i] = setInterval(setTimer(), 5000);
+        this.timer[i] = setInterval(setTimer(), 1000);
         
         function setTimer() {
           let countDownTime =''
@@ -139,7 +139,7 @@ export default {
           countDownEl.style.display = 'none';
           ticketingEl.style.display = 'block';
         }
-        }
+      }
         // this.isLoading = false;
       })
       } else {
@@ -176,7 +176,6 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
-            console.log('123')
           } else {
             this.isLoading = false;
           }

@@ -143,7 +143,7 @@ export default {
           })
     },
     checkTime() {
-      timer = setInterval( () => {
+      this.timer = setInterval( () => {
         this.currentTime = new Date();
         let expiredTime = new Date(this.bankData.payment_time_limit.replace(' ', 'T'));
         // let test = new Date('2023-07-28 19:32:21'.replace(' ', 'T'));

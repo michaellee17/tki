@@ -67,12 +67,6 @@
             <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
           </button>
         </div>
-        <button
-            type="button" class="btn btn-outline-primaryA d-flex gap-2"
-            @click.prevent="goCheckout">
-            <p class="mb-0">直接結帳</p>
-            <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
-          </button>
       </div>
     </div>
   </div>
@@ -152,6 +146,9 @@ export default {
   updated(){
     this.cleanTimer();
   },
+  mounted() {
+    console.log('status', this.basic_info.event_status)
+  },
   methods: {
     ...mapMutations('activity', ['setTicketData', 'setListTicketData', 'minus','plus']),
     minusQty() {
@@ -183,7 +180,6 @@ export default {
               'Authorization': `Bearer ${this.getLoginData.access_token}`,
             }
           }).then(res => {
-            console.log(res.data);
             if (res.data.status_code === 'SYSTEM_1000') {
               this.$refs.ticketListModal.showModal();
               setTimeout(() => {
@@ -257,9 +253,11 @@ export default {
       return now >= startDate;
     },
     getRemainingTime(ticketStartDate) {
-      if(!this.isTicketing(this.l_ticket_start_date)) {
-        this.$nextTick(()=>{
-        this.timer = setInterval(() => {
+      if(!this.isTicketing(ticketStartDate)) {
+        this.$nextTick(()=> {
+          this.timer = setInterval(setTimer(), 1000);
+        
+        function setTimer() {
           let countDownTime =''
           const countDownWrap = document.getElementById(`countdownWrap`)
           const countDownEl = document.getElementById(`countdown`)
@@ -274,16 +272,18 @@ export default {
           const minutes = diffInMinutes % 60;
           const seconds = diffInSeconds % 60;
           countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
-          // console.log(countDownTime)
           countDownEl.textContent = countDownTime;
+
           if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
-            clearInterval(this.timer);
-            console.log('clear')
-            countDownWrap.style.display = 'none';
-            ticketingEl.style.display = 'block';
+          clearInterval(this.timer);
+          this.timer = null;
+          countDownWrap.style.display = 'none';
+          ticketingEl.style.display = 'block';
           }
-        }, 1000)
-        })   
+        }
+      })
+      } else {
+        return
       }
     },
     cleanTimer() {
@@ -292,7 +292,6 @@ export default {
       // console.log('clearcart')
     },
     preInit() {
-      // console.log('2', this.l_ticket_start_date)
       this.pre = true;
       this.setListTicketData();
       const area_info = this.ticket_info.session_info.find( item => item.session_name === this.session_name).area_info;
