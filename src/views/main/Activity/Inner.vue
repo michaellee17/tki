@@ -40,7 +40,7 @@ export default{
       tags:{},
       lists:[],
       currentPage: 1, // 當前分頁
-      itemsPerPage: 1, // 每頁顯示的項目數量
+      itemsPerPage: 9, // 每頁顯示的項目數量
     }
   },
   computed:{

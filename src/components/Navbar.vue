@@ -63,17 +63,19 @@
         </div>
       </div>
       <!-- login -->
-      <div class="nav-item dropdown login-dropdown order-1 order-sm-2 d-flex align-items-center">
-        <!-- 尚未登入 -->
+      <!-- 尚未登入 -->
+      <div v-if="loginStatus === false" class="nav-item login-dropdown order-1 order-sm-2 d-flex align-items-center">
         <a
-          v-if="loginStatus === false" class="nav-link pe-0 ps-4 d-flex align-items-center gap-2 text-nowrap" href="#"
+          class="logged nav-link pe-0 ps-4 d-flex align-items-center gap-2 text-nowrap" href="#"
           role="button" @click.prevent="openLoginModal">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
           <span class="login-title">未登入</span>
         </a>
-        <!-- 已登入 -->
+      </div>
+      <!-- 已登入 -->
+      <div v-if="loginStatus === true" class="nav-item dropdown login-dropdown order-1 order-sm-2 d-flex align-items-center">
         <a
-          v-if="loginStatus === true" ref="navbarLogin" class=" nav-link pe-0 d-flex align-items-center gap-2" href="#"
+          ref="navbarLogin" class="unlog nav-link pe-0 d-flex align-items-center gap-2" href="#"
           role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <font-awesome-icon :icon="['fas', 'user-circle']" class="text-light fs-4 user-icon" />
           <span class="login-title">{{ memberName }}</span>
@@ -418,12 +420,14 @@ nav {
   margin-bottom: 0;
 }
 /* 將 click 改為滑入展開 */
-.dropdown-menu li:hover .sub-menu {
-  visibility: visible;
-}
+// .dropdown-menu li:hover .sub-menu {
+//   visibility: visible;
+// }
 .dropdown:hover .dropdown-menu {
   display: block;
 }
+
+
 /* dropdown-menu transition 效果 */
 @media (min-width: 576px) {
   .animate {
