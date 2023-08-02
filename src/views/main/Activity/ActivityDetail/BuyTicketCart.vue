@@ -42,7 +42,7 @@
         <button
           type="button" class="btn btn-outline-primaryA"
           @click.prevent="() => $router.push({ name: 'BuyTicketType' })">
-          重新選位
+          重新選擇
         </button>
         <button
           v-if="!pre"

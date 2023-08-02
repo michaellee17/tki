@@ -9,7 +9,7 @@
     <OrderAngleCard  v-for="item in tickets" :key="item.event_id" :top-image="item.main_imageH_url">
       <ul>
         <li>
-          <h4 class="fw-bold">{{ item.event_name }}</h4>
+          <h4 class="fw-bold ellipsis-1 fs-22">{{ item.event_name }}</h4>
         </li>
         <li>
           <p>{{ item.session_area }}</p>
@@ -97,10 +97,5 @@ export default {
 }
 .link:hover{
   opacity: 0.6;
-}
-h4 {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 </style>
