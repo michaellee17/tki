@@ -147,7 +147,7 @@ export default {
     this.cleanTimer();
   },
   mounted() {
-    console.log('status', this.basic_info.event_status)
+    // console.log('status', this.basic_info.event_status)
   },
   methods: {
     ...mapMutations('activity', ['setTicketData', 'setListTicketData', 'minus','plus']),
@@ -162,9 +162,11 @@ export default {
     plusQty() {
       if(this.ticket_number === this.ticket_limit) {
         this.$refs.ticketPlusModal.showModal();
-      }
-      if(this.ticket_number === -1 || this.ticket_number < this.ticket_limit){
+      } else if(this.ticket_limit === -1 || this.ticket_number < this.ticket_limit){
         this.plus();
+      } else {
+        console.log('error')
+        return
       }
     },
     addToTicketList() {

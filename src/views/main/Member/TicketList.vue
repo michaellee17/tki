@@ -16,6 +16,7 @@
       <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
+          <!-- <span class="btn-close custom position-absolute" @click="deleteTicket(item.buy_ticket_id)" /> -->
           <img class="close" src="../../../assets/images/icons/close1437.jpg" width="30" @click="deleteTicket(item.buy_ticket_id)">
           <div @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
             <p class="subject ellipsis-1">{{ item.performer }}</p>
@@ -299,6 +300,9 @@ export default {
   position: absolute;
   right:0;
   top:5px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 </style>
