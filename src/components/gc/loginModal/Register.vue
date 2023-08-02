@@ -10,7 +10,7 @@
           <label for="name" class="col-3 form-label  text-nowrap mr-2">會員姓名</label>
           <div class="col-9">
             <input
-              id="name" v-model="registerName" type="text" class="form-control"
+              id="name" ref="registerName" type="text" class="form-control"
               placeholder="輸入姓名"
               aria-describedby="name" required>
           </div>
@@ -19,7 +19,8 @@
           <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
           <div class="col-9">
             <input
-              id="tel" v-model="registerPhone" type="tel" class="form-control"
+              id="tel" ref="registerPhone" v-model="registerPhone" type="tel"
+              class="form-control"
               placeholder="0912345678"
               aria-describedby="tel" minlength="10" required>
           </div>
@@ -42,7 +43,8 @@
           <label for="code" class="col-3 form-label" />
           <div class="col-9 d-flex align-items-center gap-2">
             <input
-              id="code" v-model="registerOTP" type="text" class="form-control"
+              id="code" ref="registerOTP" v-model="registerOTP" type="text"
+              class="form-control"
               placeholder="輸入驗證碼"
               aria-describedby="code" required>
             <button type="button" class="btn btn-info link-light w-50" @click="vertifyOTP">驗證</button>
@@ -52,7 +54,7 @@
           <label for="password" class="col-3 form-label text-nowrap">密碼</label>
           <div class="col-9">
             <input
-              id="password" v-model="registerPsw1" type="password" class="form-control"
+              id="password" ref="registerPsw1" v-model="registerPsw1" type="password" class="form-control"
               placeholder="需包含英數，至少8碼"
               aria-describedby="password" minlength="8" required>
           </div>
@@ -118,11 +120,9 @@ export default{
       if (this.open && event.key === 'Enter') {
           if(this.isRegisterOTPSend === false){
             this.sendOTP()
-          }
-          if(this.isRegisterOTPSend === true && this.isRegisterOTPVertify === false){
+          } else if(this.isRegisterOTPSend === true && this.isRegisterOTPVertify === false){
             this.vertifyOTP()
-          }
-          if(this.isRegisterOTPVertify === true){
+          } else if(this.isRegisterOTPVertify === true){
             this.sendRegister()
           }
         } 
@@ -153,6 +153,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.registerName.focus();
         return;
       }
       // 驗證手機號碼格式
@@ -165,6 +166,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.registerPhone.focus()
         return; // 停止繼續執行
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
@@ -175,6 +177,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.registerPsw1.focus()
         return;
       }
       if (this.isRegisterOTPVertify === false) {
@@ -184,6 +187,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.registerOTP.focus()
         return;
       }
       if (this.registerPsw1 !== this.registerPsw2) {
@@ -193,6 +197,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.registerPsw1.focus()
         return;
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/register`;
@@ -229,6 +234,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPsw1.focus()
           }
           if (res.data.status_code === 'USER_2021') {
             Swal.fire({
@@ -237,6 +243,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus();
           }
           if (res.data.status_code === 'USER_2022') {
             Swal.fire({
@@ -245,6 +252,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPsw1.focus()
           }
           if (res.data.status_code === 'USER_2023') {
             Swal.fire({
@@ -253,6 +261,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerName.focus();
           }
           if (res.data.status_code === 'USER_2041') {
             Swal.fire({
@@ -261,6 +270,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus();
           }
           if (res.data.status_code === 'USER_2082' || res.data.status_code === 'USER_2081') {
             Swal.fire({
@@ -269,6 +279,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus();
           }
         });
     },
@@ -297,6 +308,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerOTP.focus()
           }
           if (res.data.status_code === 'SYSTEM_2093') {
             Swal.fire({
@@ -305,6 +317,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerOTP.focus()
           }
         });
     },
@@ -320,6 +333,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.registerPhone.focus()
         return; // 停止繼續執行
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
@@ -347,6 +361,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus()
           }
           if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
             Swal.fire({
@@ -356,6 +371,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus()
           }
           if (res.data.status_code === 'USER_2041') {
             Swal.fire({
@@ -364,6 +380,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus()
           }
           if (res.data.status_code === 'USER_2099') {
             Swal.fire({
@@ -372,6 +389,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.registerPhone.focus()
           }
         });
     },

@@ -42,9 +42,15 @@ export const user = {
     },
     updateMemberEmail({commit},status){
       commit('changeMemberEmail',status)
-    }
+    },
+    updateMemberID({commit},status){
+      commit('changeMemberID',status)
+    },
   },
   mutations: {
+    changeMemberID(state,status){
+      state.memberData.data.identification = status;
+    },
     changeMemberEmail(state,status){
       state.memberData.data.email = status;
     },

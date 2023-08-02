@@ -23,8 +23,8 @@
           <a class="text-primary edit" @click="updateProfile('ID')">保存</a>
         </div>
       </div>
-      <p v-show="!isIdentityEdit">A*********</p>
-      <input v-show="isIdentityEdit" ref="memberID" class="mb-0 text-gray-800">
+      <p v-show="!isIdentityEdit">{{ memberData.identification }}</p>
+      <input v-show="isIdentityEdit" ref="memberID" class="mb-0 text-gray-800" :value="memberData.identification">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     //vuex取出actions
-    ...mapActions('user', ['updateBindingData', 'bindSuccessData','updateMemberName','updateMemberEmail']),
+    ...mapActions('user', ['updateBindingData', 'bindSuccessData','updateMemberName','updateMemberEmail','updateMemberID']),
     //送出密碼修改
     sendPswChange(){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/reset_password`;
@@ -268,15 +268,18 @@ export default {
             });
             if(target === 'name'){
               this.isNameEdit = false;
+              this.updateMemberName(fullname)
             }
             if(target === 'email'){
               this.isEmailEdit = false
+              this.updateMemberEmail(email)
             }
             if(target === 'ID'){
               this.isIdentityEdit = false
+              this.updateMemberID(ID)
             }
-            this.updateMemberName(fullname)
-            this.updateMemberEmail(email)
+            
+           
           }
           if (res.data.status_code === 'SYSTEM_1001') {
             Swal.fire({
