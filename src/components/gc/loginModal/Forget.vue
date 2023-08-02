@@ -1,5 +1,5 @@
 <template>
-<div id="forgetPwdPage" ref="forgetPwdPage">
+  <div id="forgetPwdPage" ref="forgetPwdPage">
     <div class="modal-body text-second pb-5">
       <div class="text-center mb-5">
         <h1 class="modal-title fs-2 text-primary">忘記密碼</h1>
@@ -11,7 +11,8 @@
             <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
             <div class="col-9">
               <input
-                id="forgetTel" v-model="forgetPhone" type="tel" class="form-control"
+                id="forgetTel" ref="forgetPhone" v-model="forgetPhone" type="tel"
+                class="form-control"
                 placeholder="0912345678"
                 aria-describedby="tel" minlength="10" required>
             </div>
@@ -27,7 +28,8 @@
             <label for="forgetCode" class="col-3 form-label" />
             <div class="col-9 d-flex align-items-center gap-2">
               <input
-                id="forgetCode" v-model="forgetCode" type="text" class="form-control"
+                id="forgetCode" ref="forgetCode" v-model="forgetCode" type="text"
+                class="form-control"
                 placeholder="輸入驗證碼"
                 aria-describedby="code" required>
               <button type="button" class="btn btn-info link-light w-50" @click="forgetVertifyOTP">驗證</button>
@@ -40,7 +42,7 @@
             <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
             <div class="col-9">
               <input
-                id="forgetPassword" v-model="forgetPsw1" type="password" class="form-control"
+                id="forgetPassword" ref="forgetPsw1" v-model="forgetPsw1" type="password" class="form-control"
                 placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
             </div>
           </div>
@@ -56,10 +58,9 @@
           <button type="button" class="btn btn-primary link-light w-100 py-2" @click="resetPsw">送出</button>
         </div>
         <div class="text-end mb-2 d-flex">
-            <a
-              class="text-decoration-none link-secondary" @click="changePage"
-              >回上一步</a>
-          </div>
+          <a
+            class="text-decoration-none link-secondary" @click="changePage">回上一步</a>
+        </div>
       </form>
     </div>
   </div>
@@ -105,11 +106,9 @@ export default{
     if (this.open && event.key === 'Enter') {
         if(this.isForgetOTPSend === false){
           this.forgetOTP()
-        }
-        if(this.isForgetOTPSend === true && this.isForgetOTPVertify === false){
+        } else if(this.isForgetOTPSend === true && this.isForgetOTPVertify === false){
           this.forgetVertifyOTP()
-        }
-        if(this.isForgetOTPVertify === true){
+        } else if(this.isForgetOTPVertify === true){
           this.resetPsw()
         }
       } 
@@ -129,6 +128,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.forgetPsw1.focus();
         return;
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
@@ -139,6 +139,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.forgetPsw1.focus();
         return;
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/forget_password`;
@@ -168,6 +169,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             })
+            this.$refs.forgetPsw1.focus();
           }
           if (res.data.status_code === 'USER_2043') {
             Swal.fire({
@@ -176,6 +178,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             })
+            this.$refs.forgetPsw1.focus();
           }
         });
     },
@@ -196,6 +199,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             })
+            this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
             Swal.fire({
@@ -204,6 +208,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'SYSTEM_2093') {
             Swal.fire({
@@ -212,6 +217,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'USER_2091') {
             Swal.fire({
@@ -220,6 +226,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'USER_2099') {
             Swal.fire({
@@ -228,6 +235,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetCode.focus();
           }
         });
 
@@ -243,6 +251,7 @@ export default{
           showConfirmButton: false,
           timer: 1500,
         });
+        this.$refs.forgetPhone.focus();
         return; // 停止繼續執行
       }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/sendotp`;
@@ -270,6 +279,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetPhone.focus();
           }
           if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
             Swal.fire({
@@ -279,6 +289,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetPhone.focus();
           }
           if (res.data.status_code === 'USER_2043') {
             Swal.fire({
@@ -287,6 +298,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetPhone.focus();
           }
           if (res.data.status_code === 'USER_2099') {
             Swal.fire({
@@ -295,6 +307,7 @@ export default{
               showConfirmButton: false,
               timer: 1500,
             });
+            this.$refs.forgetPhone.focus();
           }
         });
     },
