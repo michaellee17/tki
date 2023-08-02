@@ -104,6 +104,7 @@ export default {
               showConfirmButton: false,
               timer: 1500,
             })
+            this.getTickets()
           }
         });
     },
@@ -176,7 +177,6 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.tickets = res.data.data
             this.total = res.data.total
-            console.log('123')
           } else {
             this.isLoading = false;
           }
