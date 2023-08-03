@@ -26,7 +26,7 @@
   font-size: 22px;
 }
 .text-second {
-  color: #0000008C;
+  color: var(--secondary-color);
 }
 .text-gray-800 {
   color: var(--bs-gray-800)
@@ -95,6 +95,32 @@
     color: #fff;
   }
 }
+/* modal */
+.modal.login-modal {
+  top: 55%;
+  transform: translateY(-50%);
+  & .modal-body {
+    padding: 1rem 3.5rem 2.5rem 3.5rem
+  }
+  & .modal-content {
+    border-radius: 20px;
+  }
+  & .modal-header {
+    border-bottom: none;
+    & .btn-close {
+      padding: 0.5rem;
+      font-size: 12px;
+    }
+  }
+  & .btn.text-second {
+    width: 100%;
+  }
+  & img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
 /* form */
 input::placeholder {
   color: var(--pale-color)!important;
@@ -132,6 +158,9 @@ ul li{
 /* other */
 .roundedM {
   border-radius: 10px;
+}
+.mb-35 {
+  margin-bottom: 1.5rem;
 }
 .mb-100 {
   margin-bottom: 100px;

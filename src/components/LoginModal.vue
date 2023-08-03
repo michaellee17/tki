@@ -3,7 +3,7 @@
     id="loginModal" ref="loginModal" class="modal login-modal fade" tabindex="-1"
     aria-labelledby="loginModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
           <button
@@ -12,15 +12,15 @@
         </div>
         <!-- 登入 / 註冊首頁 -->
         <div id="loginBoard" ref="loginBoard">
-          <div class="modal-body text-center text-second pb-5">
+          <div class="modal-body text-center text-second">
             <div class="d-flex justify-content-center gap-2 mb-4 align-items-center">
               <h1 id="loginModalLabel" class="modal-title fs-2">登入</h1>
               <div>
                 <img src="../assets/images/logos/logo-main.png" width="80" alt="logo">
               </div>
             </div>
-            <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
-            <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
+            <p class="mb-3">您可以使用下列方法作為會員帳號登入</p>
+            <div class="login-way d-flex flex-column justify-content-center align-items-center mb-4">
               <Google @show-platform="handlePlatform(true)" @after-login="afterLogin" />
               <LineLogin @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="clickClose" />
               <Apple @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="clickClose" />
@@ -42,7 +42,7 @@
         <!-- 同意平台服務協議 -->
         <div id="termsPage" ref="termsPage">
           <div class="modal-body text-second pb-5">
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
               <h1 class="modal-title fs-2 text-primary">平台服務協議</h1>
             </div>
             <div>
@@ -60,7 +60,7 @@
                 <label for="agreenTermsBox">我已同意服務條款</label>
                 <span ref="agreenTermsAlert" class="text-danger d-none">請先同意服務條款</span>
               </div>
-              <button type="button" class="btn btn-primary link-light w-100 py-2" @click="submitTerms">下一步</button>
+              <button type="button" class="btn btn-outline-primaryB w-100 py-2" @click="submitTerms">下一步</button>
             </div>
           </div>
         </div>
@@ -69,13 +69,110 @@
           v-if="isRegisterOpen" :open="isRegisterOpen" @register-hide="handleRegister(false)"
           @after-login="handleRegister('close')" />
         <!-- 第三方註冊 -->
-        <Platform
-          v-if="isPlatformOpen" :open="isPlatformOpen" @platform-hide="handlePlatform(false)"
-          @after-platform="handlePlatform('close')" />
-        <!-- 一般登入 -->
-        <Login
-          v-if="isLoginOpen" :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
-          @after-forget="clickClose" />
+        <div ref="platformRegister">
+          <div class="modal-body text-second pb-5">
+            <div class="text-center mb-5">
+              <h1 class="modal-title fs-2 text-primary">第三方註冊</h1>
+            </div>
+            <form>
+              <div class="mb-3 row justify-content-center align-items-center">
+                <label for="name" class="col-3 form-label  text-nowrap mr-2">會員姓名</label>
+                <div class="col-9">
+                  <input
+                    id="name" ref="platformName" v-model="platformName" type="text" class="form-control" 
+                    placeholder="輸入姓名"
+                    aria-describedby="name" required>
+                </div>
+              </div>
+              <div v-show="!isplatformOTPVertify" class="mb-2 row justify-content-center align-items-center">
+                <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
+                <div class="col-9">
+                  <input
+                    id="tel" ref="platformPhone" v-model="platformPhone" type="tel" class="form-control"
+                    placeholder="0912345678"
+                    aria-describedby="tel" minlength="10" required>
+                </div>
+              </div>
+              <div v-if="!isplatformOTPVertify" class="mb-2 row justify-content-center align-items-center">
+                <p class="col-3" />
+                <div class="col-9">
+                  <button v-if="!isplatformOTPSend" class="btn btn-info link-light w-100" type="button" @click="platformSendOTP">發送驗證碼</button>
+                  <button v-if="isplatformOTPSend" class="btn btn-info link-light w-100" disabled>有效時間:{{ remainingTime }}(秒)</button>
+                </div>
+              </div>
+              <div v-if="isplatformOTPSend && !isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center">
+                <label for="code" class="col-3 form-label" />
+                <div class="col-9 d-flex align-items-center gap-2">
+                  <input
+                    id="code" ref="platformOTP" v-model="platformOTP" type="text" class="form-control"
+                    placeholder="輸入驗證碼"
+                    aria-describedby="code" required>
+                  <button type="button" class="btn btn-info link-light w-50" @click="platformVertifyOTP">驗證</button>
+                </div>
+              </div>
+              <div class="mb-3 row justify-content-center align-items-center">
+                <label for="password" class="col-3 form-label text-nowrap">密碼</label>
+                <div class="col-9">
+                  <input
+                    id="password" ref="platformPsw1" v-model="platformPsw1" type="password" class="form-control"
+                    placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
+                </div>
+              </div>
+              <div class="mb-4 row justify-content-center align-items-center">
+                <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
+                <div class="col-9">
+                  <input
+                    id="passwordCmf" v-model="platformPsw2" type="password" class="form-control"
+                    placeholder="再次輸入密碼"
+                    aria-describedby="passwordCmf" minlength="8" required>
+                </div>
+              </div>
+              <div class="text-end mb-2 d-flex">
+                <a class="text-decoration-none link-secondary" @click="showPage('platformRegister', 'loginBoard')">回上一步</a>
+              </div>
+              <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendPlatform">送出</button>
+            </form>
+          </div>
+        </div>
+        <!-- 使用會員帳號登入 -->
+        <div id="accountLoginPage" ref="accountLoginPage">
+          <div class="modal-body text-second pb-5">
+            <div class="text-center mb-5">
+              <h1 class="modal-title fs-2 text-primary">使用手機號碼登入</h1>
+            </div>
+            <form>
+              <div class="mb-2 row justify-content-center align-items-center">
+                <label for="loginTel" class="col-3 form-label">手機號碼</label>
+                <div class="col-9">
+                  <input
+                    id="loginTel" ref="loginTel" v-model="loginPhone" type="tel"
+                    class="form-control"
+                    placeholder="請輸入手機號碼"
+                    aria-describedby="tel" minlength="10" required>
+                </div>
+              </div>
+              <div class="mb-4 row justify-content-center align-items-center">
+                <label for="loginPassword" class="col-3 form-label">密碼</label>
+                <div class="col-9">
+                  <input
+                    id="loginPassword" ref="loginPsw" v-model="loginPsw" type="password" class="form-control"
+                    placeholder="請輸入密碼"
+                    aria-describedby="password" minlength="8" required>
+                </div>
+              </div>
+              <div class="text-end mb-2 d-flex justify-content-between">
+                <a
+                  class="text-decoration-none link-secondary"
+                  @click="showPage('accountLoginPage', 'loginBoard')">回上一步</a>
+                <a
+                  class="text-decoration-none link-secondary"
+                  @click="handleForget(true)">忘記密碼</a>
+              </div>
+              <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendLogin">登入</button>
+            </form>
+          </div>
+        </div>
+        <Forget v-if="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)" @after-forget="handleForget('close')" />
       </div>
     </div>
   </div>
@@ -117,6 +214,7 @@ export default {
     this.loginModal = new Modal(this.$refs.loginModal);
     this.initLoginBoard();
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
+    this.enterKeyup();
   },
   methods: {
     //取出登入狀態
@@ -214,52 +312,43 @@ export default {
 .modal.login-modal {
   top: 55%;
   transform: translateY(-50%);
-
-  & .modal-header .btn-close {
+ & .modal-header .btn-close {
     padding: 1rem;
   }
-
   & .modal-header {
     border-bottom: none;
   }
-
   & .modal-body {
     padding: 1rem 2rem 2rem 2rem;
   }
 }
-
 .btn.text-second {
   width: 22rem;
 }
-
 img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
 }
-
 .termsBox {
   height: 250px;
   overflow: auto;
 }
-
 a {
   cursor: pointer;
 }
-
 .form-label {
   margin-bottom: 0;
 }
-
 @media (max-width: 768px) {
   #memberInfoPage form {
     padding-right: 0.5rem;
     padding-left: 0.5rem;
   }
 
-  #accountLoginPage form {
-    padding-right: 4rem;
-    padding-left: 4rem;
-  }
-}
+//   #accountLoginPage form {
+//     padding-right: 4rem;
+//     padding-left: 4rem;
+//   }
+// }
 </style>

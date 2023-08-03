@@ -7,4 +7,4 @@ import {
   faUserCircle
 } from "@fortawesome/free-regular-svg-icons";
 
-library.add(faBell, faHeart, faCalendar, faBookmark, faUserCircle);
+library.add( faBell, faHeart, faCalendar, faBookmark, faUserCircle);

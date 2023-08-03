@@ -1,5 +1,8 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+  faPhoneAlt,
+  faUser,
+  faLock,
   faTimesCircle,
   faExclamationCircle,
   faCheckCircle,
@@ -48,6 +51,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faPhoneAlt,
+  faUser,
+  faLock,
   faTimesCircle,
   faExclamationCircle,
   faCheckCircle,
