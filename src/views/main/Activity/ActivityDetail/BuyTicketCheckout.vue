@@ -63,7 +63,7 @@
       <li class="mb-2">•以上活動內容，主辦單位保留異動之權力</li>
     </ul>
   </div>
-  <MessageModal ref="errorModal">
+  <MessageModal ref="errorModal" :error="true">
     <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
   </MessageModal>
 </template>

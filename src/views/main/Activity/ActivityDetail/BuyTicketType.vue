@@ -61,12 +61,12 @@
       </div>
     </div>
   </div>
-  <MessageModal ref="ticketPlusModal">
+  <MessageModal ref="ticketPlusModal" :warning="true">
     <p class="text-center mb-0">您已經超過購買數量限制：<span class="text-danger px-1">{{ ticket_limit }}</span>張
       ，請依照購買限制選擇您的票券。
     </p>
   </MessageModal>
-  <MessageModal ref="ticketMinusModal">
+  <MessageModal ref="ticketMinusModal" :warning="true">
     <p class="text-center mb-0">購買數量不得小於 1 張。</p>
   </MessageModal>
 </template>

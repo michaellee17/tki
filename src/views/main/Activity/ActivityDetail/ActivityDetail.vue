@@ -56,8 +56,8 @@
     </div>
   </div>
   <loginModal ref="loginModal" />
-  <MessageModal ref="messageModal">
-    <p class="text-center mb-0">已複製網址！</p>
+  <MessageModal ref="messageModal" :success="true">
+    <p class="mb-0">已複製網址！</p>
   </MessageModal>
 </template>
 
