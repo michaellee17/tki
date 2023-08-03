@@ -91,10 +91,11 @@ export default{
  },
  beforeUnmount() {
     this.enterKeyupDestroyed();
-  },
+ },
   mounted(){
     this.enterKeyup();
-  },
+    this.$refs.forgetPhone.focus();
+ },
  methods:{
   //取出登入狀態
   ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
@@ -317,6 +318,7 @@ export default{
       this.remainingTime--;
         if (this.remainingTime <= 0) {
           clearInterval(intervalId);
+          this.isForgetOTPSend = false
         }
       }, 1000); // 更新剩餘時間間隔設為每秒
     },
