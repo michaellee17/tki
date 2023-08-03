@@ -64,7 +64,8 @@ export default {
                     cancelButtonText: '先不註冊',
                   }).then((result) => {
                     if (result.isConfirmed) {
-                      this.$emit('switch-pages','loginBoard','platformRegister');
+                      // this.$emit('switch-pages','loginBoard','platformRegister');
+                      this.$emit('show-platform')
                       localStorage.setItem('platform', 'Line')
                     }
                   })

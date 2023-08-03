@@ -105,6 +105,7 @@ export default{
   },
   mounted(){
     this.enterKeyup();
+    this.$refs.registerName.focus()
   },
   methods:{
      //取出登入狀態
@@ -137,6 +138,7 @@ export default{
       this.remainingTime--;
         if (this.remainingTime <= 0) {
           clearInterval(intervalId);
+          this.isRegisterOTPSend = false;
         }
       }, 1000); // 更新剩餘時間間隔設為每秒
     },
