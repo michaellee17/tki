@@ -99,7 +99,7 @@
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
-  <MessageModal ref="failModal">
+  <MessageModal ref="failModal" :error="true">
     <p class="text-center mb-0">支付沒有完成，請重新操作！</p>
   </MessageModal>
 </template>

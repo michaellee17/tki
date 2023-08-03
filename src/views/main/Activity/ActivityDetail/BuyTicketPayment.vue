@@ -54,14 +54,14 @@
       <li class="mb-2">•以上活動內容，主辦單位保留異動之權力</li>
     </ul>
   </div>
-  <MessageModal ref="beforePaymentModal">
+  <MessageModal ref="beforePaymentModal" :success="true">
     <p class="text-center mb-0">請於時限內至 ATM 付款。</p>
   </MessageModal> 
-  <MessageModal ref="afterPaymentModal">
+  <MessageModal ref="afterPaymentModal" :warning="true">
     <h4 class="text-center text-primary mb-3">已超過可購票時間</h4>
     <p class="text-center mb-0">您已經超過可購票時間，請重新選擇票券並重新付款。</p>
   </MessageModal> 
-  <MessageModal ref="errorModal">
+  <MessageModal ref="errorModal" :error="true">
     <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
   </MessageModal>
 </template>
