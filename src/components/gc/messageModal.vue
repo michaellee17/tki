@@ -58,9 +58,6 @@ export default {
     padding: 1rem 1.5rem 2.5rem 1.5rem;
   }
   & .modal-content {
-    // background-color: var(--primary-color);
-    // color: #fff;
-    // background-color: var(--primary-light-color);
     border-radius: 20px;
   }
   & .modal-header {
@@ -72,14 +69,7 @@ export default {
   }
   & .icon {
     color: var(--primary-color);
-    font-size: 40px;
-  }
-  & .btn-cancel {
-    background-color: var(--pale-color);
-    &:hover {
-      background-color: var(--secondary-color);
-      color: #fff;
-    }
+    font-size: 45px;
   }
 }
 </style>
