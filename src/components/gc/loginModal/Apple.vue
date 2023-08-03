@@ -86,14 +86,3 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
-img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.btn.text-second {
-  width: 22rem;
-}
-</style>

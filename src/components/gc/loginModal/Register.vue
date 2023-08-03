@@ -2,74 +2,72 @@
   <!-- 會員註冊 -->
   <div ref="memberInfoPage">
     <div class="modal-body text-second pb-5">
-      <div class="text-center mb-5">
+      <div class="text-center mb-4">
         <h1 class="modal-title fs-2 text-primary">註冊會員</h1>
       </div>
       <form>
-        <div class="mb-3 row justify-content-center align-items-center">
-          <label for="name" class="col-3 form-label  text-nowrap mr-2">會員姓名</label>
-          <div class="col-9">
-            <input
-              id="name" ref="registerName" type="text" class="form-control"
-              placeholder="輸入姓名"
-              aria-describedby="name" required>
+        <div class="mb-35 row justify-content-center align-items-center position-relative">
+          <input
+            id="name" ref="registerName" type="text" class="form-control pe-5"
+            placeholder="請輸入姓名"
+            aria-describedby="name" required>
+            <div class="position-absolute icon">
+              <font-awesome-icon :icon="['fas', 'user']" />
           </div>
         </div>
-        <div v-show="!isRegisterOTPVertify" class="mb-2 row justify-content-center align-items-center">
-          <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
-          <div class="col-9">
-            <input
-              id="tel" ref="registerPhone" v-model="registerPhone" type="tel"
-              class="form-control"
-              placeholder="0912345678"
-              aria-describedby="tel" minlength="10" required>
+        <div v-show="!isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center position-relative">
+          <input
+            id="tel" ref="registerPhone" v-model="registerPhone" type="tel"
+            class="form-control pe-5"
+            placeholder="請輸入手機號碼，例如：0912345678"
+            aria-describedby="tel" minlength="10" required>
+            <div class="position-absolute icon">
+              <font-awesome-icon :icon="['fas', 'phone-alt']" />
           </div>
         </div>
-        <div v-if="!isRegisterOTPVertify" class="mb-2 row justify-content-center align-items-center">
-          <p class="col-3" />
-          <div class="col-9">
-            <button
-              v-if="!isRegisterOTPSend" class="btn btn-info link-light w-100" type="button"
-              @click="sendOTP">
-              發送驗證碼
-            </button>
-            <button v-if="isRegisterOTPSend" class="btn btn-info link-light w-100" disabled>
-              有效時間:{{ remainingTime
-              }}(秒)
-            </button>
-          </div>
+        <div v-if="!isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center">
+          <button
+            v-if="!isRegisterOTPSend" class="btn btn-primary link-light w-100" type="button"
+            @click="sendOTP">
+            發送驗證碼
+          </button>
+          <button v-if="isRegisterOTPSend" class="btn btn-primary link-light w-100" disabled>
+            有效時間:{{ remainingTime
+            }}(秒)
+          </button>
         </div>
-        <div v-if="isRegisterOTPSend && !isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center">
-          <label for="code" class="col-3 form-label" />
-          <div class="col-9 d-flex align-items-center gap-2">
+        <div v-if="isRegisterOTPSend && !isRegisterOTPVertify" class="mb-4 justify-content-between row  align-items-center">
+          <div class="col-7 px-0">
             <input
               id="code" ref="registerOTP" v-model="registerOTP" type="text"
               class="form-control"
-              placeholder="輸入驗證碼"
+              placeholder="請輸入驗證碼"
               aria-describedby="code" required>
-            <button type="button" class="btn btn-info link-light w-50" @click="vertifyOTP">驗證</button>
+          </div>
+          <button type="button" class="col-4 btn btn-primary link-light" @click="vertifyOTP">驗證</button>
+        </div>
+        <div v-if="isRegisterOTPVertify" class="mb-35 row justify-content-center align-items-center position-relative">
+          <input
+            id="password" ref="registerPsw1" v-model="registerPsw1" type="password"
+            class="form-control pe-5"
+            placeholder="請輸入密碼，包含英數，至少8碼"
+            aria-describedby="password" minlength="8" required>
+            <div class="position-absolute icon">
+            <font-awesome-icon :icon="['fas', 'lock']" />
           </div>
         </div>
-        <div v-if="isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center">
-          <label for="password" class="col-3 form-label text-nowrap">密碼</label>
-          <div class="col-9">
-            <input
-              id="password" ref="registerPsw1" v-model="registerPsw1" type="password" class="form-control"
-              placeholder="需包含英數，至少8碼"
-              aria-describedby="password" minlength="8" required>
+       
+        <div v-if="isRegisterOTPVertify" class="mb-4 row justify-content-center align-items-center position-relative">
+          <input
+            id="passwordCmf" v-model="registerPsw2" type="password" class="form-control pe-5"
+            placeholder="請再次輸入密碼"
+            aria-describedby="passwordCmf" minlength="8" required>
+          <div class="position-absolute icon">
+            <font-awesome-icon :icon="['fas', 'lock']" />
           </div>
         </div>
-        <div v-if="isRegisterOTPVertify" class="mb-4 row justify-content-center align-items-center">
-          <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
-          <div class="col-9">
-            <input
-              id="passwordCmf" v-model="registerPsw2" type="password" class="form-control"
-              placeholder="再次輸入密碼"
-              aria-describedby="passwordCmf" minlength="8" required>
-          </div>
-        </div>
-        <div class="text-end mb-2 d-flex">
-          <a class="text-decoration-none link-secondary" @click="changePage">回上一步</a>
+        <div class="text-center">
+          <a class="text-decoration-none link-info" @click.prevent="changePage">回上一步</a>
         </div>
         <button v-if="isRegisterOTPVertify" type="button" class="btn btn-primary link-light w-100 py-2" @click="sendRegister">送出</button>
       </form>
@@ -396,5 +394,10 @@ export default{
   },
 }
 </script>
-<style scoped lang="scss">
+<style>
+.icon {
+  width: 15px;
+  right: 20px;
+  color: #000;
+}
 </style>

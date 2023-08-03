@@ -1,5 +1,5 @@
 <template>
-  <GoogleLogin :callback="callback" popup-type="TOKEN">
+  <GoogleLogin :callback="callback" popup-type="TOKEN" class="w-100">
     <button type="button" class="btn text-second fw-bold rounded-pill shadow position-relative">
       <img src="../../../assets/images/icons/google.png" alt="google" width="28" class="position-absolute">
       <p class="my-2">使用 GOOGLE 帳號</p>
@@ -81,13 +81,3 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
-img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.btn.text-second {
-  width: 22rem;
-}
-</style>

@@ -3,7 +3,7 @@
     id="loginModal" ref="loginModal" class="modal login-modal fade" tabindex="-1"
     aria-labelledby="loginModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
           <button
@@ -12,15 +12,15 @@
         </div>
         <!-- 登入 / 註冊首頁 -->
         <div id="loginBoard" ref="loginBoard">
-          <div class="modal-body text-center text-second pb-5">
+          <div class="modal-body text-center text-second">
             <div class="d-flex justify-content-center gap-2 mb-4 align-items-center">
               <h1 id="loginModalLabel" class="modal-title fs-2">登入</h1>
               <div>
                 <img src="../assets/images/logos/logo-main.png" width="80" alt="logo">
               </div>
             </div>
-            <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
-            <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
+            <p class="mb-3">您可以使用下列方法作為會員帳號登入</p>
+            <div class="login-way d-flex flex-column justify-content-center align-items-center mb-4">
               <Google @switch-pages="showPage" @after-login="afterLogin" />
               <LineLogin @switch-pages="showPage" @after-login="afterLogin" @modal-close="clickClose" />
               <Apple @switch-pages="showPage" @after-login="afterLogin" @modal-close="clickClose" />
@@ -42,7 +42,7 @@
         <!-- 同意平台服務協議 -->
         <div id="termsPage" ref="termsPage">
           <div class="modal-body text-second pb-5">
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
               <h1 class="modal-title fs-2 text-primary">平台服務協議</h1>
             </div>
             <div>
@@ -60,7 +60,7 @@
                 <label for="agreenTermsBox">我已同意服務條款</label>
                 <span ref="agreenTermsAlert" class="text-danger d-none">請先同意服務條款</span>
               </div>
-              <button type="button" class="btn btn-primary link-light w-100 py-2" @click="submitTerms">下一步</button>
+              <button type="button" class="btn btn-outline-primaryB w-100 py-2" @click="submitTerms">下一步</button>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
         <!-- 第三方註冊 -->
         <div ref="platformRegister">
           <div class="modal-body text-second pb-5">
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
               <h1 class="modal-title fs-2 text-primary">第三方註冊</h1>
             </div>
             <form>
@@ -137,7 +137,7 @@
         <!-- 使用會員帳號登入 -->
         <div id="accountLoginPage" ref="accountLoginPage">
           <div class="modal-body text-second pb-5">
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
               <h1 class="modal-title fs-2 text-primary">使用手機號碼登入</h1>
             </div>
             <form>
@@ -226,6 +226,8 @@ export default {
     this.initLoginBoard();
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
     this.enterKeyup();
+
+    // this.loginModal.show();
   },
   methods: {
     //取出登入狀態
@@ -708,45 +710,32 @@ export default {
 </script>
 <style scoped lang="scss">
 .modal.login-modal {
-  top: 55%;
-  transform: translateY(-50%);
- & .modal-header .btn-close {
-    padding: 1rem;
+  & .login-way {
+    gap: 1.3rem;
   }
-  & .modal-header {
-    border-bottom: none;
-  }
-  & .modal-body {
-    padding: 1rem 2rem 2rem 2rem;
+  & .termsBox {
+    height: 250px;
+    overflow: auto;
   }
 }
-.btn.text-second {
-  width: 22rem;
-}
-img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.termsBox {
-  height: 250px;
-  overflow: auto;
-}
-a {
-  cursor: pointer;
-}
-.form-label {
-  margin-bottom: 0;
-}
-@media (max-width: 768px) {
-  #memberInfoPage form {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-  }
 
-  #accountLoginPage form {
-    padding-right: 4rem;
-    padding-left: 4rem;
-  }
-}
+
+// 
+// a {
+//   cursor: pointer;
+// }
+// .form-label {
+//   margin-bottom: 0;
+// }
+// @media (max-width: 768px) {
+//   #memberInfoPage form {
+//     padding-right: 0.5rem;
+//     padding-left: 0.5rem;
+//   }
+
+//   #accountLoginPage form {
+//     padding-right: 4rem;
+//     padding-left: 4rem;
+//   }
+// }
 </style>

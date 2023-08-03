@@ -1,6 +1,6 @@
 <template>
   <div ref="messageModal" class="modal messageModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
@@ -51,9 +51,6 @@ export default {
 .modal.messageModal {
   top: 70%;
   transform: translateY(-50%);
-  & .modal-dialog {
-    width: 300px;
-  }
   & .modal-body {
     padding: 1rem 1.5rem 2.5rem 1.5rem;
   }
