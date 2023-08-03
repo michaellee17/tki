@@ -84,25 +84,25 @@
   </div>
   <loginModal ref="loginModal" />
   <MessageModal ref="ticketPlusModal" :warning="true">
-    <p class="text-center mb-0">
+    <p class="mb-0">
       您已經超過購買數量限制：<span class="text-danger px-1">{{ ticket_limit }}</span>張
       ，請依照購買限制選擇您的票券。
     </p>
   </MessageModal>
   <MessageModal ref="ticketMinusModal" :warning="true">
-    <p class="text-center mb-0">購買數量不得小於 1 張。</p>
+    <p class="mb-0">購買數量不得小於 1 張。</p>
   </MessageModal>
   <MessageModal ref="ticketListModal" :success="true">
-    <p class="text-center mb-0">已加入購票清單！</p>
+    <p class="mb-0">已加入購票清單！</p>
   </MessageModal>
   <MessageModal ref="soldOutModal" :error="true">
-    <p class="text-center mb-0">購票失敗，票券已完售！</p>
+    <p class="mb-0">購票失敗，票券已完售！</p>
   </MessageModal>
   <MessageModal ref="busyModal" :warning="true">
-    <p class="text-center mb-0">系統忙碌中，請稍後再試。</p>
+    <p class="mb-0">系統忙碌中，請稍後再試。</p>
   </MessageModal>
   <MessageModal ref="errorModal" :error="true">
-    <p class="text-center mb-0">發生錯誤，請稍後再試。</p>
+    <p class="mb-0">發生錯誤，請稍後再試。</p>
   </MessageModal>
 </template>
 

@@ -88,6 +88,13 @@
       filter: var(--white-filter);
   }
 }
+.btn-cancel {
+  background-color: var(--bs-gray-200);
+  &:hover {
+    background-color: var(--secondary-color);
+    color: #fff;
+  }
+}
 /* form */
 input::placeholder {
   color: var(--pale-color)!important;
