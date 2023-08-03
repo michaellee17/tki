@@ -1,21 +1,9 @@
 <template>
   <router-view :style="[getPrimaryColor]" />
-  <transition-group name="showMenu">
-    <!-- <QuickView v-if="$store.getters.modalIsQuickView" v-bind="getCurrentQuickViewProduct"/> -->
-    <!-- <Modal v-if="$store.state.app.currentActiveModal === 'newsletter'"/> -->
-  </transition-group>
-
-  <!-- <div
-    class="modal-background"
-    v-if="$store.state.app.currentActiveModal !== ''"
-    @click="$store.commit('forceCloseModal')"
-  ></div> -->
 </template>
 
 <script>
 import colors from "./views/color_schemes.json";
-// import QuickView from "./components/molecules/Modal/QuickView.vue"
-// import Modal from "./components/molecules/Modal/NewsLetterPopup.vue"
 import {products} from "./data/auctions.json"
 export default {
   data() {
@@ -45,18 +33,6 @@ export default {
       })
     }
   },
-  // watch: {
-  //   "$store.state.app.currentActiveModal": function() {
-  //     let body = document.getElementsByTagName("BODY")[0];
-  //     let modalsState = this.$store.state.app.currentActiveModal;
-  //     if (modalsState !== "") {
-  //       body.style.overflow = "hidden";
-  //     } else {
-  //       body.style.overflow = "auto";
-  //     }
-  //   },
-  // },
-  // components: {QuickView},
   created() {
     document.addEventListener('keydown', e => {
         let key = e.key;

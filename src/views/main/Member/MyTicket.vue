@@ -24,7 +24,7 @@
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
-  <MessageModal ref="successModal">
+  <MessageModal ref="successModal" :success="true">
     <p class="text-center mb-0">費用已支付完成！</p>
   </MessageModal>
 </template>

@@ -1,5 +1,8 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+  faTimesCircle,
+  faExclamationCircle,
+  faCheckCircle,
   faChevronCircleUp,
   faUserCircle,
   faSearch,
@@ -19,7 +22,6 @@ import {
   faBatteryFull,
   faPhone,
   faStopwatch,
-  faExclamationCircle,
   faWindowMaximize,
   faArrowRight,
   faMapMarker,
@@ -46,6 +48,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faTimesCircle,
+  faExclamationCircle,
+  faCheckCircle,
   faChevronCircleUp,
   faUserCircle,
   faSearch,
