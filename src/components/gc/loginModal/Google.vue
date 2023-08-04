@@ -42,32 +42,14 @@ export default {
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '登入成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
             const loginData = res.data;
             this.updateLoginData(loginData);
             this.$emit('after-login');
           }
           if (res.data.status_code === 'USER_2013') {
-            Swal.fire({
-              icon: 'error',
-              title: '該用戶未綁定',
-              showConfirmButton: true,
-              confirmButtonText: '立即註冊',
-              showCancelButton: true,
-              cancelButtonText: '先不註冊',
-            }).then((result) => {
-              if (result.isConfirmed) {
-                // this.$emit('switch-pages','loginBoard','platformRegister');
-                this.$emit('show-platform')
-                localStorage.setItem('googleID', googleId)
-                localStorage.setItem('platform', 'Google')
-              }
-            })
+            this.$emit('show-platform')
+            localStorage.setItem('googleID', googleId)
+            localStorage.setItem('platform', 'Google')
           }
           if (res.data.status_code === 'SYSTEM_1001') {
             Swal.fire({

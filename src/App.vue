@@ -51,6 +51,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.error{
+  color:red;
+}
 @import "./assets/all.scss";
 </style>
 <!-- <style src="./assets/main.css"></style> -->

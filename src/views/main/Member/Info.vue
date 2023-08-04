@@ -13,7 +13,6 @@
       <p v-show="!isNameEdit">{{ memberData.full_name }}</p>
       <input v-show="isNameEdit" ref="memberName" class="mb-0 text-gray-800" :value="memberData.full_name">
     </li>
-    <!-- 身分證字號還沒串 api -->
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">身分證字號</p>
@@ -23,7 +22,7 @@
           <a class="text-primary edit" @click="updateProfile('ID')">保存</a>
         </div>
       </div>
-      <p v-show="!isIdentityEdit">{{ memberData.identification }}</p>
+      <p v-show="!isIdentityEdit">{{ identification }}</p>
       <input v-show="isIdentityEdit" ref="memberID" class="mb-0 text-gray-800" :value="memberData.identification">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
@@ -63,7 +62,7 @@
           <a class="text-primary edit" @click="updateProfile('email')">保存</a>
         </div>
       </div>
-      <p v-show="!isEmailEdit">{{ memberData.email }}</p>
+      <p v-show="!isEmailEdit">{{ memberEmail }}</p>
       <input v-show="isEmailEdit" ref="memberEmail" class="mb-0 text-gray-800" :value="memberData.email">
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
@@ -75,7 +74,7 @@
             <a class="text-gray-800 d-block">尚未綁定</a>
           </GoogleLogin>
         </li>
-        <li v-if="googleBinding === true" @click="gooleUnbind">
+        <li v-if="googleBinding === true" @click="handleGooleUnbinding">
           <img src="../../../assets/images/icons/google.png" width="25" alt="google">
           <a class="text-gray-800 d-block">解除綁定</a>
         </li>
@@ -83,7 +82,7 @@
           <img src="../../../assets/images/icons/line.png" width="26" alt="line">
           <a class="text-gray-800 d-block">尚未綁定</a>
         </li>
-        <li v-if="lineBinding === true" @click="lineUnbind">
+        <li v-if="lineBinding === true" @click="handleLineUnbinding">
           <img src="../../../assets/images/icons/line.png" width="26" alt="line">
           <a class="text-gray-800 d-block">解除綁定</a>
         </li>
@@ -91,18 +90,79 @@
           <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
           <a class="text-gray-800 d-block">尚未綁定</a>
         </li>
-        <li v-if="appleBinding === true" @click="appleUnbind">
+        <li v-if="appleBinding === true" @click="handleAppleUnbinding">
           <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
           <a class="text-gray-800 d-block">解除綁定</a>
         </li>
       </ul>
     </li>
   </ul>
+  <MessageModal ref="passwordModal" :error="true">
+    <p class="mb-0">兩次輸入的密碼不同</p>
+  </MessageModal>
+  <MessageModal ref="passwordSuccess" :success="true">
+    <p class="mb-0">修改密碼成功</p>
+  </MessageModal>
+  <MessageModal ref="passwordError" :error="true">
+    <p class="mb-0">資料不完整</p>
+  </MessageModal>
+  <MessageModal ref="passwordError2" :error="true">
+    <p class="mb-0">舊密碼錯誤</p>
+  </MessageModal>
+  <MessageModal ref="passwordError3" :error="true">
+    <p class="mb-0">密碼格式不符</p>
+  </MessageModal>
+  <MessageModal ref="profileError" :error="true">
+    <p class="mb-0">姓名格式不符合</p>
+  </MessageModal>
+  <MessageModal ref="profileError2" :error="true">
+    <p class="mb-0">信箱格式不符合</p>
+  </MessageModal>
+  <MessageModal ref="profileError3" :error="true">
+    <p class="mb-0">身分證格式不符合</p>
+  </MessageModal>
+  <MessageModal ref="profileError4" :error="true">
+    <p class="mb-0">請輸入信箱資料</p>
+  </MessageModal>
+  <MessageModal ref="profileError5" :error="true">
+    <p class="mb-0">請輸入身份證字號</p>
+  </MessageModal>
+  <MessageModal ref="profileSuceess" :success="true">
+    <p class="mb-0">更新資料成功</p>
+  </MessageModal>
+  <MessageModal ref="bindingSuceess" :success="true">
+    <p class="mb-0">綁定成功</p>
+  </MessageModal>
+  <MessageModal ref="unbindingSuceess" :success="true">
+    <p class="mb-0">解綁成功</p>
+  </MessageModal>
+  <MessageModal ref="unbindGoogle" :warning="true">
+    <div class="d-flex justify-content-center gap-1">
+      <button class="btn btn-primary unbind" @click="googleUnbind">解除綁定</button>
+      <button class="btn btn-secondary unbind" @click="closeGoogle">取消</button>
+    </div>
+  </MessageModal>
+  <MessageModal ref="unbindLine" :warning="true">
+    <div class="d-flex justify-content-center gap-1">
+      <button class="btn btn-primary unbind" @click="lineUnbind">解除綁定</button>
+      <button class="btn btn-secondary unbind" @click="closeLine">取消</button>
+    </div>
+  </MessageModal>
+  <MessageModal ref="unbindApple" :warning="true">
+    <div class="d-flex justify-content-center gap-1">
+      <button class="btn btn-primary unbind" @click="appleUnbind">解除綁定</button>
+      <button class="btn btn-secondary unbind" @click="closeApple">取消</button>
+    </div>
+  </MessageModal>
 </template>
 <script>
+import MessageModal from '../../../components/gc/MessageModal.vue';
 import { mapGetters, mapActions } from 'vuex';
 import Swal from "sweetalert2";
 export default {
+  components:{
+    MessageModal,
+  },
   data() {
     return {
       passwordChange:false,
@@ -133,6 +193,12 @@ export default {
     appleBinding() {
       return this.getMemberBinding[2]
     },
+    identification(){
+      return this.memberData.identification ? this.memberData.identification : '無資料'
+    },
+    memberEmail(){
+      return this.memberData.email ? this.memberData.email : '無資料'
+    },
   },
   mounted() {
   },
@@ -143,12 +209,8 @@ export default {
     sendPswChange(){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/reset_password`;
       if(this.newPsw !== this.newPsw2){
-        Swal.fire({
-              icon: 'error',
-              title: '兩次輸入的新密碼不同',
-              showConfirmButton: false,
-              timer: 1500,
-        });
+        this.$refs.passwordModal.showModal()
+        return
       }
       const requestData = {
         password:this.oldPsw,
@@ -162,37 +224,17 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '修改密碼成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordSuccess.showModal()
             this.passwordChange = false;
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError.showModal()
           }
           if (res.data.status_code === 'USER_2051') {
-            Swal.fire({
-              icon: 'error',
-              title: '舊密碼錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError2.showModal()
           }
           if (res.data.status_code === 'USER_2022') {
-            Swal.fire({
-              icon: 'error',
-              title: '密碼格式不符',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError3.showModal()
           }
         });
     },
@@ -203,48 +245,23 @@ export default {
       let email = this.$refs.memberEmail.value
       let ID = this.$refs.memberID.value
       if (fullname && !/^[\u4e00-\u9fa5a-zA-Z\s]+$/.test(fullname)) {
-        Swal.fire({
-          icon: 'error',
-          title: '姓名格式不符合',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.$refs.profileError.showModal()
         return;
       }
       if (email && !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
-        Swal.fire({
-          icon: 'error',
-          title: '信箱格式不符合',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.$refs.profileError2.showModal()
         return;
       }
       if (ID && !/^[A-Z]\d{9}$/.test(ID)) {
-        Swal.fire({
-          icon: 'error',
-          title: '身分證格式不符合',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.$refs.profileError3.showModal()
         return;
       }
       if(target === 'email' && email === ''){
-        Swal.fire({
-          icon: 'error',
-          title: '請輸入信箱資料',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.$refs.profileError4.showModal()
         return;
       }
       if(target === 'ID' && ID === ''){
-        Swal.fire({
-          icon: 'error',
-          title: '請輸入身份證字號',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.$refs.profileError5.showModal()
         return;
       }
       const requestData = {
@@ -260,12 +277,7 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '更新資料成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.profileSuceess.showModal()
             if(target === 'name'){
               this.isNameEdit = false;
               this.updateMemberName(fullname)
@@ -278,35 +290,23 @@ export default {
               this.isIdentityEdit = false
               this.updateMemberID(ID)
             }
-            
-           
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-           
+            this.$refs.passwordError.showModal()
           }
           if (res.data.status_code === 'USER_2023') {
-            Swal.fire({
-              icon: 'error',
-              title: '姓名格式不符合',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.profileError.showModal()
           }
           if (res.data.status_code === 'USER_2024') {
-            Swal.fire({
-              icon: 'error',
-              title: '信箱格式不符合',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.profileError2.showModal()
           }
         });
+    },
+    handleAppleUnbinding(){
+      this.$refs.unbindApple.showModal()
+    },
+    closeApple(){
+      this.$refs.unbindApple.hideModal()
     },
     //apple解綁
     appleUnbind() {
@@ -322,21 +322,11 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '解除綁定成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.unbindingSuceess.showModal()
             this.updateBindingData(2);
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError.showModal()
           }
         });
     },
@@ -368,21 +358,11 @@ export default {
             })
               .then(res => {
                 if (res.data.status_code === 'SYSTEM_1000') {
-                  Swal.fire({
-                    icon: 'success',
-                    title: '綁定成功！',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
+                  this.$refs.unbindingSuceess.showModal()
                   this.bindSuccessData(2);
                 }
                 if (res.data.status_code === 'SYSTEM_1001') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '資料不完整',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
+                  this.$refs.passwordError.showModal()
                 }
                 localStorage.removeItem('appleID');
               });
@@ -390,8 +370,14 @@ export default {
         }
       }, 1000);
     },
+    handleGooleUnbinding(){
+      this.$refs.unbindGoogle.showModal()
+    },
+    closeGoogle(){
+      this.$refs.unbindGoogle.hideModal()
+    },
     //GOOGLE解綁
-    gooleUnbind() {
+    googleUnbind() {
       const apiUrl = `${process.env.VUE_APP_PATH}/user/unbind_platform`;
       const requestData = {
         method: "Google"
@@ -404,23 +390,19 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '解除綁定成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.unbindingSuceess.showModal()
             this.updateBindingData(0);
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError.showModal()
           }
         });
+    },
+    handleLineUnbinding(){
+      this.$refs.unbindLine.showModal()
+    },
+    closeLine(){
+      this.$refs.unbindLine.hideModal()
     },
     //line解綁
     lineUnbind() {
@@ -436,21 +418,11 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '解除綁定成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.bindingSuceess.showModal()
             this.updateBindingData(1);
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError.showModal()
           }
         });
     },
@@ -483,21 +455,11 @@ export default {
             })
               .then(res => {
                 if (res.data.status_code === 'SYSTEM_1000') {
-                  Swal.fire({
-                    icon: 'success',
-                    title: '綁定成功！',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
+                  this.$refs.bindingSuceess.showModal()
                   this.bindSuccessData(1);
                 }
                 if (res.data.status_code === 'SYSTEM_1001') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '資料不完整',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
+                  this.$refs.passwordError.showModal()
                 }
                 localStorage.removeItem('lineUserId');
               });
@@ -539,21 +501,11 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '綁定成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.bindingSuceess.showModal()
             this.bindSuccessData(0);
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.$refs.passwordError.showModal()
           }
         });
     },
@@ -582,5 +534,11 @@ input {
   & input {
     width: 100%;
   }
+}
+.unbind{
+  width: 90px;
+}
+.unbind:hover{
+  color:white;
 }
 </style>

@@ -6,6 +6,9 @@
       </div>
       <form>
         <div class="mb-3 row justify-content-center align-items-center">
+          <div class="d-flex justify-content-center">
+            <h5 v-if="errorMessage" class="error">{{ errorMessage }}</h5>
+          </div>
           <label for="name" class="col-3 form-label  text-nowrap mr-2">會員姓名</label>
           <div class="col-9">
             <input
@@ -93,6 +96,7 @@ export default{
   },
   data() {
     return {
+      errorMessage:'',
       title:localStorage.getItem('platform'),
       remainingTime:300,
       isplatformOTPSend: false,
@@ -157,57 +161,30 @@ export default{
     sendPlatform() {
       const nameRegex = /^[a-zA-Z\s\u4E00-\u9FFF]+$/;
       if (!nameRegex.test(this.platformName)) {
-        Swal.fire({
-          icon: 'error',
-          title: '姓名格式不符合要求',
-          text: '請輸入有效的姓名，只能包含中文、英文和空格',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '姓名格式不符合要求'
         this.$refs.platformName.focus();
         return;
       }
       // 驗證手機號碼格式
       const phoneRegex = /^[0-9]{10}$/;
       if (!phoneRegex.test(this.platformPhone)) {
-        Swal.fire({
-          icon: 'error',
-          title: '手機號碼格式不正確',
-          text: '請輸入有效的手機號碼',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '手機號碼格式不正確'
         this.$refs.platformPhone.focus()
         return; // 停止繼續執行
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
       if (!passwordRegex.test(this.platformPsw1)) {
-        Swal.fire({
-          icon: 'error',
-          title: '密碼格式不符合要求',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '密碼格式不符合要求'
         this.$refs.platformPsw1.focus()
         return;
       }
       if (this.isplatformOTPVertify === false) {
-        Swal.fire({
-          icon: 'error',
-          title: '請先完成手機驗證',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '請先完成手機驗證'
         this.$refs.platformOTP.focus()
         return;
       }
       if (this.platformPsw1 !== this.platformPsw2) {
-        Swal.fire({
-          icon: 'error',
-          title: '兩次輸入的密碼不同',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '兩次輸入的密碼不同'
         this.$refs.platformPsw1.focus()
         return;
       }
@@ -243,12 +220,13 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '註冊成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: '註冊成功',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            // })
+            this.errorMessage = ''
             const loginData = res.data;
             this.updateLoginData(loginData);
             this.$emit('after-platform')
@@ -268,57 +246,27 @@ export default{
             }
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料格式錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '資料格式錯誤'
             this.$refs.platformName.focus()
           }
           if (res.data.status_code === 'USER_2021') {
-            Swal.fire({
-              icon: 'error',
-              title: '帳號格式錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '帳號格式錯誤'
             this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'USER_2022') {
-            Swal.fire({
-              icon: 'error',
-              title: '密碼格式錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '密碼格式錯誤'
             this.$refs.platformPsw1.focus()
           }
           if (res.data.status_code === 'USER_2023') {
-            Swal.fire({
-              icon: 'error',
-              title: '姓名格式錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '姓名格式錯誤'
             this.$refs.platformName.focus()
           }
           if (res.data.status_code === 'USER_2041') {
-            Swal.fire({
-              icon: 'error',
-              title: '帳號已存在',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '帳號已存在'
             this.$refs.platformPsw1.focus()
           }
           if (res.data.status_code === 'USER_2082' || res.data.status_code === 'USER_2081') {
-            Swal.fire({
-              icon: 'error',
-              title: 'OPT驗證失敗',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = 'OPT驗證失敗'
             this.$refs.platformPsw1.focus()
           }
         });
@@ -334,30 +282,15 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
+            this.errorMessage = ''
             this.isplatformOTPVertify = true
-            Swal.fire({
-              icon: 'success',
-              title: '驗證成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
-            Swal.fire({
-              icon: 'error',
-              title: '驗證碼錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '驗證碼錯誤'
             this.$refs.platformOTP.focus()
           }
           if (res.data.status_code === 'SYSTEM_2093') {
-            Swal.fire({
-              icon: 'error',
-              title: '驗證碼錯誤超過五次，驗證失敗',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '驗證碼錯誤超過五次，驗證失敗'
             this.$refs.platformOTP.focus()
           }
         });
@@ -367,13 +300,7 @@ export default{
       // 驗證手機號碼格式
       const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
       if (!phoneRegex.test(this.platformPhone)) {
-        Swal.fire({
-          icon: 'error',
-          title: '手機號碼格式不正確',
-          text: '請輸入有效的手機號碼',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '手機號碼格式不正確'
         this.$refs.platformPhone.focus()
         return;
       }
@@ -385,51 +312,24 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '發送簡訊驗證碼成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
             this.isplatformOTPSend = true;
+            this.errorMessage = ''
             this.startCountdown();
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'USER_2094') {
-            Swal.fire({
-              icon: 'error',
-              title: '手機號碼格式不正確',
-              text: '請輸入有效的手機號碼',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '手機號碼格式不正確'
             this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
-            Swal.fire({
-              icon: 'error',
-              title: '請求過於頻繁',
-              text: '請稍後再嘗試',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '請求過於頻繁'
             this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'USER_2041') {
-            Swal.fire({
-              icon: 'error',
-              title: '手機已註冊過',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '手機已註冊過'
             this.$refs.platformPhone.focus()
           }
           if (res.data.status_code === 'USER_2099') {
-            Swal.fire({
-              icon: 'error',
-              title: 'OTP服務異常',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = 'OTP服務異常'
             this.$refs.platformPhone.focus()
           }
         });
