@@ -6,6 +6,9 @@
       </div>
       <form>
         <div v-show="!isForgetOTPVertify">
+          <div class="d-flex justify-content-center">
+            <h5 v-if="errorMessage" class="error">{{ errorMessage }}</h5>
+          </div>
           <h5 class="mb-3">請先驗證您的手機號碼</h5>
           <div class="mb-2 row justify-content-center align-items-center">
             <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
@@ -77,6 +80,7 @@ export default{
   },
  data(){
   return{
+      errorMessage:'',
       remainingTime:300,
       forgetPhone: '',
       forgetCode: '',
@@ -123,23 +127,13 @@ export default{
    //重設密碼
    resetPsw() {
       if (this.forgetPsw1 !== this.forgetPsw2) {
-        Swal.fire({
-          icon: 'error',
-          title: '兩次輸入的密碼不同',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '兩次輸入的密碼不同'
         this.$refs.forgetPsw1.focus();
         return;
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
       if (!passwordRegex.test(this.forgetPsw1)) {
-        Swal.fire({
-          icon: 'error',
-          title: '密碼格式不符合要求',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '密碼格式不符合要求'
         this.$refs.forgetPsw1.focus();
         return;
       }
@@ -151,34 +145,21 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '設定新密碼成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
-            this.forgetCode = '';
-            this.forgetPhone = '';
-            this.forgetPsw1 = '';
-            this.forgetPsw2 = '';
             this.$emit('after-forget')
+            this.errorMessage = ''
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: '修改密碼成功',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            // })
           }
           if (res.data.status_code === 'SYSTEM_100') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料不齊全',
-              showConfirmButton: false,
-              timer: 1500,
-            })
+            this.errorMessage = '資料不齊全'
             this.$refs.forgetPsw1.focus();
           }
           if (res.data.status_code === 'USER_2043') {
-            Swal.fire({
-              icon: 'error',
-              title: '用戶不存在',
-              showConfirmButton: false,
-              timer: 1500,
-            })
+            this.errorMessage = '用戶不存在'
             this.$refs.forgetPsw1.focus();
           }
         });
@@ -193,49 +174,24 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
+            this.errorMessage = ''
             this.isForgetOTPVertify = true;
-            Swal.fire({
-              icon: 'success',
-              title: '驗證成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
             this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
-            Swal.fire({
-              icon: 'error',
-              title: '驗證碼錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '驗證碼錯誤'
             this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'SYSTEM_2093') {
-            Swal.fire({
-              icon: 'error',
-              title: '驗證碼錯誤超過五次，驗證失敗',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '驗證碼錯誤超過五次，驗證失敗'
             this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'USER_2091') {
-            Swal.fire({
-              icon: 'error',
-              title: '發送簡訊次數過於頻繁',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '發送簡訊次數過於頻繁'
             this.$refs.forgetCode.focus();
           }
           if (res.data.status_code === 'USER_2099') {
-            Swal.fire({
-              icon: 'error',
-              title: 'OPT服務異常',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = 'OPT服務異常'
             this.$refs.forgetCode.focus();
           }
         });
@@ -245,13 +201,7 @@ export default{
     forgetOTP() {
       const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
       if (!phoneRegex.test(this.forgetPhone)) {
-        Swal.fire({
-          icon: 'error',
-          title: '手機號碼格式不正確',
-          text: '請輸入有效的手機號碼',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.errorMessage = '請輸入有效的手機號碼'
         this.$refs.forgetPhone.focus();
         return; // 停止繼續執行
       }
@@ -263,51 +213,24 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '發送簡訊驗證碼成功！',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = ''
             this.isForgetOTPSend = true;
             this.startCountdown();
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2094') {
-            Swal.fire({
-              icon: 'error',
-              title: '手機號碼格式不正確',
-              text: '請輸入有效的手機號碼',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '手機號碼格式不正確'
             this.$refs.forgetPhone.focus();
           }
           if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
-            Swal.fire({
-              icon: 'error',
-              title: '請求過於頻繁',
-              text: '請稍後再嘗試',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '請求過於頻繁'
             this.$refs.forgetPhone.focus();
           }
           if (res.data.status_code === 'USER_2043') {
-            Swal.fire({
-              icon: 'error',
-              title: '用戶不存在',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = '用戶不存在'
             this.$refs.forgetPhone.focus();
           }
           if (res.data.status_code === 'USER_2099') {
-            Swal.fire({
-              icon: 'error',
-              title: 'OTP服務異常',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            this.errorMessage = 'OTP服務異常'
             this.$refs.forgetPhone.focus();
           }
         });
