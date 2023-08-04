@@ -2,16 +2,19 @@
   <div id="accountLoginPage" ref="accountLoginPage">
     <div class="modal-body text-second pb-5">
       <div class="text-center mb-5">
-        <h1 class="modal-title fs-2 text-primary">使用手機號碼登入</h1>
+        <h1 class="modal-title fs-2 text-primary mb-1">使用手機號碼登入</h1>
       </div>
       <form>
         <div class="mb-2 row justify-content-center align-items-center">
+          <div class="d-flex justify-content-center">
+            <h5 v-if="errorMessage" class="error">{{ errorMessage }}</h5>
+          </div>
           <label for="loginTel" class="col-3 form-label">手機號碼</label>
           <div class="col-9">
             <input
               id="loginTel" ref="loginTel" v-model="loginPhone" type="tel"
               class="form-control" placeholder="請輸入手機號碼"
-              aria-describedby="tel" minlength="10" required>
+              aria-describedby="tel">
           </div>
         </div>
         <div class="mb-4 row justify-content-center align-items-center">
@@ -51,6 +54,7 @@ export default {
   },
   data() {
     return {
+      errorMessage:'',
       isForgetOpen:false,
       //登入
       loginPhone: '',
@@ -102,25 +106,27 @@ export default {
      sendLogin() {
       const phoneRegex = /^[0-9]{10}$/; 
       if (!phoneRegex.test(this.loginPhone)) {
-        Swal.fire({
-          icon: 'error',
-          title: '手機號碼格式不正確',
-          text: '請輸入有效的手機號碼',
-          showConfirmButton: false,
-          keydownListenerCapture:true,
-          timer: 1500,
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: '手機號碼格式不正確',
+        //   text: '請輸入有效的手機號碼',
+        //   showConfirmButton: false,
+        //   keydownListenerCapture:true,
+        //   timer: 1500,
+        // });
+        this.errorMessage = '手機號碼格式不正確',
         this.$refs.loginTel.focus()
         return; // 停止繼續執行
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
       if (!passwordRegex.test(this.loginPsw)) {
-        Swal.fire({
-          icon: 'error',
-          title: '密碼格式不符合要求',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: '密碼格式不符合要求',
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
+        this.errorMessage = '密碼格式不符合要求',
         this.$refs.loginPsw.focus()
         return;
       }
@@ -132,12 +138,12 @@ export default {
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '登入成功',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            // Swal.fire({
+            //   icon: 'success',
+            //   title: '登入成功',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            // });
             this.loginPhone = '';
             this.loginPsw = '';
             const loginData = res.data;
@@ -145,30 +151,33 @@ export default {
             this.$emit('after-login');
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資料格式錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: '資料格式錯誤',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            // });
+            this.errorMessage = '資料格式錯誤'
             this.$refs.loginTel.focus()
           }
           if (res.data.status_code === 'USER_2011') {
-            Swal.fire({
-              icon: 'error',
-              title: '登入失敗，驗證資訊錯誤',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: '登入失敗，驗證資訊錯誤',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            // });
+            this.errorMessage = '登入失敗，驗證資訊錯誤'
             this.$refs.loginTel.focus()
           }
           if (res.data.status_code === 'USER_2012') {
-            Swal.fire({
-              icon: 'error',
-              title: '登入失敗，帳號已被停權',
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            // Swal.fire({
+            //   icon: 'error',
+            //   title: '登入失敗，帳號已被停權',
+            //   showConfirmButton: false,
+            //   timer: 1500,
+            // });
+            this.errorMessage = '登入失敗，帳號已被停權'
             this.$refs.loginTel.focus()
           }
         });
@@ -178,3 +187,8 @@ export default {
 
 }
 </script>
+<style scoped>
+.error{
+  color:red;
+}
+</style>
