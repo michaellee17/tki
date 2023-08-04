@@ -8,7 +8,7 @@
       <form>
         <div class="mb-35 row justify-content-center align-items-center position-relative">
           <input
-            id="name" ref="registerName" type="text" class="form-control pe-5"
+            id="name" ref="registerName" v-model="registerName" type="text" class="form-control pe-5"
             placeholder="請輸入姓名"
             aria-describedby="name" required>
             <div class="position-absolute icon">
