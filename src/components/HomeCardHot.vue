@@ -30,7 +30,7 @@
           <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
         </a>
       </div>
-      <div class="btn-next position-absolute">
+      <div v-if="data.length > 3" class="btn-next position-absolute">
         <a @click.stop="slider.slideNext()">
           <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
         </a>

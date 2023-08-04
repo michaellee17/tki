@@ -15,7 +15,7 @@ import { mapState } from 'vuex';
   }
 </script>
 
-<style scoped>
+<style>
 .matter_content ul li {
     list-style: disc !important;
 }

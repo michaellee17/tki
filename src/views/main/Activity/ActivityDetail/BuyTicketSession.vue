@@ -32,14 +32,14 @@
             to="type"
             :class="{ 'soldout': area.remain_ticket === '已完售' }"
             @click.prevent="setData(area.area_name, area.area_status, area.ticket_type_info )">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 gap-3">
               <div>
                 <h6 class="mb-1 link-dark">{{ area.area_name }}</h6>
                 <p class="text-primary mb-0">
                   <span v-for="(ticket, i) in area.ticket_type_info" :key="ticket.ticket_name">NTD {{ $currency(ticket.ticket_price) }}<span v-if="i !== area.ticket_type_info.length - 1"> / </span></span>
                 </p>
               </div>
-              <p class="fs-5 link-secondary mb-0 remain-ticket">{{ area.remain_ticket }}<span class="ms-3 arrow-right" /></p>
+              <p class="fs-5 link-secondary mb-0 remain-ticket text-nowrap">{{ area.remain_ticket }}<span class="ms-3 arrow-right" /></p>
             </div>
           </router-link>
         </div>

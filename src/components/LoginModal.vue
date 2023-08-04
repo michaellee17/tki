@@ -212,54 +212,13 @@ export default {
 </script>
 <style scoped lang="scss">
 .modal.login-modal {
-  top: 55%;
-  transform: translateY(-50%);
-
-  & .modal-header .btn-close {
-    padding: 1rem;
+  & .login-way {
+    gap: 1.3rem;
   }
-
-  & .modal-header {
-    border-bottom: none;
-  }
-
-  & .modal-body {
-    padding: 1rem 2rem 2rem 2rem;
+  & .termsBox {
+    height: 250px;
+    overflow: auto;
   }
 }
 
-.btn.text-second {
-  width: 22rem;
-}
-
-img:is([alt="google"], [alt="line"], [alt="apple"], [alt="member"]) {
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.termsBox {
-  height: 250px;
-  overflow: auto;
-}
-
-a {
-  cursor: pointer;
-}
-
-.form-label {
-  margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-  #memberInfoPage form {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-  }
-
-  #accountLoginPage form {
-    padding-right: 4rem;
-    padding-left: 4rem;
-  }
-}
 </style>

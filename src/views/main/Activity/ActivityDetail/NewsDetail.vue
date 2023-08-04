@@ -3,7 +3,7 @@
     <h3 class="mb-4">{{ newDetail.title }}</h3>
     <p class="text-secondary">{{ $timeFormatter(newDetail.release_date) }}</p>
     <img :src="newDetail.image_url" class="img-fluid mb-4" alt="">
-    <div v-html="newDetail.content" />
+    <div class="newsDetail" v-html="newDetail.content" />
   </div>
 </template>
 
@@ -37,5 +37,9 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
+.newsDetail img {
+  max-width: 100%;
+  height: auto;
+}
 </style>
