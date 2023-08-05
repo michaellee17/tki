@@ -4,9 +4,9 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">姓名</p>
-        <a v-if="!isNameEdit" class="text-primary edit" @click="isNameEdit = true">編輯</a>
+        <a v-if="!isNameEdit" class="text-primary edit" @click="handleEdit('name')">編輯</a>
         <div v-if="isNameEdit" class="d-flex gap-2">
-          <a class="text-primary edit" @click="isNameEdit = false">返回</a>
+          <a class="text-primary edit" @click="this.isNameEdit = false">返回</a>
           <a class="text-primary edit" @click="updateProfile('name')">保存</a>
         </div>
       </div>
@@ -16,9 +16,9 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">身分證字號</p>
-        <a v-if="!isIdentityEdit" class="text-primary edit" @click="isIdentityEdit = true">編輯</a>
+        <a v-if="!isIdentityEdit" class="text-primary edit" @click="handleEdit('ID')">編輯</a>
         <div v-if="isIdentityEdit" class="d-flex gap-2">
-          <a class="text-primary edit" @click="isIdentityEdit = false">返回</a>
+          <a class="text-primary edit" @click="this.isIdentityEdit = false">返回</a>
           <a class="text-primary edit" @click="updateProfile('ID')">保存</a>
         </div>
       </div>
@@ -56,9 +56,9 @@
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
         <p class="fs-18">電子信箱</p>
-        <a v-if="!isEmailEdit" class="text-primary edit" @click="isEmailEdit = true">編輯</a>
+        <a v-if="!isEmailEdit" class="text-primary edit" @click="handleEdit('email')">編輯</a>
         <div v-if="isEmailEdit" class="d-flex gap-2">
-          <a class="text-primary edit" @click="isEmailEdit = false">返回</a>
+          <a class="text-primary edit" @click="this.isEmailEdit = false">返回</a>
           <a class="text-primary edit" @click="updateProfile('email')">保存</a>
         </div>
       </div>
@@ -200,11 +200,52 @@ export default {
       return this.memberData.email ? this.memberData.email : '無資料'
     },
   },
+  beforeUnmount() {
+    this.enterKeyupDestroyed();
+  },
   mounted() {
+    this.enterKeyup();
   },
   methods: {
     //vuex取出actions
     ...mapActions('user', ['updateBindingData', 'bindSuccessData','updateMemberName','updateMemberEmail','updateMemberID']),
+    //控制下拉區塊不重複顯示
+    handleEdit(target){
+      console.log(target);
+      if(target === 'name'){
+        this.isNameEdit = true
+        this.isEmailEdit = false
+        this.isIdentityEdit = false
+      }else if(target === 'ID'){
+        this.isNameEdit = false
+        this.isEmailEdit = false
+        this.isIdentityEdit = true
+      }else if(target === 'email'){
+        this.isNameEdit = false
+        this.isEmailEdit = true
+        this.isIdentityEdit = false
+      }
+    },
+    enterKeyup() {
+      document.addEventListener("keyup", this.enterKey);
+    },
+    //表單enter送出事件
+    enterKey(event) {
+      if (event.key === 'Enter') {
+          if(this.isNameEdit){
+            this.updateProfile('name')
+          }else if(this.isEmailEdit){
+            this.updateProfile('email')
+          }else if(this.isIdentityEdit){
+            this.updateProfile('ID')
+          }else if(this.passwordChange){
+            this.sendPswChange()
+          }
+        } 
+    },
+    enterKeyupDestroyed() {
+      document.removeEventListener("keyup", this.enterKey);
+    },
     //送出密碼修改
     sendPswChange(){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/reset_password`;
