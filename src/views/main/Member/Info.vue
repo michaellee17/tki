@@ -211,20 +211,10 @@ export default {
     ...mapActions('user', ['updateBindingData', 'bindSuccessData','updateMemberName','updateMemberEmail','updateMemberID']),
     //控制下拉區塊不重複顯示
     handleEdit(target){
-      console.log(target);
-      if(target === 'name'){
-        this.isNameEdit = true
-        this.isEmailEdit = false
-        this.isIdentityEdit = false
-      }else if(target === 'ID'){
-        this.isNameEdit = false
-        this.isEmailEdit = false
-        this.isIdentityEdit = true
-      }else if(target === 'email'){
-        this.isNameEdit = false
-        this.isEmailEdit = true
-        this.isIdentityEdit = false
-      }
+      //target === 'name'印出布林值再賦值給isNameEdit
+      this.isNameEdit = target === 'name';
+      this.isIdentityEdit = target === 'ID';
+      this.isEmailEdit = target === 'email';
     },
     enterKeyup() {
       document.addEventListener("keyup", this.enterKey);
