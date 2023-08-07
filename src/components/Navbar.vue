@@ -143,7 +143,7 @@
 import MessageModal from "./gc/MessageModal.vue";
 import loginModal from "./LoginModal";
 import Swal from "sweetalert2";
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   components: {
     loginModal,
@@ -192,6 +192,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+    // ...mapMutations('user', ['updateLogoutMsg']),
     triggerSearch(item) {
       this.searchData = item;
       this.sendSearch();
@@ -215,7 +216,7 @@ export default {
     },
     //表單enter送出事件
     enterKey(event) {
-      console.log(this.isSearchFoucs);
+      // console.log(this.isSearchFoucs);
       if (event.key === 'Enter' && this.isSearchFoucs) {
         this.sendSearch()
       }
@@ -266,7 +267,8 @@ export default {
             this.updateLoginStatus(false);
             this.updateLoginData([]);
             this.cleanMemberData();
-            this.$refs.logoutSuccess.showModal()
+            // this.updateLogoutMsg(true);
+
             this.$router.push('/')
           }
           if (res.data.status_code === 'SYSTEM_1001') {

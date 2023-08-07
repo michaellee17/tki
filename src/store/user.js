@@ -8,6 +8,7 @@ export const user = {
     memberData: null,
     //登入資訊包含token
     loginData:null,
+    // logoutMsg: false
   }),
   actions: {
     fetchMemberData({ commit }, loginToken) {
@@ -72,6 +73,9 @@ export const user = {
     changeBindingData(state,status){
       state.memberData.data.platform_status[status] = false;
     },
+    // updateLogoutMsg(state, status) {
+    //   state.logoutMsg = status;
+    // }
   },
   getters: {
     getLoginStatus(state){
