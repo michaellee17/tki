@@ -74,6 +74,7 @@ const routes = [
         path: 'info/:memberID',
         name: 'Info',
         component: () => import('../views/main/Member/Info.vue'),
+        meta: { requiresAuth: true },
       },
       {
         path: 'order-history/:memberID',
