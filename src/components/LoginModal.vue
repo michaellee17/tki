@@ -118,7 +118,7 @@ export default {
     this.initLoginBoard();
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
     
-    this.showModal();
+    // this.showModal();
   },
   methods: {
     //取出登入狀態
@@ -134,7 +134,6 @@ export default {
         this.isPlatformOpen = false
         this.afterLogin()
       }
-     
     },
     //控制一般豋入收合
     handleLogin(show) {

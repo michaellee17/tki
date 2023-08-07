@@ -389,6 +389,7 @@ export default {
             })
               .then(res => {
                 if (res.data.status_code === 'SYSTEM_1000') {
+                  this.closeApple()
                   this.$refs.unbindingSuceess.showModal()
                   this.bindSuccessData(2);
                 }
@@ -421,6 +422,7 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
+            this.closeGoogle()
             this.$refs.unbindingSuceess.showModal()
             this.updateBindingData(0);
           }
@@ -449,6 +451,7 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
+            this.closeLine()
             this.$refs.bindingSuceess.showModal()
             this.updateBindingData(1);
           }

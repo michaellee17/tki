@@ -14,15 +14,13 @@ export default {
     ...mapActions('user', ['updateLoginData']),
     linkToApple() {
       AppleID.auth.init({
-        clientId: 'demo2.gcreate.com.tw',
+        clientId: process.env.VUE_APP_APPLE_CLIENT_ID,
         scope: 'name email',
-        redirectURI: 'https://demo2.gcreate.com.tw/gc_tki/api/apple-login',
+        redirectURI: process.env.VUE_APP_APLLE_REDIRECTURI,
         state: 'tki',
         usePopup:false
       })
-      AppleID.auth.signIn((res) => {
-       
-      });
+      AppleID.auth.signIn();
     },
    },
 

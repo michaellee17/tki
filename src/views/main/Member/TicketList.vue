@@ -16,12 +16,12 @@
       <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
-          <button class="btn-close close" @click="deleteTicket(item.buy_ticket_id)" />
+          <button class="btn-close close" @click="showModal(item.buy_ticket_id)" />
           <div @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
             <p class="subject ellipsis-1">{{ item.performer }}</p>
             <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
           </div>
-          <p class="small">{{ item.session_name }} {{ item.area_name }}</p>
+          <p class="small ellipsis-1">{{ item.session_name }} {{ item.area_name }}</p>
           <h3 class="price">$ {{ item.ticket_price }} x {{ item.ticket_number }}</h3>
           <p class="countDown d-flex gap-2">
             <img src="../../../assets/images/icons/icon_schedule.svg">
@@ -35,17 +35,25 @@
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
+  <MessageModal ref="deleteModal" :warning="true" :id="modalID">
+    <div class="d-flex justify-content-center gap-1">
+      <button class="btn btn-primary unbind" @click="deleteTicket">確認刪除</button>
+      <button class="btn btn-secondary unbind" @click="closeModal">取消</button>
+    </div>
+  </MessageModal>
 </template>
 
 <script>
+import MessageModal from '../../../components/gc/MessageModal.vue';
 import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import Swal from "sweetalert2";
 export default {
-  components: { SearchOrderDate, PaginationA },
+  components: { SearchOrderDate, PaginationA, MessageModal },
   data() {
     return {
+      modalID :'',
       isLoading: false,
       tickets: [],
       currentPage: 1, // 當前分頁
@@ -85,11 +93,19 @@ export default {
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
-    deleteTicket(id){
+    closeModal(){
+      this.$refs.deleteModal.hideModal()
+      this.modalID = ''
+    },
+    showModal(id){
+      this.$refs.deleteModal.showModal()
+      this.modalID = id
+    },
+    deleteTicket(){
       const apiUrl = `${process.env.VUE_APP_PATH}/user/remove-ticket-list`;
       const accessToken = this.getLoginData.access_token
       const params = {
-        id:id
+        id:this.modalID
       };
       this.axios.post(apiUrl, params,{
         headers: {
@@ -98,16 +114,11 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            Swal.fire({
-              icon: 'success',
-              title: '移除購票清單成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
             if(this.total % this.itemsPerPage === 1 ){
               this.currentPage--;
             }
             this.getTickets()
+            this.closeModal()
           }
         });
     },

@@ -110,6 +110,16 @@ export default {
     },
      //登入
      sendLogin() {
+      if(!this.loginPhone){
+        this.errorMessage = '手機號碼不得為空',
+        this.$refs.loginTel.focus()
+        return; 
+      }
+      if(!this.loginPsw){
+        this.errorMessage = '密碼不得為空',
+        this.$refs.loginPsw.focus()
+        return; 
+      }
       const phoneRegex = /^[0-9]{10}$/; 
       if (!phoneRegex.test(this.loginPhone)) {
         this.errorMessage = '手機號碼格式不正確',
