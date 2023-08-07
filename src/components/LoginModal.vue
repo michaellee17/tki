@@ -20,7 +20,7 @@
               </div>
             </div>
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
-            <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-5">
+            <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-4">
               <Google @show-platform="handlePlatform(true)" @after-login="afterLogin" />
               <LineLogin @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="clickClose" />
               <Apple @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="clickClose" />
@@ -117,6 +117,8 @@ export default {
     this.loginModal = new Modal(this.$refs.loginModal);
     this.initLoginBoard();
     this.$refs.loginModal.addEventListener('hidden.bs.modal', () => this.initLoginBoard())
+    
+    this.showModal();
   },
   methods: {
     //取出登入狀態

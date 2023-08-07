@@ -1,68 +1,68 @@
 <template>
   <div id="forgetPwdPage" ref="forgetPwdPage">
     <div class="modal-body text-second pb-5">
-      <div class="text-center mb-5">
+      <div class="text-center mb-4">
         <h1 class="modal-title fs-2 text-primary">忘記密碼</h1>
       </div>
       <form>
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
         <div v-show="!isForgetOTPVertify">
-          <div class="d-flex justify-content-center">
-            <h5 v-if="errorMessage" class="error">{{ errorMessage }}</h5>
-          </div>
-          <h5 class="mb-3">請先驗證您的手機號碼</h5>
-          <div class="mb-2 row justify-content-center align-items-center">
-            <label for="forgetTel" class="col-3 form-label  text-nowrap">手機號碼</label>
-            <div class="col-9">
+          <div class="mb-3">
+            <div class="row justify-content-center align-items-center position-relative">
               <input
                 id="forgetTel" ref="forgetPhone" v-model="forgetPhone" type="tel"
-                class="form-control"
-                placeholder="0912345678"
+                class="form-control pe-5"
+                placeholder="請先驗證您的手機號碼"
                 aria-describedby="tel" minlength="10" required>
+              <div class="position-absolute icon">
+                <font-awesome-icon :icon="['fas', 'phone-alt']" />
+              </div>
             </div>
           </div>
-          <div class="mb-2 row justify-content-center align-items-center">
-            <p class="col-3" />
-            <div class="col-9">
-              <button v-if="!isForgetOTPSend && !isForgetOTPVertify" type="button" class="btn btn-info link-light w-100" @click="forgetOTP">發送驗證碼</button>
-              <button v-if="isForgetOTPSend && !isForgetOTPVertify" class="btn btn-info link-light w-100" disabled>有效時間:{{ remainingTime }}(秒)</button>
-            </div>
+          <div class="mb-3 row justify-content-center align-items-center">
+            <button v-if="!isForgetOTPSend && !isForgetOTPVertify" type="button" class="btn btn-primary link-light w-100 py-2" @click="forgetOTP">發送驗證碼</button>
+            <button v-if="isForgetOTPSend && !isForgetOTPVertify" class="btn btn-primary link-light w-100 py-2" disabled>有效時間:{{ remainingTime }}(秒)</button>
           </div>
-          <div v-if="isForgetOTPSend && !isForgetOTPVertify" class="mb-5 row justify-content-center align-items-center">
-            <label for="forgetCode" class="col-3 form-label" />
-            <div class="col-9 d-flex align-items-center gap-2">
+  
+          <div v-if="isForgetOTPSend && !isForgetOTPVertify" class="mb-4 row justify-content-between align-items-center">
+            <div class="col-7 px-0">
               <input
                 id="forgetCode" ref="forgetCode" v-model="forgetCode" type="text"
                 class="form-control"
                 placeholder="輸入驗證碼"
                 aria-describedby="code" required>
-              <button type="button" class="btn btn-info link-light w-50" @click="forgetVertifyOTP">驗證</button>
             </div>
+            <button type="button" class="col-4 btn btn-primary link-light py-2" @click="forgetVertifyOTP">驗證</button>
           </div>
         </div>
         <div v-show="isForgetOTPVertify">
-          <h5 class="mb-3">重新設定密碼</h5>
-          <div class="mb-3 row justify-content-center align-items-center">
-            <label for="forgetPassword" class="col-3 form-label text-nowrap">密碼</label>
-            <div class="col-9">
+          <!-- <h5 class="mb-3">重新設定密碼</h5> -->
+          <div class="mb-3">
+            <div class="row justify-content-center align-items-center position-relative">
               <input
-                id="forgetPassword" ref="forgetPsw1" v-model="forgetPsw1" type="password" class="form-control"
-                placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
+                id="forgetPassword" ref="forgetPsw1" v-model="forgetPsw1" type="password"
+                class="form-control"
+                placeholder="請重新設定密碼，包含英數，至少8碼" aria-describedby="password" minlength="8" required>
+              <div class="position-absolute icon">
+                <font-awesome-icon :icon="['fas', 'lock']" />
+              </div>
             </div>
           </div>
-          <div class="mb-4 row justify-content-center align-items-center">
-            <label for="forgetPasswordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
-            <div class="col-9">
+          <div class="mb-4">
+            <div class="row justify-content-center align-items-center position-relative">
               <input
                 id="orgetPasswordCmf" v-model="forgetPsw2" type="password" class="form-control"
-                placeholder="再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
+                placeholder="請再次輸入密碼" aria-describedby="passwordCmf" minlength="8" required>
+              <div class="position-absolute icon">
+                <font-awesome-icon :icon="['fas', 'lock']" />
+              </div>
             </div>
           </div>
          
-          <button type="button" class="btn btn-primary link-light w-100 py-2" @click="resetPsw">送出</button>
+          <button type="button" class="btn btn-primary link-light w-100 py-2 mb-3" @click="resetPsw">送出</button>
         </div>
-        <div class="text-end mb-2 d-flex">
-          <a
-            class="text-decoration-none link-secondary" @click="changePage">回上一步</a>
+        <div class="text-center">
+          <a class="text-decoration-none link-info" @click.prevent="changePage">回上一步</a>
         </div>
       </form>
     </div>
