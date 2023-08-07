@@ -6,7 +6,6 @@ import VueZoomer from 'vue-zoomer';
 import vue3GoogleLogin from 'vue3-google-login';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import VueAppleLogin from 'vue-apple-login';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
@@ -36,9 +35,8 @@ const app = createApp(App);
 
 app.config.globalProperties.$timeFormatter = timeFormatter;
 app.config.globalProperties.$currency = currency;
-
 const gAuthOptions = {
-  clientId: '578959991705-kbott67stia8chh8mijjfs8e1qa77hbo.apps.googleusercontent.com',
+  clientId: process.env.VUE_APP_GOOGLE_CLIENT_ID,
 };
 app.use(vue3GoogleLogin,gAuthOptions)
 
@@ -68,13 +66,6 @@ router.beforeEach((to, from) => {
   }
   store.commit("forceCloseModal")
 })
-app.use(VueAppleLogin, {
-  clientId: 'demo2.gcreate.com.tw',
-  scope: 'name email',
-  redirectURI: 'https://example.com/redirect',
-  state: 'test',
-  usePopup: true,
-});
 app.use(VueZoomer)
   .use(router)
   .use(store)

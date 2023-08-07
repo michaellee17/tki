@@ -128,18 +128,30 @@
     </div>
   </nav>
   <loginModal ref="loginModal" />
+  <MessageModal ref="logoutSuccess" :success="true">
+    <p class="mb-0">登出成功</p>
+  </MessageModal>
+  <MessageModal ref="logoutfail" :error="true">
+    <p class="mb-0">資訊不完整</p>
+  </MessageModal>
+  <MessageModal ref="searchEmpty" :error="true">
+    <p class="mb-0">搜尋值不得為空</p>
+  </MessageModal>
 </template>
 
 <script>
+import MessageModal from "./gc/MessageModal.vue";
 import loginModal from "./LoginModal";
 import Swal from "sweetalert2";
 import { mapActions, mapGetters } from 'vuex';
 export default {
   components: {
-    loginModal
+    loginModal,
+    MessageModal
   },
   data() {
     return {
+      isSearchFoucs:false,
       memberID: 0,
       searchData: '',
       eventSubMenu: {},
@@ -203,7 +215,8 @@ export default {
     },
     //表單enter送出事件
     enterKey(event) {
-      if (event.key === 'Enter' && this.searchData) {
+      console.log(this.isSearchFoucs);
+      if (event.key === 'Enter' && this.isSearchFoucs) {
         this.sendSearch()
       }
     },
@@ -212,12 +225,7 @@ export default {
     },
     sendSearch() {
       if (this.searchData.trim() === '') {
-        Swal.fire({
-          icon: 'error',
-          title: '搜尋值不得為空',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        this.$refs.searchEmpty.showModal()
         return;
       }
       if (localStorage.getItem('searchHistory')) {
@@ -258,28 +266,20 @@ export default {
             this.updateLoginStatus(false);
             this.updateLoginData([]);
             this.cleanMemberData();
-            Swal.fire({
-              icon: 'success',
-              title: '登出成功',
-              showConfirmButton: false,
-              timer: 1500,
-            })
+            this.$refs.logoutSuccess.showModal()
             this.$router.push('/')
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-            Swal.fire({
-              icon: 'error',
-              title: '資訊不完整',
-              showConfirmButton: false,
-              timer: 1500,
-            })
+           this.$refs.logoutfail.showModal()
           }
         });
     },
     handleMouseEnter() {
+      this.isSearchFoucs = true
       this.$refs.searchDropdownMenu.classList.remove('d-none');
     },
     handleMouseLeave() {
+      this.isSearchFoucs = false
       this.$refs.searchDropdownMenu.classList.add('d-none');
     },
     closeDropdown() {

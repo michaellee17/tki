@@ -147,6 +147,16 @@ export default{
     },
     //註冊
     sendRegister() {
+      if(!this.registerName){
+        this.errorMessage = '姓名不得為空',
+        this.$refs.registerName.focus()
+        return; 
+      }
+      if(!this.registerPhone){
+        this.errorMessage = '手機號碼不得為空',
+        this.$refs.registerPhone.focus()
+        return; 
+      }
       const nameRegex = /^[a-zA-Z\s\u4E00-\u9FFF]+$/; // 只能包含中文、英文和空格
       if (!nameRegex.test(this.registerName)) {
         this.errorMessage = '姓名格式不符合要求'
@@ -186,12 +196,6 @@ export default{
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.isRegisterOTPSend = true
-            // Swal.fire({
-            //   icon: 'success',
-            //   title: '註冊成功',
-            //   showConfirmButton: false,
-            //   timer: 1500,
-            // })
             this.errorMessage = ''
             const loginData = res.data;
             this.updateLoginData(loginData);
@@ -225,6 +229,11 @@ export default{
     },
      //註冊驗證otp
      vertifyOTP() {
+      if(!this.registerOTP){
+        this.errorMessage = '驗證碼不得為空',
+        this.$refs.registerOTP.focus()
+        return; 
+      }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/verifyotp`;
       const requestData = {
         phone: this.registerPhone,
@@ -250,6 +259,11 @@ export default{
      sendOTP() {
       // 驗證手機號碼格式
       const phoneRegex = /^[0-9]{10}$/; 
+      if(!this.registerPhone){
+        this.errorMessage = '手機號碼不得為空',
+        this.$refs.registerPhone.focus()
+        return; 
+      }
       if (!phoneRegex.test(this.registerPhone)) {
         this.errorMessage = '手機號碼格式不正確'
         this.$refs.registerPhone.focus()

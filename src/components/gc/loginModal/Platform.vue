@@ -216,6 +216,16 @@ export default{
     
     //第三方註冊
     sendPlatform() {
+      if (!this.platformName) {
+        this.errorMessage = '姓名不得為空'
+        this.$refs.platformName.focus();
+        return;
+      }
+      if (!this.platformPhone) {
+        this.errorMessage = '手機號碼不得為空'
+        this.$refs.platformPhone.focus()
+        return; 
+      }
       const nameRegex = /^[a-zA-Z\s\u4E00-\u9FFF]+$/;
       if (!nameRegex.test(this.platformName)) {
         this.errorMessage = '姓名格式不符合要求'
@@ -227,7 +237,7 @@ export default{
       if (!phoneRegex.test(this.platformPhone)) {
         this.errorMessage = '手機號碼格式不正確'
         this.$refs.platformPhone.focus()
-        return; // 停止繼續執行
+        return; 
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
       if (!passwordRegex.test(this.platformPsw1)) {
@@ -277,12 +287,6 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            // Swal.fire({
-            //   icon: 'success',
-            //   title: '註冊成功',
-            //   showConfirmButton: false,
-            //   timer: 1500,
-            // })
             this.errorMessage = ''
             const loginData = res.data;
             this.updateLoginData(loginData);
@@ -331,6 +335,11 @@ export default{
 
     //第三方註冊驗證otp
     platformVertifyOTP() {
+      if (!this.platformOTP) {
+        this.errorMessage = '驗證碼不得為空'
+        this.$refs.platformOTP.focus()
+        return;
+      }
       const apiUrl = `${process.env.VUE_APP_PATH}/user/verifyotp`;
       const requestData = {
         phone: this.platformPhone,
@@ -354,6 +363,11 @@ export default{
     },
     //第三方註冊送出otp
     platformSendOTP() {
+      if (!this.platformPhone) {
+        this.errorMessage = '手機號碼不得為空'
+        this.$refs.platformPhone.focus()
+        return;
+      }
       // 驗證手機號碼格式
       const phoneRegex = /^[0-9]{10}$/; // 假設要求手機號碼為10位數字
       if (!phoneRegex.test(this.platformPhone)) {
