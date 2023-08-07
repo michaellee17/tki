@@ -6,10 +6,8 @@
         <h1 class="modal-title fs-2 text-primary">註冊會員</h1>
       </div>
       <form>
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
         <div class="mb-35 row justify-content-center align-items-center position-relative">
-          <div class="d-flex justify-content-center">
-            <h5 v-if="errorMessage" class="error">{{ errorMessage }}</h5>
-          </div>
           <input
             id="name" ref="registerName" v-model="registerName" type="text"
             class="form-control pe-5"
@@ -31,7 +29,7 @@
         </div>
         <div v-if="!isRegisterOTPVertify" class="mb-3 row justify-content-center align-items-center">
           <button
-            v-if="!isRegisterOTPSend" class="btn btn-primary link-light w-100" type="button"
+            v-if="!isRegisterOTPSend" class="btn btn-primary link-light w-100 py-2" type="button"
             @click="sendOTP">
             發送驗證碼
           </button>
@@ -48,7 +46,7 @@
               placeholder="請輸入驗證碼"
               aria-describedby="code" required>
           </div>
-          <button type="button" class="col-4 btn btn-primary link-light" @click="vertifyOTP">驗證</button>
+          <button type="button" class="col-4 btn btn-primary link-light py-2" @click="vertifyOTP">驗證</button>
         </div>
         <div v-if="isRegisterOTPVertify" class="mb-35 row justify-content-center align-items-center position-relative">
           <input
@@ -70,10 +68,10 @@
             <font-awesome-icon :icon="['fas', 'lock']" />
           </div>
         </div>
+        <button v-if="isRegisterOTPVertify" type="button" class="btn btn-primary link-light w-100 py-2 mb-3" @click="sendRegister">送出</button>
         <div class="text-center">
           <a class="text-decoration-none link-info" @click.prevent="changePage">回上一步</a>
         </div>
-        <button v-if="isRegisterOTPVertify" type="button" class="btn btn-primary link-light w-100 py-2" @click="sendRegister">送出</button>
       </form>
     </div>
   </div>

@@ -162,7 +162,7 @@ export default {
   right: 1%;
   z-index: 100;
   &:hover {
-    color: var(--primary-color);
+    color: var(--secondary-color);
   }
 }
 .event-bg {

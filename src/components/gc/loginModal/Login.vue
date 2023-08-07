@@ -5,32 +5,38 @@
         <h1 class="modal-title fs-2 text-primary mb-1">使用手機號碼登入</h1>
       </div>
       <form>
-        <div class="mb-2 row justify-content-center align-items-center">
-          <div class="d-flex justify-content-center">
-            <h5 v-if="errorMessage" class="error">{{ errorMessage }}</h5>
-          </div>
-          <label for="loginTel" class="col-3 form-label">手機號碼</label>
-          <div class="col-9">
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+        <div class="mb-3">
+          <div class="row justify-content-center align-items-center position-relative">
             <input
               id="loginTel" ref="loginTel" v-model="loginPhone" type="tel"
-              class="form-control" placeholder="請輸入手機號碼"
+              class="form-control pe-5" placeholder="請輸入手機號碼"
               aria-describedby="tel">
+            <div class="position-absolute icon">
+              <font-awesome-icon :icon="['fas', 'phone-alt']" />
+            </div>
           </div>
         </div>
-        <div class="mb-4 row justify-content-center align-items-center">
-          <label for="loginPassword" class="col-3 form-label">密碼</label>
-          <div class="col-9">
+
+        <div class="mb-4">
+          <div class="row justify-content-center align-items-center position-relative">
             <input
               id="loginPassword" ref="loginPsw" v-model="loginPsw" type="password"
               class="form-control"
               placeholder="請輸入密碼" aria-describedby="password" minlength="8" required>
+            <div class="position-absolute icon">
+              <font-awesome-icon :icon="['fas', 'lock']" />
+            </div>
           </div>
         </div>
-        <div class="text-end mb-2 d-flex justify-content-between">
-          <a class="text-decoration-none link-secondary" @click="changePage">回上一步</a>
+        <div class="text-end mb-2">
           <a class="text-decoration-none link-secondary" @click="handleForget(true)">忘記密碼</a>
         </div>
-        <button type="button" class="btn btn-primary link-light w-100 py-2" @click="sendLogin">登入</button>
+        <button type="button" class="btn btn-primary link-light w-100 py-2 mb-3" @click="sendLogin">登入</button>
+
+        <div class="text-center">
+          <a class="text-decoration-none link-info" @click.prevent="changePage">回上一步</a>
+        </div>
       </form>
     </div>
   </div>
