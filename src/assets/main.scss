@@ -120,10 +120,16 @@
     top: 50%;
     transform: translateY(-50%);
   }
-  .row {
+  & .row {
     margin-left: 0;
     margin-right: 0;
   }
+  & .icon {
+    width: 15px;
+    right: 20px;
+    color: #000;
+  }
+
 }
 /* form */
 input::placeholder {
@@ -196,7 +202,7 @@ ul li{
   padding: 3px;
   transform: rotate(-45deg);
 }
-.error{
+.error {
   color: var(--danger-color);
   text-align: center;
   background-color: var(--bs-gray-200);

@@ -118,7 +118,7 @@ export default {
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
       if (!passwordRegex.test(this.loginPsw)) {
-        this.errorMessage = '密碼格式不符合要求',
+        this.errorMessage = '密碼格式不符合要求，需包含英數，至少8碼',
         this.$refs.loginPsw.focus()
         return;
       }
@@ -141,6 +141,7 @@ export default {
             this.errorMessage = '資料格式錯誤'
             this.$refs.loginTel.focus()
           }
+          /* 沒註冊 or 帳號/密碼錯誤 */
           if (res.data.status_code === 'USER_2011') {
             this.errorMessage = '登入失敗，驗證資訊錯誤'
             this.$refs.loginTel.focus()
@@ -156,6 +157,3 @@ export default {
 
 }
 </script>
-<style scoped>
-
-</style>

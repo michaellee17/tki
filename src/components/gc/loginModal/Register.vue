@@ -272,7 +272,7 @@ export default{
             this.$refs.registerPhone.focus()
           }
           if (res.data.status_code === 'SYSTEM_1002' || res.data.status_code === 'USER_2091') {
-            this.errorMessage = '請求過於頻繁'
+            this.errorMessage = '請求過於頻繁，請5分鐘後再試'
             this.$refs.registerPhone.focus()
           }
           if (res.data.status_code === 'USER_2041') {
@@ -288,10 +288,3 @@ export default{
   },
 }
 </script>
-<style>
-.icon {
-  width: 15px;
-  right: 20px;
-  color: #000;
-}
-</style>
