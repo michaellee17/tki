@@ -34,7 +34,7 @@ export default {
     }
   },
   mounted() {
-    this.messageModal = new Modal(this.$refs.messageModal);
+     this.messageModal = new Modal(this.$refs.messageModal);
   },
   methods: {
     showModal() {
