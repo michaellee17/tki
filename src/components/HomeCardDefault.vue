@@ -46,7 +46,7 @@
       Swiper,
       SwiperSlide,
     },
-    props: ['title', 'eng-title', 'data','index'],
+    props: ['title', 'data','index'],
     data () {
         return {
           slider: null,

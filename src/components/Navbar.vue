@@ -216,7 +216,6 @@ export default {
     },
     //表單enter送出事件
     enterKey(event) {
-      // console.log(this.isSearchFoucs);
       if (event.key === 'Enter' && this.isSearchFoucs) {
         this.sendSearch()
       }
@@ -267,12 +266,15 @@ export default {
             this.updateLoginStatus(false);
             this.updateLoginData([]);
             this.cleanMemberData();
-            // this.updateLogoutMsg(true);
-
-            this.$router.push('/')
+            if (this.$route.path === '/') {
+              this.$refs.logoutSuccess.showModal();
+            } else {
+              localStorage.setItem('isLogout',true)
+              this.$router.push('/');
+            }
           }
           if (res.data.status_code === 'SYSTEM_1001') {
-           this.$refs.logoutfail.showModal()
+            this.$refs.logoutfail.showModal()
           }
         });
     },

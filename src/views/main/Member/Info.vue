@@ -6,7 +6,7 @@
         <p class="fs-18">姓名</p>
         <a v-if="!isNameEdit" class="text-primary edit" @click="handleEdit('name')">編輯</a>
         <div v-if="isNameEdit" class="d-flex gap-2">
-          <a class="text-primary edit" @click="this.isNameEdit = false">返回</a>
+          <a class="text-primary edit" @click="isNameEdit = false">返回</a>
           <a class="text-primary edit" @click="updateProfile('name')">保存</a>
         </div>
       </div>
@@ -18,7 +18,7 @@
         <p class="fs-18">身分證字號</p>
         <a v-if="!isIdentityEdit" class="text-primary edit" @click="handleEdit('ID')">編輯</a>
         <div v-if="isIdentityEdit" class="d-flex gap-2">
-          <a class="text-primary edit" @click="this.isIdentityEdit = false">返回</a>
+          <a class="text-primary edit" @click="isIdentityEdit = false">返回</a>
           <a class="text-primary edit" @click="updateProfile('ID')">保存</a>
         </div>
       </div>
@@ -58,7 +58,7 @@
         <p class="fs-18">電子信箱</p>
         <a v-if="!isEmailEdit" class="text-primary edit" @click="handleEdit('email')">編輯</a>
         <div v-if="isEmailEdit" class="d-flex gap-2">
-          <a class="text-primary edit" @click="this.isEmailEdit = false">返回</a>
+          <a class="text-primary edit" @click="isEmailEdit = false">返回</a>
           <a class="text-primary edit" @click="updateProfile('email')">保存</a>
         </div>
       </div>
@@ -137,21 +137,24 @@
     <p class="mb-0">解綁成功</p>
   </MessageModal>
   <MessageModal ref="unbindGoogle" :warning="true">
-    <div class="d-flex justify-content-center gap-1">
-      <button class="btn btn-primary unbind" @click="googleUnbind">解除綁定</button>
-      <button class="btn btn-secondary unbind" @click="closeGoogle">取消</button>
+    <p class="mb-0">請確認是否解除綁定？</p>
+    <div class="mt-4 d-flex justify-content-around">
+      <button type="button" class="btn btn-cancel px-4" @click="closeGoogle">取消</button>
+      <button type="button" class=" btn btn-outline-primaryB px-4" @click="googleUnbind">確認</button>
     </div>
   </MessageModal>
   <MessageModal ref="unbindLine" :warning="true">
-    <div class="d-flex justify-content-center gap-1">
-      <button class="btn btn-primary unbind" @click="lineUnbind">解除綁定</button>
-      <button class="btn btn-secondary unbind" @click="closeLine">取消</button>
+    <p class="mb-0">請確認是否解除綁定？</p>
+    <div class="mt-4 d-flex justify-content-around">
+      <button type="button" class="btn btn-cancel px-4" @click="closeLine">取消</button>
+      <button type="button" class=" btn btn-outline-primaryB px-4" @click="lineUnbind">確認</button>
     </div>
   </MessageModal>
   <MessageModal ref="unbindApple" :warning="true">
-    <div class="d-flex justify-content-center gap-1">
-      <button class="btn btn-primary unbind" @click="appleUnbind">解除綁定</button>
-      <button class="btn btn-secondary unbind" @click="closeApple">取消</button>
+    <p class="mb-0">請確認是否解除綁定？</p>
+    <div class="mt-4 d-flex justify-content-around">
+      <button type="button" class="btn btn-cancel px-4" @click="closeApple">取消</button>
+      <button type="button" class=" btn btn-outline-primaryB px-4" @click="appleUnbind">確認</button>
     </div>
   </MessageModal>
 </template>
@@ -390,7 +393,7 @@ export default {
               .then(res => {
                 if (res.data.status_code === 'SYSTEM_1000') {
                   this.closeApple()
-                  this.$refs.unbindingSuceess.showModal()
+                  this.$refs.bindingSuceess.showModal()
                   this.bindSuccessData(2);
                 }
                 if (res.data.status_code === 'SYSTEM_1001') {
@@ -452,7 +455,7 @@ export default {
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.closeLine()
-            this.$refs.bindingSuceess.showModal()
+            this.$refs.unbindingSuceess.showModal()
             this.updateBindingData(1);
           }
           if (res.data.status_code === 'SYSTEM_1001') {

@@ -32,15 +32,14 @@
       <font-awesome-icon
         :icon="['fas', 'chevron-circle-up']" />
     </a>
-
     <MessageModal ref="logoutSuccess" :success="true">
-    <p class="mb-0">登出成功</p>
-  </MessageModal>
-  
+      <p class="mb-0">登出成功</p>
+    </MessageModal>
   </layout>
 </template>
 
 <script>
+import MessageModal from "../../components/gc/MessageModal.vue";
 import Layout from "../../components/Layout.vue";
 import Slider from "../../components/Slider.vue";
 import SliderSecond from "../../components/Slider-second.vue";
@@ -52,6 +51,7 @@ import { mapState } from 'vuex';
 
 export default {
   components: {
+    MessageModal,
     Layout,
     Slider,
     SliderSecond,
@@ -90,6 +90,10 @@ export default {
     this.getReserveList();
   },
   mounted() {
+    if(localStorage.getItem('isLogout')){
+      this.$refs.logoutSuccess.showModal();
+      localStorage.removeItem('isLogout')
+    }
     this.$nextTick(() => {
       window.addEventListener('scroll', this.showUpButton);
     })
@@ -169,12 +173,6 @@ export default {
     toUppercase(param) {
       return param.toUpperCase();
     },
-    showLoginModal() {
-      this.$refs.logoutSuccess.showModal();
-    },
-    test() {
-      this.$refs.logoutSuccess.showModal();
-    }
   },
 }
 </script>
