@@ -21,7 +21,7 @@
         <div>
           <HomeCardDefault
             v-if="typeList[eventClass.class_id] && typeList[eventClass.class_id].length > 0"
-            :title="eventClass.class_name" :data="typeList[eventClass.class_id]" :index="eventClass.class_id" />
+            :title="eventClass.class_name" :eng-title="toUppercase(eventClass.english_class_name)" :data="typeList[eventClass.class_id]" :index="eventClass.class_id" />
         </div>
       </div>
     </div>
@@ -150,7 +150,10 @@ export default {
       } else {
         this.$refs.upButton.classList.add('d-none');
       }
-    }
+    },
+    toUppercase(param) {
+      return param.toUpperCase();
+    },
   },
 }
 </script>
