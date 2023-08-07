@@ -46,7 +46,6 @@ import SliderSecond from "../../components/Slider-second.vue";
 import HomeCardHot from "../../components/HomeCardHot.vue";
 import HomeCardDefault from "../../components/HomeCardDefault.vue";
 import HomeCardReserve from "../../components/HomeCardReserve.vue";
-import MessageModal from "../../components/gc/MessageModal.vue";
 import { mapState } from 'vuex';
 
 export default {
