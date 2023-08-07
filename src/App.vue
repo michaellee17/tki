@@ -1,38 +1,39 @@
 <template>
-  <router-view :style="[getPrimaryColor]" />
+  <!-- <router-view :style="[getPrimaryColor]" /> -->
+  <router-view  />
 </template>
 
 <script>
-import colors from "./views/color_schemes.json";
-import {products} from "./data/auctions.json"
+// import colors from "./views/color_schemes.json";
+// import {products} from "./data/auctions.json"
 export default {
-  data() {
-    return {
-      colors,
-    };
-  },
-  computed: {
-    getCurrentColor() {
-      return process.env.VUE_APP_PRIMARY_COLOR === ""
-        ? colors[process.env.VUE_APP_CURRENT_THEME]
-        : process.env.VUE_APP_PRIMARY_COLOR;
-    },
-    getPrimaryColor() {
-      return (
-        "--primary-color:" +
-        this.getCurrentColor +
-        ";" +
-        "--swiper-theme-color: " +
-        this.getCurrentColor +
-        ";"
-      );
-    },
-    getCurrentQuickViewProduct() {
-      return products.find((prod) => {
-          return prod.id == this.$store.state.app.currentActiveModal.split('-')[1]
-      })
-    }
-  },
+  // data() {
+  //   return {
+  //     colors,
+  //   };
+  // },
+  // computed: {
+  //   getCurrentColor() {
+  //     return process.env.VUE_APP_PRIMARY_COLOR === ""
+  //       ? colors[process.env.VUE_APP_CURRENT_THEME]
+  //       : process.env.VUE_APP_PRIMARY_COLOR;
+  //   },
+  //   getPrimaryColor() {
+  //     return (
+  //       "--primary-color:" +
+  //       this.getCurrentColor +
+  //       ";" +
+  //       "--swiper-theme-color: " +
+  //       this.getCurrentColor +
+  //       ";"
+  //     );
+  //   },
+  //   getCurrentQuickViewProduct() {
+  //     return products.find((prod) => {
+  //         return prod.id == this.$store.state.app.currentActiveModal.split('-')[1]
+  //     })
+  //   }
+  // },
   created() {
     document.addEventListener('keydown', e => {
         let key = e.key;
