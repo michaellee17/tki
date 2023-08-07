@@ -143,7 +143,7 @@
 import MessageModal from "./gc/MessageModal.vue";
 import loginModal from "./LoginModal";
 import Swal from "sweetalert2";
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   components: {
     loginModal,
@@ -192,6 +192,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+    // ...mapMutations('user', ['updateLogoutMsg']),
     triggerSearch(item) {
       this.searchData = item;
       this.sendSearch();

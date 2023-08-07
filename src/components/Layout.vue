@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <Navbar v-if="!$store.state.appView.view" />
+    <Navbar v-if="!$store.state.appView.view"  />
     <div :class="{ 'mb-100': $route.name !== 'Home'}">
       <slot><div class="text-center">No content yet.</div> </slot>
     </div>
@@ -39,18 +39,24 @@
       </div>
     </footer>
   </div>
+
+  <MessageModal ref="logoutSuccess" :success="true">
+    <p class="mb-0">登出成功</p>
+  </MessageModal>
 </template>
 
 <script>
 import "bootstrap/dist/js/bootstrap.bundle";
 import Navbar from "../components/Navbar.vue"
+import MessageModal from "../components/gc/MessageModal.vue"
 
 export default {
   components: {
-    Navbar,
+    Navbar, MessageModal
   },
   data () {
     return {
+      logout: false
     }
   },
   mounted () {

@@ -1,6 +1,9 @@
 <template v-if="data.length > 0">
   <div class="d-flex align-items-center justify-content-between mb-4">
-    <h2 class="text-primary title">{{ title }}</h2>
+    <div class="d-flex align-items-center">
+      <h2 class="text-primary title mb-0">{{ title }}</h2>
+      <p class="text-primary ms-2 fw-normal fs-22 mb-0 eng-title">{{ engTitle }}</p>
+    </div>
     <router-link class="more fs-22 me-4" :to="'/activity/' + index">MORE<span class="ms-3 arrow-right" /></router-link>
   </div>
   <section>
@@ -79,6 +82,9 @@
 h2.title {
   border-left: 8px solid var(--primary-color);
   padding-left: 1rem;
+}
+.eng-title {
+  letter-spacing: 2px;
 }
 .more {
   letter-spacing: 2px;

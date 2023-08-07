@@ -21,7 +21,7 @@
         <div>
           <HomeCardDefault
             v-if="typeList[eventClass.class_id] && typeList[eventClass.class_id].length > 0"
-            :title="eventClass.class_name" :data="typeList[eventClass.class_id]" :index="eventClass.class_id" />
+            :title="eventClass.class_name" :eng-title="toUppercase(eventClass.english_class_name)" :data="typeList[eventClass.class_id]" :index="eventClass.class_id" />
         </div>
       </div>
     </div>
@@ -46,6 +46,8 @@ import SliderSecond from "../../components/Slider-second.vue";
 import HomeCardHot from "../../components/HomeCardHot.vue";
 import HomeCardDefault from "../../components/HomeCardDefault.vue";
 import HomeCardReserve from "../../components/HomeCardReserve.vue";
+import MessageModal from "../../components/gc/MessageModal.vue";
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -55,7 +57,8 @@ export default {
     SliderSecond,
     HomeCardHot,
     HomeCardDefault,
-    HomeCardReserve
+    HomeCardReserve,
+    MessageModal
   },
   data () {
     return {
@@ -64,6 +67,22 @@ export default {
       typeList: {},
       reserveList:[]
     }
+  },
+  computed: {
+    // ...mapState('user', ['logoutMsg']),
+  },
+  watch: {
+    // logoutMsg: {
+    //   immediate: true,
+    //   handler() {
+    //     if(this.logoutMsg === true) {
+    //       console.log('logout')
+    //       this.$nextTick(() => {
+    //         this.$refs.logoutSuccess.showModal()
+    //       })
+    //     }
+    //   }
+    // },
   },
   created() {
     this.getHotList();
@@ -150,7 +169,10 @@ export default {
       } else {
         this.$refs.upButton.classList.add('d-none');
       }
-    }
+    },
+    toUppercase(param) {
+      return param.toUpperCase();
+    },
   },
 }
 </script>
