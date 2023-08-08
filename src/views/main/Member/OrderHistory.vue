@@ -10,7 +10,7 @@
   <div
     v-if="(order_status === 1 && orders.waiting_payment && orders.waiting_payment.length === 0) || 
       (order_status === 2 && orders.success_payment && orders.success_payment.length === 0) || 
-      (order_status === 1 && orders.fail_payment && orders.fail_payment.length === 0)" class="text-center mt-2">
+      (order_status === 3 && orders.fail_payment && orders.fail_payment.length === 0)" class="text-center mt-2">
     <p>目前尚無資料。</p>
   </div>
   <section>

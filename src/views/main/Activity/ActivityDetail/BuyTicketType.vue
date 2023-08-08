@@ -121,6 +121,11 @@ import MessageModal from "../../../../components/gc/MessageModal.vue";
           return
         }
       },
+      scrollToPosition(){
+        window.scrollTo({
+          top: 895,
+          behavior: 'smooth' })
+      },
     }
   }
 </script>

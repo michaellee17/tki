@@ -17,7 +17,7 @@
         </div>
         <div class="title-bottom position-absolute">
           <h2 class="mb-3">{{ basic_info.event_name }}</h2>
-          <div class="mb-4">
+          <div class="mb-2 mb-md-4">
             <p class="text-primary me-3">{{ basic_info.event_tags }}</p>
           </div>
           <div class="d-flex gap-4">

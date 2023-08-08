@@ -10,7 +10,7 @@
         <img :src="ticket_info.ticket_image_url" class="img-fluid roundedM" alt="">
       </div>
     </div>
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-6" ref="cartContent">
       <div class="roundedM bg-primary text-white p-4 mb-3">
         <p class="fs-5 mb-1">{{ basic_info.performer }}</p>
         <p class="fs-18 border-bottom pb-3">{{ basic_info.event_name }}</p>
@@ -52,14 +52,18 @@
         </button>
         <div
           v-show="pre && !isTicketing(l_ticket_start_date)"
-          id="countdownWrap">
+          id="countdownWrap"
+          class="checkout-wrap">
           <button
             type="button" class="btn btn-outline-primaryA d-flex disable-btn" disabled>
             <img src="../../../../assets/images/icons/icon_schedule.svg" class="time-icon me-2">
             <span id="countdown">{{ getRemainingTime(l_ticket_start_date) }}</span>後可以購買
           </button>
         </div>
-        <div v-show="basic_info.event_status === 2 || isTicketing(l_ticket_start_date)" id="ticketing">
+        <div
+          v-show="basic_info.event_status === 2 || isTicketing(l_ticket_start_date)" 
+          id="ticketing"
+          class="checkout-wrap">
           <button
             type="button" class="btn btn-outline-primaryA d-flex gap-2"
             @click.prevent="goCheckout">
@@ -128,7 +132,7 @@ export default {
     ...mapGetters('activity', ['ticketPrice', 'ticket_id']),
     totalAmount() {
       return this.ticketPrice * this.ticket_number;
-    }
+    },
   },
   watch: {
     isUpdated: {
@@ -147,7 +151,7 @@ export default {
     this.cleanTimer();
   },
   mounted() {
-    // console.log('status', this.basic_info.event_status)
+    // this.scrollToPosition();
   },
   methods: {
     ...mapMutations('activity', ['setTicketData', 'setListTicketData', 'minus','plus']),
@@ -299,7 +303,13 @@ export default {
       const area_info = this.ticket_info.session_info.find( item => item.session_name === this.session_name).area_info;
       const ticket_type_info = area_info.find( item => item.area_name === this.area_name).ticket_type_info;
       this.setTicketData({ stateData: 'ticket_type_info', data: ticket_type_info });
-    }
+    },
+    scrollToPosition(){
+      const cardTop = this.$refs.cartContent.offsetTop;
+      window.scrollTo({
+        top: cardTop - 60,
+        behavior: 'smooth' })
+    },
   }
 }
 </script>
@@ -352,6 +362,9 @@ export default {
 @media(max-width:1200px){
   .btn-outline-primaryA {
     padding: 0.4rem 1.5rem;
+  }
+  .checkout-wrap .btn-outline-primaryA {
+    width: 100%;
   }
 }
 </style>

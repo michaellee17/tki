@@ -6,7 +6,7 @@
         <img :src="ticket_info.ticket_image_url" class="img-fluid roundedM" alt="">
       </div>
     </div>
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-6" ref="cartContent">
       <div class="roundedM bg-primary text-white p-4 mb-4">
         <p class="fs-5 mb-1">{{ orderData.event_session }} {{ orderData.performer }}</p>
         <p class="fs-18">{{ orderData.event_name }}</p>
@@ -105,10 +105,11 @@ export default {
   methods: {
     ...mapMutations('activity', ['setTicketData']),
     scrollToPosition(){
+      const cardTop = this.$refs.cartContent.offsetTop;
       window.scrollTo({
-        top: 895,
+        top: cardTop - 60,
         behavior: 'smooth' })
-      },
+    },
     getBankData() {
       const apiUrl = `${process.env.VUE_APP_PATH}/order/get-bank-code?order_id=${this.orderData.order_id}`;
       this.axios.get(apiUrl,

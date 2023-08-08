@@ -13,13 +13,15 @@
       v-for="(item, i) in tickets"
       :key="item.event_id"
       class="d-flex cardMain">
-      <div class="cardLeft bg-cover flex-shrink-0" :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
+      <div
+        class="cardLeft bg-cover flex-shrink-0" 
+        :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
           <button class="btn-close close" @click="showModal(item.buy_ticket_id)" />
-          <div @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
-            <p class="subject ellipsis-1">{{ item.performer }}</p>
-            <p class="subject ellipsis-1 event_name">{{ item.event_name }}</p>
+          <div class="subject" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
+            <p class="mb-0 ellipsis-1">{{ item.performer }}</p>
+            <p class="mb-0 ellipsis-1 event_name">{{ item.event_name }}</p>
           </div>
           <p class="small ellipsis-1">{{ item.session_name }} {{ item.area_name }}</p>
           <h3 class="price">$ {{ item.ticket_price }} x {{ item.ticket_number }}</h3>
@@ -35,7 +37,7 @@
   <div class="d-flex justify-content-end">
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
-  <MessageModal ref="deleteModal" :warning="true" :id="modalID">
+  <MessageModal :id="modalID" ref="deleteModal" :warning="true">
     <div class="d-flex justify-content-center gap-1">
       <button class="btn btn-primary unbind" @click="deleteTicket">確認刪除</button>
       <button class="btn btn-secondary unbind" @click="closeModal">取消</button>
@@ -224,15 +226,11 @@ export default {
     width: 305px;
     height: 172px;
   }
-  &:hover {
-    & .subject {
-      color: var(--primary-color);
-    }
-  }
   & .position-absolute {
     left: 1rem;
   }
-  & .cardLeft{
+  & .cardLeft {
+    cursor: pointer;
     width: 220px;
     height: 220px;
     border-radius: 10px 0px 0px 10px;
@@ -268,7 +266,9 @@ export default {
     color:black;
     font-size:20px;
     font-weight:600;
-    margin-bottom: 0;
+    &:hover {
+      color: var(--primary-color);
+    }
   }
   & .middle{
     color:grey;
@@ -288,12 +288,12 @@ export default {
   & .grabbing{
     color:var(--primary-color);
   }
-  & .cardLeft{
-    cursor: pointer;
-    width: 220px;
-    height: 220px;
-    border-radius: 10px 0px 0px 10px;
-  }
+  // & .cardLeft{
+  //   cursor: pointer;
+  //   width: 220px;
+  //   height: 220px;
+  //   border-radius: 10px 0px 0px 10px;
+  // }
   & .cardRight{
     width: 245px;
   }
