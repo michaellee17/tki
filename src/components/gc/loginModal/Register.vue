@@ -48,7 +48,7 @@
           </div>
           <button type="button" class="col-4 btn btn-primary link-light py-2" @click="vertifyOTP">驗證</button>
         </div>
-        <div v-if="isRegisterOTPVertify" class="mb-35 row justify-content-center align-items-center position-relative">
+        <div v-show="isRegisterOTPVertify" class="mb-35 row justify-content-center align-items-center position-relative">
           <input
             id="password" ref="registerPsw1" v-model="registerPsw1" type="password"
             class="form-control pe-5"
@@ -59,7 +59,7 @@
           </div>
         </div>
        
-        <div v-if="isRegisterOTPVertify" class="mb-4 row justify-content-center align-items-center position-relative">
+        <div v-show="isRegisterOTPVertify" class="mb-4 row justify-content-center align-items-center position-relative">
           <input
             id="passwordCmf" v-model="registerPsw2" type="password" class="form-control pe-5"
             placeholder="請再次輸入密碼"
@@ -77,7 +77,6 @@
   </div>
 </template>
 <script>
-import Swal from "sweetalert2";
 import { mapActions, mapGetters } from 'vuex';
 export default{
   props: {
@@ -168,7 +167,7 @@ export default{
       if (!phoneRegex.test(this.registerPhone)) {
         this.errorMessage = '手機號碼格式不正確'
         this.$refs.registerPhone.focus()
-        return; // 停止繼續執行
+        return; 
       }
       const passwordRegex = /^[A-Za-z0-9@#_-]{8,255}$/;
       if (!passwordRegex.test(this.registerPsw1)) {
@@ -244,6 +243,7 @@ export default{
           if (res.data.status_code === 'SYSTEM_1000') {
             this.errorMessage = ''
             this.isRegisterOTPVertify = true
+            this.$refs.registerPsw1.focus()
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
             this.errorMessage = '驗證碼錯誤'

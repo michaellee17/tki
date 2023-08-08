@@ -6,7 +6,6 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Swal from "sweetalert2";
 export default {
   computed: {
     ...mapGetters('user', ['getLoginData']),
@@ -52,12 +51,6 @@ export default {
                   localStorage.setItem('platform', 'Apple')
                 }
                 if (res.data.status_code === 'SYSTEM_1001') {
-                  Swal.fire({
-                    icon: 'error',
-                    title: '資料不完整',
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
                   localStorage.removeItem('appleID');
                   this.$emit('modal-close')
                 }

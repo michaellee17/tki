@@ -48,7 +48,6 @@ import MessageModal from '../../../components/gc/MessageModal.vue';
 import SearchOrderDate from '../../../components/SearchOrderDate.vue';
 import PaginationA from "../../../components/PaginationA.vue";
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-import Swal from "sweetalert2";
 export default {
   components: { SearchOrderDate, PaginationA, MessageModal },
   data() {

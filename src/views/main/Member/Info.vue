@@ -161,7 +161,6 @@
 <script>
 import MessageModal from '../../../components/gc/MessageModal.vue';
 import { mapGetters, mapActions } from 'vuex';
-import Swal from "sweetalert2";
 export default {
   components:{
     MessageModal,

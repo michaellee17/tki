@@ -45,7 +45,6 @@
     @after-forget="handleForget('close')" />
 </template>
 <script>
-import Swal from "sweetalert2";
 import Forget from "./Forget.vue";
 import { mapActions, mapGetters } from 'vuex';
 export default {
