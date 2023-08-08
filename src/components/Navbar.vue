@@ -142,7 +142,6 @@
 <script>
 import MessageModal from "./gc/MessageModal.vue";
 import loginModal from "./LoginModal";
-import Swal from "sweetalert2";
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   components: {

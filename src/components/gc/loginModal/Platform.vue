@@ -6,15 +6,6 @@
       </div>
       <form>
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-        <!-- <div class="mb-3 row justify-content-center align-items-center">
-          <label for="name" class="col-3 form-label  text-nowrap mr-2">會員姓名</label>
-          <div class="col-9">
-            <input
-              id="name" ref="platformName" v-model="platformName" type="text"
-              class="form-control"
-              placeholder="輸入姓名" aria-describedby="name" required>
-          </div>
-        </div> -->
         <div class="mb-35 row justify-content-center align-items-center position-relative">
           <input
             id="name" ref="platformName" v-model="platformName" type="text"
@@ -25,16 +16,6 @@
             <font-awesome-icon :icon="['fas', 'user']" />
           </div>
         </div>
-
-        <!-- <div v-show="!isplatformOTPVertify" class="mb-2 row justify-content-center align-items-center">
-          <label for="tel" class="col-3 form-label  text-nowrap">手機號碼</label>
-          <div class="col-9">
-            <input
-              id="tel" ref="platformPhone" v-model="platformPhone" type="tel"
-              class="form-control"
-              placeholder="0912345678" aria-describedby="tel" minlength="10" required>
-          </div>
-        </div> -->
         <div v-show="!isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center position-relative">
           <input
             id="tel" ref="platformPhone" v-model="platformPhone" type="tel"
@@ -45,21 +26,6 @@
             <font-awesome-icon :icon="['fas', 'phone-alt']" />
           </div>
         </div>
-
-        <!-- <div v-if="!isplatformOTPVertify" class="mb-2 row justify-content-center align-items-center">
-          <p class="col-3" />
-          <div class="col-9">
-            <button
-              v-if="!isplatformOTPSend" class="btn btn-info link-light w-100" type="button"
-              @click="platformSendOTP">
-              發送驗證碼
-            </button>
-            <button v-if="isplatformOTPSend" class="btn btn-info link-light w-100" disabled>
-              有效時間:{{ remainingTime
-              }}(秒)
-            </button>
-          </div>
-        </div> -->
         <div v-if="!isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center">
           <button
             v-if="!isplatformOTPSend" class="btn btn-primary link-light w-100 py-2" type="button"
@@ -71,19 +37,6 @@
             }}(秒)
           </button>
         </div>
-
-        <!-- <div
-          v-if="isplatformOTPSend && !isplatformOTPVertify"
-          class="mb-3 row justify-content-center align-items-center">
-          <label for="code" class="col-3 form-label" />
-          <div class="col-9 d-flex align-items-center gap-2">
-            <input
-              id="code" ref="platformOTP" v-model="platformOTP" type="text"
-              class="form-control"
-              placeholder="輸入驗證碼" aria-describedby="code" required>
-            <button type="button" class="btn btn-info link-light w-50" @click="platformVertifyOTP">驗證</button>
-          </div>
-        </div> -->
         <div v-if="isplatformOTPSend && !isplatformOTPVertify" class="mb-35 justify-content-between row  align-items-center">
           <div class="col-7 px-0">
             <input
@@ -94,29 +47,9 @@
           </div>
           <button type="button" class="col-4 btn btn-primary link-light py-2" @click="platformVertifyOTP">驗證</button>
         </div>
-
-        <!-- <div v-if="isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center">
-          <label for="password" class="col-3 form-label text-nowrap">密碼</label>
-          <div class="col-9">
-            <input
-              id="password" ref="platformPsw1" v-model="platformPsw1" type="password"
-              class="form-control"
-              placeholder="需包含英數，至少8碼" aria-describedby="password" minlength="8" required>
-          </div>
-        </div>
-        <div v-if="isplatformOTPVertify" class="mb-4 row justify-content-center align-items-center">
-          <label for="passwordCmf" class="col-3 form-label text-nowrap">確認密碼</label>
-          <div class="col-9">
-            <input
-              id="passwordCmf" v-model="platformPsw2" type="password" class="form-control"
-              placeholder="再次輸入密碼"
-              aria-describedby="passwordCmf" minlength="8" required>
-          </div>
-        </div> -->
-
-        <div v-if="isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center position-relative">
+        <div v-show="isplatformOTPVertify" class="mb-3 row justify-content-center align-items-center position-relative">
           <input
-            id="password" v-model="platformPsw1" rref="platformPsw1" type="password"
+            id="password" ref="platformPsw1" v-model="platformPsw1" type="password"
             class="form-control pe-5"
             placeholder="請輸入密碼，包含英數，至少8碼"
             aria-describedby="password" minlength="8" required>
@@ -124,7 +57,7 @@
             <font-awesome-icon :icon="['fas', 'lock']" />
           </div>
         </div>
-        <div v-if="isplatformOTPVertify" class="mb-4 row justify-content-center align-items-center position-relative">
+        <div v-show="isplatformOTPVertify" class="mb-4 row justify-content-center align-items-center position-relative">
           <input
             id="passwordCmf" v-model="platformPsw2" type="password" class="form-control pe-5"
             placeholder="請再次輸入密碼"
@@ -142,7 +75,6 @@
   </div>
 </template>
 <script>
-import Swal from "sweetalert2";
 import { mapActions, mapGetters } from 'vuex';
 export default{
   props: {
@@ -179,6 +111,10 @@ export default{
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
     changePage(){
+      localStorage.removeItem('platform')
+      localStorage.removeItem('googleID')
+      localStorage.removeItem('appleID')
+      localStorage.removeItem('lineUserId')
       this.$emit('platform-hide');
     },
      //解綁
@@ -350,6 +286,7 @@ export default{
           if (res.data.status_code === 'SYSTEM_1000') {
             this.errorMessage = ''
             this.isplatformOTPVertify = true
+            this.$refs.platformPsw1.focus()
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
             this.errorMessage = '驗證碼錯誤'

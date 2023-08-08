@@ -69,7 +69,6 @@
   </div>
 </template>
 <script>
-import Swal from "sweetalert2";
 import { mapActions, mapGetters } from 'vuex';
 export default{
   props: {
@@ -147,12 +146,6 @@ export default{
           if (res.data.status_code === 'SYSTEM_1000') {
             this.$emit('after-forget')
             this.errorMessage = ''
-            // Swal.fire({
-            //   icon: 'success',
-            //   title: '修改密碼成功',
-            //   showConfirmButton: false,
-            //   timer: 1500,
-            // })
           }
           if (res.data.status_code === 'SYSTEM_100') {
             this.errorMessage = '資料不齊全'

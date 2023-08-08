@@ -22,8 +22,8 @@
             <p class="pb-2">您可以使用下列方法作為會員帳號登入</p>
             <div class="d-flex flex-column justify-content-center align-items-center gap-4 mb-4">
               <Google @show-platform="handlePlatform(true)" @after-login="afterLogin" />
-              <LineLogin @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="clickClose" />
-              <Apple @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="clickClose" />
+              <LineLogin @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="handlePlatformFail" />
+              <Apple @show-platform="handlePlatform(true)" @after-login="afterLogin" @modal-close="handlePlatformFail" />
               <button
                 type="button" class="btn text-second fw-bold rounded-pill shadow position-relative"
                 @click="handleLogin(true)">
@@ -75,12 +75,25 @@
         <!-- 一般登入 -->
         <Login
           v-if="isLoginOpen" :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
-          @after-forget="clickClose" />
+          @after-forget="handleForget" />
       </div>
     </div>
   </div>
+  <MessageModal ref="registerSuceess" :success="true">
+    <p class="mb-0">註冊成功</p>
+  </MessageModal>
+  <MessageModal ref="PlatformSuceess" :success="true">
+    <p class="mb-0">第三方註冊成功</p>
+  </MessageModal>
+  <MessageModal ref="changePswSuceess" :success="true">
+    <p class="mb-0">重設密碼成功</p>
+  </MessageModal>
+  <MessageModal ref="platformFail" :error="true">
+    <p class="mb-0">資訊不完整</p>
+  </MessageModal>
 </template>
 <script>
+import MessageModal from "./gc/MessageModal.vue";
 import Platform from "./gc/loginModal/Platform.vue";
 import Login from "./gc/loginModal/Login.vue";
 import Google from "./gc/loginModal/Google.vue";
@@ -88,10 +101,10 @@ import Line from "./gc/loginModal/Line.vue";
 import Apple from "./gc/loginModal/Apple.vue";
 import Register from "./gc/loginModal/Register.vue"
 import Modal from "bootstrap/js/dist/modal";
-import Swal from "sweetalert2";
 import { mapActions, mapGetters } from 'vuex';
 export default {
   components: {
+    MessageModal,
     Google,
     LineLogin: Line,
     Apple,
@@ -113,6 +126,16 @@ export default {
   computed: {
     ...mapGetters('user', ['getLoginData']),
   },
+  watch:{
+    isPlatformOpen(nVal,oVal){
+      if(nVal === false){
+        localStorage.removeItem('platform')
+        localStorage.removeItem('googleID')
+        localStorage.removeItem('appleID')
+        localStorage.removeItem('lineUserId')
+      }
+    },
+  },
   mounted() {
     this.loginModal = new Modal(this.$refs.loginModal);
     this.initLoginBoard();
@@ -123,6 +146,17 @@ export default {
   methods: {
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+    //第三方登入資訊不完整
+    handlePlatformFail(){
+      this.clickClose()
+      this.$refs.platformFail.showModal()
+    },
+    //忘記密碼
+    handleForget(){
+      this.clickClose()
+      this.$refs.changePswSuceess.showModal()
+    },
+    //控制第三方收合
     handlePlatform(show){
       if(show === true){
         this.isPlatformOpen = true
@@ -131,6 +165,7 @@ export default {
         this.isPlatformOpen = false
         this.$refs.loginBoard.classList.remove('d-none')
       }else if(show === 'close'){
+        this.$refs.PlatformSuceess.showModal()
         this.isPlatformOpen = false
         this.afterLogin()
       }
@@ -157,6 +192,7 @@ export default {
         this.isRegisterOpen = false
         this.$refs.loginBoard.classList.remove('d-none')
       } else if (show === 'close') {
+        this.$refs.registerSuceess.showModal()
         this.isRegisterOpen = false
         this.afterLogin()
       }
@@ -204,9 +240,6 @@ export default {
       this.$refs[showedPage].classList.remove('d-none');
       this.$refs[showedPage].classList.add('active');
       this.$refs[closedPage].classList.remove('active');
-      if (closedPage === 'platformRegister') {
-        this.resetPlatform()
-      }
     },
   }
 }

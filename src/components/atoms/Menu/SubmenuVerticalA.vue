@@ -36,7 +36,6 @@
 <script>
 
 import LinkWrapper from "../../atoms/LinkWrapper/LinkWrapper.vue";
-import Swal from "sweetalert2";
 import { mapActions,mapGetters } from 'vuex';
 export default {
   components: {
@@ -62,29 +61,6 @@ export default {
   },
   methods: {
     ...mapActions('user', ['updateLoginStatus','updateLoginData','cleanMemberData']),
-    // handleLinkClick(location){
-    //   if (location === '/') {
-    //     const apiUrl = `${process.env.VUE_APP_PATH}/user/logout`;
-    //     const accessToken = this.getLoginData.access_token
-    //     this.axios.get(apiUrl,{
-    //       headers: {
-    //       'Authorization': `Bearer ${accessToken}`
-    //     }
-    //     })
-    //       .then(res => { 
-    //         if(res.data.status_code === 'SYSTEM_1000'){
-    //           this.updateLoginStatus(false);
-    //           this.updateLoginData([]);
-    //           this.cleanMemberData();
-    //           Swal.fire({
-    //             icon: 'success',
-    //             title: '登出成功',
-    //           })
-    //           // this.$router.push('/');
-    //         }
-    //       });
-    //   }
-    // },
     rowClass(rowIdx) {
       return rowIdx % this.colPerRow === 0
         ? "mt-4"
