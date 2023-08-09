@@ -24,7 +24,6 @@
             <p class="ellipsis-1 event_name">{{ item.event_name }}</p>
           </li>
           <li class="d-flex justify-content-between">
-            <!-- 檢查 -->
             <p>{{ item.event_session }} {{ item.event_area }}</p>
           </li>
           <li class="d-flex justify-content-between align-items-center">

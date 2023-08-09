@@ -55,6 +55,7 @@ export const activity = {
       state.ticket_info = {};
       state.venue_info = {};
       state.matter_content = {};
+      state.orderData = {};
     },
     getRecommendList(state, data) {
       state.recommendList = data;
