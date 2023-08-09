@@ -56,7 +56,7 @@
         <div
           v-show="limitSearchList.length > 0" ref="searchDropdownMenu"
           class="search-dropdown-menu animate slideIn d-none position-absolute">
-          <p class="recentSearch">最近搜尋</p>
+          <p class="mb-2">最近搜尋</p>
           <a
             v-for="item in limitSearchList" :key="item" class="ellipsis-1 link-primary d-block mb-2"
             @click="triggerSearch(item)">{{ item }}</a>
@@ -419,13 +419,10 @@ nav {
   border: none;
   background-color: white;
 }
-.recentSearch {
-  margin-bottom: 0;
-}
-/* 將 click 改為滑入展開 */
-// .dropdown-menu li:hover .sub-menu {
-//   visibility: visible;
+// .recentSearch {
+//   margin-bottom: 0;
 // }
+/* 將 click 改為滑入展開 */
 .dropdown:hover .dropdown-menu {
   display: block;
 }

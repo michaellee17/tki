@@ -5,10 +5,7 @@
       :slides-per-view="1"
       :space-between="15"
       :breakpoints="breakpoints"
-      :pagination="{
-        clickable: true,
-      }"
-      class="mySwiper">
+      class="mySwiper news">
       <swiper-slide v-for="item in announcement_info" :key="item.announcement_id">
         <router-link class="card-news-wrap d-flex" :to="'/activity/news-detail/' + $convertToSlug(item.title, item.announcement_id)">
           <div class="h-100 w-100 card-news rounded mb-5">
@@ -72,10 +69,17 @@
   }
 }
 }
-.swiper-slide {
-  height: auto;
-  align-self: stretch;
+
+</style>
+<style lang="scss">
+.news {
+  & .swiper-slide {
+    height: auto;
+    align-self: stretch;
+  }
+  & .swiper-button-prev.swiper-button-disabled, 
+    .swiper-button-next.swiper-button-disabled {
+      opacity: 0
+    }
 }
-
-
 </style>

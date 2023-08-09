@@ -9,7 +9,10 @@
           <div class="row justify-content-between">
             <div class="col-12 col-lg-5">
               <label for="name" class="d-block">姓名*</label>
-              <input id="name" type="text">
+              <!-- <ValidationProvider v-slot="{ errors }">
+                <input id="name" v-model="value" type="text">
+                <span>{{ errors[0] }}</span>
+              </ValidationProvider> -->
             </div>
             <div class="col-12 col-lg-5">
               <label for="address">居住縣市區域*</label>
@@ -44,10 +47,11 @@
 <script>
 import Layout from "../../components/Layout.vue";
 import TopHeader from "../../components/TopHeader.vue";
+import { defineRule } from 'vee-validate';
 
 export default {
   components: {
-    Layout, TopHeader
+    Layout, TopHeader, 
   },
   beforeCreate() {
     document.title = "聯絡我們 - T-KI";

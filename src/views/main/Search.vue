@@ -228,9 +228,7 @@ select::-ms-expand {
   justify-self: start;
 }
 
-select,
-.select:after,
-.select:before {
+select, .select:after, .select:before {
   grid-area: select;
 }
 </style>

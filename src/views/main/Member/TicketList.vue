@@ -38,10 +38,15 @@
     <PaginationA :total-pages="totalPages" :current-page="currentPage" @page-changed="changePage" />
   </div>
   <MessageModal :id="modalID" ref="deleteModal" :warning="true">
-    <div class="d-flex justify-content-center gap-1">
-      <button class="btn btn-primary unbind" @click="deleteTicket">確認刪除</button>
-      <button class="btn btn-secondary unbind" @click="closeModal">取消</button>
+    <p class="mb-0">請確認是否要刪除？</p>
+    <div class="mt-4 d-flex justify-content-around">
+      <button class="btn btn-cancel px-4 unbind" @click="closeModal">取消</button>
+      <button class="btn btn-outline-primaryB px-4 unbind" @click="deleteTicket">確認</button>
     </div>
+    <!-- <div class="mt-4 d-flex justify-content-around">
+            <button type="button" class="btn btn-cancel px-4">取消</button>
+            <button type="button" class=" btn btn-outline-primaryB px-4">確認</button>
+          </div> -->
   </MessageModal>
 </template>
 
@@ -309,10 +314,10 @@ export default {
   }
 }
 .close{
-  font-size:14px;
+  font-size: 14px;
   position: absolute;
-  right:3px;
-  top:5px;
+  right: 8px;
+  top: 8px;
   &:hover {
     cursor: pointer;
   }

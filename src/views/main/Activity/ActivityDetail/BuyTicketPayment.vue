@@ -20,7 +20,8 @@
         </div>
         <div class="d-flex justify-content-between border-bottom mb-3 pb-2">
           <p class="mb-2">總計</p>
-          <p class="mb-2">NTD {{ orderData.order_amount }}</p>
+          <!-- 檢查 -->
+          <p class="mb-2">NTD {{ $currency(orderData.ticket_price * orderData.ticket_number) }}</p>
         </div>
         <h4 class="mb-3">{{ orderData.event_area }}</h4>
         <h4 class="">{{ orderData.ticket_type_name }}</h4>
@@ -98,9 +99,11 @@ export default {
   },
   unmounted() {
     this.cleanTimer();
+    console.log('clearUnmounted')
   },
   updated(){
-    this.cleanTimer();
+    // this.cleanTimer();
+    // console.log('clearUpdate')
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
@@ -144,9 +147,12 @@ export default {
           })
     },
     checkTime() {
+      console.log('check')
       this.timer = setInterval( () => {
         this.currentTime = new Date();
         let expiredTime = new Date(this.bankData.payment_time_limit.replace(' ', 'T'));
+        // console.log(this.currentTime, expiredTime)
+        // console.log(this.currentTime.getTime() > expiredTime.getTime())
         // let test = new Date('2023-07-28 19:32:21'.replace(' ', 'T'));
           if(this.currentTime.getTime() > expiredTime.getTime()) {
             this.$refs.afterPaymentModal.showModal();
@@ -161,7 +167,6 @@ export default {
     cleanTimer() {
       clearInterval(this.timer);
       this.timer = null;
-      // console.log('clearpayment')
     },
   },
 }

@@ -24,13 +24,17 @@
             <p class="ellipsis-1 event_name">{{ item.event_name }}</p>
           </li>
           <li class="d-flex justify-content-between">
-            <p>{{ item.session_area }}</p>
+            <!-- 檢查 -->
+            <p>{{ item.event_session }} {{ item.event_area }}</p>
           </li>
           <li class="d-flex justify-content-between align-items-center">
             <p class="price">${{ item.ticket_price.toLocaleString() }} x {{ item.ticket_number }}</p>
-            <router-link v-if="item.order_status === 0" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn px-3 link_button">付款</router-link>
-            <router-link v-if="item.order_status === 1" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn px-3 link_button">重新付款</router-link>
-            <router-link v-if="item.order_status === 2" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn px-3 link_button">ATM付款詳情</router-link>
+            <!-- <router-link v-if="item.order_status === 0" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn mb-3 px-3 link_button">付款</router-link>
+            <router-link v-if="item.order_status === 1" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn mb-3 px-3 link_button">重新付款</router-link>
+            <router-link v-if="item.order_status === 2" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/payment'" class="btn mb-3 px-3 link_button">ATM付款詳情</router-link> -->
+            <a v-if="item.order_status === 0" class="btn mb-3 px-3 link_button" @click.prevent="goCheckout(item)">付款</a>
+            <a v-if="item.order_status === 1" class="btn mb-3 px-3 link_button" @click.prevent="goCheckout(item)">重新付款</a>
+            <a v-if="item.order_status === 2" class="btn mb-3 px-3 link_button" @click.prevent="goPayment(item)">ATM付款詳情</a>
           </li>
           <li class="d-flex justify-content-between">
             <p>{{ item.created_at }}</p>
@@ -109,7 +113,7 @@ import PaginationA from "../../../components/PaginationA.vue";
 import OrderAngleCard from "../../../components/OrderAngleCard.vue";
 import MessageModal from "../../../components/gc/MessageModal.vue";
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   components: { SearchOrderDate, OrderAngleCard, PaginationA, MessageModal },
   data() {
@@ -149,6 +153,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('activity', ['setTicketData']),
     changePage(page) {
       // 分頁變更事件處理器
       this.currentPage = page;
@@ -170,9 +175,22 @@ export default {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.orders = res.data.data
             this.total = res.data.total
+            console.log(res.data.data)
           }
         });
     },
+    goCheckout(item) {
+      this.setTicketData({ stateData: 'orderData', data: item });
+      this.$router.push({
+        path: '/activity/detail/' + this.$convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout',
+      });
+    },
+    goPayment(item) {
+      this.setTicketData({ stateData: 'orderData', data: item });
+      this.$router.push({
+        path: '/activity/detail/' + this.$convertToSlug(item.event_name, item.event_id) + '/buy-ticket/payment',
+      });
+    }
   },
 }
 </script>
