@@ -1,7 +1,7 @@
 <template>
-  <div class="angle-card">
+  <div class="angle-card d-flex flex-column">
     <div class="angle-card-top" :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + topImage + ')' }" />
-    <div class="angle-card-body bg-primary text-white pt-3 px-3">
+    <div class="angle-card-body bg-primary text-white pt-3 px-3 flex-grow-1">
       <slot>沒有資料</slot>
     </div>
   </div>

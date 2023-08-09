@@ -8,7 +8,7 @@
     <div class="position-relative">
       <!-- 次要 slider -->
       <SliderSecond class="mb-5" />
-      <div class="oval bg-primary position-absolute" />
+      <div v-if="reserveList.length > 0" class="oval bg-primary position-absolute" />
     </div>
     <div class="container">
       <HomeCardReserve v-if="reserveList.length > 0" :title="'預約搶票'" :data="reserveList" />

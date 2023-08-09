@@ -7,7 +7,7 @@
   <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0 mb-4">
     <div class="col-12 col-lg-6">
       <div>
-        <img :src="ticket_info.ticket_image_url" class="img-fluid roundedM" alt="">
+        <TicketImage :image-url="ticket_info.ticket_image_url" />
       </div>
     </div>
     <div ref="cartContent" class="col-12 col-lg-6">
@@ -129,10 +129,12 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import loginModal from "../../../../components/LoginModal";
 import MessageModal from "../../../../components/gc/MessageModal.vue";
+import TicketImage from '../../../../components/gc/loginModal/TicketImage.vue';
+
 
 export default {
   components: {
-    loginModal, MessageModal
+    loginModal, MessageModal, TicketImage
   },
   data() {
     return {

@@ -4,7 +4,7 @@
       <h2 class="text-primary title mb-0">{{ title }}</h2>
       <p class="text-primary ms-2 fw-normal fs-22 mb-0 eng-title">{{ engTitle }}</p>
     </div>
-    <router-link class="more fs-22 me-4" :to="'/activity/' + index">MORE<span class="ms-3 arrow-right" /></router-link>
+    <router-link class="more fs-22 me-2 me-md-4" :to="'/activity/' + index">MORE<span class="ms-1 ms-md-3 arrow-right" /></router-link>
   </div>
   <section>
     <swiper
@@ -82,9 +82,15 @@
 h2.title {
   border-left: 8px solid var(--primary-color);
   padding-left: 1rem;
+  @media(max-width: 576px) {
+    font-size: 22px;
+  }
 }
 .eng-title {
   letter-spacing: 2px;
+  @media(max-width: 576px) {
+    font-size: 14px;
+  }
 }
 .more {
   letter-spacing: 2px;
@@ -92,10 +98,16 @@ h2.title {
     border: solid var(--primary-color);
     border-width: 0px 2px 2px 0;
   }
+  @media(max-width: 576px) {
+    font-size: 14px;
+  }
 }
 .arrow-right {
   padding: 5px;
   margin-bottom: 1px;
+  @media(max-width: 576px) {
+    padding: 3px;
+  }
 }
 </style>
 <style lang="scss">
