@@ -5,7 +5,8 @@
     class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0">
     <div class="col-12 col-lg-6">
       <div>
-        <img :src="ticket_info.ticket_image_url" class="img-fluid" alt="">
+        <!-- <img :src="ticket_info.ticket_image_url" class="img-fluid" alt=""> -->
+        <TicketImage :image-url="ticket_info.ticket_image_url" />
       </div>
     </div>
     <div class="col-12 col-lg-6">
@@ -54,11 +55,13 @@ import SwiperCore, { EffectFade, Navigation } from "swiper";
 SwiperCore.use([EffectFade, Navigation]);
 import "swiper/swiper-bundle.css";
 import { mapState, mapMutations } from 'vuex';
+import TicketImage from '../../../../components/gc/loginModal/TicketImage.vue';
 
 export default {
   components: {
     Swiper,
     SwiperSlide,
+    TicketImage
   },
   data() {
     return {

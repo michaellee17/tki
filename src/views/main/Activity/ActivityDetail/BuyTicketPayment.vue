@@ -3,7 +3,7 @@
   <div class="row flex-column flex-md-row justify-content-center gap-3 gap-lg-0 mb-4">
     <div class="col-12 col-lg-6">
       <div>
-        <img :src="ticket_info.ticket_image_url" class="img-fluid roundedM" alt="">
+        <TicketImage :image-url="ticket_info.ticket_image_url" />
       </div>
     </div>
     <div class="col-12 col-lg-6" ref="cartContent">
@@ -12,7 +12,8 @@
         <p class="fs-18">{{ orderData.event_name }}</p>
         <div class="d-flex justify-content-between">
           <p class="mb-2">訂單編號 : {{ orderData.order_number }}</p>
-          <p class="mb-2">{{ formatDate(orderData.created_at) }}</p>
+          <p v-if="orderData.created_at" class="mb-2">{{ formatDate(orderData.created_at) }}</p>
+          <p v-else class="mb-2">{{ orderDate }}</p>
         </div>
         <div class="d-flex justify-content-between">
           <p class="mb-2">張數</p>
@@ -68,10 +69,12 @@
 <script>
 import MessageModal from "../../../../components/gc/MessageModal.vue";
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import TicketImage from '../../../../components/gc/loginModal/TicketImage.vue';
+
 
 export default {
   components: {
-    MessageModal
+    MessageModal, TicketImage
   },
   data() {
     return {
@@ -83,12 +86,18 @@ export default {
   computed: {
     ...mapState('activity', ['ticket_info', 'orderData', 'routeActivityId']),
     ...mapGetters('user', ['getLoginData']),
+    orderDate() {
+      let currentDate = new Date();
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      return `${month}/${day}`;
+    },
   },
   mounted() {
     this.scrollToPosition();
     this.getBankData();
     this.checkTime();
-    console.log(this.orderData.order_id)
+    console.log(this.orderData)
   },
   unmounted() {
     this.cleanTimer();

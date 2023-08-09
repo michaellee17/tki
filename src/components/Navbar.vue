@@ -335,9 +335,9 @@ nav {
     }
   }
 
-  & .login-title {
-    width: 84px;
-  }
+  // & .login-title {
+  //   width: 84px;
+  // }
 
   & .login-dropdown {
     padding-top: 20px;

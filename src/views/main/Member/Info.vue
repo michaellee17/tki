@@ -15,7 +15,7 @@
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
-        <p class="fs-18">身分證字號</p>
+        <p class="fs-18">身分證字號（選填）</p>
         <a v-if="!isIdentityEdit" class="text-primary edit" @click="handleEdit('ID')">編輯</a>
         <div v-if="isIdentityEdit" class="d-flex gap-2">
           <a class="text-primary edit" @click="isIdentityEdit = false">返回</a>
@@ -55,7 +55,7 @@
     </li>
     <li class="col-md-10 col-lg-6 py-3 px-4 mb-3 rounded">
       <div class="d-flex justify-content-between">
-        <p class="fs-18">電子信箱</p>
+        <p class="fs-18">電子信箱（選填）</p>
         <a v-if="!isEmailEdit" class="text-primary edit" @click="handleEdit('email')">編輯</a>
         <div v-if="isEmailEdit" class="d-flex gap-2">
           <a class="text-primary edit" @click="isEmailEdit = false">返回</a>
@@ -70,28 +70,28 @@
       <ul class="text-center d-flex justify-content-between px-0">
         <li v-if="googleBinding === false">
           <GoogleLogin :callback="callback" popup-type="TOKEN">
-            <img src="../../../assets/images/icons/google.png" width="25" class="mb-1" alt="google">
+            <img src="../../../assets/images/icons/google.png" class="mb-1" width="25" alt="google">
             <a class="text-gray-800 d-block">尚未綁定</a>
           </GoogleLogin>
         </li>
         <li v-if="googleBinding === true" @click="handleGooleUnbinding">
-          <img src="../../../assets/images/icons/google.png" width="25" alt="google">
+          <img src="../../../assets/images/icons/google.png"  class="mb-1" width="25" alt="google">
           <a class="text-gray-800 d-block">解除綁定</a>
         </li>
         <li v-if="lineBinding === false" @click="lineVertify">
-          <img src="../../../assets/images/icons/line.png" width="26" alt="line">
+          <img src="../../../assets/images/icons/line.png"  class="mb-1" width="26" alt="line">
           <a class="text-gray-800 d-block">尚未綁定</a>
         </li>
         <li v-if="lineBinding === true" @click="handleLineUnbinding">
-          <img src="../../../assets/images/icons/line.png" width="26" alt="line">
+          <img src="../../../assets/images/icons/line.png"  class="mb-1" width="26" alt="line">
           <a class="text-gray-800 d-block">解除綁定</a>
         </li>
         <li v-if="appleBinding === false" @click="triggerApple">
-          <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
+          <img src="../../../assets/images/icons/apple.png"  class="mb-1" width="25" alt="apple">
           <a class="text-gray-800 d-block">尚未綁定</a>
         </li>
         <li v-if="appleBinding === true" @click="handleAppleUnbinding">
-          <img src="../../../assets/images/icons/apple.png" width="25" alt="apple">
+          <img src="../../../assets/images/icons/apple.png"  class="mb-1" width="25" alt="apple">
           <a class="text-gray-800 d-block">解除綁定</a>
         </li>
       </ul>
