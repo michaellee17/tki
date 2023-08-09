@@ -10,7 +10,7 @@
         <img :src="ticket_info.ticket_image_url" class="img-fluid roundedM" alt="">
       </div>
     </div>
-    <div class="col-12 col-lg-6" ref="cartContent">
+    <div ref="cartContent" class="col-12 col-lg-6">
       <div class="roundedM bg-primary text-white p-4 mb-3">
         <p class="fs-5 mb-1">{{ basic_info.performer }}</p>
         <p class="fs-18 border-bottom pb-3">{{ basic_info.event_name }}</p>
@@ -41,7 +41,7 @@
       <div class="d-flex flex-column flex-sm-row  justify-content-end gap-3">
         <button
           type="button" class="btn btn-outline-primaryA"
-          @click.prevent="() => $router.push({ name: 'BuyTicketType' })">
+          @click.prevent="() => $refs.resetTicketModal.showModal()">
           重新選擇
         </button>
         <button
@@ -98,6 +98,21 @@
   </MessageModal>
   <MessageModal ref="ticketListModal" :success="true">
     <p class="mb-0">已加入購票清單！</p>
+  </MessageModal>
+  <MessageModal ref="resetTicketModal" :warning="true">
+    <p class="mb-0">請確認是否要重新選擇票券？</p>
+    <div class="mt-4 d-flex justify-content-around">
+      <button
+        type="button" class="btn btn-cancel px-4"
+        @click.prevent="() => $refs.resetTicketModal.hideModal()">
+        取消
+      </button>
+      <button
+        type="button" class=" btn btn-outline-primaryB px-4"
+        @click.prevent="resetTicket">
+        確認
+      </button>
+    </div>
   </MessageModal>
   <MessageModal ref="soldOutModal" :error="true">
     <p class="mb-0">購票失敗，票券已完售！</p>
@@ -172,6 +187,10 @@ export default {
         console.log('error')
         return
       }
+    },
+    resetTicket() {
+      this.$refs.resetTicketModal.hideModal();
+      this.$router.push({ name: 'BuyTicketType' });
     },
     addToTicketList() {
       if(this.getLoginStatus) {
@@ -310,6 +329,7 @@ export default {
         top: cardTop - 60,
         behavior: 'smooth' })
     },
+
   }
 }
 </script>

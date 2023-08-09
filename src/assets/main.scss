@@ -12,7 +12,7 @@
   --info-color: #5990fa;
   --danger-color: #ea4335;
   --pale-color: #00000029; //#adb5bd;
-  --swiper-theme-color: var(--primary-color);
+  --swiper-theme-color: var(--primary-color)!important;
   --swiper-pagination-color: var(--primary-color);
   font-family: 'Noto Sans TC', sans-serif;
 }
@@ -141,6 +141,13 @@ input:not([type="checkbox"]):focus,
 input:not([type="checkbox"]).form-control:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+/* 隱藏 chrome autocomplete的藍色背景 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+  transition: background-color 5000s ease-in-out 0s;
 }
 .form-check-input:focus {
   outline: none !important;

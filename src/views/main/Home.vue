@@ -3,7 +3,7 @@
     <!-- 主要 slider -->
     <Slider class="mb-5" />
     <div class="container">
-      <HomeCardHot :title="'熱門活動'" :data="hotList" />
+      <HomeCardHot v-if="hotList.length > 0" :title="'熱門活動'" :data="hotList" />
     </div>
     <div class="position-relative">
       <!-- 次要 slider -->
@@ -11,7 +11,7 @@
       <div class="oval bg-primary position-absolute" />
     </div>
     <div class="container">
-      <HomeCardReserve :title="'預約搶票'" :data="reserveList" />
+      <HomeCardReserve v-if="reserveList.length > 0" :title="'預約搶票'" :data="reserveList" />
     </div>
     <div
       v-for="(eventClass, i) in classList" :key="eventClass.class_id" class="position-relative"

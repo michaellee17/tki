@@ -54,7 +54,7 @@ import BasicTextArea from "../../atoms/FormInput/BasicTextArea.vue";
 import BasicInputText from "../../atoms/FormInput/BasicInputText.vue";
 import ButtonFilled from "../../atoms/Button/ButtonFilled.vue";
 import BasicInputError from "../../atoms/FormInput/BasicInputError.vue";
-import validateComment from "../../../composables/validatorAddComment.js";
+// import validateComment from "../../../composables/validatorAddComment.js";
 // todo mutat in form
 export default {
   components: {

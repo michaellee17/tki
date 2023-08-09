@@ -5,6 +5,7 @@ export const activity = {
   state: () => ({
     isLoading: false,
     isUpdated: false,
+    
     /* 活動資訊 */
     routeActivityId: '',
     basic_info: {},
@@ -13,6 +14,7 @@ export const activity = {
     venue_info: {},
     matter_content: {},
     recommendList: [],
+
     /* 購票 */
     session_name: '',
     /* limit = -1 無限
@@ -26,8 +28,10 @@ export const activity = {
     ticket_type_info: [],
     selectedTicketName: '',
     ticket_number: 1,
+
     /* 訂單 */
     orderData: {},
+
     /* 購票清單導向 cart */
     l_session_name: '',
     l_area_name: '',
