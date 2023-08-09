@@ -20,9 +20,8 @@
         </div>
         <div class="d-flex justify-content-between border-bottom mb-3 pb-2">
           <p class="mb-2">總計</p>
-          <!-- 檢查 -->
-          <p class="mb-2" v-show="orderData.ticket_price">NTD {{ $currency(orderData.ticket_price * orderData.ticket_number) }}</p>
-          <p class="mb-2" v-show="orderData.order_amount">NTD {{ $currency(orderData.order_amount) }}</p>
+          <p v-if="orderData.ticket_price" class="mb-2">NTD {{ $currency(orderData.ticket_price * orderData.ticket_number) }}</p>
+          <p v-if="orderData.order_amount" class="mb-2">NTD {{ $currency(orderData.order_amount) }}</p>
         </div>
         <h4 class="mb-3">{{ orderData.event_area }}</h4>
         <h4 class="">{{ orderData.ticket_type_name }}</h4>
@@ -33,8 +32,8 @@
         <div class="payment-method row justify-content-end flex-column flex-sm-row gap-3 gap-sm-0">
           <div class="col-12 col-sm-6">
             <button 
-            @click.prevent="checkout('VACC')"
-            type="button" class=" btn btn-outline-primaryB border-primary w-100 d-flex justify-content-between ">
+              type="button"
+              class=" btn btn-outline-primaryB border-primary w-100 d-flex justify-content-between " @click.prevent="checkout('VACC')">
               <img src="../../../../assets/images/icons/atm.svg" alt="atm" class="icon">
               <p class="mb-0">ATM付款</p>
               <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">
@@ -42,8 +41,8 @@
           </div>
           <div class="col-12 col-sm-6">
             <button 
-            @click.prevent="checkout('CREDIT')"
-            type="button" class="btn btn-outline-primaryB border-primary w-100 d-flex justify-content-between">
+              type="button"
+              class="btn btn-outline-primaryB border-primary w-100 d-flex justify-content-between" @click.prevent="checkout('CREDIT')">
               <img src="../../../../assets/images/icons/credit-card.svg" alt="credit-card" class="icon">
               <p class="mb-0">信用卡付款</p>
               <img src="../../../../assets/images/icons/right-arrow.svg" alt="right-arrow" class="icon">

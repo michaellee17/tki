@@ -12,7 +12,7 @@
         <p class="fs-18">{{ orderData.event_name }}</p>
         <div class="d-flex justify-content-between">
           <p class="mb-2">訂單編號 : {{ orderData.order_number }}</p>
-          <p class="mb-2">{{ orderDate }}</p>
+          <p class="mb-2">{{ formatDate(orderData.created_at) }}</p>
         </div>
         <div class="d-flex justify-content-between">
           <p class="mb-2">張數</p>
@@ -20,8 +20,8 @@
         </div>
         <div class="d-flex justify-content-between border-bottom mb-3 pb-2">
           <p class="mb-2">總計</p>
-          <!-- 檢查 -->
-          <p class="mb-2">NTD {{ $currency(orderData.ticket_price * orderData.ticket_number) }}</p>
+          <p v-if="orderData.ticket_price" class="mb-2">NTD {{ $currency(orderData.ticket_price * orderData.ticket_number) }}</p>
+          <p v-if="orderData.order_amount" class="mb-2">NTD {{ $currency(orderData.order_amount) }}</p>
         </div>
         <h4 class="mb-3">{{ orderData.event_area }}</h4>
         <h4 class="">{{ orderData.ticket_type_name }}</h4>
@@ -32,9 +32,7 @@
         <div class="d-flex gap-4 align-items-center rounded bg-primary text-white p-4 mb-3">
           <img src="../../../../assets/images/icons/atm.svg" alt="atm" width="53" class="icon">
           <p class="mb-0 fs-5">帳號 {{ bankData.code_number }}</p>
-          <!-- <p class="mb-0 fs-5">帳號 204561234879</p> -->
           <p class="mb-0 fs-5">{{ bankData.bank_code }}</p>
-          <!-- <p class="mb-0 fs-5">中國信託 822</p> -->
         </div>
       </div>
       <h5 class="fs-18 text-secondary mb-3">
@@ -85,25 +83,18 @@ export default {
   computed: {
     ...mapState('activity', ['ticket_info', 'orderData', 'routeActivityId']),
     ...mapGetters('user', ['getLoginData']),
-    orderDate() {
-      let currentDate = new Date();
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      return `${month}/${day}`;
-    },
   },
   mounted() {
     this.scrollToPosition();
     this.getBankData();
     this.checkTime();
+    console.log(this.orderData.order_id)
   },
   unmounted() {
     this.cleanTimer();
-    console.log('clearUnmounted')
   },
   updated(){
     // this.cleanTimer();
-    // console.log('clearUpdate')
   },
   methods: {
     ...mapMutations('activity', ['setTicketData']),
@@ -112,6 +103,12 @@ export default {
       window.scrollTo({
         top: cardTop - 60,
         behavior: 'smooth' })
+    },
+    formatDate(date) {
+      const newDate = new Date(date);
+      const month = String(newDate.getMonth() + 1).padStart(2, '0');
+      const day = String(newDate.getDate()).padStart(2, '0');
+      return `${month}/${day}`;
     },
     getBankData() {
       const apiUrl = `${process.env.VUE_APP_PATH}/order/get-bank-code?order_id=${this.orderData.order_id}`;
@@ -147,7 +144,6 @@ export default {
           })
     },
     checkTime() {
-      console.log('check')
       this.timer = setInterval( () => {
         this.currentTime = new Date();
         let expiredTime = new Date(this.bankData.payment_time_limit.replace(' ', 'T'));
@@ -158,7 +154,8 @@ export default {
             this.$refs.afterPaymentModal.showModal();
             setTimeout(() => {
               this.$refs.afterPaymentModal.hideModal();
-              this.$router.replace({ name: 'BuyTicketSession', params: { activityId: this.routeActivityId } });
+              // this.$router.replace({ name: 'BuyTicketSession', params: { activityId: this.routeActivityId } });
+              this.$router.replace('/');
             }, 3000);
             clearInterval(this.timer);
           }
