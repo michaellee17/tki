@@ -251,12 +251,12 @@ export default {
     }
   }
   @media(max-width: 576px) {
-    div.rightTop {
-      padding-top: 10px;
-    }
+    // div.rightTop {
+    //   padding-top: 10px;
+    // }
     .cardRight p, h3.price {
       font-size: 12px;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
     .cardRight img {
       width: 16px;
@@ -301,6 +301,10 @@ export default {
   // }
   & .cardRight{
     width: 245px;
+    @media(max-width: 576px) {
+      width: 135px;
+      height: 172px;
+    }
   }
   & .countDown{
     font-size:16px;
@@ -308,6 +312,9 @@ export default {
   & .rightTop{
     position: relative;
     padding-top:26px;
+    @media(max-width: 576px) {
+     height: 100%;
+    }
   }
   & .event_name{
     margin-bottom: 5px;
