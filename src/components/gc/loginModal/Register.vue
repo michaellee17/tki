@@ -7,7 +7,7 @@
       </div>
       <form>
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-        <div class="mb-35 row justify-content-center align-items-center position-relative">
+        <div v-show="isRegisterOTPVertify" class="mb-35 row justify-content-center align-items-center position-relative">
           <input
             id="name" ref="registerName" v-model="registerName" type="text"
             class="form-control pe-5"
@@ -243,7 +243,7 @@ export default{
           if (res.data.status_code === 'SYSTEM_1000') {
             this.errorMessage = ''
             this.isRegisterOTPVertify = true
-            this.$refs.registerPsw1.focus()
+            this.$refs.registerName.focus()
           }
           if (res.data.status_code === 'SYSTEM_1001' || res.data.status_code === 'SYSTEM_2092') {
             this.errorMessage = '驗證碼錯誤'

@@ -355,6 +355,7 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
+            this.closeApple()
             this.$refs.unbindingSuceess.showModal()
             this.updateBindingData(2);
           }
