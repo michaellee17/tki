@@ -94,7 +94,7 @@ h2.title {
 }
 .more {
   letter-spacing: 2px;
-  &:hover span {
+  &:hover span.arrow-right {
     border: solid var(--primary-color);
     border-width: 0px 2px 2px 0;
   }

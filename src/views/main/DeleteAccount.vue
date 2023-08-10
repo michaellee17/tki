@@ -1,12 +1,22 @@
 <template>
   <layout>
-    <!-- <TopHeader :title="'刪除帳號'" /> -->
-    <TopHeader :title="'聯絡我們'" />
+    <TopHeader :title="'刪除帳號'" />
     <div class="container">
-      <p class="description text-center fs-5 mb-5">請將您的寶貴意見以填寫表單方式送出，我們將於工作日由專人回覆您的問題</p>
+      <p class="description text-center fs-5 mb-5">填寫完以下表單，我們將於 5 個工作日內（不包含假日），移除會員帳號所有資訊</p>
+      <div class="row justify-content-center text-secondary mb-4">
+          <div class="text-center mb-2 fs-18">
+            <span class="text-primary me-2"><font-awesome-icon :icon="['fas', 'exclamation-triangle']" /> </span>
+            <span>提醒您：</span>
+          </div>
+        <ul class="col-11 col-lg-7">
+          <li>帳號刪除為永久且不可逆的，成功刪除帳號後，您將無法恢復此帳號、登入或查看先前的帳號歷史紀錄</li>
+          <li>成功刪除帳號後，T-KI 將繼續持有交易數據，用於財務稽核目的</li>
+          <li>特定情況下，T-KI 保有拒絕申請帳號的權利</li>
+        </ul>
+      </div>
+
       <div class="row">
         <Form @submit.prevent="submitForm" class="contact-form p-4 rounded col-11 col-lg-6 mx-auto">
-          <p class="text-primary text-center mb-2 fs-18 ">請留下您的意見與想法，我們會有專人與您聯繫</p>
           <div class="row justify-content-between">
             <div class="col-12 col-lg-5">
               <label for="姓名" class="d-block mt-3">姓名*</label>
@@ -31,15 +41,8 @@
               <ErrorMessage name="tel" class="text-danger" />
             </div>
           </div>
-          <div class="row justify-content-center mt-3">
-            <div class="col-12 col-lg-12">
-              <label for="message" class="d-block">請留下您的需求內容以及寶貴意見*</label>
-              <Field v-model="form.message" label="內容" as="textarea" name="message" id="message" rules="required" rows="3"/>
-              <ErrorMessage name="message" class="text-danger" />
-            </div>
-          </div>
           <div class="text-center">
-            <button class="btn btn-primary link-light rounded-pill px-4 fs-18 mt-4">確認並送出</button>
+            <button class="btn btn-primary link-light rounded-pill px-4 fs-18 mt-4">刪除帳號</button>
           </div>
         </Form>
       </div>
@@ -129,4 +132,8 @@ export default {
    outline: none;
   } 
 }
+ul > li {
+  list-style-type: disc;
+}
+
 </style>

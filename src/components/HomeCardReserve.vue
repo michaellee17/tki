@@ -1,8 +1,11 @@
 <template v-if="data.length > 0">
+<div class="d-flex align-items-center justify-content-between mb-4">
   <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-4 gap-3 ">
     <img src="../assets/images/icons/icon_time.svg" alt="hot-event">
     <h2 class="mb-0 text-white">{{ title }}</h2>
   </div>
+  <router-link class="more link-light fs-22 me-2 me-md-4" to="/activity/reserve-ticket">MORE<span class="ms-1 ms-md-3 arrow-right" /></router-link>
+</div>
   <section class="mb-5">
     <swiper
       ref="mySwiperRef" 
@@ -64,6 +67,28 @@
 }
 .slide-content {
   width: var(--card-width);
+}
+a.more {
+  letter-spacing: 2px;
+  &:hover {
+    color: #000;
+  }
+  &:hover span.arrow-right {
+    border: solid #000;
+    border-width: 0px 2px 2px 0;
+  }
+  @media(max-width: 576px) {
+    font-size: 14px;
+  }
+}
+.arrow-right {
+  border: solid #fff;
+  border-width: 0px 2px 2px 0;
+  padding: 5px;
+  margin-bottom: 1px;
+  @media(max-width: 576px) {
+    padding: 3px;
+  }
 }
 </style>
 

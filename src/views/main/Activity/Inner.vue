@@ -95,9 +95,13 @@ export default{
         })
         .then(res => { 
           if(res.data.status_code === 'SYSTEM_1000'){
-            this.lists = res.data.data;
-            this.total = res.data.total;
-          }
+            if(res.data.data.length > 0) {
+              this.lists = res.data.data;
+              this.total = res.data.total;
+            } else {
+              this.$router.push('/404')
+            }
+          } 
         });
     },
   },

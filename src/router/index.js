@@ -4,59 +4,63 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Home.vue')
+    component: () => import('../views/main/Home.vue')
   },
   {
     path: '/test',
     name: 'Test',
-    component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Test.vue')
+    component: () => import('../views/main/Test.vue')
   },
   {
     path: '/announcement',
     name: 'Announcement',
-    component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Announcement.vue')
+    component: () => import('../views/main/Announcement.vue')
   },
   {
     path: '/announcement/page/:pageId',
     name: 'AnnouncementPage',
-    component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Announcement.vue')
+    component: () => import('../views/main/Announcement.vue')
   },
   {
     path: '/announcement/:annoucementID',
     name: 'AnnouncementPost',
-    component: () => import(/* webpackChunkName: "blogpost" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/AnnouncementPost.vue')
+    component: () => import('../views/main/AnnouncementPost.vue')
   },
   {
     path: '/about',
     name: 'About',
-
-    component: () => import(/* webpackChunkName: "about" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/About.vue')
+    component: () => import('../views/main/About.vue')
   },
   {
     path: '/contact',
     name: 'Contact',
+    component: () => import('../views/main/Contact.vue')
+  },
+  {
+    path: '/delete-account',
+    name: 'DeleteAccount',
 
-    component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Contact.vue')
+    component: () => import('../views/main/DeleteAccount.vue')
   },
   {
     path: '/faq',
     name: 'FAQ',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/FAQ.vue')
+    component: () => import('../views/main/FAQ.vue')
   },
   {
     path: '/service-terms',
     name: 'ServiceTerms',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/ServiceTerms.vue')
+    component: () => import('../views/main/ServiceTerms.vue')
   },
   {
     path: '/privacy-terms',
     name: 'PrivacyTerms',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/PrivacyTerms.vue')
+    component: () => import('../views/main/PrivacyTerms.vue')
   },
   {
     path: '/search/:searchText',
     name: 'Search',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Search.vue')
+    component: () => import('../views/main/Search.vue')
   },
   {
     path: '/member',
@@ -110,7 +114,11 @@ const routes = [
     children: [
       {
         path: ':activityId',
-        component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/Activity/Inner.vue')
+        component: () => import('../views/main/Activity/Inner.vue')
+      },
+      {
+        path: 'reserve-ticket',
+        component: () => import('../views/main/Activity/ReserveTicket.vue')
       },
       {
         path: 'detail/:activityId',
@@ -183,79 +191,24 @@ const routes = [
     name: 'BuyTicketCallback',
     component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCallback.vue')
   },
-  { path: '/404',     component: () => import(/* webpackChunkName: "contact" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/NotFound.vue')},  
+  { path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../views/main/NotFound.vue')},  
   {
     path: '/line-login',
     name: 'LineLogin',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/LineLogin.vue')
+    component: () => import('../views/main/LineLogin.vue')
   },
   {
     path: '/apple-login',
     name: 'AppleLogin',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/AppleLogin.vue')
+    component: () => import('../views/main/AppleLogin.vue')
   },
   {
     path: '/apple-redirect',
     name: 'AppleRedirect',
-    component: () => import('../views/'+process.env.VUE_APP_CURRENT_THEME+'/AppleRedirect.vue')
+    component: () => import('../views/main/AppleRedirect.vue')
   },
-  // { path: '/:catchAll(.*)', redirect: '/404' },  
-   // {
-  //   path: '/my-account',
-  //   name: 'MyAccount',
-
-  //   component: () => import(/* webpackChunkName: "myaccount" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/MyAccount.vue')
-  // },
-  // {
-  //   path: '/wishlist',
-  //   name: 'Wishlist',
-
-  //   component: () => import(/* webpackChunkName: "wishlist" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Wishlist.vue')
-  // },
-  // {
-  //   path: '/shop',
-  //   name: 'ShopDefault',
-  //   component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Shop.vue')
-  // },
-  // {
-  //   path: '/shop/:pageNo',
-  //   name: 'ShopWithPagination',
-
-  //   component: () => import(/* webpackChunkName: "shop" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Shop.vue')
-  // },
-  // {
-  //   path: '/cart',
-  //   name: 'Cart',
-  //   component: () => import(/* webpackChunkName: "cart" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Cart.vue')
-  // },
-  // {
-  //   path: process.env.VUE_APP_PRODUCT_PATH+':productID',
-  //   name: 'Product',
-
-  //   component: () => import(/* webpackChunkName: "product" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Product.vue')
-  // },
-  // {
-  //   path: '/checkout',
-  //   name: 'Checkout',
-
-  //   component: () => import(/* webpackChunkName: "checkout" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/Checkout.vue')
-  // },
-  // {
-  //   path: '/blog-list',
-  //   name: 'BlogList',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (shop.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "blog-list" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/BlogList.vue')
-  // },
-  // {
-    //   path: process.env.VUE_APP_BLOG_PATH+':blogID',
-    //   name: 'BlogPost',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (shop.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "blogpost" */ '../views/'+process.env.VUE_APP_CURRENT_THEME+'/BlogPost.vue')
-    // },
 ]
 
 
