@@ -1,5 +1,6 @@
 import {library} from "@fortawesome/fontawesome-svg-core";
 import {
+  faExclamationTriangle,
   faPhoneAlt,
   faUser,
   faLock,
@@ -51,6 +52,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faExclamationTriangle,
   faPhoneAlt,
   faUser,
   faLock,

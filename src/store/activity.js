@@ -100,8 +100,10 @@ export const activity = {
           commit('getRecommendList', res.data.data);
           // console.log('action', res.data.data)
         } else {
-          // router.push('/404')
-        }
+          console.error('error');
+        }})
+      .catch(error => {
+        console.error('error occurred:', error);
       });
     }
   },

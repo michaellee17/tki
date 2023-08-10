@@ -64,24 +64,8 @@ export default {
       classList: [],
       hotList: [],
       typeList: {},
-      reserveList:[]
+      reserveList: []
     }
-  },
-  computed: {
-    // ...mapState('user', ['logoutMsg']),
-  },
-  watch: {
-    // logoutMsg: {
-    //   immediate: true,
-    //   handler() {
-    //     if(this.logoutMsg === true) {
-    //       console.log('logout')
-    //       this.$nextTick(() => {
-    //         this.$refs.logoutSuccess.showModal()
-    //       })
-    //     }
-    //   }
-    // },
   },
   created() {
     this.getHotList();

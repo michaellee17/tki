@@ -1,13 +1,13 @@
 <template>
   <h5 v-if="!$store.state.appView.view" class="fs-18 text-secondary mb-3">選擇位置</h5>
   <div ref="seatTable" class="seat-table position-relative">
-    <div class="zoom-widget position-absolute">
+    <div class="zoom-widget position-absolute d-flex gap-2 align-items-center">
       <div>
         <img
           src="../../../../assets/images/icons/zoom_in_default.svg" alt="zoom-in"
           @click="zoomIn">
       </div>
-      <div class="mt-3">
+      <div>
         <img
           src="../../../../assets/images/icons/zoom_out_default.svg" alt="zoom-out"
           @click="zoomOut">
@@ -45,6 +45,10 @@
       </div>
     </div>
   </div>
+  <!-- 提示窗 -->
+    <div class="bg-white seat-info border border-primary rounded p-2 text-center">
+      <p>a 排 1 號</p>
+    </div>
   <div v-if="!$store.state.appView.view" class="d-flex justify-content-between mt-3">
     <router-link to="type">
       <button type="button" class="btn btn-outline-primaryA">上一步</button>
@@ -182,13 +186,13 @@
       border: 1px solid transparent;
       & .content-wrap {
           height: 500px;
-          overflow: auto;
-          // overflow: hidden;
+          // overflow: auto;
+          overflow: hidden;
           @media(max-width: 768px) {
               overflow: auto;
           }
           margin-top: 6rem;
-          margin-left: 5rem;
+          margin-bottom: 4rem;
           white-space: nowrap;
           &.active {
               cursor: grabbing;
@@ -208,9 +212,9 @@
           pointer-events: none;
       }
       & .zoom-widget {
-          top: 50%;
-          transform: translateY(-50%);
-          left: 1rem;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 1rem;
           & img {
               filter: var(--grey-filter);
           }
@@ -249,5 +253,9 @@
       & img[data-status="2"]:hover {
           cursor: not-allowed;
       }
+  }
+  .seat-info {
+    width: 100px;
+    height: 50px;
   }
   </style>
