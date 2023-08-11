@@ -1,19 +1,34 @@
 <template>
   <layout>
     <TopHeader :title="`「${searchInput}」搜尋結果`" />
-    <div v-if="lists.length > 0" class="container mt-5">
+    <div v-if="areas || lists.length > 0" class="container mt-5">
       <div class="d-flex flex-wrap gap-3 mb-4">
         <div class="icon-circle bg-primary d-flex justify-content-center align-items-center">
           <img src="../../assets/images/icons/icon_tuneshow.png" width="24" alt="">
         </div>
         <div>
-          <div class="select">
+          <!-- <div class="select">
             <select v-model="areas">
               <option value="" disabled>縣市</option>
               <template v-for="country in countries" :key="country.id">
                 <option :value="country.name">{{ country.name }}</option>
               </template>
             </select>
+          </div> -->
+          <div ref="customSelect" class="custom-select position-relative">
+            <div ref="inputWrap" class="input-wrap position-relative" @click="showOption">
+              <input
+                v-model="areas" type="text" placeholder="縣市" readonly>
+            </div>
+            <div ref="optionTop" class="option-top d-none position-absolute w-100" />
+            <div ref="option" class="option d-none text-center position-absolute w-100">
+              <p
+                v-for="country in countries" :key="country.id"
+                class="mb-0 px-2 py-1"
+                @click.prevent="showValue(country.name)">
+                {{ country.name }}
+              </p>
+            </div>
           </div>
         </div>
         <button
@@ -88,7 +103,7 @@ export default {
     },
     areas (nVal, oVal){
       if(nVal){
-        this.getSearchData(this.searchInput)
+        this.getSearchData(this.searchInput);
       }
     },
     currentPage(nVal,oVal){
@@ -97,12 +112,16 @@ export default {
       }
     }
   },
-  mounted() {
-    this.getSearchData(this.searchInput)
-  },
   beforeCreate() {
     document.title = "搜尋結果 - T-KI";
   },
+  mounted() {
+    this.getSearchData(this.searchInput);
+    document.addEventListener('click', this.clickOutside);
+  },
+  beforeUnmount() {
+      document.removeEventListener('click', this.clickOutside);
+    },
   methods: {
     changeSearch(item){
       this.$router.push({ name: 'Search', params: {searchText:item} })
@@ -130,6 +149,24 @@ export default {
         }
       });
     },
+     /* select 客製化 */
+     showOption() {
+        this.$refs.inputWrap.classList.toggle('active');
+        this.$refs.optionTop.classList.toggle('d-none');
+        this.$refs.option.classList.toggle('d-none');
+      },
+      showValue(value) {
+        this.areas = value;
+        this.showOption();
+      },
+      clickOutside(e) {
+        const clickedElement = e.target;
+        if (this.$refs.customSelect && !this.$refs.customSelect.contains(clickedElement)) {
+          this.$refs.inputWrap.classList.remove('active');
+          this.$refs.optionTop.classList.add('d-none');
+          this.$refs.option.classList.add('d-none');
+        }
+      }
   },
 };
 </script>
@@ -177,58 +214,133 @@ export default {
 }
 
 /* select custom style  */
-select {
-  color: #fff;
-  appearance: none;
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
-  padding: 0 10px 0 30px;
-  width: 100%;
-  cursor: inherit;
-}
+// select {
+//   color: #fff;
+//   appearance: none;
+//   background-color: transparent;
+//   border: none;
+//   font-size: 1rem;
+//   padding: 0 10px 0 30px;
+//   width: 100%;
+//   cursor: inherit;
+// }
 
-select::-ms-expand {
-  display: none;
-}
+// select::-ms-expand {
+//   display: none;
+// }
 
-.select {
-  background-color: var(--primary-color);
-  border-radius: 28px;
-  width: 100%;
-  min-width: 165px;
-  padding: 0.4rem 2rem;
-  font-size: 1.25rem;
-  cursor: pointer;
-  display: grid;
-  grid-template-areas: "select";
-  align-items: center;
-  & option{
-    background-color: var(--primary-color);;
+// .select {
+//   background-color: var(--primary-color);
+//   border-radius: 28px;
+//   width: 100%;
+//   min-width: 165px;
+//   padding: 0.4rem 2rem;
+//   font-size: 1.25rem;
+//   cursor: pointer;
+//   display: grid;
+//   grid-template-areas: "select";
+//   align-items: center;
+//   & option{
+//     background-color: var(--primary-color);;
+//   }
+// }
+
+// .select::after {
+//   content: "";
+//   width: 14px;
+//   height: 7px;
+//   background-color: #fff;
+//   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+//   justify-self: end;
+// }
+
+// .select::before {
+//   content: "";
+//   width: 24px;
+//   height: 100%;
+//   background-image: url(../../assets/images/icons/icon_locationshow.png);
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   justify-self: start;
+// }
+
+// select, .select:after, .select:before {
+//   grid-area: select;
+// }
+.custom-select {
+  & .input-wrap {
+      z-index: 300;
+      background-color: var(--primary-color);
+      border-radius: 28px;
+      width: 140px;
+      padding: 0.4rem 0 0.4rem 2.9rem;
+      cursor: pointer;
   }
+  & .input-wrap::after {
+    content: "";
+    position: absolute;
+    z-index: 200;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1rem;
+    width: 14px;
+    height: 7px;
+    background-color: #fff;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%); 
+  }
+  & .input-wrap.active::after {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  .input-wrap::before {
+    content: "";
+    position: absolute;
+    z-index: 200;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1rem;
+    width: 24px;
+    height: 24px;
+    background-image: url(../../assets/images/icons/icon_locationshow.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+  & input {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+  }
+  & input::placeholder {
+    color: #fff!important;
+  }
+  & .option-top {
+    z-index: 200;
+    top: 57%;
+    height: 2rem;
+    background-color: var(--primary-color);
 
-.select::after {
-  content: "";
-  width: 14px;
-  height: 7px;
-  background-color: #fff;
-  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-  justify-self: end;
-}
-
-.select::before {
-  content: "";
-  width: 24px;
-  height: 100%;
-  background-image: url(../../assets/images/icons/icon_locationshow.png);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  justify-self: start;
-}
-
-select, .select:after, .select:before {
-  grid-area: select;
+  }
+  & .option {
+    z-index: 200;
+    top: 105%;
+    overflow: auto;
+    height: 550px;
+    background-color: var(--primary-color);
+    color: #fff;
+      &::-webkit-scrollbar {
+          width: 8px;
+          background-color: var(--primary-color);
+        }
+        //bar 本體
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--bs-gray-200);
+      }
+    & p:hover {
+      background-color: var(--pale-color);
+      cursor: pointer;
+    }
+  }
 }
 </style>
