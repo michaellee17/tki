@@ -32,7 +32,6 @@
           <a class="text-decoration-none link-secondary" @click="handleForget(true)">忘記密碼</a>
         </div>
         <button type="button" class="btn btn-primary link-light w-100 py-2 mb-3" @click="sendLogin">登入</button>
-
         <div class="text-center">
           <a class="text-decoration-none link-info" @click.prevent="changePage">回上一步</a>
         </div>
@@ -84,7 +83,7 @@ export default {
     },
     //表單enter送出事件
     enterKey(event) {
-      if (this.open && event.key === 'Enter') {
+      if (this.open && event.key === 'Enter' && this.isForgetOpen === false) {
          this.sendLogin()
       } 
     },
@@ -99,6 +98,7 @@ export default {
         this.isForgetOpen = false
         this.$refs.accountLoginPage.classList.remove('d-none')
       }else if(show === 'close'){
+        this.$refs.accountLoginPage.classList.remove('d-none')
         this.isForgetOpen =false
         this.$emit('after-forget')
       }

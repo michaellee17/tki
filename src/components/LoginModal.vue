@@ -73,9 +73,11 @@
           v-show="isPlatformOpen" :open="isPlatformOpen" @platform-hide="handlePlatform(false)"
           @after-platform="handlePlatform('close')" />
         <!-- 一般登入 -->
-        <Login 
-          v-if="isLoginOpen" :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
+        <div v-show="isLoginOpen">
+          <Login 
+           :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
           @after-forget="handleForget" />
+        </div>
       </div>
     </div>
   </div>
