@@ -43,10 +43,6 @@
       <button class="btn btn-cancel px-4 unbind" @click="closeModal">取消</button>
       <button class="btn btn-outline-primaryB px-4 unbind" @click="deleteTicket">確認</button>
     </div>
-    <!-- <div class="mt-4 d-flex justify-content-around">
-            <button type="button" class="btn btn-cancel px-4">取消</button>
-            <button type="button" class=" btn btn-outline-primaryB px-4">確認</button>
-          </div> -->
   </MessageModal>
 </template>
 
@@ -85,14 +81,6 @@ export default {
   beforeUnmount() {
     // console.log('beforeUnmount')
     this.cleanTimer();
-  },
-  // unmounted() {
-  //   console.log('unmounted')
-  //   this.cleanTimer();
-  // },
-  updated(){
-    this.cleanTimer();
-    // console.log('updated')
   },
   mounted() {
     this.getTickets();
@@ -136,34 +124,35 @@ export default {
     getRemainingTime(ticketStartDate, i) {
       if(!this.isTicketing(ticketStartDate)) {
         this.$nextTick(()=> {
-        this.timer[i] = setInterval(setTimer(), 1000);
+          setTimer();
+          this.timer[i] = setInterval(setTimer, 1000);
         
-        function setTimer() {
-          let countDownTime =''
-          const countDownEl = document.getElementById(`countdown${i}`)
-          const ticketingEl = document.getElementById(`ticketing${i}`)
-          const startDate = new Date(ticketStartDate).getTime(); 
-          const now = Date.now(); 
-          const diffInMillis = startDate - now;
-          const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
-          const diffInSeconds = Math.floor(diffInMillis / 1000);
-          const days = Math.floor(diffInMinutes / (60 * 24));
-          const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
-          const minutes = diffInMinutes % 60;
-          const seconds = diffInSeconds % 60;
-          countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
-          countDownEl.textContent = countDownTime;
+          function setTimer() {
+            let countDownTime = '';
+            const countDownEl = document.getElementById(`countdown${i}`)
+            const ticketingEl = document.getElementById(`ticketing${i}`)
+            const startDate = new Date(ticketStartDate).getTime(); 
+            const now = Date.now(); 
+            const diffInMillis = startDate - now;
+            const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
+            const diffInSeconds = Math.floor(diffInMillis / 1000);
+            const days = Math.floor(diffInMinutes / (60 * 24));
+            const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
+            const minutes = diffInMinutes % 60;
+            // const seconds = diffInSeconds % 60;
+            countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
+            // console.log(countDownTime, seconds);
+            countDownEl.textContent = countDownTime;
 
-          if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
-          clearInterval(this.timer[i]);
-          this.timer[i] = '';
-          countDownEl.style.display = 'none';
-          ticketingEl.style.display = 'block';
+            if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
+            clearInterval(this.timer[i]);
+            this.timer[i] = '';
+            countDownEl.style.display = 'none';
+            ticketingEl.style.display = 'block';
+            }
+          }
         }
-      }
-        // this.isLoading = false;
-      })
-      } else {
+      )} else {
         // console.log('else')
         // this.isLoading = false;
         return

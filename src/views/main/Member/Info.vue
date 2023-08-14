@@ -98,43 +98,43 @@
     </li>
   </ul>
   <MessageModal ref="passwordModal" :error="true">
-    <p class="mb-0">兩次輸入的密碼不同</p>
+    <p class="mb-0">兩次輸入的密碼不同！</p>
   </MessageModal>
   <MessageModal ref="passwordSuccess" :success="true">
-    <p class="mb-0">修改密碼成功</p>
+    <p class="mb-0">修改密碼成功！</p>
   </MessageModal>
   <MessageModal ref="passwordError" :error="true">
-    <p class="mb-0">資料不完整</p>
+    <p class="mb-0">資料不完整！</p>
   </MessageModal>
   <MessageModal ref="passwordError2" :error="true">
-    <p class="mb-0">舊密碼錯誤</p>
+    <p class="mb-0">舊密碼錯誤！</p>
   </MessageModal>
   <MessageModal ref="passwordError3" :error="true">
-    <p class="mb-0">密碼格式不符</p>
+    <p class="mb-0">密碼格式不符！</p>
   </MessageModal>
   <MessageModal ref="profileError" :error="true">
-    <p class="mb-0">姓名格式不符合</p>
+    <p class="mb-0">姓名格式不符合！</p>
   </MessageModal>
   <MessageModal ref="profileError2" :error="true">
-    <p class="mb-0">信箱格式不符合</p>
+    <p class="mb-0">信箱格式不符合！</p>
   </MessageModal>
   <MessageModal ref="profileError3" :error="true">
-    <p class="mb-0">身分證格式不符合</p>
+    <p class="mb-0">身分證格式不符合！</p>
   </MessageModal>
   <MessageModal ref="profileError4" :error="true">
-    <p class="mb-0">請輸入信箱資料</p>
+    <p class="mb-0">請輸入信箱資料！</p>
   </MessageModal>
   <MessageModal ref="profileError5" :error="true">
-    <p class="mb-0">請輸入身份證字號</p>
+    <p class="mb-0">請輸入身份證字號！</p>
   </MessageModal>
   <MessageModal ref="profileSuceess" :success="true">
-    <p class="mb-0">更新資料成功</p>
+    <p class="mb-0">更新資料成功！</p>
   </MessageModal>
   <MessageModal ref="bindingSuceess" :success="true">
-    <p class="mb-0">綁定成功</p>
+    <p class="mb-0">綁定成功！</p>
   </MessageModal>
   <MessageModal ref="unbindingSuceess" :success="true">
-    <p class="mb-0">解綁成功</p>
+    <p class="mb-0">解綁成功！</p>
   </MessageModal>
   <MessageModal ref="unbindGoogle" :warning="true">
     <p class="mb-0">請確認是否解除綁定？</p>

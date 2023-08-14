@@ -33,7 +33,7 @@
         :icon="['fas', 'chevron-circle-up']" />
     </a>
     <MessageModal ref="logoutSuccess" :success="true">
-      <p class="mb-0">登出成功</p>
+      <p class="mb-0">登出成功！</p>
     </MessageModal>
   </layout>
 </template>

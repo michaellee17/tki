@@ -129,13 +129,13 @@
   </nav>
   <loginModal ref="loginModal" />
   <MessageModal ref="logoutSuccess" :success="true">
-    <p class="mb-0">登出成功</p>
+    <p class="mb-0">登出成功！</p>
   </MessageModal>
   <MessageModal ref="logoutfail" :error="true">
-    <p class="mb-0">資訊不完整</p>
+    <p class="mb-0">資訊不完整！</p>
   </MessageModal>
   <MessageModal ref="searchEmpty" :error="true">
-    <p class="mb-0">搜尋值不得為空</p>
+    <p class="mb-0">搜尋內容不得為空！</p>
   </MessageModal>
 </template>
 
