@@ -1,5 +1,5 @@
 <template>
-  <div id="accountLoginPage" ref="accountLoginPage">
+  <div ref="accountLoginPage">
     <div class="modal-body text-second pb-5">
       <div class="text-center mb-5">
         <h1 class="modal-title fs-2 text-primary mb-1">使用手機號碼登入</h1>
@@ -17,7 +17,6 @@
             </div>
           </div>
         </div>
-
         <div class="mb-4">
           <div class="row justify-content-center align-items-center position-relative">
             <input
@@ -41,7 +40,7 @@
     </div>
   </div>
   <Forget
-    v-if="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)"
+    v-show="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)"
     @after-forget="handleForget('close')" />
 </template>
 <script>
@@ -75,7 +74,7 @@ export default {
   },
   mounted(){
     this.enterKeyup();
-    this.$refs.loginTel.focus();
+    // this.$refs.loginTel.focus();
   },
   methods: {
     //取出登入狀態

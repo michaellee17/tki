@@ -95,13 +95,23 @@ export default{
  beforeUnmount() {
     this.enterKeyupDestroyed();
  },
-  mounted(){
+ mounted(){
     this.enterKeyup();
-    this.$refs.forgetPhone.focus();
+    // this.$refs.forgetPhone.focus();
  },
  methods:{
   //取出登入狀態
   ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+  forgetInit(){
+    this.errorMessage = ''
+    this.remainingTime = 300
+    this.forgetPhone = ''
+    this.forgetCode = ''
+    this.forgetPsw1 = ''
+    this.forgetPsw2 = ''
+    this.isForgetOTPSend = false
+    this.isForgetOTPVertify = false
+  },
   enterKeyup() {
       document.addEventListener("keyup", this.enterKey);
     },
@@ -145,7 +155,7 @@ export default{
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
             this.$emit('after-forget')
-            this.errorMessage = ''
+            this.forgetInit()
           }
           if (res.data.status_code === 'SYSTEM_100') {
             this.errorMessage = '資料不齊全'

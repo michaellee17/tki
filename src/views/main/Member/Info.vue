@@ -181,6 +181,7 @@ export default {
   computed: {
     ...mapGetters('user', ['getMemberData', 'getLoginData', 'getMemberBinding']),
     memberData() {
+      console.log(this.getMemberData.data);
       return this.getMemberData.data;
     },
     fullname() {
