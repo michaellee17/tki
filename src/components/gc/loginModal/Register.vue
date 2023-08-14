@@ -112,7 +112,19 @@ export default{
   methods:{
      //取出登入狀態
      ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
-      //表單enter事件綁定
+     //註冊成功後初始化
+     registerInit(){
+      this.errorMessage = '';
+      this.remainingTime = 300;
+      this.isRegisterOTPSend = false;
+      this.isRegisterOTPVerify = false;
+      this.registerName = '';
+      this.registerPhone = '';
+      this.registerOTP = '';
+      this.registerPsw1 = '';
+      this.registerPsw2 = '';
+     },
+    //表單enter事件綁定
     enterKeyup() {
       document.addEventListener("keyup", this.enterKey);
     },
@@ -194,8 +206,7 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            this.isRegisterOTPSend = true
-            this.errorMessage = ''
+            this.registerInit()
             const loginData = res.data;
             this.updateLoginData(loginData);
             this.$emit('after-login');

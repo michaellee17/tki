@@ -105,11 +105,22 @@ export default{
   },
   mounted(){
     this.enterKeyup();
-    this.$refs.platformName.focus()
+    // this.$refs.platformName.focus()
   },
   methods: {
     //取出登入狀態
     ...mapActions('user', ['fetchMemberData', 'updateLoginStatus', 'updateLoginData', 'cleanMemberData']),
+    platformInit(){
+      this.errorMessage = ''
+      this.remainingTime = 300
+      this.isplatformOTPSend = false
+      this.isplatformOTPVertify = false
+      this.platformName = ''
+      this.platformPhone = ''
+      this.platformOTP = ''
+      this.platformPsw1 = ''
+      this.platformPsw2 = ''
+    },
     changePage(){
       localStorage.removeItem('platform')
       localStorage.removeItem('googleID')
@@ -223,7 +234,7 @@ export default{
       this.axios.post(apiUrl, requestData)
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            this.errorMessage = ''
+            this.platformInit()
             const loginData = res.data;
             this.updateLoginData(loginData);
             this.$emit('after-platform')
