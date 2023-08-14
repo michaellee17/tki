@@ -11,7 +11,7 @@
   <section class="d-flex flex-wrap gap-4 mb-3">
     <div
       v-for="(item, i) in tickets"
-      :key="item.event_id"
+      :key="item.buy_ticket_id"
       class="d-flex cardMain">
       <div
         class="cardLeft bg-cover flex-shrink-0" 
@@ -120,7 +120,7 @@ export default {
       })
         .then(res => {
           if (res.data.status_code === 'SYSTEM_1000') {
-            if(this.total % this.itemsPerPage === 1 ){
+            if(this.total % this.itemsPerPage === 1 && this.currentPage !==1 ){
               this.currentPage--;
             }
             this.getTickets()
