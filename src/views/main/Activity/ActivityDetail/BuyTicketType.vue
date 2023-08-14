@@ -16,13 +16,28 @@
       </div>
       <p>選擇您要購買的票種</p>
       <div class="d-flex gap-4 align-items-center mb-3">
-        <div class="flex-grow-1">
+        <!-- <div class="flex-grow-1">
           <select
             id="ticketType" v-model="TicketName" name="ticketType"
             class="form-select">
             <option>請選擇</option>
             <option v-for="ticket in ticket_type_info" :key="ticket.ticket_name" :value="ticket.ticket_name">{{ ticket.ticket_name }}</option>
           </select>
+        </div> -->
+        <div ref="customSelect" class="custom-select flex-grow-1 position-relative">
+          <div ref="inputWrap" class="input-wrap position-relative border border-dark" @click="showOption">
+            <input
+              v-model="TicketName" type="text" placeholder="請選擇" readonly
+              class="border-0 p-2 w-100">
+          </div>
+          <div ref="option" class="option d-none bg-white border border-dark border-top-0 position-absolute top-100 w-100">
+            <p
+              v-for="(ticket) in ticket_type_info" :key="ticket.ticket_name" 
+              class="mb-0 px-2 py-2"
+              @click.prevent="showValue(ticket.ticket_name)">
+              {{ ticket.ticket_name }}
+            </p>
+          </div>
         </div>
         <div class="num-wrap d-flex justify-content-center align-items-center gap-3 position-relative">
           <img
@@ -62,7 +77,8 @@
     </div>
   </div>
   <MessageModal ref="ticketPlusModal" :warning="true">
-    <p class="text-center mb-0">您已經超過購買數量限制：<span class="text-danger px-1">{{ ticket_limit }}</span>張
+    <p class="text-center mb-0">
+      您已經超過購買數量限制：<span class="text-danger px-1">{{ ticket_limit }}</span>張
       ，請依照購買限制選擇您的票券。
     </p>
   </MessageModal>
@@ -100,8 +116,11 @@ import TicketImage from '../../../../components/gc/loginModal/TicketImage.vue';
     },
     mounted() {
       this.setTicketData({ stateData: 'selectedTicketName', data: this.ticket_type_info[0].ticket_name });
-      // this.selectedTicketName = this.ticket_type_info.length > 0 ? this.ticket_type_info[0].ticket_name : ''
       this.setTicketData({ stateData: 'ticket_number', data: 1 });
+      document.addEventListener('click', this.clickOutside);
+    },
+    beforeUnmount() {
+      document.removeEventListener('click', this.clickOutside);
     },
     methods: {
       ...mapMutations('activity', ['setTicketData', 'minus', 'plus' ]),
@@ -128,6 +147,25 @@ import TicketImage from '../../../../components/gc/loginModal/TicketImage.vue';
           top: 895,
           behavior: 'smooth' })
       },
+      /* select 客製化 */
+      showOption() {
+        this.$refs.inputWrap.classList.toggle('border-bottom-n');
+        this.$refs.inputWrap.classList.toggle('active');
+        this.$refs.option.classList.toggle('d-none');
+      },
+      showValue(value) {
+        // this.ticketType = value;
+        this.setTicketData({ stateData: 'selectedTicketName', data: value });
+        this.showOption();
+      },
+      clickOutside(e) {
+        const clickedElement = e.target;
+        if (!this.$refs.customSelect.contains(clickedElement)) {
+          this.$refs.inputWrap.classList.remove('border-bottom-n');
+          this.$refs.inputWrap.classList.remove('active');
+          this.$refs.option.classList.add('d-none');
+        }
+      }
     }
   }
 </script>
@@ -154,5 +192,40 @@ import TicketImage from '../../../../components/gc/loginModal/TicketImage.vue';
 }
 .choose-seat label:hover {
   cursor: pointer;
+}
+.custom-select {
+  & .input-wrap::after {
+    content: "";
+    position: absolute;
+    z-index: 200;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 18px;
+    height: 9px;
+    background-color: #000;
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    
+  }
+  & .input-wrap.active::after {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  & input {
+    cursor: pointer;
+  }
+  // & input::placeholder {
+  //   color: var(--secondary-color)!important;
+  // }
+  & .option {
+    z-index: 200;
+    overflow: hidden;
+    & p:hover {
+      background-color: var(--pale-color);
+      cursor: pointer;
+    }
+  }
+}
+.border-bottom-n {
+  border-bottom-color: transparent!important;
 }
 </style>

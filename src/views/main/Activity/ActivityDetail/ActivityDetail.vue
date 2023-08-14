@@ -3,8 +3,9 @@
     :active="isLoading"
     :color="'#f5742e'"
     :opacity="0.7" />
-  <div v-if="!$store.state.appView.view && basic_info"  
-  :style="{ backgroundImage: `url(${basic_info.main_imageV_url})` }" class="top-bg">
+  <div
+    v-if="!$store.state.appView.view && basic_info"  
+    :style="{ backgroundImage: `url(${basic_info.main_imageV_url})` }" class="top-bg">
     <div class="blur">
       <div class="container bg position-relative">
         <div class="img-wrap-top position-absolute">
