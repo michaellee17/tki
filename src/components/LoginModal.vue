@@ -80,16 +80,16 @@
     </div>
   </div>
   <MessageModal ref="registerSuceess" :success="true">
-    <p class="mb-0">註冊成功</p>
+    <p class="mb-0">註冊成功！</p>
   </MessageModal>
   <MessageModal ref="PlatformSuceess" :success="true">
-    <p class="mb-0">第三方註冊成功</p>
+    <p class="mb-0">第三方註冊成功！</p>
   </MessageModal>
   <MessageModal ref="changePswSuceess" :success="true">
-    <p class="mb-0">重設密碼成功，請重新登入</p>
+    <p class="mb-0">重設密碼成功，請重新登入。</p>
   </MessageModal>
   <MessageModal ref="platformFail" :error="true">
-    <p class="mb-0">資訊不完整</p>
+    <p class="mb-0">資訊不完整！</p>
   </MessageModal>
 </template>
 <script>

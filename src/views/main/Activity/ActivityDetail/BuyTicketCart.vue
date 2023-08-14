@@ -161,15 +161,17 @@ export default {
       }
     },
   },
-  unmounted() {
+  beforeUnmount() {
+    console.log('beforeUnmount')
     this.cleanTimer();
   },
-  updated(){
+  updated() {
+    console.log('updated')
     this.cleanTimer();
   },
-  mounted() {
-    // this.scrollToPosition();
-  },
+  // mounted() {
+  //   this.scrollToPosition();
+  // },
   methods: {
     ...mapMutations('activity', ['setTicketData', 'setListTicketData', 'minus','plus']),
     minusQty() {
@@ -280,9 +282,10 @@ export default {
       return now >= startDate;
     },
     getRemainingTime(ticketStartDate) {
-      if(!this.isTicketing(ticketStartDate)) {
+      if(this.pre && !this.isTicketing(ticketStartDate)) {
         this.$nextTick(()=> {
-          this.timer = setInterval(setTimer(), 1000);
+          setTimer();
+          this.timer = setInterval(setTimer, 1000);
         
         function setTimer() {
           let countDownTime =''
@@ -299,6 +302,7 @@ export default {
           const minutes = diffInMinutes % 60;
           const seconds = diffInSeconds % 60;
           countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
+          console.log(countDownTime, seconds);
           countDownEl.textContent = countDownTime;
 
           if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
@@ -316,7 +320,6 @@ export default {
     cleanTimer() {
       clearInterval(this.timer);
       this.timer = null;
-      // console.log('clearcart')
     },
     preInit() {
       this.pre = true;

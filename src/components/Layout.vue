@@ -41,7 +41,7 @@
   </div>
 
   <MessageModal ref="logoutSuccess" :success="true">
-    <p class="mb-0">登出成功</p>
+    <p class="mb-0">登出成功！</p>
   </MessageModal>
 </template>
 
