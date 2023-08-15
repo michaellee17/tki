@@ -66,16 +66,18 @@
         </div>
         <!-- 會員註冊 -->
         <Register
-          v-if="isRegisterOpen" :open="isRegisterOpen" @register-hide="handleRegister(false)"
+          v-show="isRegisterOpen" :open="isRegisterOpen" @register-hide="handleRegister(false)"
           @after-login="handleRegister('close')" />
         <!-- 第三方註冊 -->
         <Platform
-          v-if="isPlatformOpen" :open="isPlatformOpen" @platform-hide="handlePlatform(false)"
+          v-show="isPlatformOpen" :open="isPlatformOpen" @platform-hide="handlePlatform(false)"
           @after-platform="handlePlatform('close')" />
         <!-- 一般登入 -->
-        <Login
-          v-if="isLoginOpen" :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
+        <div v-show="isLoginOpen">
+          <Login 
+           :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
           @after-forget="handleForget" />
+        </div>
       </div>
     </div>
   </div>

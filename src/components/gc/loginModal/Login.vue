@@ -1,5 +1,5 @@
 <template>
-  <div id="accountLoginPage" ref="accountLoginPage">
+  <div ref="accountLoginPage">
     <div class="modal-body text-second pb-5">
       <div class="text-center mb-5">
         <h1 class="modal-title fs-2 text-primary mb-1">使用手機號碼登入</h1>
@@ -17,7 +17,6 @@
             </div>
           </div>
         </div>
-
         <div class="mb-4">
           <div class="row justify-content-center align-items-center position-relative">
             <input
@@ -33,7 +32,6 @@
           <a class="text-decoration-none link-secondary" @click="handleForget(true)">忘記密碼</a>
         </div>
         <button type="button" class="btn btn-primary link-light w-100 py-2 mb-3" @click="sendLogin">登入</button>
-
         <div class="text-center">
           <a class="text-decoration-none link-info" @click.prevent="changePage">回上一步</a>
         </div>
@@ -41,7 +39,7 @@
     </div>
   </div>
   <Forget
-    v-if="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)"
+    v-show="isForgetOpen" :open="isForgetOpen" @forget-hide="handleForget(false)"
     @after-forget="handleForget('close')" />
 </template>
 <script>
@@ -75,7 +73,7 @@ export default {
   },
   mounted(){
     this.enterKeyup();
-    this.$refs.loginTel.focus();
+    // this.$refs.loginTel.focus();
   },
   methods: {
     //取出登入狀態
@@ -85,7 +83,7 @@ export default {
     },
     //表單enter送出事件
     enterKey(event) {
-      if (this.open && event.key === 'Enter') {
+      if (this.open && event.key === 'Enter' && this.isForgetOpen === false) {
          this.sendLogin()
       } 
     },
@@ -100,6 +98,7 @@ export default {
         this.isForgetOpen = false
         this.$refs.accountLoginPage.classList.remove('d-none')
       }else if(show === 'close'){
+        this.$refs.accountLoginPage.classList.remove('d-none')
         this.isForgetOpen =false
         this.$emit('after-forget')
       }
