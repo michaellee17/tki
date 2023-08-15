@@ -79,7 +79,11 @@ export default {
     },
   },
   beforeUnmount() {
-    // console.log('beforeUnmount')
+    console.log('beforeUnmount')
+    this.cleanTimer();
+  },
+  updated() {
+    console.log('updated')
     this.cleanTimer();
   },
   mounted() {
