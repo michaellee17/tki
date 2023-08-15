@@ -16,7 +16,7 @@
       </div>
 
       <div class="row">
-        <Form @submit.prevent="submitForm" class="contact-form p-4 rounded col-11 col-lg-6 mx-auto">
+        <Form ref="form" @submit="submitForm" class="contact-form p-4 rounded col-11 col-lg-6 mx-auto">
           <div class="row justify-content-between">
             <div class="col-12 col-lg-5">
               <label for="姓名" class="d-block mt-3">姓名*</label>
@@ -47,6 +47,9 @@
         </Form>
       </div>
     </div>
+    <MessageModal ref="successModal" :success="true">
+      <p class="text-center mb-0">已成功送出表單！</p>
+    </MessageModal>
   </layout>
 </template>
 
@@ -58,11 +61,12 @@ import { defineRule, configure } from 'vee-validate';
 import { required, email, min, numeric } from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zh_TW from '@vee-validate/i18n/dist/locale/zh_TW.json';
+import MessageModal from "../../components/gc/MessageModal.vue"
 
 
 export default {
   components: {
-    Layout, TopHeader, Form, Field, ErrorMessage
+    Layout, TopHeader, Form, Field, ErrorMessage, MessageModal
   },
   data() {
     return {
@@ -98,10 +102,11 @@ export default {
       setLocale('zh_TW');
     },
     submitForm() {
-      console.log('submit');
+      this.$refs.form.resetForm();
+      this.$refs.successModal.showModal();
+
       let formData = new FormData()
       Object.entries(this.form).forEach((item) => {
-        console.log(item)
         formData.append(item[0], item[1]);
       })
         // const apiUrl = `${process.env.VUE_APP_PATH}/user/add-collect?event_id=${this.name}`;

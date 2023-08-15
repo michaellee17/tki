@@ -66,6 +66,7 @@ router.beforeEach((to, from) => {
   }
   store.commit("forceCloseModal")
 })
+
 app.use(VueZoomer)
   .use(router)
   .use(store)
