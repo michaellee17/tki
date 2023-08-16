@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from "../router";
 
 export const activity = {
   namespaced: true,
@@ -41,7 +42,6 @@ export const activity = {
   }),
   mutations: {
     getData(state, data) {
-      state.isLoading = false;
       state.basic_info = data.basic_info;
       state.announcement_info = data.announcement_info;
       state.ticket_info = data.ticket_info;
@@ -86,8 +86,26 @@ export const activity = {
         if (res.data.status_code === 'SYSTEM_1000') {
           commit('getData', res.data.data);
           commit('setTicketData', { stateData: 'isUpdated', data: true });
+          commit('setTicketData', { stateData: 'isLoading', data: false });
         } else {
-          return false
+          router.push('/404');
+          commit('setTicketData', { stateData: 'isLoading', data: false });
+        }
+      });
+    },
+    getDraft({ commit }, identifier) {
+      commit('setTicketData', { stateData: 'isUpdated', data: false });
+      axios.get(`${process.env.VUE_APP_PATH}/event/get-draft-info?identifier=${identifier}`)
+      .then(res => { 
+        if (res.data.status_code === 'SYSTEM_1000') {
+          console.log(res.data.data)
+          commit('getData', res.data.data);
+          commit('setTicketData', { stateData: 'isUpdated', data: true });
+          commit('setTicketData', { stateData: 'isLoading', data: false });
+        } else {
+          console.log(res.data.data)
+          // router.push('/404');
+          commit('setTicketData', { stateData: 'isLoading', data: false });
         }
       });
     },
