@@ -19,34 +19,34 @@ module.exports = defineConfig(
         }
     }
 )
-//開發中
+// 開發中
 // const { defineConfig } = require('@vue/cli-service')
 // const path = require('path');
-// const PrerenderSPAPlugin = require('prerender-spa-plugin');
-// const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
-
+// const PrerenderSPAPlugin = require("prerender-spa-plugin-next");
+// const renderer = require("@prerenderer/renderer-puppeteer");
 // module.exports = defineConfig({
-//   configureWebpack: config => {
-//     if (process.env.NODE_ENV === 'production') {
-//       return {
-//         plugins: [
-//           new PrerenderSPAPlugin({
-//             staticDir: path.join(__dirname, 'dist'),
-//             routes: ['/'],
-//             renderer: new Renderer({
-//               inject: {
-//                 foo: 'bar'
-//               },
-//               headless: true, 
-//               renderAfterDocumentEvent: 'render-event',
-//               navigationParams: {
-//                 timeout: 0
-//               }
-//             })
-//           })
-//         ],
-//       }
+//   publicPath: "/",
+//   configureWebpack(config) {
+//     if (process.env.NODE_ENV === "production") {
+//       const prerenderCfg = new PrerenderSPAPlugin({
+//         routes: ["/"],
+//         renderer,
+//         postProcess(context) {
+//           context.outputPath = path.join(
+//             "prerender",
+//             (context.route.replace("/", "") || "index") + ".html"
+//           );
+//           return context;
+//         },
+//         renderOptions: {
+//           inject: {
+//             foo: "bar",
+//           },
+//           headless: true,
+//           renderAfterDocumentEvent: "prerender",
+//         },
+//       });
+//       config.plugins.push(prerenderCfg);
 //     }
 //   },
-// })
-
+// });

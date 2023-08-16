@@ -32,7 +32,7 @@ import "./icons/iconsBrands.js";
 import 'vue-toast-notification/dist/theme-sugar.css';
 const myPlugin = {
   install(app, options) {
-    document.dispatchEvent(new Event('render-event'))
+    document.dispatchEvent(new Event('prerender'))
   }
 }
 const app = createApp(App);
