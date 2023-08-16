@@ -1,6 +1,6 @@
 <template>
   <!-- <router-view :style="[getPrimaryColor]" /> -->
-  <router-view  />
+  <router-view />
 </template>
 
 <script>
@@ -33,6 +33,9 @@ export default {
   //         return prod.id == this.$store.state.app.currentActiveModal.split('-')[1]
   //     })
   //   }
+  // },
+  // mounted() {
+  // document.dispatchEvent(new Event('render-event'))
   // },
   created() {
     document.addEventListener('keydown', e => {

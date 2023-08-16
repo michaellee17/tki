@@ -75,8 +75,8 @@
         <!-- 一般登入 -->
         <div v-show="isLoginOpen">
           <Login 
-           :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
-          @after-forget="handleForget" />
+            :open="isLoginOpen" @hide-login="handleLogin(false)" @after-login="handleLogin('close')"
+            @after-forget="handleForget" />
         </div>
       </div>
     </div>

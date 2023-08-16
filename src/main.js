@@ -30,7 +30,11 @@ import "./icons/iconsBrands.js";
 // Import one of the available themes
 //import 'vue-toast-notification/dist/theme-default.css';
 import 'vue-toast-notification/dist/theme-sugar.css';
-
+const myPlugin = {
+  install(app, options) {
+    document.dispatchEvent(new Event('render-event'))
+  }
+}
 const app = createApp(App);
 
 app.config.globalProperties.$timeFormatter = timeFormatter;
@@ -79,6 +83,7 @@ app.use(VueZoomer)
   .use(VueAxios, axios)
   .component("font-awesome-icon", FontAwesomeIcon)
   .component("Loading", Loading)
+  .use(myPlugin)
   .mount("#app");
 
 

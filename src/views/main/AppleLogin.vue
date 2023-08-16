@@ -16,7 +16,7 @@ export default {
       AppleID.auth.init({
         clientId: process.env.VUE_APP_APPLE_CLIENT_ID,
         scope: 'name email',
-        redirectURI: process.env.VUE_APP_APLLE_REDIRECTURI,
+        redirectURI: process.env.VUE_APP_APPLE_REDIRECTURI,
         state: 'tki',
         usePopup:false
       })
