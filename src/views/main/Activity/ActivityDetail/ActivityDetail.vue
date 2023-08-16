@@ -5,7 +5,7 @@
     :opacity="0.7" />
   <div
     v-if="!$store.state.appView.view && basic_info"  
-    :style="{ backgroundImage: `url(${basic_info.main_imageV_url})` }" class="top-bg">
+    :style="{ backgroundImage: `url(${ basic_info.main_imageV_url })` }" class="top-bg">
     <div class="blur">
       <div class="container bg position-relative">
         <div class="img-wrap-top position-absolute">
@@ -67,9 +67,6 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import loginModal from "../../../../components/LoginModal";
 import MessageModal from "../../../../components/gc/MessageModal.vue";
 
-// import Loading from 'vue-loading-overlay';
-// import 'vue-loading-overlay/dist/css/index.css';
-
 export default {
   components: {
     loginModal,
@@ -108,7 +105,6 @@ export default {
     }
     },
   created() {
-    // this.setTicketData({ stateData: 'isUpdated', data: false });
     this.setTicketData({ stateData: 'isLoading', data: true });
     this.getData(this.eventId);
     if(this.getLoginStatus) {
@@ -116,6 +112,7 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.basic_info.custom_url)
     this.setTicketData({ stateData: 'routeActivityId', data: this.$route.params.activityId });
   },
   unmounted() {

@@ -104,17 +104,11 @@ export default {
       this.setTicketData({ stateData: 'ticket_type_info', data: ticket });
       this.setTicketData({ stateData: 'session_name', data: this.currentSessionName });
     },
-    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-// .img-wrap-buy-ticket {
-//     width: 100%;
-//     height: 100%;
-//     max-width: 560px;
-//     max-height: 560px;
-// }
 .choose-date {
     max-height: 400px;
     overflow: auto;

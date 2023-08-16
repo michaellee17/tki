@@ -162,11 +162,9 @@ export default {
     },
   },
   beforeUnmount() {
-    console.log('beforeUnmount')
     this.cleanTimer();
   },
   updated() {
-    console.log('updated')
     this.cleanTimer();
   },
   // mounted() {
@@ -301,8 +299,7 @@ export default {
           const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
           const minutes = diffInMinutes % 60;
           const seconds = diffInSeconds % 60;
-          countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
-          console.log(countDownTime, seconds);
+          countDownTime = `${days} 日 ${hours} 時 ${minutes} 分 ${seconds} 秒`;
           countDownEl.textContent = countDownTime;
 
           if( days === 0 && hours === 0 && minutes === 0 && seconds === 1 ) {
@@ -377,6 +374,7 @@ export default {
   }
 }
 .disable-btn {
+  width: 343px;
   color: #fff;
   background-color: var(--secondary-color);
   border: none;

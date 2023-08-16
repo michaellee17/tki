@@ -143,8 +143,8 @@ export default {
             const days = Math.floor(diffInMinutes / (60 * 24));
             const hours = Math.floor((diffInMinutes % (60 * 24)) / 60);
             const minutes = diffInMinutes % 60;
-            // const seconds = diffInSeconds % 60;
-            countDownTime = `${days} 日 ${hours} 時 ${minutes} 分`;
+            const seconds = diffInSeconds % 60;
+            countDownTime = `${days} 日 ${hours} 時 ${minutes} 分 ${seconds} 秒`;
             // console.log(countDownTime, seconds);
             countDownEl.textContent = countDownTime;
 

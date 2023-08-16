@@ -122,6 +122,7 @@ const routes = [
       },
       {
         path: 'detail/:activityId',
+        redirect: { name: 'BuyTicketSession' },
         component: () => import('../views/main/Activity/ActivityDetail/ActivityDetail.vue'),
         children: [
           {
@@ -166,7 +167,6 @@ const routes = [
               },
             ]
           },
-          
           {
             path: 'location',
             name: 'Location',
@@ -190,6 +190,11 @@ const routes = [
     path: '/newebpay-callback',
     name: 'BuyTicketCallback',
     component: () => import('../views/main/Activity/ActivityDetail/BuyTicketCallback.vue')
+  },
+  {
+    path: '/event-redirect',
+    name: 'EventRedirect',
+    component: () => import('../views/main/Activity/EventRedirect.vue')
   },
   { path: '/:pathMatch(.*)*',
     name: 'NotFound',
