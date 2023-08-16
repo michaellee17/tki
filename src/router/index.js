@@ -113,7 +113,7 @@ const routes = [
     component: () => import('../views/main/Activity/Layout.vue'),
     children: [
       {
-        path: ':activityId',
+        path: ':activityClassId',
         component: () => import('../views/main/Activity/Inner.vue')
       },
       {

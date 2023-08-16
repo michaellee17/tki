@@ -48,7 +48,7 @@ export default{
       return Math.ceil(this.total / this.itemsPerPage);
     },
     innerIndex () {
-      return this.$route.params.activityId
+      return this.$route.params.activityClassId
     },
   },
   watch:{

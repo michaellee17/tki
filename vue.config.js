@@ -7,8 +7,7 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin-next');
 module.exports = defineConfig(
     {
         publicPath: process.env.VUE_APP_BUILD_PATH,
-        transpileDependencies: true,
-        lintOnSave: false,
+        // publicPath: process.env.NODE_ENV === 'production'? process.env.VUE_APP_BUILD_PATH : '/',
         configureWebpack: {
             plugins: [
                 new PrerenderSPAPlugin({

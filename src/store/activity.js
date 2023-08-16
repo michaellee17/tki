@@ -103,9 +103,8 @@ export const activity = {
           commit('setTicketData', { stateData: 'isUpdated', data: true });
           commit('setTicketData', { stateData: 'isLoading', data: false });
         } else {
-          console.log(res.data.data)
-          // router.push('/404');
           commit('setTicketData', { stateData: 'isLoading', data: false });
+          router.push('/404');
         }
       });
     },

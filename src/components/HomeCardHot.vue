@@ -20,21 +20,22 @@
     </swiper>
   </div>
   <section class="mb-5">
-    <swiper
+    <swiper 
+      :navigation="true"
       :slides-per-view="'auto'"
       :space-between="20"
       class="mySwiper card-hot"
       @swiper="onSwiper">
-      <div class="btn-prev position-absolute">
+      <!-- <div class="btn-prev position-absolute">
         <a class="me-3" @click.stop="slider.slidePrev()">
           <img src="../assets/images/icons/arrow_circle_left.svg" alt="" class="arrow-icon">
         </a>
       </div>
-      <div v-if="data.length > 3" class="btn-next position-absolute">
+      <div class="btn-next position-absolute">
         <a @click.stop="slider.slideNext()">
           <img src="../assets/images/icons/arrow_circle_right.svg" alt="" class="arrow-icon">
         </a>
-      </div>
+      </div> -->
       <swiper-slide v-for="eventData in findHotList.event_data" :key="eventData.event_id">
         <router-link
           :to="'/activity/detail/' + $convertToSlug(eventData.event_name, eventData.event_id) + '/buy-ticket/session'"
@@ -78,7 +79,7 @@
           }
         },
     },
-    created () {
+    created() {
       this.init();
     },
     methods: {
@@ -138,23 +139,46 @@
       & .swiper-slide {
           width: auto;
       }
-  & .arrow-icon {
+  // & .arrow-icon {
+  //   filter: var(--white-filter);
+  //   &:hover, &:focus {
+  //     filter: var(--primary-filter);
+  //   }
+  // }
+  // & .btn-prev, .btn-next {
+  //   width: 40px;
+  //   z-index: 10;
+  //   top: 50%;
+  //   transform: translateY(-50%);
+  // }
+  // & .btn-prev {
+  //   left: 20px;
+  // }
+  // & .btn-prev, .btn-next {
+  //   right: 20px; 
+  // }
+  .swiper-button-prev, .swiper-button-next {
+    color: transparent;
+    width: 40px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
     filter: var(--white-filter);
     &:hover, &:focus {
       filter: var(--primary-filter);
     }
   }
-  & .btn-prev, .btn-next {
-    width: 40px;
-    z-index: 10;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  & .btn-prev {
+  .swiper-button-prev {
     left: 20px;
+    background-image: url("../assets/images/icons/arrow_circle_left.svg");
   }
-  & .btn-prev, .btn-next {
-    right: 20px; 
+  .swiper-button-next {
+    right: 20px;
+    background-image: url("../assets/images/icons/arrow_circle_right.svg");
+  }
+  & .swiper-button-prev.swiper-button-disabled, 
+    .swiper-button-next.swiper-button-disabled {
+      opacity: 0
   }
 }
 
