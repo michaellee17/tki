@@ -92,12 +92,14 @@ export default {
   },
   watch: {
     /* 點擊為您推薦會更換元件 */
-      eventId() {
-        this.getData(this.eventId);
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth' 
-        });
+      eventId(nVal) {
+        if(nVal) {
+          this.getData(this.eventId);
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth' 
+          });
+        }
       },
       /* 登入後更新收藏狀態 */
       getLoginStatus(){
