@@ -38,7 +38,7 @@
       </div> -->
       <swiper-slide v-for="eventData in findHotList.event_data" :key="eventData.event_id">
         <router-link
-          :to="'/activity/detail/' + $convertToSlug(eventData.event_name, eventData.event_id) + '/buy-ticket/session'"
+          :to="'/activity/detail/' + $convertToSlug(eventData.event_name, eventData.event_id, eventData.custom_url) + '/buy-ticket/session'"
           class="event-card d-block bg-cover text-white position-relative"
           :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + eventData.main_imageH_url + ')' }">
           <div class="slider-content position-absolute bottom-0">

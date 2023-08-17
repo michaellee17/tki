@@ -15,11 +15,13 @@
       class="d-flex cardMain">
       <div
         class="cardLeft bg-cover flex-shrink-0" 
-        :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)" />
+        :style="{ backgroundImage: `url('${ item.reserve_image_url }')` }" 
+        @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id, item.custom_url)" />
       <div class="flex-column cardRight d-flex flex-shrink-1">
         <div class="d-flex flex-column rightTop px-3">
           <button class="btn-close close" @click="showModal(item.buy_ticket_id)" />
-          <div class="subject" @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id)">
+          <div class="subject" 
+          @click.prevent="goCart(item.session_name, item.area_name, item.ticket_name, item.ticket_number, item.ticket_start_date, item.event_name, item.event_id, item.custom_url)">
             <p class="mb-0 ellipsis-1">{{ item.performer }}</p>
             <p class="mb-0 ellipsis-1 event_name">{{ item.event_name }}</p>
           </div>
@@ -79,11 +81,9 @@ export default {
     },
   },
   beforeUnmount() {
-    console.log('beforeUnmount')
     this.cleanTimer();
   },
   updated() {
-    console.log('updated')
     this.cleanTimer();
   },
   mounted() {
@@ -195,7 +195,8 @@ export default {
           }
         });
     },
-    goCart(session_name, area_name, ticket_name, ticket_number, ticket_start_date, event_name, event_id) {
+    goCart(session_name, area_name, ticket_name, ticket_number, ticket_start_date, event_name, event_id, custom_url) {
+      console.log(custom_url);
       this.setTicketData({ stateData: 'l_session_name', data: session_name });
       this.setTicketData({ stateData: 'l_area_name', data: area_name });
       this.setTicketData({ stateData: 'l_ticket_name', data: ticket_name });
@@ -204,7 +205,7 @@ export default {
       // this.setTicketData({ stateData: 'isUpdated', data: true });
 
       this.$router.push({
-        path: '/activity/detail/' + this.$convertToSlug(event_name, event_id) + '/buy-ticket/cart',
+        path: '/activity/detail/' + this.$convertToSlug(event_name, event_id, custom_url) + '/buy-ticket/cart',
         query: { pre: true }
       });
     }

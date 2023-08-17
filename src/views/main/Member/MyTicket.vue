@@ -15,7 +15,7 @@
           <p>{{ item.session_area }}</p>
         </li>
         <li class="d-flex justify-content-between align-items-center pb-3">
-          <router-link :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'" class="mb-0 link">活動詳情</router-link>
+          <router-link :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id, item.custom_url) + '/buy-ticket/session'" class="mb-0 link">活動詳情</router-link>
           <button type="button" class="btn btn-outline-light rounded-pill px-3">下載 APP</button>
         </li>
       </ul>

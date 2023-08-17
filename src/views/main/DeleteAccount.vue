@@ -80,7 +80,7 @@ export default {
     }
   },
   beforeCreate() {
-    document.title = "聯絡我們 - T-KI";
+    document.title = "刪除帳號 - T-KI";
   },
   created() {
     this.initValidate();
