@@ -28,9 +28,6 @@
           </li>
           <li class="d-flex justify-content-between align-items-center">
             <p class="price">${{ item.ticket_price.toLocaleString() }} x {{ item.ticket_number }}</p>
-            <!-- <router-link v-if="item.order_status === 0" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn mb-3 px-3 link_button">付款</router-link>
-            <router-link v-if="item.order_status === 1" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout'" class="btn mb-3 px-3 link_button">重新付款</router-link>
-            <router-link v-if="item.order_status === 2" :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/payment'" class="btn mb-3 px-3 link_button">ATM付款詳情</router-link> -->
             <a v-if="item.order_status === 0" class="btn mb-3 px-3 link_button" @click.prevent="goCheckout(item)">付款</a>
             <a v-if="item.order_status === 1" class="btn mb-3 px-3 link_button" @click.prevent="goCheckout(item)">重新付款</a>
             <a v-if="item.order_status === 2" class="btn mb-3 px-3 link_button" @click.prevent="goPayment(item)">ATM付款詳情</a>
@@ -181,13 +178,13 @@ export default {
     goCheckout(item) {
       this.setTicketData({ stateData: 'orderData', data: item });
       this.$router.push({
-        path: '/activity/detail/' + this.$convertToSlug(item.event_name, item.event_id) + '/buy-ticket/checkout',
+        path: '/activity/detail/' + this.$convertToSlug(item.event_name, item.event_id, item.custom_url) + '/buy-ticket/checkout',
       });
     },
     goPayment(item) {
       this.setTicketData({ stateData: 'orderData', data: item });
       this.$router.push({
-        path: '/activity/detail/' + this.$convertToSlug(item.event_name, item.event_id) + '/buy-ticket/payment',
+        path: '/activity/detail/' + this.$convertToSlug(item.event_name, item.event_id, item.custom_url) + '/buy-ticket/payment',
       });
     }
   },

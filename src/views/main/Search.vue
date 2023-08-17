@@ -41,7 +41,7 @@
       <div class="d-flex justify-content-center justify-content-md-start gap-4 flex-wrap mb-4">
         <router-link
           v-for="item in lists" :key="item.event_id" class="cardA bg-cover text-white position-relative"
-          :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id) + '/buy-ticket/session'"
+          :to="'/activity/detail/' + $convertToSlug(item.event_name, item.event_id, item.custom_url) + '/buy-ticket/session'"
           :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + item.main_imageH_url + ')' }">
           <div class="slider-content position-absolute bottom-0">
             <h4 class="ellipsis-1 fw-bold">{{ item.performer }}</h4>

@@ -21,7 +21,7 @@
         class="mySwiper">
         <swiper-slide v-for="event in recommendList" :key="event.event_id">
           <router-link
-            :to="'/activity/detail/' + $convertToSlug(event.event_name, event.event_id) + '/buy-ticket/session'">
+            :to="'/activity/detail/' + $convertToSlug(event.event_name, event.event_id, event.custom_url) + '/buy-ticket/session'">
             <div
               class="collection bg-cover text-white position-relative"
               :style="{ backgroundImage: 'linear-gradient(180deg, #00000000 0%, #00000033 73%, #000000 100%),url(' + event.main_imageH_url + ')' }">
